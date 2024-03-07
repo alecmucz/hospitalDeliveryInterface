@@ -4,30 +4,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7e1c1fe8-19dc-4e88-bc9d-fc845d4c4708" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+    <list default="true" id="7e1c1fe8-19dc-4e88-bc9d-fc845d4c4708" name="Changes" comment="@author Alec Muczynski&#10;Implemented the Pending stage">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/hospitaldeliveryinterface/hello-view.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/example/hospitaldeliveryinterface/hello-view.fxml" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FileTemplateManagerImpl">
-    <option name="RECENT_TEMPLATES">
-      <list>
-        <option value="Class" />
-      </list>
-    </option>
-  </component>
   <component name="Git.Settings">
-    <option name="RECENT_BRANCH_BY_REPOSITORY">
-      <map>
-        <entry key="$PROJECT_DIR$" value="requisitionTesting" />
-      </map>
-    </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;alecmucz&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">
+    <option name="selectedUrlAndAccountId">
+      <UrlAndAccount>
+        <option name="accountId" value="64d9bc1e-b3cb-4982-8fc1-6520ac9417d8" />
+        <option name="url" value="https://github.com/alecmucz/hospitalDeliveryInterface.git" />
+      </UrlAndAccount>
+    </option>
   </component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
@@ -50,29 +53,39 @@
   </component>
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
-    &quot;Application.RunTest.executor&quot;: &quot;Run&quot;,
+    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
     &quot;git-widget-placeholder&quot;: &quot;master&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/wcars/OneDrive/Desktop/School/Spring 2024/CSC 325/hospitalDeliveryInterface&quot;,
-    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
-    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
-    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
-    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/alecm/IdeaProjects/hospitalDeliveryInterface&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;SDKs&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;
   }
 }</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="C:\Users\alecm\IdeaProjects\hospitalDeliveryInterface\src\main\resources\com\example\hospitaldeliveryinterface" />
+      <recent name="C:\Users\alecm\IdeaProjects\hospitalDeliveryInterface\src\main\java\com\example\hospitaldeliveryinterface" />
+    </key>
+  </component>
   <component name="RunManager">
-    <configuration name="RunTest" type="Application" factoryName="Application">
+    <configuration name="Unnamed" type="Application" factoryName="Application" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.hospitaldeliveryinterface.HelloApplication" />
       <module name="hospitalDeliveryInterface" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="jdk-21.0.2-openjdk-21.0.2-4caba194b151-4f524021" />
+      </set>
+    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -82,27 +95,28 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1707344166278</updated>
-      <workItem from="1708476501062" duration="3469000" />
-      <workItem from="1708553208626" duration="1503000" />
-      <workItem from="1709763445797" duration="2550000" />
-      <workItem from="1709766555562" duration="18000" />
-      <workItem from="1709834544139" duration="303000" />
-      <workItem from="1709835139804" duration="300000" />
     </task>
+    <task id="LOCAL-00001" summary="@author Alec Muczynski&#10;Implemented the Pending stage">
+      <option name="closed" value="true" />
+      <created>1709776495292</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1709776495292</updated>
+    </task>
+    <task id="LOCAL-00002" summary="@author Alec Muczynski&#10;Implemented the Pending stage">
+      <option name="closed" value="true" />
+      <created>1709778289724</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1709778289724</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="3" />
-  </component>
-  <component name="Vcs.Log.Tabs.Properties">
-    <option name="TAB_STATES">
-      <map>
-        <entry key="MAIN">
-          <value>
-            <State />
-          </value>
-        </entry>
-      </map>
-    </option>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="@author Alec Muczynski&#10;Implemented the Pending stage" />
+    <option name="LAST_COMMIT_MESSAGE" value="@author Alec Muczynski&#10;Implemented the Pending stage" />
   </component>
 </project>
