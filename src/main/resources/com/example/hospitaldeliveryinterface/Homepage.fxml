@@ -12,16 +12,16 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="486.0" prefWidth="685.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hospitaldeliveryinterface.HomepageController">
+<BorderPane prefHeight="547.0" prefWidth="769.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hospitaldeliveryinterface.HomepageController">
    <bottom>
-      <ToolBar prefHeight="55.0" prefWidth="685.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+      <ToolBar prefHeight="10.0" prefWidth="819.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
         <items>
-          <Button fx:id="deliverPackageButton" mnemonicParsing="false" style="-fx-background-color: white;" text="Deliver Package">
+          <Button fx:id="deliverPackageButton" mnemonicParsing="false" prefHeight="29.0" prefWidth="139.0" style="-fx-background-color: white;" text="Deliver Package">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Pane style="-fx-background-color: white;" HBox.hgrow="ALWAYS" />
+            <Pane prefHeight="45.0" prefWidth="180.0" style="-fx-background-color: white;" HBox.hgrow="ALWAYS" />
             <Button fx:id="addNoteButton" mnemonicParsing="false" style="-fx-background-color: white;" text="Add Note">
                <font>
                   <Font name="System Bold" size="14.0" />
@@ -32,7 +32,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="newDeliveryButton" mnemonicParsing="false" onAction="#onNewDelivery" style="-fx-background-color: white;" text="+ New Delivery">
+            <Button fx:id="newDeliveryButton" mnemonicParsing="false" onAction="#onNewDelivery" prefHeight="29.0" prefWidth="133.0" style="-fx-background-color: white;" text="+ New Delivery">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -53,37 +53,71 @@
          </BorderPane.margin>
       </ScrollPane>
    </center>
+   <right>
+      <VBox fx:id="settingNavbar" alignment="TOP_RIGHT" prefHeight="431.0" prefWidth="136.0" BorderPane.alignment="CENTER">
+         <children>
+            <Button alignment="CENTER" minWidth="0.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="219.0" text="Button1" />
+            <Button layoutX="10.0" layoutY="10.0" minWidth="0.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="137.0" text="Button2" />
+            <Button layoutX="10.0" layoutY="55.0" minWidth="0.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="137.0" text="Button3" />
+         </children>
+      </VBox>
+   </right>
    <top>
-      <ToolBar prefHeight="62.0" prefWidth="685.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
-         <items>
-            <Label prefHeight="47.0" prefWidth="87.0" text="PharmaTrac">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Label>
-            <TextField prefHeight="39.0" prefWidth="206.0" promptText="Search" style="-fx-border-color: black;" />
-            <Button fx:id="filterbtn" mnemonicParsing="false" prefHeight="38.0" prefWidth="67.0" style="-fx-background-color: black;" text="Filter" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="12.0" />
-               </font>
-            </Button>
-            <Pane prefHeight="51.0" prefWidth="25.0" style="-fx-background-color: white;" />
-            <Button fx:id="pendingButton" mnemonicParsing="false" onAction="#onPendingClick" prefHeight="47.0" prefWidth="79.0" style="-fx-background-color: white;" text="Pending">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Button>
-            <Button fx:id="completedButton" mnemonicParsing="false" onAction="#onCompleteClick" prefHeight="47.0" prefWidth="99.0" style="-fx-background-color: white;" text="Completed">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Button>
-            <Button fx:id="settingsButton" mnemonicParsing="false" onAction="#onSettingClick" prefHeight="47.0" prefWidth="80.0" style="-fx-background-color: white;" text="Settings">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Button>
-         </items>
-      </ToolBar>
+      <HBox prefHeight="60.0" prefWidth="703.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+         <children>
+            <HBox alignment="CENTER_LEFT" prefHeight="55.0" prefWidth="459.0" style="-fx-background-color: white;">
+               <children>
+                  <Label prefHeight="47.0" prefWidth="87.0" text="PharmaTrac">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField prefHeight="39.0" prefWidth="292.0" promptText="Search" style="-fx-border-color: black;" />
+                  <Button fx:id="filterbtn" mnemonicParsing="false" prefHeight="38.0" prefWidth="67.0" style="-fx-background-color: black;" text="Filter" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+            </HBox>
+            <HBox alignment="CENTER_RIGHT" prefHeight="60.0" prefWidth="233.0" style="-fx-background-color: white;" HBox.hgrow="ALWAYS">
+               <children>
+                  <Button fx:id="pendingButton" alignment="CENTER" mnemonicParsing="false" onAction="#onPendingClick" prefHeight="39.0" prefWidth="75.0" style="-fx-background-color: white;" text="Pending">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="completedButton" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#onCompleteClick" prefHeight="39.0" prefWidth="91.0" style="-fx-background-color: white;" text="Completed">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+                  <Button fx:id="settingsButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSettingClick" prefHeight="39.0" prefWidth="73.0" style="-fx-background-color: white;" text="Settings">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets left="10.0" />
+                     </HBox.margin>
+                  </Button>
+               </children>
+               <HBox.margin>
+                  <Insets left="10.0" />
+               </HBox.margin>
+            </HBox>
+         </children>
+         <BorderPane.margin>
+            <Insets left="10.0" />
+         </BorderPane.margin>
+         <padding>
+            <Insets right="10.0" />
+         </padding>
+      </HBox>
    </top>
 </BorderPane>

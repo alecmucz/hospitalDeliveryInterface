@@ -1,17 +1,16 @@
 package com.example.hospitaldeliveryinterface;
 
+
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.MenuButton;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 import java.util.Queue;
 
@@ -30,18 +29,28 @@ public class HomepageController {
     private Button editDeliveryButton;
 
     @FXML
+    private Button filterbtn;
+
+    @FXML
     private Button newDeliveryButton;
-
-    @FXML
-    private Button pendingButton;
-
-    @FXML
-    private Button settingsButton;
 
     @FXML
     private VBox orderDisplayContainer;
 
+    @FXML
+    private Button pendingButton;
+
+
+    @FXML
+    private VBox settingNavbar;
+
+    @FXML
+    private Button settingsButton;
+
+    private boolean isToggleSettings;
     public void initialize(){
+        isToggleSettings = false;
+        settingNavbar.setPrefWidth(0);
        pendingToggle();
     }
 
@@ -69,7 +78,7 @@ public class HomepageController {
 
         buttonToggle(completedButton);
         buttonNotToggle(pendingButton);
-        buttonNotToggle(settingsButton);
+
 
         orderDisplayContainer.getChildren().clear();
 
@@ -92,9 +101,15 @@ public class HomepageController {
 
     @FXML
     void onSettingClick(ActionEvent event) {
-        buttonToggle(settingsButton);
-        buttonNotToggle(completedButton);
-        buttonNotToggle(pendingButton);
+        if(!isToggleSettings){
+            buttonToggle(settingsButton);
+            settingNavbar.setPrefWidth(137);
+        }else{
+            buttonNotToggle(settingsButton);
+            settingNavbar.setPrefWidth(0);
+        }
+
+        isToggleSettings = !isToggleSettings;
     }
 
 
@@ -109,8 +124,8 @@ public class HomepageController {
     public void pendingToggle(){
         buttonToggle(pendingButton);
         buttonNotToggle(completedButton);
-        buttonNotToggle(settingsButton);
 
+        orderDisplayContainer.getChildren().clear();
         Pending pendQueue = Pending.getInstance();
         Queue<DeliveryRequisition> currentPending = pendQueue.getPendingQueue();
         if(!currentPending.isEmpty()){
