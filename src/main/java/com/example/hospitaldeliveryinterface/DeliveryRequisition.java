@@ -1,7 +1,9 @@
 package com.example.hospitaldeliveryinterface;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.Locale;
 
 public class DeliveryRequisition {
     private String patientName;
@@ -9,7 +11,10 @@ public class DeliveryRequisition {
     private String medication; // name and strength
     private String dose;
     private int numDoses;
-    LocalDateTime dateTime;
+    private String dateTime;
+
+    private  String orderNumberDisplay;
+    private static int orderNumCount = 1;
 
     public DeliveryRequisition(String patientName, String patientLocation, String medication, String dose, int numDoses) {
         this.patientName = patientName;
@@ -17,7 +22,8 @@ public class DeliveryRequisition {
         this.medication = medication;
         this.dose = dose;
         this.numDoses = numDoses;
-        this.dateTime = java.time.LocalDateTime.now();
+        this.dateTime = currentDateTime();
+        this.orderNumberDisplay = generateOrderNum();
     }
     public void setPatientName(String patientName) {
         this.patientName = patientName;
@@ -48,5 +54,43 @@ public class DeliveryRequisition {
     }
     public int getNumDoses() {
         return numDoses;
+    }
+
+    public String getOrderNumberDisplay(){
+        return orderNumberDisplay;
+    }
+
+    public String getDateTime(){
+        return dateTime;
+    }
+
+    public String generateOrderNum(){
+        System.out.println("Current OrderNumCount: "+ orderNumCount);
+        LocalDateTime currentTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
+        String dateString = currentTime.format(formatter);
+        String counterString = String.format("%03d", orderNumCount);
+        orderNumCount++;
+        String orderNumber = dateString + counterString;
+        return orderNumber;
+    }
+
+    public String currentDateTime(){
+        LocalDateTime timeNow = LocalDateTime.now();
+        DateTimeFormatter format = DateTimeFormatter.ofPattern("MMMM dd, yyyy - HH:mm a");
+        return timeNow.format(format);
+    }
+
+    @Override
+    public String toString() {
+        return "DeliveryRequisition{" +
+                "patientName='" + patientName + '\'' +
+                ", patientLocation='" + patientLocation + '\'' +
+                ", medication='" + medication + '\'' +
+                ", dose='" + dose + '\'' +
+                ", numDoses=" + numDoses +
+                ", dateTime=" + dateTime +
+                ", orderNumberDisplay='" + orderNumberDisplay + '\'' +
+                '}';
     }
 }
