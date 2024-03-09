@@ -16,3 +16,7 @@
 
 3/9/2024 2:21pm -Mitchell Edit:
 -Able to toggle between Pending and Completed Tab
+
+3/9/2024 6:09 pm -Mitchell Edit:
+-Adjust top navbar
+-setting side nav bar implmented
