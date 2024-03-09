@@ -42,6 +42,71 @@ public class HomepageController {
     private VBox orderDisplayContainer;
 
     public void initialize(){
+       pendingToggle();
+    }
+
+    @FXML
+    protected void onNewDelivery(ActionEvent event){
+
+        FXMLLoader fxmlLoader = new FXMLLoader(PharmaTracApp.class.getResource("CreateOrder.fxml"));
+        Stage stage = PharmaTracApp.getStage();
+        Scene scene = PharmaTracApp.getScene();
+        try {
+            scene.setRoot(fxmlLoader.load());
+            stage.setTitle("PharmaTrac/New Delivery Form");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @FXML
+    void onPendingClick(ActionEvent event) {
+        pendingToggle();
+    }
+
+    @FXML
+    void onCompleteClick(ActionEvent event) {
+
+        buttonToggle(completedButton);
+        buttonNotToggle(pendingButton);
+        buttonNotToggle(settingsButton);
+
+        orderDisplayContainer.getChildren().clear();
+
+        Completed completeQueue = Completed.getInstance();
+        Queue<DeliveryRequisition> currentCompleted = completeQueue.getCompletedQueue();
+        if(!currentCompleted.isEmpty()){
+            for(DeliveryRequisition order: currentCompleted){
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("orderCard.fxml"));
+                    GridPane orderTemplate = loader.load();
+                    OrderCardUIController controller = loader.getController();
+                    controller.updateOrderLabels(order);
+                    orderDisplayContainer.getChildren().add(orderTemplate);
+                } catch (IOException e) {
+                    System.out.println("Failed to find orderCard.fxml");
+                }
+            }
+        }
+    }
+
+    @FXML
+    void onSettingClick(ActionEvent event) {
+        buttonToggle(settingsButton);
+        buttonNotToggle(completedButton);
+        buttonNotToggle(pendingButton);
+    }
+
+
+    public void buttonToggle(Button button){
+        button.setStyle("-fx-border-color: black; -fx-background-color: white");
+    }
+
+    public void buttonNotToggle(Button button){
+        button.setStyle("-fx-background-color: white");
+    }
+
+    public void pendingToggle(){
         buttonToggle(pendingButton);
         buttonNotToggle(completedButton);
         buttonNotToggle(settingsButton);
@@ -62,49 +127,4 @@ public class HomepageController {
             }
         }
     }
-
-    @FXML
-    protected void onNewDelivery(ActionEvent event){
-
-        FXMLLoader fxmlLoader = new FXMLLoader(PharmaTracApp.class.getResource("CreateOrder.fxml"));
-        Stage stage = PharmaTracApp.getStage();
-        Scene scene = PharmaTracApp.getScene();
-        try {
-            scene.setRoot(fxmlLoader.load());
-            stage.setTitle("PharmaTrac/New Delivery Form");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @FXML
-    void onPendingClick(ActionEvent event) {
-        buttonToggle(pendingButton);
-        buttonNotToggle(completedButton);
-        buttonNotToggle(settingsButton);
-    }
-
-    @FXML
-    void onCompleteClick(ActionEvent event) {
-        buttonToggle(completedButton);
-        buttonNotToggle(pendingButton);
-        buttonNotToggle(settingsButton);
-    }
-
-    @FXML
-    void onSettingClick(ActionEvent event) {
-        buttonToggle(settingsButton);
-        buttonNotToggle(completedButton);
-        buttonNotToggle(pendingButton);
-    }
-
-
-    public void buttonToggle(Button button){
-        button.setStyle("-fx-border-color: black; -fx-background-color: white");
-    }
-
-    public void buttonNotToggle(Button button){
-        button.setStyle("-fx-background-color: white");
-    }
-
 }

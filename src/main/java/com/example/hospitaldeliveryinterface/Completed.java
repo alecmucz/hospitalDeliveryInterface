@@ -22,7 +22,7 @@ public class Completed {
         return completedQueue.poll();
     }
 
-    public Queue<DeliveryRequisition> getPendingQueue(){
+    public Queue<DeliveryRequisition> getCompletedQueue(){
         return completedQueue;
     }
 

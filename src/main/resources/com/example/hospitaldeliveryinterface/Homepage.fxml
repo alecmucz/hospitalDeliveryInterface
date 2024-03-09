@@ -78,7 +78,7 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="settingsButton" mnemonicParsing="false" onAction="#onSettingClick" prefHeight="47.0" prefWidth="80.0" style="-fx-background-color: white;" text="Setting">
+            <Button fx:id="settingsButton" mnemonicParsing="false" onAction="#onSettingClick" prefHeight="47.0" prefWidth="80.0" style="-fx-background-color: white;" text="Settings">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
