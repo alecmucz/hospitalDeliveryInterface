@@ -13,3 +13,6 @@
 - Method to generate Order number, I decide the ordernumbers are based  on todays date then "00" and then orderNumberCounter
 - ScrollPane added to Homepage for orderQueue list
 - To test make sure you are on my branch "Mitchell_branch" / Didnt merge to main/master branch yet.
+
+3/9/2024 2:21pm -Mitchell Edit:
+-Able to toggle between Pending and Completed Tab
