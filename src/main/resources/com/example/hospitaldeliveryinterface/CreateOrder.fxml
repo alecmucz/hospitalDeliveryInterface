@@ -12,44 +12,44 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="696.0" prefWidth="560.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hospitaldeliveryinterface.CreateOrderController">
+<BorderPane focusTraversable="true" prefHeight="640.0" prefWidth="513.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hospitaldeliveryinterface.CreateOrderController">
    <center>
-      <VBox alignment="CENTER_LEFT" maxWidth="-Infinity" prefHeight="467.0" prefWidth="506.0" BorderPane.alignment="CENTER_LEFT">
+      <VBox alignment="CENTER_LEFT" focusTraversable="true" maxWidth="-Infinity" prefHeight="467.0" prefWidth="506.0" BorderPane.alignment="CENTER_LEFT">
          <children>
             <Label prefHeight="43.0" prefWidth="631.0" text="Patient Information" textFill="#707070">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Label>
-            <GridPane alignment="CENTER_LEFT" hgap="20.0" maxWidth="-Infinity" prefHeight="157.0" prefWidth="549.0">
+            <GridPane alignment="CENTER_LEFT" hgap="20.0" maxWidth="-Infinity" prefHeight="167.0" prefWidth="463.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                </columnConstraints>
                <rowConstraints>
                   <RowConstraints maxHeight="37.0" minHeight="10.0" prefHeight="37.0" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="43.000020345052086" minHeight="10.0" prefHeight="43.000020345052086" vgrow="SOMETIMES" />
-                  <RowConstraints maxHeight="42.66666666666667" minHeight="8.666676839192704" prefHeight="39.33333333333333" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="43.000020345052086" minHeight="10.0" prefHeight="37.666646321614586" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="43.66667683919272" minHeight="8.666676839192704" prefHeight="39.00002034505209" vgrow="SOMETIMES" />
                   <RowConstraints maxHeight="42.66666666666667" minHeight="8.666676839192704" prefHeight="32.66666666666666" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
+                  <TextField fx:id="firstnameTextfield" layoutX="10.0" layoutY="47.0" maxWidth="-Infinity" prefHeight="49.0" prefWidth="265.0" promptText="First" style="-fx-border-color: grey;" GridPane.rowIndex="1" />
+                  <TextField fx:id="lastnameTextfield" maxWidth="-Infinity" prefHeight="59.0" prefWidth="252.0" promptText="Last" style="-fx-border-color: grey;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                  <TextField fx:id="locationTextfield" maxWidth="-Infinity" prefHeight="45.0" prefWidth="209.0" style="-fx-border-color: grey;" GridPane.rowIndex="3">
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </TextField>
                   <Label prefHeight="39.0" prefWidth="300.0" text="Full Name">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="lastnameTextfield" maxWidth="-Infinity" prefHeight="59.0" prefWidth="252.0" promptText="Last" style="-fx-border-color: grey;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <Label maxWidth="-Infinity" prefHeight="31.0" prefWidth="230.0" text="Location" GridPane.rowIndex="2">
                      <font>
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="locationTextfield" maxWidth="-Infinity" prefHeight="39.0" prefWidth="230.0" style="-fx-border-color: grey;" GridPane.rowIndex="3">
-                     <GridPane.margin>
-                        <Insets />
-                     </GridPane.margin>
-                  </TextField>
-                  <TextField fx:id="firstnameTextfield" layoutX="10.0" layoutY="47.0" maxWidth="-Infinity" prefHeight="49.0" prefWidth="265.0" promptText="First" style="-fx-border-color: grey;" GridPane.rowIndex="1" />
                </children>
                <padding>
                   <Insets right="25.0" />
@@ -75,6 +75,17 @@
                   <RowConstraints maxHeight="37.6666259765625" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
+                  <TextField fx:id="medDescTextfield" maxWidth="-Infinity" prefHeight="49.0" prefWidth="265.0" style="-fx-border-color: grey;" GridPane.rowIndex="1" />
+                  <TextField fx:id="doseTextfield" maxWidth="-Infinity" prefHeight="34.0" prefWidth="65.0" style="-fx-border-color: grey;" GridPane.rowIndex="3">
+                     <GridPane.margin>
+                        <Insets right="190.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <TextField fx:id="doseNumTextfield" maxWidth="-Infinity" prefHeight="34.0" prefWidth="65.0" style="-fx-border-color: grey;" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <GridPane.margin>
+                        <Insets right="190.0" />
+                     </GridPane.margin>
+                  </TextField>
                   <Label prefHeight="43.0" prefWidth="275.0" text="Medication (Name/Strength)">
                      <font>
                         <Font size="14.0" />
@@ -90,17 +101,6 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="medDescTextfield" maxWidth="-Infinity" prefHeight="49.0" prefWidth="265.0" style="-fx-border-color: grey;" GridPane.rowIndex="1" />
-                  <TextField fx:id="doseTextfield" maxWidth="-Infinity" prefHeight="34.0" prefWidth="65.0" style="-fx-border-color: grey;" GridPane.rowIndex="3">
-                     <GridPane.margin>
-                        <Insets right="190.0" />
-                     </GridPane.margin>
-                  </TextField>
-                  <TextField fx:id="doseNumTextfield" maxWidth="-Infinity" prefHeight="34.0" prefWidth="65.0" style="-fx-border-color: grey;" GridPane.columnIndex="1" GridPane.rowIndex="3">
-                     <GridPane.margin>
-                        <Insets right="190.0" />
-                     </GridPane.margin>
-                  </TextField>
                </children>
             </GridPane>
             <Label prefHeight="50.0" prefWidth="507.0" text="Additional Notes" textFill="#707070">
@@ -146,7 +146,7 @@
       </GridPane>
    </top>
    <bottom>
-      <GridPane alignment="CENTER_LEFT" prefHeight="32.0" prefWidth="504.0" BorderPane.alignment="CENTER_LEFT">
+      <GridPane alignment="CENTER_LEFT" focusTraversable="true" prefHeight="32.0" prefWidth="504.0" BorderPane.alignment="CENTER_LEFT">
          <columnConstraints>
             <ColumnConstraints hgrow="NEVER" maxWidth="443.66668701171875" minWidth="10.0" prefWidth="400.33331298828125" />
             <ColumnConstraints hgrow="NEVER" maxWidth="297.66668701171875" minWidth="10.0" prefWidth="205.66668701171875" />
