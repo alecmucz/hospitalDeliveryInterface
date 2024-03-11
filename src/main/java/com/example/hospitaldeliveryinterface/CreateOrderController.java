@@ -3,6 +3,7 @@ package com.example.hospitaldeliveryinterface;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
@@ -89,8 +90,10 @@ public class CreateOrderController {
     }
 
     @FXML
-    protected void onCancelForm() throws IOException {
-        navHomePage();
+    protected void onCancelForm(ActionEvent event) throws IOException {
+        Node source = (Node) event.getSource();
+        Stage stage = (Stage) source.getScene().getWindow();
+        stage.close();
     }
 
     @FXML

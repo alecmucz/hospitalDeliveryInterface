@@ -12,9 +12,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane prefHeight="547.0" prefWidth="769.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hospitaldeliveryinterface.HomepageController">
+<BorderPane fx:id="mainLayout" prefHeight="547.0" prefWidth="769.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hospitaldeliveryinterface.HomepageController">
    <bottom>
-      <ToolBar prefHeight="10.0" prefWidth="819.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+      <ToolBar fx:id="bottomToolBar" prefHeight="10.0" prefWidth="819.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
         <items>
           <Button fx:id="deliverPackageButton" mnemonicParsing="false" prefHeight="29.0" prefWidth="139.0" style="-fx-background-color: white;" text="Deliver Package">
                <font>
@@ -43,7 +43,7 @@
    <center>
       <ScrollPane fitToHeight="true" fitToWidth="true" pannable="true" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: black;" BorderPane.alignment="TOP_CENTER">
          <content>
-            <VBox fx:id="orderDisplayContainer" prefHeight="349.0" prefWidth="684.0" spacing="20.0" style="-fx-background-color: black;">
+            <VBox fx:id="orderDisplayContainer" prefHeight="349.0" prefWidth="684.0" spacing="20.0" style="-fx-background-color: blue;">
                <padding>
                   <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
                </padding></VBox>
@@ -73,7 +73,7 @@
                      </font>
                   </Label>
                   <TextField prefHeight="39.0" prefWidth="292.0" promptText="Search" style="-fx-border-color: black;" />
-                  <Button fx:id="filterbtn" mnemonicParsing="false" prefHeight="38.0" prefWidth="67.0" style="-fx-background-color: black;" text="Filter" textFill="WHITE">
+                  <Button fx:id="filterbtn" mnemonicParsing="false" prefHeight="38.0" prefWidth="67.0" style="-fx-background-color: blue;" text="Filter" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
