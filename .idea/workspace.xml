@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7e1c1fe8-19dc-4e88-bc9d-fc845d4c4708" name="Changes" comment="-Toolbar changes according to page">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="7e1c1fe8-19dc-4e88-bc9d-fc845d4c4708" name="Changes" comment="struggling" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -164,7 +162,15 @@
       <option name="project" value="LOCAL" />
       <updated>1710116865839</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="struggling">
+      <option name="closed" value="true" />
+      <created>1710117675809</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1710117675809</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -187,6 +193,7 @@
     <MESSAGE value="-Changed up Homepage UI&#10;-Complete new Delivery From and display on homepage&#10;-ErrorMessage Display for form textfields&#10;-Display Orders Vertically&#10;-Added New classes, Pending,OrderCardUI,etc." />
     <MESSAGE value="-Changed up Homepage UI&#10;-Complete new Delivery From and display on homepage&#10;-ErrorMessage Display for form textfields&#10;-Display Orders Vertically&#10;-Added New classes, Pending,OrderCardUI,etc.&#10;-Navbar complete and pending toggles" />
     <MESSAGE value="-Toolbar changes according to page" />
-    <option name="LAST_COMMIT_MESSAGE" value="-Toolbar changes according to page" />
+    <MESSAGE value="struggling" />
+    <option name="LAST_COMMIT_MESSAGE" value="struggling" />
   </component>
 </project>
