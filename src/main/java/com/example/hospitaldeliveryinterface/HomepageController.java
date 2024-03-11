@@ -64,13 +64,15 @@ public class HomepageController {
 
     @FXML
     protected void onNewDelivery(ActionEvent event){
-
+        System.out.println("New Delivery Button Clicked");
         FXMLLoader fxmlLoader = new FXMLLoader(PharmaTracApp.class.getResource("CreateOrder.fxml"));
-        Stage stage = PharmaTracApp.getStage();
-        Scene scene = PharmaTracApp.getScene();
         try {
-            scene.setRoot(fxmlLoader.load());
-            stage.setTitle("PharmaTrac/New Delivery Form");
+            Scene scene = new Scene(fxmlLoader.load());
+            Stage newStage = new Stage();
+
+            newStage.setTitle("PharmaTrac/New Delivery Form");
+            newStage.setScene(scene);
+            newStage.show();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
