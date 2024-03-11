@@ -4,9 +4,12 @@ package com.example.hospitaldeliveryinterface;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.control.ToolBar;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -40,6 +43,8 @@ public class HomepageController {
     @FXML
     private Button pendingButton;
 
+    @FXML
+    private ToolBar bottomToolBar;
 
     @FXML
     private VBox settingNavbar;
@@ -47,8 +52,11 @@ public class HomepageController {
     @FXML
     private Button settingsButton;
 
+    @FXML
+    private BorderPane mainLayout;
+
     private boolean isToggleSettings;
-    public void initialize(){
+    public void initialize() throws IOException {
         isToggleSettings = false;
         settingNavbar.setPrefWidth(0);
        pendingToggle();
@@ -69,12 +77,16 @@ public class HomepageController {
     }
 
     @FXML
-    void onPendingClick(ActionEvent event) {
+    void onPendingClick(ActionEvent event) throws IOException {
+        System.out.println("Pending Button Clicked");
+        loadToolbar("PendingToolbar.fxml");
         pendingToggle();
     }
 
     @FXML
-    void onCompleteClick(ActionEvent event) {
+    void onCompleteClick(ActionEvent event) throws IOException {
+        System.out.println("Delivery Button Clicked");
+        loadToolbar("DeliveryToolbar.fxml");
 
         buttonToggle(completedButton);
         buttonNotToggle(pendingButton);
@@ -140,6 +152,26 @@ public class HomepageController {
                     System.out.println("Failed to find orderCard.fxml");
                 }
             }
+        }
+    }
+
+    /**
+     * @author Alec Muczysnki
+     * @param fxmlFile is the javafx design of the bottom toolbar
+     */
+    private void loadToolbar(String fxmlFile) {
+        try {
+            System.out.println("Loading toolbar: " + fxmlFile);
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(getClass().getResource(fxmlFile));
+            loader.setController(this);
+            ToolBar loadedToolbar = loader.load();
+
+            mainLayout.setBottom(loadedToolbar);
+            System.out.println("Successfully loaded toolbar: " + fxmlFile);
+        } catch (IOException e) {
+            System.err.println("Failed to load toolbar: " + fxmlFile);
+            e.printStackTrace();
         }
     }
 }
