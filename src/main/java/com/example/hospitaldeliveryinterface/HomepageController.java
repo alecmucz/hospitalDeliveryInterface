@@ -6,13 +6,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
-import javafx.scene.control.ToolBar;
-import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import java.io.IOException;
 import java.util.Queue;
@@ -20,19 +15,55 @@ import java.util.Queue;
 public class HomepageController {
 
     @FXML
-    private Button addNoteButton;
+    private Button deliverReturnBtn;
+
+    @FXML
+    private Button addNoteBtn;
+
+    @FXML
+    private TextArea addNoteText;
+
 
     @FXML
     private Button completedButton;
 
-    @FXML
-    private Button deliverPackageButton;
+
 
     @FXML
-    private Button editDeliveryButton;
+    private BorderPane deliveryFormPane;
+
+
 
     @FXML
-    private Button filterbtn;
+    private TextField doseAmountText;
+
+    @FXML
+    private TextField doseText;
+
+    @FXML
+    private Button editBtn;
+
+    @FXML
+    private Label errMessLabel;
+
+    @FXML
+    private MenuButton filterbtn;
+
+    @FXML
+    private Label deliveryFormLabel;
+
+    @FXML
+    private TextField firstnameText;
+
+    @FXML
+    private TextField lastnameText;
+
+    @FXML
+    private TextField locationText;
+
+
+    @FXML
+    private TextField medicationText;
 
     @FXML
     private Button newDeliveryButton;
@@ -44,73 +75,163 @@ public class HomepageController {
     private Button pendingButton;
 
     @FXML
-    private ToolBar bottomToolBar;
-
-    @FXML
     private VBox settingNavbar;
 
     @FXML
     private Button settingsButton;
 
-    @FXML
-    private BorderPane mainLayout;
-
+    //variables created
     private boolean isToggleSettings;
+    private boolean isNewDelivery;
+    private boolean isNewAddNote;
+    private boolean isEdit;
+    private boolean isDelivered;
+
+    private String currentPage;
+    private String selectedCardOrderNum;
+    private Node selectedCard;
+    TextField[] allInputs;
     public void initialize() throws IOException {
         isToggleSettings = false;
+        isNewDelivery = false;
+        isNewAddNote = false;
+        isEdit = false;
+        selectedCard = null;
+        selectedCardOrderNum = null;
+        isDelivered = false;
+
+        currentPage = "Pending";
+
+        toggleNewDelivery();
+        toggleAddNote();
+
         settingNavbar.setPrefWidth(0);
-       pendingToggle();
+        displayQueue();
+
+
+       //Stuff to handle new Delivery
+        errMessLabel.setText("");
+        allInputs = new TextField[]{
+                firstnameText,
+                lastnameText,
+                medicationText,
+                locationText,
+                doseAmountText,
+                doseText,
+        };
+
+
+        firstnameText.textProperty().addListener((observableValue, s, t1) -> {
+            if(!t1.isEmpty()){
+                defaultBorder(firstnameText);
+            }
+        });
+        lastnameText.textProperty().addListener((observableValue, s, t1) -> {
+            if(!t1.isEmpty()){
+                defaultBorder(lastnameText);
+            }
+        });
+        medicationText.textProperty().addListener((observableValue, s, t1) -> {
+            if(!t1.isEmpty()){
+                defaultBorder(medicationText);
+            }
+        });
+        locationText.textProperty().addListener((observableValue, s, t1) -> {
+            if(!t1.isEmpty()){
+                defaultBorder(locationText);
+            }
+        });
+        doseAmountText.textProperty().addListener((observableValue, s, t1) -> {
+            if(!t1.isEmpty()){
+                defaultBorder(doseAmountText);
+            }
+        });
+        doseText.textProperty().addListener((observableValue, s, t1) -> {
+            if(!t1.isEmpty()){
+                defaultBorder(doseText);
+            }
+        });
+
     }
 
     @FXML
-    protected void onNewDelivery(ActionEvent event){
-        System.out.println("New Delivery Button Clicked");
-        FXMLLoader fxmlLoader = new FXMLLoader(PharmaTracApp.class.getResource("CreateOrder.fxml"));
-        try {
-            Scene scene = new Scene(fxmlLoader.load());
-            Stage newStage = new Stage();
+    void onAddNote(ActionEvent event) {
 
-            newStage.setTitle("PharmaTrac/New Delivery Form");
-            newStage.setScene(scene);
-            newStage.show();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+        isNewAddNote = !isNewAddNote;
+        toggleAddNote();
+
+    }
+
+    public void toggleAddNote(){
+        if(isNewAddNote){
+            addNoteBtn.setText("Close Note");
+            addNoteText.setVisible(true);
+        }else{
+            addNoteBtn.setText("Add Note");
+            addNoteText.setVisible(false);
+        }
+    }
+
+
+    @FXML
+    void onClearText(ActionEvent event) {
+        clearText();
+    }
+    @FXML
+    void onSubmitOrder(ActionEvent event) {
+        boolean checkErrors = false;
+        for (TextField child: allInputs){
+            if(child.getText().isEmpty()){
+                errorBorder(child);
+                checkErrors = true;
+            }
+        };
+
+        if(checkErrors){
+            errMessLabel.setText("**Error: Please fill out all required fields.**");
+        }else{
+            try {
+                int numDose = Integer.parseInt(doseAmountText.getText());
+                String fullName = firstnameText.getText() + " " + lastnameText.getText();
+                DeliveryRequisition newOrder = new DeliveryRequisition(
+                        fullName,
+                        lastnameText.getText(),
+                        medicationText.getText(),
+                        doseText.getText(),
+                        numDose
+                );
+
+
+                Pending pendQueue = Pending.getInstance();
+                if(isEdit && selectedCardOrderNum != null){
+                    pendQueue.getRemoveOrderByOrderNumber(selectedCardOrderNum);
+                }
+                pendQueue.addOrders(newOrder);
+                displayQueue();
+                clearText();
+            }catch (NumberFormatException ex) {
+                errMessLabel.setText("**Error: The fields selected should be Numeric.**");
+                errorBorder(doseAmountText);
+            }
         }
     }
 
     @FXML
     void onPendingClick(ActionEvent event) throws IOException {
         System.out.println("Pending Button Clicked");
-        loadToolbar("PendingToolbar.fxml");
-        pendingToggle();
+        currentPage = "Pending";
+        displayQueue();
     }
 
     @FXML
     void onCompleteClick(ActionEvent event) throws IOException {
         System.out.println("Delivery Button Clicked");
-        loadToolbar("DeliveryToolbar.fxml");
+        currentPage = "Completed";
+        displayQueue();
 
-        buttonToggle(completedButton);
-        buttonNotToggle(pendingButton);
-
-
-        orderDisplayContainer.getChildren().clear();
-
-        Completed completeQueue = Completed.getInstance();
-        Queue<DeliveryRequisition> currentCompleted = completeQueue.getCompletedQueue();
-        if(!currentCompleted.isEmpty()){
-            for(DeliveryRequisition order: currentCompleted){
-                try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("orderCard.fxml"));
-                    GridPane orderTemplate = loader.load();
-                    OrderCardUIController controller = loader.getController();
-                    controller.updateOrderLabels(order);
-                    orderDisplayContainer.getChildren().add(orderTemplate);
-                } catch (IOException e) {
-                    System.out.println("Failed to find orderCard.fxml");
-                }
-            }
-        }
+        isEdit = false;
+        isNewDelivery = false;
+        toggleNewDelivery();
     }
 
     @FXML
@@ -126,54 +247,269 @@ public class HomepageController {
         isToggleSettings = !isToggleSettings;
     }
 
+    @FXML
+    protected void onNewDelivery(ActionEvent event){
+        isNewDelivery = !isNewDelivery;
+        isEdit = false;
+        isDelivered = false;
+        toggleNewDelivery();
+        selectOrder();
 
+    }
+    @FXML
+    void onDeliverReturn(ActionEvent event) {
+        isDelivered = !isDelivered;
+        isEdit = false;
+        toggleNewDelivery();
+        selectOrder();
+    }
+
+    @FXML
+    void onEditDelivery(ActionEvent event) {
+        isEdit = !isEdit;
+        isNewDelivery = false;
+        isDelivered = false;
+        toggleNewDelivery();
+        selectOrder();
+    }
+
+    public void toggleNewDelivery( ){
+
+        if(isDelivered){
+            buttonToggle(deliverReturnBtn);
+        }
+
+        if(!isDelivered){
+            buttonNotToggle(deliverReturnBtn);
+        }
+
+        if(isEdit){
+
+            editBtn.setText("Close Edit Delivery");
+            buttonToggle(editBtn);
+            buttonNotToggle(newDeliveryButton);
+        }
+
+        if(!isEdit || isDelivered){
+            selectedCard = null;
+            selectedCardOrderNum = null;
+            editBtn.setText("Edit Delivery");
+            buttonNotToggle(editBtn);
+        }
+
+        if(isNewDelivery){
+            selectedCard = null;
+            selectedCardOrderNum = null;
+            clearText();
+            deliveryFormLabel.setText("New Delivery Form");
+            newDeliveryButton.setText("Close New Delivery");
+            buttonToggle(newDeliveryButton);
+            buttonNotToggle(editBtn);
+        }
+
+        if(!isNewDelivery){
+            newDeliveryButton.setText("+ New Delivery");
+            buttonNotToggle(newDeliveryButton);
+        }
+
+        if(isEdit || isNewDelivery){
+            deliveryFormPane.setPrefWidth(320);
+            deliveryFormPane.setVisible(true);
+        }
+
+        if((isEdit && !isNewDelivery) || (!isEdit && !isNewDelivery)){
+            deliveryFormPane.setPrefWidth(0);
+            deliveryFormPane.setVisible(false);
+        }
+    }
     public void buttonToggle(Button button){
-        button.setStyle("-fx-border-color: black; -fx-background-color: white");
+        button.setStyle("-fx-border-color: white; -fx-background-color: #22aae1;");
     }
 
     public void buttonNotToggle(Button button){
-        button.setStyle("-fx-background-color: white");
+        button.setStyle("-fx-border-color: transparent; -fx-background-color: #22aae1;");
     }
 
-    public void pendingToggle(){
-        buttonToggle(pendingButton);
-        buttonNotToggle(completedButton);
+
+    public void errorBorder(TextField textField){
+        textField.setStyle("-fx-border-color: red;");
+    }
+    public void defaultBorder(TextField textfield){
+        textfield.setStyle("-fx-border-color: grey;");
+    }
+
+    public void displayQueue(){
 
         orderDisplayContainer.getChildren().clear();
-        Pending pendQueue = Pending.getInstance();
-        Queue<DeliveryRequisition> currentPending = pendQueue.getPendingQueue();
-        if(!currentPending.isEmpty()){
-            for(DeliveryRequisition order: currentPending){
+        Queue<DeliveryRequisition> currentQueue;
+        if(currentPage.equals("Completed")){
+            deliverReturnBtn.setText("Return to Pending");
+            buttonToggle(completedButton);
+            buttonNotToggle(pendingButton);
+            Completed completeQueue = Completed.getInstance();
+            currentQueue = completeQueue.getCompletedQueue();
+        }else{
+            deliverReturnBtn.setText("Deliver Package");
+            buttonToggle(pendingButton);
+            buttonNotToggle(completedButton);
+            Pending pendQueue = Pending.getInstance();
+            currentQueue = pendQueue.getPendingQueue();
+        }
+
+        if(!currentQueue.isEmpty()){
+
+            for(DeliveryRequisition order: currentQueue){
                 try {
                     FXMLLoader loader = new FXMLLoader(getClass().getResource("orderCard.fxml"));
                     GridPane orderTemplate = loader.load();
                     OrderCardUIController controller = loader.getController();
                     controller.updateOrderLabels(order);
                     orderDisplayContainer.getChildren().add(orderTemplate);
+
+                    //Checking child IDs
+                    for (Node childNode : orderTemplate.getChildren()) {
+                        if (childNode instanceof Label) {
+                            System.out.println("Current child of Order: " + childNode.getId());
+                        }
+                    }
+
                 } catch (IOException e) {
                     System.out.println("Failed to find orderCard.fxml");
                 }
             }
         }
+
+        selectOrder();
+
     }
 
-    /**
-     * @author Alec Muczysnki
-     * @param fxmlFile is the javafx design of the bottom toolbar
-     */
-    private void loadToolbar(String fxmlFile) {
-        try {
-            System.out.println("Loading toolbar: " + fxmlFile);
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource(fxmlFile));
-            loader.setController(this);
-            ToolBar loadedToolbar = loader.load();
+    public void selectOrder(){
+            for(Node node: orderDisplayContainer.getChildren()){
+                node.setOnMouseClicked(mouseEvent -> {
+                    if(isEdit || isDelivered){
 
-            mainLayout.setBottom(loadedToolbar);
-            System.out.println("Successfully loaded toolbar: " + fxmlFile);
-        } catch (IOException e) {
-            System.err.println("Failed to load toolbar: " + fxmlFile);
-            e.printStackTrace();
+                        if(node != selectedCard){
+                            if(isEdit){
+                                node.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: #ffbdbd");
+
+                            }
+                            if(isDelivered){
+                                node.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: #b2f18f");
+                            }
+                            if (node instanceof GridPane) {
+                                GridPane gridpane = (GridPane) node;
+
+                                for(Node childNode : gridpane.getChildren()){
+                                    if (childNode instanceof Label) {
+                                        Label label = (Label) childNode;
+                                        if ("orderNumDisplay".equals(label.getId())) {
+                                            String labelText  = label.getText().substring(1); // Remove the "#" symbol
+                                            selectedCardOrderNum = labelText;
+                                            System.out.println("ORDER NUMBER RETRIEVED: " + labelText);
+                                        }
+                                    }
+                                }
+                                if(isDelivered){
+                                    sendOrderToCompleted();
+                                }else{
+                                    openEditDelivery(gridpane);
+                                }
+                            }
+
+                        }
+
+                        if(selectedCard != null && selectedCard != node){
+                            selectedCard.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: transparent");
+                        }
+
+
+                        selectedCard = node;
+
+
+
+                    }
+
+
+                });
+            }
+
+            if(!isEdit){
+                for(Node node: orderDisplayContainer.getChildren()){
+                    node.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: transparent");
+                }
+            }
+    }
+
+    public void openEditDelivery(GridPane selectCard){
+        System.out.println("Edit Delivery is Open");
+        deliveryFormPane.setPrefWidth(320);
+        deliveryFormPane.setVisible(true);
+        deliveryFormLabel.setText("Edit Delivery Form");
+        clearText();
+
+        for(Node selectChild: selectCard.getChildren()){
+            if(selectChild instanceof Label){
+                setTextFieldFromLabel((Label)selectChild);
+            }
         }
+
     }
+
+    public void setTextFieldFromLabel(Label label){
+        if(label.getId() != null){
+            switch (label.getId()){
+                case "patientNameDisplay":
+                    String[] fullName = label.getText().split(" ");
+                    firstnameText.setText(fullName[0]);
+                    lastnameText.setText(fullName[1]);
+                    break;
+                case "locationDisplay":
+                    locationText.setText(label.getText());
+                    break;
+
+                case "medicationDisplay":
+                    medicationText.setText(label.getText());
+                    break;
+
+                case "doseDisplay":
+                    doseText.setText(label.getText());
+                    break;
+
+                case "doseQuantityDisplay":
+                    doseAmountText.setText(label.getText());
+                    break;
+                default:
+                    System.out.println("NO ID EXIST ON ORDERCARD");
+            }
+        }
+
+
+
+    }
+
+    public void clearText(){
+        for(TextField child: allInputs){
+            child.setText("");
+        }
+        addNoteText.setText("");
+        errMessLabel.setText("");
+    }
+
+
+    public void sendOrderToCompleted(){
+        Pending pendQueue = Pending.getInstance();
+        Completed  completedQueue = Completed.getInstance();
+        if(isDelivered && selectedCardOrderNum != null){
+            DeliveryRequisition toBeDelivered = pendQueue.getPendingOrderByOrderNumber(selectedCardOrderNum);
+            completedQueue.addOrders(toBeDelivered);
+            pendQueue.getRemoveOrderByOrderNumber(selectedCardOrderNum);
+            isDelivered = false;
+            toggleNewDelivery();
+            displayQueue();
+        }
+
+
+    }
+
+
 }

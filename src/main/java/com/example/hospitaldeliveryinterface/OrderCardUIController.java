@@ -33,7 +33,7 @@ public class OrderCardUIController {
     private GridPane orderTemplate;
 
     public void updateOrderLabels(DeliveryRequisition order){
-        orderNumDisplay.setText(order.getOrderNumberDisplay());
+        orderNumDisplay.setText("#"+order.getOrderNumberDisplay());
         patientNameDisplay.setText(order.getPatientName());
         locationDisplay.setText(order.getPatientLocation());
         medicationDisplay.setText(order.getMedication());
