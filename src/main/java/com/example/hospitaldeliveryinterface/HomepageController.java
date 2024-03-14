@@ -386,8 +386,15 @@ public class HomepageController {
     public void selectOrder(){
             for(Node node: orderDisplayContainer.getChildren()){
                 node.setOnMouseClicked(mouseEvent -> {
+                    if(selectedCard != null &&  selectedCard != node){
+                        selectedCard.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: transparent");
+                        selectedCard = null;
+                        isEdit = false;
+                        isDelivered = false;
+                        toggleNewDelivery();
+                    }
 
-                        if(node != selectedCard || selectedCard == null){
+                    if(selectedCard != node || selectedCard == null){
                             if (node instanceof GridPane) {
                                 GridPane gridpane = (GridPane) node;
                                 gridpane.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: #ffbdbd");
@@ -403,26 +410,16 @@ public class HomepageController {
                                     }
                                 }
                             }
-
-                        }
-
-                        if(selectedCard != null){
-                            selectedCard.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: transparent");
-                            selectedCard = null;
-                            isEdit = false;
-                            isDelivered = false;
-                            toggleNewDelivery();
-
-                        }
-
-
                         selectedCard = node;
 
+                    }else{
+                        selectedCard.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: transparent");
 
-
-
-
-
+                        selectedCard = null;
+                        isEdit = false;
+                        isDelivered = false;
+                        toggleNewDelivery();
+                    }
                 });
             }
 
