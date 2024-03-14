@@ -235,7 +235,7 @@ public class HomepageController {
     void onSettingClick(ActionEvent event) {
         if(!isToggleSettings){
             buttonToggle(settingsButton);
-            settingNavbar.setPrefWidth(137);
+            settingNavbar.setPrefWidth(161);
         }else{
             buttonNotToggle(settingsButton);
             settingNavbar.setPrefWidth(0);
@@ -412,9 +412,16 @@ public class HomepageController {
                             isEdit = false;
                             isDelivered = false;
                             toggleNewDelivery();
-                        }else{
-                            selectedCard = node;
+
                         }
+
+
+                        selectedCard = node;
+
+
+
+
+
 
                 });
             }

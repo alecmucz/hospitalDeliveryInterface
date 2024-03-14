@@ -13,6 +13,14 @@ public class DeliveryRequisition {
     private String numDoses;
     private String dateTime;
 
+    /*
+    Need to add:
+    - Deliveredby: tracks which staff member signed off of package
+    - CreatdeBy: tracks which staff created the delivery/order
+    -UpdateBy: tracks who update order if needed
+
+    */
+
 
     private  String orderNumberDisplay;
     private static int orderNumCount = 1;
