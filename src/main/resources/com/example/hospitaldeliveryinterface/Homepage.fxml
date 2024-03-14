@@ -284,14 +284,14 @@
                         </HBox>
                         <HBox prefHeight="32.0" prefWidth="289.0" spacing="10.0">
                            <children>
-                              <Label prefHeight="32.0" prefWidth="78.0" text="Dose" />
-                              <Label prefHeight="43.0" prefWidth="92.0" text="Dose Quantity" />
+                              <Label prefHeight="28.0" prefWidth="129.0" text="Dose" />
+                              <Label prefHeight="28.0" prefWidth="103.0" text="Number of Doses" />
                            </children>
                         </HBox>
                         <HBox prefHeight="9.0" prefWidth="292.0" spacing="34.0">
                            <children>
-                              <TextField fx:id="doseText" prefHeight="25.0" prefWidth="53.0" />
-                              <TextField fx:id="doseAmountText" prefHeight="25.0" prefWidth="58.0" />
+                              <TextField fx:id="doseText" prefHeight="25.0" prefWidth="103.0" />
+                              <TextField fx:id="doseAmountText" prefHeight="25.0" prefWidth="123.0" />
                            </children>
                         </HBox>
                         <Button fx:id="addNoteBtn" mnemonicParsing="false" onAction="#onAddNote" prefHeight="27.0" prefWidth="102.0" style="-fx-background-color: #22aae1;" text="Add Note" textFill="WHITE">

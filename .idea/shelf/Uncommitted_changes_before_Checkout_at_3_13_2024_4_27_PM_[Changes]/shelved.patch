@@ -1,0 +1,19 @@
+Index: src/main/java/module-info.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>module com.example.hospitaldeliveryinterface {\r\n    requires javafx.controls;\r\n    requires javafx.fxml;\r\n\r\n\r\n    opens com.example.hospitaldeliveryinterface to javafx.fxml;\r\n    exports com.example.hospitaldeliveryinterface;\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/main/java/module-info.java b/src/main/java/module-info.java
+--- a/src/main/java/module-info.java	
++++ b/src/main/java/module-info.java	
+@@ -1,7 +1,7 @@
+ module com.example.hospitaldeliveryinterface {
+     requires javafx.controls;
+     requires javafx.fxml;
+-
++    
+ 
+     opens com.example.hospitaldeliveryinterface to javafx.fxml;
+     exports com.example.hospitaldeliveryinterface;
