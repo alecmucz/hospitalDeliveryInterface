@@ -10,13 +10,14 @@ public class DeliveryRequisition {
     private String patientLocation; // floor and room number
     private String medication; // name and strength
     private String dose;
-    private int numDoses;
+    private String numDoses;
     private String dateTime;
+
 
     private  String orderNumberDisplay;
     private static int orderNumCount = 1;
 
-    public DeliveryRequisition(String patientName, String patientLocation, String medication, String dose, int numDoses) {
+    public DeliveryRequisition(String patientName, String patientLocation, String medication, String dose, String numDoses) {
         this.patientName = patientName;
         this.patientLocation = patientLocation;
         this.medication = medication;
@@ -37,7 +38,7 @@ public class DeliveryRequisition {
     public void setDose(String dose) {
         this.dose= dose;
     }
-    public void setNumDoses(int numDoses) {
+    public void setNumDoses(String numDoses) {
         this.numDoses = numDoses;
     }
     public String getPatientName(){
@@ -52,7 +53,7 @@ public class DeliveryRequisition {
     public String getDose() {
         return dose;
     }
-    public int getNumDoses() {
+    public String getNumDoses() {
         return numDoses;
     }
 
@@ -71,8 +72,7 @@ public class DeliveryRequisition {
         String dateString = currentTime.format(formatter);
         String counterString = String.format("%03d", orderNumCount);
         orderNumCount++;
-        String orderNumber = dateString + counterString;
-        return orderNumber;
+        return dateString + counterString;
     }
 
     public String currentDateTime(){

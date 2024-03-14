@@ -38,7 +38,7 @@ public class OrderCardUIController {
         locationDisplay.setText(order.getPatientLocation());
         medicationDisplay.setText(order.getMedication());
         doseDisplay.setText(order.getDose());
-        doseQuantityDisplay.setText(Integer.toString(order.getNumDoses()));
+        doseQuantityDisplay.setText(order.getNumDoses());
         dateDisplay.setText(order.getDateTime());
     }
 
