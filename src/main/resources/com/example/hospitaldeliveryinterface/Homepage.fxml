@@ -6,6 +6,7 @@
 <?import javafx.scene.control.CustomMenuItem?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
@@ -40,7 +41,7 @@
       </ToolBar>
    </bottom>
    <right>
-      <VBox fx:id="settingNavbar" alignment="TOP_RIGHT" prefHeight="431.0" prefWidth="136.0" style="-fx-background-color: #1678a8;" BorderPane.alignment="CENTER">
+      <VBox fx:id="settingNavbar" alignment="TOP_RIGHT" minWidth="-Infinity" prefHeight="548.0" prefWidth="187.0" style="-fx-background-color: #1678a8;" BorderPane.alignment="CENTER">
          <children>
             <Button alignment="CENTER" minWidth="0.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="219.0" style="-fx-background-color: transparent; -fx-border-color: transparent transparent white transparent; -fx-border-width: 0 0 3 0;" text="Button1" textFill="WHITE">
                <font>
@@ -56,34 +57,34 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Button>
-            <Button alignment="CENTER" layoutX="10.0" layoutY="101.0" minWidth="0.0" mnemonicParsing="false" onAction="#handleLoginButton" prefHeight="45.0" prefWidth="219.0" style="-fx-background-color: transparent; -fx-border-color: transparent transparent white transparent; -fx-border-width: 0 0 3 0;" text="Login" textFill="WHITE">
+            <Button fx:id="LoginButtonChange" alignment="CENTER" layoutX="10.0" layoutY="101.0" minWidth="0.0" mnemonicParsing="false" onAction="#handleLoginButtonChange" prefHeight="45.0" prefWidth="219.0" style="-fx-background-color: transparent; -fx-border-color: transparent transparent white transparent; -fx-border-width: 0 0 3 0;" text="Login" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Button>
-            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+            <VBox fx:id="LoginVbox" alignment="TOP_CENTER" visible="false">
                <children>
-                  <Label alignment="CENTER" text="Username" textFill="WHITE">
+                  <Label fx:id="us" alignment="CENTER" minWidth="-Infinity" text="Username" textFill="WHITE">
                      <font>
                         <Font name="Tahoma Bold" size="18.0" />
                      </font>
                   </Label>
-                  <TextField>
+                  <TextField fx:id="textFieldUsername" minWidth="-Infinity">
                      <VBox.margin>
                         <Insets bottom="10.0" />
                      </VBox.margin>
                   </TextField>
-                  <Label alignment="CENTER" text="Password" textFill="WHITE">
+                  <Label alignment="CENTER" minWidth="-Infinity" text="Password" textFill="WHITE">
                      <font>
                         <Font name="Tahoma Bold" size="18.0" />
                      </font>
                   </Label>
-                  <TextField>
+                  <PasswordField fx:id="textFieldPassword">
                      <VBox.margin>
                         <Insets bottom="10.0" />
                      </VBox.margin>
-                  </TextField>
-                  <Button fx:id="pendingButton1" alignment="CENTER" mnemonicParsing="false" onAction="#onPendingClick" prefHeight="39.0" prefWidth="104.0" style="-fx-background-color: #22aae1; -fx-background-radius: 90;" text="Login" textFill="WHITE">
+                  </PasswordField>
+                  <Button fx:id="LoginButton" alignment="CENTER" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleLoginButton" style="-fx-background-color: #22aae1; -fx-background-radius: 90;" text="Login" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -96,15 +97,15 @@
                   <Insets />
                </VBox.margin>
             </VBox>
-            <Pane prefHeight="200.0" prefWidth="200.0" />
-            <VBox alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+            <Pane minWidth="-Infinity" prefHeight="200.0" />
+            <VBox fx:id="vboxSignedIn" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" visible="false">
                <children>
-                  <Label text="Signed in as:" textFill="#12dd4c">
+                  <Label minWidth="-Infinity" text="Signed in as:" textFill="#12dd4c">
                      <font>
                         <Font name="Tahoma Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="usernameTextfield" text="Username" textFill="#12dd4c">
+                  <Label fx:id="usernameLabel" minWidth="-Infinity" text="Username" textFill="#12dd4c">
                      <font>
                         <Font name="Tahoma Bold" size="14.0" />
                      </font>

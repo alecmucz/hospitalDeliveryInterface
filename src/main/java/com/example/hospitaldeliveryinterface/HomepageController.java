@@ -10,9 +10,29 @@ import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.Queue;
 
 public class HomepageController {
+    @FXML
+    private VBox vboxSignedIn;
+
+    @FXML
+    private Button LoginButton;
+
+    @FXML
+    private Button LoginButtonChange;
+
+    @FXML
+    private TextField textFieldUsername;
+
+    @FXML
+    private TextField textFieldPassword;
+
+    @FXML
+    private VBox LoginVbox;
+
+
     @FXML
     private Label usernameLabel;
 
@@ -523,6 +543,7 @@ public class HomepageController {
 
     }
 
+    /*
     public void handleLoginButton() {
         FXMLLoader fxmlLoader = new FXMLLoader(PharmaTracApp.class.getResource("Login.fxml"));
         Stage stage = PharmaTracApp.getStage();
@@ -536,6 +557,75 @@ public class HomepageController {
         }
 
     }
+
+     */
+
+    public static boolean textFieldCheck(String username,String password) {
+        boolean checker = false;
+        if (username.length() == 0 || password.length() == 0) {
+            checker = true;
+        }
+        if (!(username.matches("S\\d{8}") && password.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$"))) {
+
+            checker = true;
+        }
+        return checker;
+
+    }
+    public void showDialog () {
+        Alert alert = new Alert(Alert.AlertType.WARNING);
+        alert.setHeaderText("Invalid input");
+        alert.setTitle("Warning");
+        alert.setContentText("Username or password is incorrect");
+        Optional<ButtonType> result = alert.showAndWait();
+    }
+
+
+    public void showDialogCorrect () {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText("Correct Input");
+        alert.setTitle("Logged in");
+        alert.setContentText("You are signed in");
+        Optional<ButtonType> result = alert.showAndWait();
+    }
+    public void showDialogSignOut() {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("Logged out");
+        alert.setTitle("Signed out");
+        alert.setContentText("You are signing out");
+        Optional<ButtonType> result = alert.showAndWait();
+    }
+
+    @FXML
+    void handleLoginButtonChange() {
+        if (LoginButtonChange.getText().equals("Login")) {
+            LoginVbox.setVisible(true);
+        }
+        else if (LoginButtonChange.getText().equals("Sign out")) {
+            showDialogSignOut();
+            LoginButtonChange.setText("Login");
+            LoginVbox.setVisible(true);
+            vboxSignedIn.setVisible(false);
+        }
+    }
+    @FXML
+    void handleLoginButton() {
+
+            if (textFieldCheck(textFieldUsername.getText(), textFieldPassword.getText()) == false) {
+                showDialogCorrect();
+                LoginVbox.setVisible(false);
+                usernameLabel.setText(String.valueOf(textFieldUsername.getText()));
+                vboxSignedIn.setVisible(true);
+                LoginButtonChange.setText("Sign out");
+            } else{
+                showDialog();
+            }
+            textFieldUsername.clear();
+            textFieldPassword.clear();
+
+    }
+
+
 
 
 }
