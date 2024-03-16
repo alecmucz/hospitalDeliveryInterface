@@ -10,6 +10,7 @@ module com.example.hospitaldeliveryinterface {
     requires google.cloud.core;
 
 
+
     opens com.example.hospitaldeliveryinterface to javafx.fxml;
     exports com.example.hospitaldeliveryinterface;
 }

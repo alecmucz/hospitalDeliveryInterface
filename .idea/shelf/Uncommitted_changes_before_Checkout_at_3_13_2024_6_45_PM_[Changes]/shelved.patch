@@ -1,0 +1,52 @@
+Index: src/main/resources/com/example/hospitaldeliveryinterface/Login.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n<?import javafx.scene.control.Button?>\r\n<?import javafx.scene.control.Label?>\r\n<?import javafx.scene.control.TextField?>\r\n<?import javafx.scene.image.Image?>\r\n<?import javafx.scene.image.ImageView?>\r\n<?import javafx.scene.layout.AnchorPane?>\r\n<?import javafx.scene.text.Font?>\r\n\r\n<AnchorPane prefHeight=\"400.0\" prefWidth=\"600.0\" xmlns=\"http://javafx.com/javafx/19\" xmlns:fx=\"http://javafx.com/fxml/1\" fx:controller=\"com.example.hospitaldeliveryinterface.LoginController\">\r\n   <children>\r\n      <ImageView fitHeight=\"682.0\" fitWidth=\"1100.0\">\r\n         <image>\r\n            <Image url=\"@../../../../../../../LogIn/src/main/resources/com/example/login/LogIn.jpg\" />\r\n         </image>\r\n      </ImageView>\r\n      <AnchorPane layoutX=\"350.0\" layoutY=\"151.0\" prefHeight=\"386.0\" prefWidth=\"410.0\" style=\"-fx-background-color: #212121;\">\r\n         <children>\r\n            <Label layoutX=\"155.0\" layoutY=\"41.0\" text=\"Login\" textFill=\"WHITE\">\r\n               <font>\r\n                  <Font name=\"Tahoma Bold\" size=\"36.0\" />\r\n               </font>\r\n            </Label>\r\n            <AnchorPane layoutX=\"170.0\" layoutY=\"94.0\" prefHeight=\"5.0\" prefWidth=\"71.0\" style=\"-fx-background-color: #76ff03;\" />\r\n            <TextField fx:id=\"textFieldUsername\" layoutX=\"110.0\" layoutY=\"168.0\" prefHeight=\"25.0\" prefWidth=\"190.0\" promptText=\"Username\" />\r\n            <TextField fx:id=\"textFieldPassword\" layoutX=\"111.0\" layoutY=\"236.0\" prefHeight=\"25.0\" prefWidth=\"190.0\" promptText=\"Password\" />\r\n            <Button fx:id=\"LoginButton\" layoutX=\"83.0\" layoutY=\"291.0\" mnemonicParsing=\"false\" onAction=\"#handleLoginButton\" prefHeight=\"46.0\" prefWidth=\"245.0\" style=\"-fx-background-color: #76ff03; -fx-background-radius: 90;\" text=\"Login\" textFill=\"WHITE\">\r\n               <font>\r\n                  <Font name=\"Tahoma\" size=\"14.0\" />\r\n               </font>\r\n            </Button>\r\n            <ImageView fitHeight=\"38.0\" fitWidth=\"33.0\" layoutX=\"56.0\" layoutY=\"162.0\">\r\n               <image>\r\n                  <Image url=\"@../../../../../../../LogIn/src/main/resources/com/example/login/username.png\" />\r\n               </image>\r\n            </ImageView>\r\n            <ImageView fitHeight=\"46.0\" fitWidth=\"33.0\" layoutX=\"50.0\" layoutY=\"226.0\">\r\n               <image>\r\n                  <Image url=\"@../../../../../../../LogIn/src/main/resources/com/example/login/password.png\" />\r\n               </image>\r\n            </ImageView>\r\n         </children>\r\n      </AnchorPane>\r\n   </children>\r\n</AnchorPane>\r\n
+===================================================================
+diff --git a/src/main/resources/com/example/hospitaldeliveryinterface/Login.fxml b/src/main/resources/com/example/hospitaldeliveryinterface/Login.fxml
+--- a/src/main/resources/com/example/hospitaldeliveryinterface/Login.fxml	
++++ b/src/main/resources/com/example/hospitaldeliveryinterface/Login.fxml	
+@@ -8,34 +8,29 @@
+ <?import javafx.scene.layout.AnchorPane?>
+ <?import javafx.scene.text.Font?>
+ 
+-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hospitaldeliveryinterface.LoginController">
++<AnchorPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+-      <ImageView fitHeight="682.0" fitWidth="1100.0">
+-         <image>
+-            <Image url="@../../../../../../../LogIn/src/main/resources/com/example/login/LogIn.jpg" />
+-         </image>
+-      </ImageView>
+-      <AnchorPane layoutX="350.0" layoutY="151.0" prefHeight="386.0" prefWidth="410.0" style="-fx-background-color: #212121;">
++      <AnchorPane prefHeight="537.0" prefWidth="760.0" style="-fx-background-color: #212121;">
+          <children>
+-            <Label layoutX="155.0" layoutY="41.0" text="Login" textFill="WHITE">
++            <Label layoutX="330.0" layoutY="76.0" text="Login" textFill="WHITE">
+                <font>
+                   <Font name="Tahoma Bold" size="36.0" />
+                </font>
+             </Label>
+-            <AnchorPane layoutX="170.0" layoutY="94.0" prefHeight="5.0" prefWidth="71.0" style="-fx-background-color: #76ff03;" />
+-            <TextField fx:id="textFieldUsername" layoutX="110.0" layoutY="168.0" prefHeight="25.0" prefWidth="190.0" promptText="Username" />
+-            <TextField fx:id="textFieldPassword" layoutX="111.0" layoutY="236.0" prefHeight="25.0" prefWidth="190.0" promptText="Password" />
+-            <Button fx:id="LoginButton" layoutX="83.0" layoutY="291.0" mnemonicParsing="false" onAction="#handleLoginButton" prefHeight="46.0" prefWidth="245.0" style="-fx-background-color: #76ff03; -fx-background-radius: 90;" text="Login" textFill="WHITE">
++            <AnchorPane layoutX="345.0" layoutY="129.0" prefHeight="5.0" prefWidth="71.0" style="-fx-background-color: #76ff03;" />
++            <TextField fx:id="textFieldUsername" layoutX="276.0" layoutY="169.0" prefHeight="25.0" prefWidth="190.0" promptText="Username" />
++            <TextField fx:id="textFieldPassword" layoutX="276.0" layoutY="237.0" prefHeight="25.0" prefWidth="190.0" promptText="Password" />
++            <Button fx:id="LoginButton" layoutX="249.0" layoutY="293.0" mnemonicParsing="false" onAction="#handleLoginButton" prefHeight="46.0" prefWidth="245.0" style="-fx-background-color: #76ff03; -fx-background-radius: 90;" text="Login" textFill="WHITE">
+                <font>
+                   <Font name="Tahoma" size="14.0" />
+                </font>
+             </Button>
+-            <ImageView fitHeight="38.0" fitWidth="33.0" layoutX="56.0" layoutY="162.0">
++            <ImageView fitHeight="38.0" fitWidth="33.0" layoutX="216.0" layoutY="163.0">
+                <image>
+                   <Image url="@../../../../../../../LogIn/src/main/resources/com/example/login/username.png" />
+                </image>
+             </ImageView>
+-            <ImageView fitHeight="46.0" fitWidth="33.0" layoutX="50.0" layoutY="226.0">
++            <ImageView fitHeight="46.0" fitWidth="33.0" layoutX="216.0" layoutY="227.0">
+                <image>
+                   <Image url="@../../../../../../../LogIn/src/main/resources/com/example/login/password.png" />
+                </image>

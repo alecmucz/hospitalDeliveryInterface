@@ -1,13 +1,19 @@
 package com.example.hospitaldeliveryinterface;
 
+import com.google.firebase.database.*;
+import com.google.firebase.remoteconfig.User;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.TextField;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.UserRecord;
 
 import java.util.Optional;
+
 
 public class LoginController {
 
@@ -19,6 +25,8 @@ public class LoginController {
 
     @FXML
     private TextField textFieldPassword;
+
+
 
     //this method checks if the parameters are empty, if they are checker is turned on becoming true
     //if it passes the first test it checks if username and password matches the specified requirements, if they don't match checker is turned on becoming true
@@ -51,6 +59,7 @@ public class LoginController {
         alert.setContentText("next page");
         Optional<ButtonType> result = alert.showAndWait();
     }
+
     @FXML
     void handleLoginButton() {
             if (textFieldCheck(textFieldUsername.getText(), textFieldPassword.getText()) == false) {
@@ -59,6 +68,8 @@ public class LoginController {
                 showDialog();
             }
         }
+
+
 
 
 

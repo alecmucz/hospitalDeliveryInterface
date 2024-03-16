@@ -1,0 +1,146 @@
+Index: src/main/java/com/example/hospitaldeliveryinterface/LoginController.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.hospitaldeliveryinterface;\r\n\r\nimport javafx.event.ActionEvent;\r\nimport javafx.fxml.FXML;\r\nimport javafx.scene.control.Alert;\r\nimport javafx.scene.control.Button;\r\nimport javafx.scene.control.ButtonType;\r\nimport javafx.scene.control.TextField;\r\n\r\nimport java.util.Optional;\r\n\r\npublic class LoginController {\r\n\r\n    @FXML\r\n    private Button LoginButton;\r\n\r\n    @FXML\r\n    private TextField textFieldUsername;\r\n\r\n    @FXML\r\n    private TextField textFieldPassword;\r\n\r\n    //this method checks if the parameters are empty, if they are checker is turned on becoming true\r\n    //if it passes the first test it checks if username and password matches the specified requirements, if they don't match checker is turned on becoming true\r\n    //if it passes all the test then it stays turned off\r\n    public static boolean textFieldCheck(String username,String password) {\r\n        boolean checker = false;\r\n        if (username.length() == 0 || password.length() == 0) {\r\n            checker = true;\r\n        }\r\n        if (!(username.matches(\"S\\\\d{8}\") && password.matches(\"^(?=.*[a-z])(?=.*[A-Z])(?=.*\\\\d)(?=.*[@$!%*?&])[A-Za-z\\\\d@$!%*?&]{8,}$\"))) {\r\n\r\n            checker = true;\r\n        }\r\n        return checker;\r\n\r\n    }\r\n    public void showDialog () {\r\n        Alert alert = new Alert(Alert.AlertType.WARNING);\r\n        alert.setHeaderText(\"Invalid input\");\r\n        alert.setTitle(\"Warning\");\r\n        alert.setContentText(\"Username or password is incorrect\");\r\n        Optional<ButtonType> result = alert.showAndWait();\r\n    }\r\n\r\n\r\n    public void showDialogCorrect () {\r\n        Alert alert = new Alert(Alert.AlertType.WARNING);\r\n        alert.setHeaderText(\"correct input\");\r\n        alert.setTitle(\"Warning\");\r\n        alert.setContentText(\"next page\");\r\n        Optional<ButtonType> result = alert.showAndWait();\r\n    }\r\n    @FXML\r\n    void handleLoginButton() {\r\n            if (textFieldCheck(textFieldUsername.getText(), textFieldPassword.getText()) == false) {\r\n                showDialogCorrect();\r\n            } else {\r\n                showDialog();\r\n            }\r\n        }\r\n\r\n\r\n\r\n\r\n\r\n\r\n}
+===================================================================
+diff --git a/src/main/java/com/example/hospitaldeliveryinterface/LoginController.java b/src/main/java/com/example/hospitaldeliveryinterface/LoginController.java
+--- a/src/main/java/com/example/hospitaldeliveryinterface/LoginController.java	
++++ b/src/main/java/com/example/hospitaldeliveryinterface/LoginController.java	
+@@ -14,12 +14,13 @@
+     @FXML
+     private Button LoginButton;
+ 
+-    @FXML
+-    private TextField textFieldUsername;
+-
+     @FXML
+     private TextField textFieldPassword;
+ 
++    @FXML
++    private TextField textFieldUsername;
++
++
+     //this method checks if the parameters are empty, if they are checker is turned on becoming true
+     //if it passes the first test it checks if username and password matches the specified requirements, if they don't match checker is turned on becoming true
+     //if it passes all the test then it stays turned off
+@@ -52,17 +53,21 @@
+         Optional<ButtonType> result = alert.showAndWait();
+     }
+     @FXML
+-    void handleLoginButton() {
+-            if (textFieldCheck(textFieldUsername.getText(), textFieldPassword.getText()) == false) {
+-                showDialogCorrect();
+-            } else {
+-                showDialog();
+-            }
+-        }
++    void handleLoginButton(ActionEvent event) {
++        if (textFieldCheck(textFieldUsername.getText(), textFieldPassword.getText()) == false) {
++            showDialogCorrect();
++        } else {
++            showDialog();
++        }
++    }
+ 
+ 
+ 
+ 
+ 
+ 
++
++
++
++
+ }
+\ No newline at end of file
+Index: src/main/java/com/example/hospitaldeliveryinterface/Login.java
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>package com.example.hospitaldeliveryinterface;\r\n\r\npublic class Login {\r\n\r\n    private String username;\r\n    private String password;\r\n\r\n    public Login(String username, String password) {\r\n        this.username = username;\r\n        this.password = password;\r\n    }\r\n\r\n    public String getUsername() {\r\n        return username;\r\n    }\r\n\r\n    public void setUsername(String username) {\r\n        this.username = username;\r\n    }\r\n\r\n    public String getPassword() {\r\n        return password;\r\n    }\r\n\r\n    public void setPassword(String password) {\r\n        this.password = password;\r\n    }\r\n\r\n    public Login(boolean login) {\r\n        Login = login;\r\n    }\r\n\r\n    private boolean Login = false;\r\n\r\n    public boolean isLogin() {\r\n        return Login;\r\n    }\r\n\r\n    public void setLogin(boolean login) {\r\n        Login = login;\r\n    }\r\n}\r\n
+===================================================================
+diff --git a/src/main/java/com/example/hospitaldeliveryinterface/Login.java b/src/main/java/com/example/hospitaldeliveryinterface/Login.java
+--- a/src/main/java/com/example/hospitaldeliveryinterface/Login.java	
++++ b/src/main/java/com/example/hospitaldeliveryinterface/Login.java	
+@@ -5,6 +5,23 @@
+     private String username;
+     private String password;
+ 
++    private static String currentLogin;
++
++    public Login(String currentLogin) {
++        this.currentLogin = currentLogin;
++    }
++
++
++
++    public String getCurrentLogin() {
++        return currentLogin;
++    }
++
++    public void setCurrentLogin(String currentLogin) {
++        this.currentLogin = currentLogin;
++    }
++
++
+     public Login(String username, String password) {
+         this.username = username;
+         this.password = password;
+@@ -39,4 +56,4 @@
+     public void setLogin(boolean login) {
+         Login = login;
+     }
+-}
++}
+\ No newline at end of file
+Index: src/main/resources/com/example/hospitaldeliveryinterface/Login.fxml
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+><?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n<?import javafx.scene.control.Button?>\r\n<?import javafx.scene.control.Label?>\r\n<?import javafx.scene.control.TextField?>\r\n<?import javafx.scene.image.Image?>\r\n<?import javafx.scene.image.ImageView?>\r\n<?import javafx.scene.layout.AnchorPane?>\r\n<?import javafx.scene.text.Font?>\r\n\r\n<AnchorPane prefHeight=\"400.0\" prefWidth=\"600.0\" xmlns=\"http://javafx.com/javafx/19\" xmlns:fx=\"http://javafx.com/fxml/1\" fx:controller=\"com.example.hospitaldeliveryinterface.LoginController\">\r\n   <children>\r\n      <ImageView fitHeight=\"682.0\" fitWidth=\"1100.0\">\r\n         <image>\r\n            <Image url=\"@../../../../../../../LogIn/src/main/resources/com/example/login/LogIn.jpg\" />\r\n         </image>\r\n      </ImageView>\r\n      <AnchorPane layoutX=\"350.0\" layoutY=\"151.0\" prefHeight=\"386.0\" prefWidth=\"410.0\" style=\"-fx-background-color: #212121;\">\r\n         <children>\r\n            <Label layoutX=\"155.0\" layoutY=\"41.0\" text=\"Login\" textFill=\"WHITE\">\r\n               <font>\r\n                  <Font name=\"Tahoma Bold\" size=\"36.0\" />\r\n               </font>\r\n            </Label>\r\n            <AnchorPane layoutX=\"170.0\" layoutY=\"94.0\" prefHeight=\"5.0\" prefWidth=\"71.0\" style=\"-fx-background-color: #76ff03;\" />\r\n            <TextField fx:id=\"textFieldUsername\" layoutX=\"110.0\" layoutY=\"168.0\" prefHeight=\"25.0\" prefWidth=\"190.0\" promptText=\"Username\" />\r\n            <TextField fx:id=\"textFieldPassword\" layoutX=\"111.0\" layoutY=\"236.0\" prefHeight=\"25.0\" prefWidth=\"190.0\" promptText=\"Password\" />\r\n            <Button fx:id=\"LoginButton\" layoutX=\"83.0\" layoutY=\"291.0\" mnemonicParsing=\"false\" onAction=\"#handleLoginButton\" prefHeight=\"46.0\" prefWidth=\"245.0\" style=\"-fx-background-color: #76ff03; -fx-background-radius: 90;\" text=\"Login\" textFill=\"WHITE\">\r\n               <font>\r\n                  <Font name=\"Tahoma\" size=\"14.0\" />\r\n               </font>\r\n            </Button>\r\n            <ImageView fitHeight=\"38.0\" fitWidth=\"33.0\" layoutX=\"56.0\" layoutY=\"162.0\">\r\n               <image>\r\n                  <Image url=\"@../../../../../../../LogIn/src/main/resources/com/example/login/username.png\" />\r\n               </image>\r\n            </ImageView>\r\n            <ImageView fitHeight=\"46.0\" fitWidth=\"33.0\" layoutX=\"50.0\" layoutY=\"226.0\">\r\n               <image>\r\n                  <Image url=\"@../../../../../../../LogIn/src/main/resources/com/example/login/password.png\" />\r\n               </image>\r\n            </ImageView>\r\n         </children>\r\n      </AnchorPane>\r\n   </children>\r\n</AnchorPane>\r\n
+===================================================================
+diff --git a/src/main/resources/com/example/hospitaldeliveryinterface/Login.fxml b/src/main/resources/com/example/hospitaldeliveryinterface/Login.fxml
+--- a/src/main/resources/com/example/hospitaldeliveryinterface/Login.fxml	
++++ b/src/main/resources/com/example/hospitaldeliveryinterface/Login.fxml	
+@@ -8,34 +8,29 @@
+ <?import javafx.scene.layout.AnchorPane?>
+ <?import javafx.scene.text.Font?>
+ 
+-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hospitaldeliveryinterface.LoginController">
++<AnchorPane xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+-      <ImageView fitHeight="682.0" fitWidth="1100.0">
+-         <image>
+-            <Image url="@../../../../../../../LogIn/src/main/resources/com/example/login/LogIn.jpg" />
+-         </image>
+-      </ImageView>
+-      <AnchorPane layoutX="350.0" layoutY="151.0" prefHeight="386.0" prefWidth="410.0" style="-fx-background-color: #212121;">
++      <AnchorPane prefHeight="537.0" prefWidth="760.0" style="-fx-background-color: #212121;">
+          <children>
+-            <Label layoutX="155.0" layoutY="41.0" text="Login" textFill="WHITE">
++            <Label layoutX="330.0" layoutY="76.0" text="Login" textFill="WHITE">
+                <font>
+                   <Font name="Tahoma Bold" size="36.0" />
+                </font>
+             </Label>
+-            <AnchorPane layoutX="170.0" layoutY="94.0" prefHeight="5.0" prefWidth="71.0" style="-fx-background-color: #76ff03;" />
+-            <TextField fx:id="textFieldUsername" layoutX="110.0" layoutY="168.0" prefHeight="25.0" prefWidth="190.0" promptText="Username" />
+-            <TextField fx:id="textFieldPassword" layoutX="111.0" layoutY="236.0" prefHeight="25.0" prefWidth="190.0" promptText="Password" />
+-            <Button fx:id="LoginButton" layoutX="83.0" layoutY="291.0" mnemonicParsing="false" onAction="#handleLoginButton" prefHeight="46.0" prefWidth="245.0" style="-fx-background-color: #76ff03; -fx-background-radius: 90;" text="Login" textFill="WHITE">
++            <AnchorPane layoutX="345.0" layoutY="129.0" prefHeight="5.0" prefWidth="71.0" style="-fx-background-color: #76ff03;" />
++            <TextField fx:id="textFieldUsername" layoutX="276.0" layoutY="169.0" prefHeight="25.0" prefWidth="190.0" promptText="Username" />
++            <TextField fx:id="textFieldPassword" layoutX="276.0" layoutY="237.0" prefHeight="25.0" prefWidth="190.0" promptText="Password" />
++            <Button fx:id="LoginButton" layoutX="249.0" layoutY="293.0" mnemonicParsing="false" onAction="#handleLoginButton" prefHeight="46.0" prefWidth="245.0" style="-fx-background-color: #76ff03; -fx-background-radius: 90;" text="Login" textFill="WHITE">
+                <font>
+                   <Font name="Tahoma" size="14.0" />
+                </font>
+             </Button>
+-            <ImageView fitHeight="38.0" fitWidth="33.0" layoutX="56.0" layoutY="162.0">
++            <ImageView fitHeight="38.0" fitWidth="33.0" layoutX="216.0" layoutY="163.0">
+                <image>
+                   <Image url="@../../../../../../../LogIn/src/main/resources/com/example/login/username.png" />
+                </image>
+             </ImageView>
+-            <ImageView fitHeight="46.0" fitWidth="33.0" layoutX="50.0" layoutY="226.0">
++            <ImageView fitHeight="46.0" fitWidth="33.0" layoutX="216.0" layoutY="227.0">
+                <image>
+                   <Image url="@../../../../../../../LogIn/src/main/resources/com/example/login/password.png" />
+                </image>

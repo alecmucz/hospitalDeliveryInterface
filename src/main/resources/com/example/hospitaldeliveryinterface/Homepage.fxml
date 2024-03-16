@@ -6,19 +6,18 @@
 <?import javafx.scene.control.CustomMenuItem?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="mainLayout" prefHeight="673.0" prefWidth="1030.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hospitaldeliveryinterface.HomepageController">
+<BorderPane fx:id="mainLayout" prefHeight="678.0" prefWidth="885.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hospitaldeliveryinterface.HomepageController">
    <bottom>
       <ToolBar fx:id="bottomToolBar" prefHeight="10.0" prefWidth="819.0" style="-fx-background-color: #22aae1; -fx-border-color: #1e90f5 transparent transparent transparent; -fx-border-width: 3 0 0 0;" BorderPane.alignment="CENTER">
         <items>
@@ -42,7 +41,7 @@
       </ToolBar>
    </bottom>
    <right>
-      <VBox fx:id="settingNavbar" alignment="TOP_RIGHT" prefHeight="543.0" prefWidth="161.0" style="-fx-background-color: #1678a8;" BorderPane.alignment="CENTER">
+      <VBox fx:id="settingNavbar" alignment="TOP_RIGHT" minWidth="-Infinity" prefHeight="548.0" prefWidth="187.0" style="-fx-background-color: #1678a8;" BorderPane.alignment="CENTER">
          <children>
             <Button alignment="CENTER" minWidth="0.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="219.0" style="-fx-background-color: transparent; -fx-border-color: transparent transparent white transparent; -fx-border-width: 0 0 3 0;" text="Button1" textFill="WHITE">
                <font>
@@ -58,27 +57,77 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Button>
-            <Button alignment="CENTER" layoutX="10.0" layoutY="101.0" minWidth="0.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="219.0" style="-fx-background-color: transparent; -fx-border-color: transparent transparent white transparent; -fx-border-width: 0 0 3 0;" text="Button1" textFill="WHITE">
+            <Button fx:id="LoginButtonChange" alignment="CENTER" layoutX="10.0" layoutY="101.0" minWidth="0.0" mnemonicParsing="false" onAction="#handleLoginButtonChange" prefHeight="45.0" prefWidth="219.0" style="-fx-background-color: transparent; -fx-border-color: transparent transparent white transparent; -fx-border-width: 0 0 3 0;" text="Login" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>
             </Button>
+            <VBox fx:id="LoginVbox" alignment="TOP_CENTER" visible="false">
+               <children>
+                  <Label fx:id="us" alignment="CENTER" minWidth="-Infinity" text="Username" textFill="WHITE">
+                     <font>
+                        <Font name="Tahoma Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="textFieldUsername" minWidth="-Infinity">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </TextField>
+                  <Label alignment="CENTER" minWidth="-Infinity" text="Password" textFill="WHITE">
+                     <font>
+                        <Font name="Tahoma Bold" size="18.0" />
+                     </font>
+                  </Label>
+                  <PasswordField fx:id="textFieldPassword">
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
+                  </PasswordField>
+                  <Button fx:id="LoginButton" alignment="CENTER" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleLoginButton" style="-fx-background-color: #22aae1; -fx-background-radius: 90;" text="Login" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
+               </children>
+               <padding>
+                  <Insets left="10.0" right="10.0" />
+               </padding>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </VBox>
+            <Pane minWidth="-Infinity" prefHeight="200.0" />
+            <VBox fx:id="vboxSignedIn" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" visible="false">
+               <children>
+                  <Label minWidth="-Infinity" text="Signed in as:" textFill="#12dd4c">
+                     <font>
+                        <Font name="Tahoma Bold" size="14.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="usernameLabel" minWidth="-Infinity" text="Username" textFill="#12dd4c">
+                     <font>
+                        <Font name="Tahoma Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </VBox>
          </children>
       </VBox>
    </right>
    <top>
-      <HBox alignment="CENTER" prefHeight="72.0" prefWidth="759.0" style="-fx-background-color: #22aae1; -fx-border-color: transparent transparent  #1e90f5 transparent; -fx-border-width: 0 0 3 0;" BorderPane.alignment="CENTER">
+      <HBox prefHeight="72.0" prefWidth="759.0" style="-fx-background-color: #22aae1; -fx-border-color: transparent transparent  #1e90f5 transparent; -fx-border-width: 0 0 3 0;" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="55.0" fitWidth="183.0" nodeOrientation="INHERIT" pickOnBounds="true">
-               <image>
-                  <Image url="@PharmaTracLogo.png" />
-               </image>
-               <HBox.margin>
-                  <Insets left="5.0" />
-               </HBox.margin>
-            </ImageView>
             <HBox alignment="CENTER_LEFT" prefHeight="72.0" prefWidth="501.0">
                <children>
+                  <Label prefHeight="47.0" prefWidth="89.0" text="PharmaTrac" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                     <HBox.margin>
+                        <Insets right="10.0" />
+                     </HBox.margin>
+                  </Label>
                   <TextField prefHeight="39.0" prefWidth="292.0" promptText="Search">
                      <HBox.margin>
                         <Insets />
@@ -286,14 +335,14 @@
                         </HBox>
                         <HBox prefHeight="32.0" prefWidth="289.0" spacing="10.0">
                            <children>
-                              <Label prefHeight="28.0" prefWidth="129.0" text="Dose" />
-                              <Label prefHeight="28.0" prefWidth="103.0" text="Number of Doses" />
+                              <Label prefHeight="32.0" prefWidth="78.0" text="Dose" />
+                              <Label prefHeight="43.0" prefWidth="92.0" text="Dose Quantity" />
                            </children>
                         </HBox>
                         <HBox prefHeight="9.0" prefWidth="292.0" spacing="34.0">
                            <children>
-                              <TextField fx:id="doseText" prefHeight="25.0" prefWidth="103.0" />
-                              <TextField fx:id="doseAmountText" prefHeight="25.0" prefWidth="123.0" />
+                              <TextField fx:id="doseText" prefHeight="25.0" prefWidth="53.0" />
+                              <TextField fx:id="doseAmountText" prefHeight="25.0" prefWidth="58.0" />
                            </children>
                         </HBox>
                         <Button fx:id="addNoteBtn" mnemonicParsing="false" onAction="#onAddNote" prefHeight="27.0" prefWidth="102.0" style="-fx-background-color: #22aae1;" text="Add Note" textFill="WHITE">

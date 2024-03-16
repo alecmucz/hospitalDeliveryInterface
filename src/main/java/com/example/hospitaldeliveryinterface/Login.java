@@ -1,9 +1,10 @@
 package com.example.hospitaldeliveryinterface;
-
 public class Login {
+
 
     private String username;
     private String password;
+    private boolean login = false;
 
     public Login(String username, String password) {
         this.username = username;
@@ -26,17 +27,11 @@ public class Login {
         this.password = password;
     }
 
-    public Login(boolean login) {
-        Login = login;
-    }
-
-    private boolean Login = false;
-
     public boolean isLogin() {
-        return Login;
+        return login;
     }
 
     public void setLogin(boolean login) {
-        Login = login;
+        this.login = login;
     }
 }
