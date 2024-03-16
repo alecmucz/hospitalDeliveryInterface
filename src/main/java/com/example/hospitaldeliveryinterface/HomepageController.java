@@ -123,8 +123,8 @@ public class HomepageController {
         selectedCard = null;
         selectedCardOrderNum = null;
         isDelivered = false;
-        int totalOrders = getTotalNumOrders();
-        DeliveryRequisition.setOrderNumCount(totalOrders);
+        DeliveryRequisition.getTotalNumOrders();
+
 
         currentPage = "Pending";
 
@@ -712,22 +712,7 @@ public class HomepageController {
     /**
      * @return the total number of orders ever created from the DB
      */
-    public int getTotalNumOrders(){
-        CollectionReference statistics = PharmaTracApp.fstore.collection("statistics");
 
-        DocumentReference statisticsRef = statistics.document("numOrders");
-        ApiFuture<DocumentSnapshot> future = statisticsRef.get();
-        try {
-            DocumentSnapshot document = future.get();
-            Number numTotalOrders = (Number) document.get("totalNumOrders");
-            return numTotalOrders.intValue();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        } catch (ExecutionException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
 
     /**
      * Reads all order from a collection, pending or completed and puts then into a linked list
