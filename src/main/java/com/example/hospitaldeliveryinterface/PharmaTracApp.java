@@ -17,7 +17,8 @@ public class PharmaTracApp extends Application {
 
         stage = theStage;
         FXMLLoader fxmlLoader = new FXMLLoader(PharmaTracApp.class.getResource("Homepage.fxml"));
-        scene = new Scene(fxmlLoader.load());
+
+        scene = new Scene(fxmlLoader.load(),885,678);
         stage.setTitle("PharmaTrac");
         stage.setScene(scene);
         stage.show();

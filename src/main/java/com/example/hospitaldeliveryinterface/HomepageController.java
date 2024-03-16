@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.util.Queue;
 
 public class HomepageController {
+    @FXML
+    private TextField username;
 
     @FXML
     private Button deliverReturnBtn;
@@ -508,6 +510,20 @@ public class HomepageController {
             displayQueue();
         }
 
+
+    }
+
+    public void handleLoginButton() {
+        FXMLLoader fxmlLoader = new FXMLLoader(PharmaTracApp.class.getResource("Login.fxml"));
+        Stage stage = PharmaTracApp.getStage();
+        Scene scene = PharmaTracApp.getScene();
+        try {
+            scene.setRoot(fxmlLoader.load());
+            stage.setTitle("Demo: DBAccess");
+
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
     }
 
