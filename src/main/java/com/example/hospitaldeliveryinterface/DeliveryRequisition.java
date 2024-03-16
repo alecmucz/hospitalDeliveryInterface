@@ -1,5 +1,10 @@
 package com.example.hospitaldeliveryinterface;
 
+import com.google.api.core.ApiFuture;
+import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.FieldValue;
+import com.google.cloud.firestore.WriteResult;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -23,7 +28,7 @@ public class DeliveryRequisition {
 
 
     private  String orderNumberDisplay;
-    private static int orderNumCount = 1;
+    private static int orderNumCount;
 
     public DeliveryRequisition(String patientName, String patientLocation, String medication, String dose, String numDoses) {
         this.patientName = patientName;
@@ -49,6 +54,9 @@ public class DeliveryRequisition {
     public void setNumDoses(String numDoses) {
         this.numDoses = numDoses;
     }
+    public static void setOrderNumCount(int DBcount) {
+        orderNumCount = DBcount;
+    }
     public String getPatientName(){
         return patientName;
     }
@@ -72,14 +80,19 @@ public class DeliveryRequisition {
     public String getDateTime(){
         return dateTime;
     }
+    public static int getOrderNumCount() {
+        return orderNumCount;
+    }
 
     public String generateOrderNum(){
+        orderNumCount++;
+        incrementNumOrders();
         System.out.println("Current OrderNumCount: "+ orderNumCount);
         LocalDateTime currentTime = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyyMMdd");
         String dateString = currentTime.format(formatter);
         String counterString = String.format("%03d", orderNumCount);
-        orderNumCount++;
+
         return dateString + counterString;
     }
 
@@ -103,5 +116,14 @@ public class DeliveryRequisition {
                 ", dateTime=" + dateTime +
                 ", orderNumberDisplay='" + orderNumberDisplay + '\'' +
                 '}';
+    }
+
+    /**
+     * increases the tracker in DB for number of orders
+     */
+    public void incrementNumOrders(){
+        DocumentReference docRef = PharmaTracApp.fstore.collection("statistics").document("numOrders");
+        final ApiFuture<WriteResult> updateFuture =
+                docRef.update("totalNumOrders", FieldValue.increment(1));
     }
 }
