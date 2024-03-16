@@ -1,14 +1,13 @@
 package com.example.hospitaldeliveryinterface;
 
 import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.DocumentReference;
-import com.google.cloud.firestore.FieldValue;
-import com.google.cloud.firestore.WriteResult;
+import com.google.cloud.firestore.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.ExecutionException;
 
 public class DeliveryRequisition {
     private String patientName;
@@ -85,6 +84,7 @@ public class DeliveryRequisition {
     }
 
     public String generateOrderNum(){
+        getTotalNumOrders();
         orderNumCount++;
         incrementNumOrders();
         System.out.println("Current OrderNumCount: "+ orderNumCount);
@@ -125,5 +125,21 @@ public class DeliveryRequisition {
         DocumentReference docRef = PharmaTracApp.fstore.collection("statistics").document("numOrders");
         final ApiFuture<WriteResult> updateFuture =
                 docRef.update("totalNumOrders", FieldValue.increment(1));
+    }
+    public static void getTotalNumOrders(){
+        CollectionReference statistics = PharmaTracApp.fstore.collection("statistics");
+
+        DocumentReference statisticsRef = statistics.document("numOrders");
+        ApiFuture<DocumentSnapshot> future = statisticsRef.get();
+        try {
+            DocumentSnapshot document = future.get();
+            Number numTotalOrders = (Number) document.get("totalNumOrders");
+            orderNumCount = numTotalOrders.intValue();
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 }
