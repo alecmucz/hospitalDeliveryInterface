@@ -25,6 +25,16 @@ public class DeliveryRequisition {
         this.dateTime = currentDateTime();
         this.orderNumberDisplay = generateOrderNum();
     }
+    public DeliveryRequisition(String orderNumber, String patientName, String patientLocation, String medication, String dose, int numDoses, String dateTime) {
+        this.patientName = patientName;
+        this.patientLocation = patientLocation;
+        this.medication = medication;
+        this.dose = dose;
+        this.numDoses = numDoses;
+        this.dateTime = dateTime;
+        this.orderNumberDisplay = orderNumber;
+
+    }
     public void setPatientName(String patientName) {
         this.patientName = patientName;
     }
