@@ -24,3 +24,9 @@
 3/11/2024 1:00 pm - Alec Edit:
 - Toolbar changes according to page
 - New Delivery Popup window (note: Edit Delivery currently has the same popup to Deliver Windows )
+
+3/14/2024 12:38 am - Mitchell Edit:
+- Redesign application UI
+- reimplmented new delivery to homepage
+- edit and delivered button works
+- Completed and Pending tabs display orders

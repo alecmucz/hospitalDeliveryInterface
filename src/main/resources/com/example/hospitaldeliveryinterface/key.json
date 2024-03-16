@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "pharmtrac-65ee7",
+  "private_key_id": "33389824c0922c17ff3e467157057108d4b12a70",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQDBNRqtWWDQMDV8\nGozfJY6VrNF7EZ/CBaT1WAZKMwxUrwLfUWu3/lM6zoGN/TNAkiDE0DMNdgx7a4Cx\n1D51UoElanD0Ct7BjBBe/Q711qrdYVuDpnlPKIhHol7pVYHbmaZjYs9vRNGDeCN5\ncqGmveg1I/i6/MCpBs4pl7GwXop84jdQsJgE9AN6SrSn6m3Ju1e7YRJ6VbTrTwmS\nYrfxUygMfPrXJjV+TKTzC5odJ7NMx2VMK+pc2gie+ZxpSaiA9uzY4SfU2VngePz8\nQFWvzJYU3UsmFulcl2W0c9SdopGPGK0G1Zg+UPXFDnR+FU2Tbc8hOR5d8q/6Mgz3\nnbeFQpy5AgMBAAECggEAGjYVH21ft/7CUsrbT66tsFqYtMSIUu8nGO3PNKPGSXrQ\nvfEy1uxW6ER5yQSPvnPUpD7Gnk3klZ3ZAMcVjh8aTDQrjMAoxkM1OV3FeM6dsZjy\nrGKaVIXgLy+1BpzGGD+5FgSitaq1bcuPrHtDuPZMmWD+7oc5r/SvZW8h+RZqXVSq\nf+pPpHIdtOeKV4MLoeNwDMpCyfxk8dq7+sssL+Wg/Gpo+H6IYgMgNEpr6RXyfJ4B\nToeY3MzlU1FDiPHHkCqoguDyrS7q93G4LIP3qzOkRLoB+p1egPVqRIUSz1HPS70f\nSja+khuVNrUvLuBz5jhEn6Lek7f1JVYdZIacn5rlvQKBgQD6GIOMuZmEmqi0JXgl\nnkY+F8HWEvk5eHlwQDHi+NlpNztjl+3gY5Ho4nWSnMS/YI8wXuyBEPbEbceadfy8\nOz6lI1BZ/g0XsP1nF0zM3FMu9bWx7OpVnj0diQmYtro4byrl0htYuATbjAls9cQe\nEHLnkj0SkqxHAZBRQduG0vZVvwKBgQDFxMdF5TsqDF7KqjLYrz3ga6r+5PsE9SH2\nkSDSzyJGcpIV2m3y528ldu1/RDaCLGoFZxMHnlu7vDh2J1IXUdXcJr0DrbFj5FAX\nDb9FA2fpbc9FA6M69v278uJZfXL/j+wUGlK+MKIZLYUMBcApL8NWlnTihDoXKVBB\noyh1kD/bhwKBgQDu8uz9T3c2Eu6M8B/TEV3bhadVedtU5Z5heXQwf8J5nKPJjCdi\n9L872uKqqc3xa7hjZs5gomyjUKAdHA3VamV4Mj1bPjgUIq56CPD/6qIvg+ONk+Zw\n1zddOMlKd4uEz/IUkqI+KdO6UBnRWR9/+gdO6ZIgZLLlRME2Yc31CysA0QKBgGO9\nZjKd9USzkGrtg088shwosMh0exR4/HP5pXAr/sFAruROkPzcM3XVkNmKcWMdOysW\nXMaO2vzHZEJSelhAcXbiIplkU/5o+utlh30qxpE3TD0mJIBsaHMNf5JablDtKMbK\nr8gzhszj5CG4FL2w1PcqUjCbNyDPOSahPppr8YipAoGBAPISEHWRqCufB6woapmF\nG54l6Q2kjRlQZaXwWQ926BE4YBGk9iDPhdCHoAbxWx5/3ykXuhRSm/YxXvW7kUhk\n5uMN0SJxGMoeY2hkIvnMejHstNNrcp9hRac8/zKE8toAXGTagYyDLacYJchlgmYc\nKuKuih9nOx+GE2SQwPqIOKat\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-1cu8l@pharmtrac-65ee7.iam.gserviceaccount.com",
+  "client_id": "114735169697098006568",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-1cu8l%40pharmtrac-65ee7.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

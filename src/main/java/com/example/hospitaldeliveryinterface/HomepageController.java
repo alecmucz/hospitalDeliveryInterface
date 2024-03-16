@@ -109,7 +109,7 @@ public class HomepageController {
 
         settingNavbar.setPrefWidth(0);
         displayQueue();
-
+        selectOrder();
 
        //Stuff to handle new Delivery
         errMessLabel.setText("");
@@ -192,29 +192,26 @@ public class HomepageController {
         if(checkErrors){
             errMessLabel.setText("**Error: Please fill out all required fields.**");
         }else{
-            try {
-                int numDose = Integer.parseInt(doseAmountText.getText());
-                String fullName = firstnameText.getText() + " " + lastnameText.getText();
-                DeliveryRequisition newOrder = new DeliveryRequisition(
-                        fullName,
-                        lastnameText.getText(),
-                        medicationText.getText(),
-                        doseText.getText(),
-                        numDose
-                );
+            String fullName = firstnameText.getText() + " " + lastnameText.getText();
+            DeliveryRequisition newOrder = new DeliveryRequisition(
+                    fullName,
+                    locationText.getText(),
+                    medicationText.getText(),
+                    doseText.getText(),
+                    doseAmountText.getText()
+            );
 
-
-                Pending pendQueue = Pending.getInstance();
-                if(isEdit && selectedCardOrderNum != null){
-                    pendQueue.getRemoveOrderByOrderNumber(selectedCardOrderNum);
-                }
-                pendQueue.addOrders(newOrder);
-                displayQueue();
-                clearText();
-            }catch (NumberFormatException ex) {
-                errMessLabel.setText("**Error: The fields selected should be Numeric.**");
-                errorBorder(doseAmountText);
+            Pending pendQueue = Pending.getInstance();
+            pendQueue.addOrders(newOrder);
+            if(isEdit && selectedCardOrderNum != null){
+                pendQueue.getRemoveOrderByOrderNumber(selectedCardOrderNum);
+                isEdit = false;
+                toggleNewDelivery();
+                deselectOrder();
             }
+            displayQueue();
+            clearText();
+
         }
     }
 
@@ -240,7 +237,7 @@ public class HomepageController {
     void onSettingClick(ActionEvent event) {
         if(!isToggleSettings){
             buttonToggle(settingsButton);
-            settingNavbar.setPrefWidth(137);
+            settingNavbar.setPrefWidth(161);
         }else{
             buttonNotToggle(settingsButton);
             settingNavbar.setPrefWidth(0);
@@ -260,19 +257,24 @@ public class HomepageController {
     }
     @FXML
     void onDeliverReturn(ActionEvent event) {
-        isDelivered = !isDelivered;
-        isEdit = false;
-        toggleNewDelivery();
-        selectOrder();
+        if(selectedCard != null){
+            isDelivered = !isDelivered;
+            isEdit = false;
+            toggleNewDelivery();
+            sendOrderToCompleted(selectedCardOrderNum);
+        }
     }
 
     @FXML
     void onEditDelivery(ActionEvent event) {
-        isEdit = !isEdit;
-        isNewDelivery = false;
-        isDelivered = false;
-        toggleNewDelivery();
-        selectOrder();
+        if(selectedCard != null){
+            isEdit = !isEdit;
+            isNewDelivery = false;
+            isDelivered = false;
+            toggleNewDelivery();
+            openEditDelivery(selectedCard);
+        }
+
     }
 
     public void toggleNewDelivery( ){
@@ -293,8 +295,6 @@ public class HomepageController {
         }
 
         if(!isEdit || isDelivered){
-            selectedCard = null;
-            selectedCardOrderNum = null;
             editBtn.setText("Edit Delivery");
             buttonNotToggle(editBtn);
         }
@@ -388,19 +388,18 @@ public class HomepageController {
     public void selectOrder(){
             for(Node node: orderDisplayContainer.getChildren()){
                 node.setOnMouseClicked(mouseEvent -> {
-                    if(isEdit || isDelivered){
+                    if(selectedCard != null &&  selectedCard != node){
+                        selectedCard.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: transparent");
+                        selectedCard = null;
+                        isEdit = false;
+                        isDelivered = false;
+                        toggleNewDelivery();
+                    }
 
-                        if(node != selectedCard){
-                            if(isEdit){
-                                node.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: #ffbdbd");
-
-                            }
-                            if(isDelivered){
-                                node.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: #b2f18f");
-                            }
+                    if(selectedCard != node || selectedCard == null){
                             if (node instanceof GridPane) {
                                 GridPane gridpane = (GridPane) node;
-
+                                gridpane.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: #ffbdbd");
                                 for(Node childNode : gridpane.getChildren()){
                                     if (childNode instanceof Label) {
                                         Label label = (Label) childNode;
@@ -408,30 +407,21 @@ public class HomepageController {
                                             String labelText  = label.getText().substring(1); // Remove the "#" symbol
                                             selectedCardOrderNum = labelText;
                                             System.out.println("ORDER NUMBER RETRIEVED: " + labelText);
+                                            break;
                                         }
                                     }
                                 }
-                                if(isDelivered){
-                                    sendOrderToCompleted();
-                                }else{
-                                    openEditDelivery(gridpane);
-                                }
                             }
-
-                        }
-
-                        if(selectedCard != null && selectedCard != node){
-                            selectedCard.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: transparent");
-                        }
-
-
                         selectedCard = node;
 
+                    }else{
+                        selectedCard.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: transparent");
 
-
+                        selectedCard = null;
+                        isEdit = false;
+                        isDelivered = false;
+                        toggleNewDelivery();
                     }
-
-
                 });
             }
 
@@ -442,18 +432,31 @@ public class HomepageController {
             }
     }
 
-    public void openEditDelivery(GridPane selectCard){
+
+
+    public void deselectOrder(){
+        if(selectedCard != null) {
+            selectedCard.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: transparent");
+            selectedCard = null;
+        }
+    }
+
+    public void openEditDelivery(Node selectCard){
         System.out.println("Edit Delivery is Open");
         deliveryFormPane.setPrefWidth(320);
         deliveryFormPane.setVisible(true);
         deliveryFormLabel.setText("Edit Delivery Form");
         clearText();
 
-        for(Node selectChild: selectCard.getChildren()){
-            if(selectChild instanceof Label){
-                setTextFieldFromLabel((Label)selectChild);
+        if(selectCard instanceof GridPane){
+            GridPane gridpane = (GridPane) selectCard;
+            for(Node selectChild: gridpane.getChildren()){
+                if(selectChild instanceof Label){
+                    setTextFieldFromLabel((Label)selectChild);
+                }
             }
         }
+
 
     }
 
@@ -498,16 +501,23 @@ public class HomepageController {
     }
 
 
-    public void sendOrderToCompleted(){
+    public void sendOrderToCompleted(String selectedorderNum){
+        System.out.print("sendOrderToComplete method called!!!");
+        System.out.println("selectOrderNum: " + selectedorderNum);
         Pending pendQueue = Pending.getInstance();
         Completed  completedQueue = Completed.getInstance();
-        if(isDelivered && selectedCardOrderNum != null){
+        if(selectedorderNum != null){
+
             DeliveryRequisition toBeDelivered = pendQueue.getPendingOrderByOrderNumber(selectedCardOrderNum);
             completedQueue.addOrders(toBeDelivered);
-            pendQueue.getRemoveOrderByOrderNumber(selectedCardOrderNum);
+            pendQueue.getRemoveOrderByOrderNumber(selectedorderNum);
             isDelivered = false;
             toggleNewDelivery();
             displayQueue();
+
+            selectedCard = null;
+            selectedCardOrderNum = null;
+            deselectOrder();
         }
 
 
