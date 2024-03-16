@@ -14,7 +14,7 @@ import java.util.Queue;
 
 public class HomepageController {
     @FXML
-    private TextField uname;
+    private Label usernameLabel;
 
     @FXML
     private Button deliverReturnBtn;

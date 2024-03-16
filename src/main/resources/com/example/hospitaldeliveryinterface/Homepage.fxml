@@ -104,7 +104,7 @@
                         <Font name="Tahoma Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Label fx:id="uname" text="Username" textFill="#12dd4c">
+                  <Label fx:id="usernameTextfield" text="Username" textFill="#12dd4c">
                      <font>
                         <Font name="Tahoma Bold" size="14.0" />
                      </font>
