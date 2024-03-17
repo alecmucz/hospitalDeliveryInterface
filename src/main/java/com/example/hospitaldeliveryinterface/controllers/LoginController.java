@@ -1,4 +1,4 @@
-package com.example.hospitaldeliveryinterface;
+package com.example.hospitaldeliveryinterface.controllers;
 
 import com.google.firebase.database.*;
 import com.google.firebase.remoteconfig.User;
@@ -16,16 +16,6 @@ import java.util.Optional;
 
 
 public class LoginController {
-
-    @FXML
-    private Button LoginButton;
-
-    @FXML
-    private TextField textFieldUsername;
-
-    @FXML
-    private TextField textFieldPassword;
-
 
 
     //this method checks if the parameters are empty, if they are checker is turned on becoming true
@@ -59,21 +49,5 @@ public class LoginController {
         alert.setContentText("next page");
         Optional<ButtonType> result = alert.showAndWait();
     }
-
-    @FXML
-    void handleLoginButton() {
-            if (textFieldCheck(textFieldUsername.getText(), textFieldPassword.getText()) == false) {
-                showDialogCorrect();
-            } else {
-                showDialog();
-            }
-        }
-
-
-
-
-
-
-
 
 }

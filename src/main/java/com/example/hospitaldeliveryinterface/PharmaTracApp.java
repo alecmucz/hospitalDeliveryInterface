@@ -1,5 +1,6 @@
 package com.example.hospitaldeliveryinterface;
 
+import com.example.hospitaldeliveryinterface.firebase.FirestoreContext;
 import com.google.cloud.firestore.Firestore;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

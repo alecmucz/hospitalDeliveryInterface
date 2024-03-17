@@ -19,7 +19,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="mainLayout" prefHeight="680.0" prefWidth="1157.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hospitaldeliveryinterface.HomepageController">
+<BorderPane fx:id="mainLayout" prefHeight="734.0" prefWidth="955.0" style="-fx-background-color: white;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hospitaldeliveryinterface.controllers.HomepageController">
    <bottom>
       <ToolBar fx:id="bottomToolBar" prefHeight="10.0" prefWidth="819.0" style="-fx-background-color: #22aae1; -fx-border-color: #1e90f5 transparent transparent transparent; -fx-border-width: 3 0 0 0;" BorderPane.alignment="CENTER">
         <items>
@@ -64,7 +64,7 @@
                   <Font name="System Bold" size="18.0" />
                </font>
             </Button>
-            <VBox fx:id="LoginVbox" alignment="TOP_CENTER" visible="false">
+            <VBox fx:id="LoginVbox" alignment="TOP_CENTER">
                <children>
                   <Label fx:id="us" alignment="CENTER" minWidth="-Infinity" text="Username" textFill="WHITE">
                      <font>
@@ -100,7 +100,7 @@
                </VBox.margin>
             </VBox>
             <Pane minWidth="-Infinity" prefHeight="200.0" />
-            <VBox fx:id="vboxSignedIn" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" visible="false">
+            <VBox fx:id="vboxSignedIn" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
                <children>
                   <Label minWidth="-Infinity" text="Signed in as:" textFill="#12dd4c">
                      <font>
@@ -117,139 +117,6 @@
          </children>
       </VBox>
    </right>
-   <top>
-      <HBox alignment="CENTER" prefHeight="72.0" prefWidth="1099.0" style="-fx-background-color: #22aae1; -fx-border-color: transparent transparent  #1e90f5 transparent; -fx-border-width: 0 0 3 0;" BorderPane.alignment="CENTER">
-         <children>
-            <ImageView fitHeight="71.0" fitWidth="208.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@PharmaTracLogo.png" />
-               </image>
-               <HBox.margin>
-                  <Insets left="10.0" />
-               </HBox.margin>
-            </ImageView>
-            <HBox alignment="CENTER_LEFT" prefHeight="72.0" prefWidth="501.0">
-               <children>
-                  <TextField prefHeight="39.0" prefWidth="292.0" promptText="Search">
-                     <HBox.margin>
-                        <Insets />
-                     </HBox.margin>
-                  </TextField>
-                  <MenuButton fx:id="filterbtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" popupSide="RIGHT" prefHeight="42.0" prefWidth="101.0" style="-fx-background-color: #1e90f5; -fx-border-color: transparent;" text="Filter by" textFill="WHITE">
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                     <items>
-                        <CustomMenuItem mnemonicParsing="false" text="Unspecified Action">
-                          <content>
-                            <CheckBox alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Name" textFill="#22aae1">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </CheckBox>
-                          </content>
-                        </CustomMenuItem>
-                        <CustomMenuItem mnemonicParsing="false" text="Unspecified Action">
-                           <content>
-                              <CheckBox alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Date" textFill="#22aae1">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </CheckBox>
-                           </content>
-                        </CustomMenuItem>
-                        <CustomMenuItem mnemonicParsing="false" text="Unspecified Action">
-                           <content>
-                              <CheckBox alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Location" textFill="#22aae1">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </CheckBox>
-                           </content>
-                        </CustomMenuItem>
-                        <CustomMenuItem mnemonicParsing="false" text="Unspecified Action">
-                           <content>
-                              <CheckBox alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Medication" textFill="#22aae1">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </CheckBox>
-                           </content>
-                        </CustomMenuItem>
-                        <CustomMenuItem mnemonicParsing="false" text="Unspecified Action">
-                           <content>
-                              <CheckBox alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Dose" textFill="#22aae1">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </CheckBox>
-                           </content>
-                        </CustomMenuItem>
-                        <CustomMenuItem mnemonicParsing="false" text="Unspecified Action">
-                           <content>
-                              <CheckBox alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Dose Quantity" textFill="#22aae1">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </CheckBox>
-                           </content>
-                        </CustomMenuItem>
-                        <CustomMenuItem mnemonicParsing="false" text="Unspecified Action">
-                           <content>
-                              <CheckBox alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Order Number" textFill="#22aae1">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </CheckBox>
-                           </content>
-                        </CustomMenuItem>
-                     </items>
-                  </MenuButton>
-               </children>
-               <HBox.margin>
-                  <Insets left="10.0" />
-               </HBox.margin>
-            </HBox>
-            <HBox alignment="CENTER_RIGHT" prefHeight="72.0" prefWidth="283.0" HBox.hgrow="ALWAYS">
-               <children>
-                  <Button fx:id="pendingButton" alignment="CENTER" mnemonicParsing="false" onAction="#onPendingClick" prefHeight="39.0" prefWidth="104.0" style="-fx-background-color: trasnsparent;" text="Pending" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="completedButton" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#onCompleteClick" prefHeight="39.0" prefWidth="114.0" style="-fx-background-color: transparent;" text="Completed" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                  </Button>
-                  <Button fx:id="settingsButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSettingClick" prefHeight="39.0" prefWidth="92.0" style="-fx-background-color: transparent;" text="Settings" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                     <HBox.margin>
-                        <Insets left="10.0" />
-                     </HBox.margin>
-                  </Button>
-               </children>
-               <HBox.margin>
-                  <Insets left="10.0" />
-               </HBox.margin>
-            </HBox>
-         </children>
-         <BorderPane.margin>
-            <Insets />
-         </BorderPane.margin>
-         <padding>
-            <Insets right="10.0" />
-         </padding>
-      </HBox>
-   </top>
    <center>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
          <children>
@@ -299,7 +166,7 @@
                   </HBox>
                </bottom>
                <center>
-                  <VBox focusTraversable="true" maxHeight="-Infinity" prefHeight="481.0" prefWidth="300.0" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
+                  <VBox focusTraversable="true" prefHeight="468.0" prefWidth="300.0" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
                      <children>
                         <Label alignment="TOP_LEFT" contentDisplay="TOP" prefHeight="8.0" prefWidth="292.0" text="Patient Information" textFill="#1e90f5">
                            <font>
@@ -331,7 +198,7 @@
                         <Label prefHeight="28.0" prefWidth="292.0" text="Medication (Name/Strength)" />
                         <HBox prefHeight="9.0" prefWidth="292.0" spacing="10.0">
                            <children>
-                              <TextField fx:id="medicationText" prefHeight="2.0" prefWidth="141.0" />
+                              <TextField fx:id="medicationText" prefHeight="49.0" prefWidth="141.0" />
                               <Pane prefHeight="25.0" prefWidth="150.0" />
                            </children>
                         </HBox>
@@ -355,7 +222,7 @@
                               <Font name="System Bold" size="13.0" />
                            </font>
                         </Button>
-                        <TextArea fx:id="addNoteText" prefHeight="137.0" prefWidth="309.0">
+                        <TextArea fx:id="addNoteText" prefHeight="114.0" prefWidth="300.0">
                            <VBox.margin>
                               <Insets top="10.0" />
                            </VBox.margin>
@@ -370,4 +237,102 @@
          </children>
       </HBox>
    </center>
+   <top>
+      <ToolBar prefHeight="62.0" prefWidth="406.0" style="-fx-background-color: #22aae1; -fx-border-color: transparent transparent #1e90f5 transparent; -fx-border-width: 0 0 3 0;" BorderPane.alignment="CENTER">
+        <items>
+            <ImageView fitHeight="71.0" fitWidth="208.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@PharmaTracLogo.png" />
+               </image>
+            </ImageView>
+            <TextField prefHeight="39.0" prefWidth="259.0" promptText="Search" />
+            <MenuButton fx:id="filterbtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" popupSide="RIGHT" prefHeight="42.0" prefWidth="101.0" style="-fx-background-color: #1e90f5; -fx-border-color: transparent;" text="Filter by" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <items>
+                  <CustomMenuItem mnemonicParsing="false" text="Unspecified Action">
+                    <content>
+                      <CheckBox alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Name" textFill="#22aae1">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </CheckBox>
+                    </content>
+                  </CustomMenuItem>
+                  <CustomMenuItem mnemonicParsing="false" text="Unspecified Action">
+                     <content>
+                        <CheckBox alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Date" textFill="#22aae1">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </CheckBox>
+                     </content>
+                  </CustomMenuItem>
+                  <CustomMenuItem mnemonicParsing="false" text="Unspecified Action">
+                     <content>
+                        <CheckBox alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Location" textFill="#22aae1">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </CheckBox>
+                     </content>
+                  </CustomMenuItem>
+                  <CustomMenuItem mnemonicParsing="false" text="Unspecified Action">
+                     <content>
+                        <CheckBox alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Medication" textFill="#22aae1">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </CheckBox>
+                     </content>
+                  </CustomMenuItem>
+                  <CustomMenuItem mnemonicParsing="false" text="Unspecified Action">
+                     <content>
+                        <CheckBox alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Dose" textFill="#22aae1">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </CheckBox>
+                     </content>
+                  </CustomMenuItem>
+                  <CustomMenuItem mnemonicParsing="false" text="Unspecified Action">
+                     <content>
+                        <CheckBox alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Dose Quantity" textFill="#22aae1">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </CheckBox>
+                     </content>
+                  </CustomMenuItem>
+                  <CustomMenuItem mnemonicParsing="false" text="Unspecified Action">
+                     <content>
+                        <CheckBox alignment="CENTER_RIGHT" contentDisplay="CENTER" text="Order Number" textFill="#22aae1">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </CheckBox>
+                     </content>
+                  </CustomMenuItem>
+               </items>
+            </MenuButton>
+            <Pane prefHeight="51.0" prefWidth="0.0" HBox.hgrow="ALWAYS" />
+            <Button fx:id="pendingButton" alignment="CENTER" mnemonicParsing="false" onAction="#onPendingClick" prefHeight="39.0" prefWidth="102.0" style="-fx-background-color: trasnsparent;" text="Pending" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="completedButton" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#onCompleteClick" prefHeight="39.0" prefWidth="97.0" style="-fx-background-color: transparent;" text="Completed" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="settingsButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSettingClick" prefHeight="39.0" prefWidth="92.0" style="-fx-background-color: transparent;" text="Settings" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+        </items>
+      </ToolBar>
+   </top>
 </BorderPane>
