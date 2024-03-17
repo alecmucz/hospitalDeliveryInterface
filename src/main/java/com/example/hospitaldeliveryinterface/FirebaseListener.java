@@ -10,10 +10,12 @@ public class FirebaseListener {
 
     private Firestore firestore;
     private HomepageController controller;
+    private String currentpage;
 
-    public FirebaseListener(HomepageController controller){
-        this.controller = controller;
+    public FirebaseListener(HomepageController homeController, String currPage){
+        this.controller = homeController;
         this.firestore = FirestoreClient.getFirestore();
+        this.currentpage = currPage;
 
         //this listen to changes in the pendingDeliveries Colllection
         firestore.collection("pendingDeliveries").addSnapshotListener(new EventListener<QuerySnapshot>() {
@@ -25,11 +27,9 @@ public class FirebaseListener {
                     return;
                 }
 
-                if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
+                if (currentpage.equals("Pending")) {
                     System.out.println("PendingDeliveries Collection has been UPDATED");
                     onDataDisplay("pendingDeliveries");
-                } else {
-                    System.out.println("No documents found in collection: pendingDeliveries.");
                 }
             }
 
@@ -44,11 +44,9 @@ public class FirebaseListener {
                     return;
                 }
 
-                if (queryDocumentSnapshots != null && !queryDocumentSnapshots.isEmpty()) {
+                if (currentpage.equals("Completed")) {
                     System.out.println("CompletedDeliveries Collection has been UPDATED");
                     onDataDisplay("completedDeliveries");
-                } else {
-                    System.out.println("No documents found in collection: completedDeliveries.");
                 }
             }
         });

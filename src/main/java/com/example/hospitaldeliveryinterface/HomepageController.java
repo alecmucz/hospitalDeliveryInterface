@@ -178,7 +178,7 @@ public class HomepageController {
 
 
 
-        FirebaseListener fsListener = new FirebaseListener(this);
+        FirebaseListener fsListener = new FirebaseListener(this, currentPage);
         fsListener.onDataDisplay("pendingDeliveries");
 
     }
@@ -261,7 +261,7 @@ public class HomepageController {
         System.out.println("Pending Button Clicked");
         currentPage = "Pending";
         //displayQueue(DataBaseMgmt.buildQueue("pendingDeliveries"));
-        FirebaseListener fsListener = new FirebaseListener(this);
+        FirebaseListener fsListener = new FirebaseListener(this,currentPage);
         fsListener.onDataDisplay("pendingDeliveries");
     }
 
@@ -270,7 +270,7 @@ public class HomepageController {
         System.out.println("Completed Button Clicked");
         currentPage = "Completed";
         //displayQueue(DataBaseMgmt.buildQueue("pendingDeliveries"));
-        FirebaseListener fsListener = new FirebaseListener(this);
+        FirebaseListener fsListener = new FirebaseListener(this,currentPage);
         fsListener.onDataDisplay("completedDeliveries");
         isEdit = false;
         isNewDelivery = false;
@@ -387,9 +387,9 @@ public class HomepageController {
     public void displayQueue(Queue<DeliveryRequisition> currentQueue, String collectionName){
         Platform.runLater(() -> {
 
-
             System.out.println("TESTING DISPLAY QUEUE HAS BEEN CALLED IN HOMEPAGECONTROLLER");
             System.out.println("CHECKING SIZE OF ORDERS QUEUE IN DISPLAY QUEUE: " + currentQueue.size());
+
             Queue<DeliveryRequisition> tempQueue = null;
 
             if(currentPage.equals("Completed") && collectionName.equals("completedDeliveries")){
@@ -399,6 +399,7 @@ public class HomepageController {
                 buttonNotToggle(pendingButton);
                 tempQueue = currentQueue;
             }
+
             if(currentPage.equals("Pending") && collectionName.equals("pendingDeliveries")){
                 orderDisplayContainer.getChildren().clear();
                 deliverReturnBtn.setText("Deliver Package");
@@ -407,28 +408,26 @@ public class HomepageController {
                 tempQueue = currentQueue;
             }
 
-            if(tempQueue != null){
-                for(DeliveryRequisition order: tempQueue){
-                    System.out.println("CHECKING DISPLAY QUEUE ORDERS: " + order.toString());
-                    try {
-                        FXMLLoader loader = new FXMLLoader(getClass().getResource("orderCard.fxml"));
-                        GridPane orderTemplate = loader.load();
-                        OrderCardUIController controller = loader.getController();
-                        controller.updateOrderLabels(order);
-                        orderDisplayContainer.getChildren().add(orderTemplate);
-
-                        //Checking child IDs
-                        /*for (Node childNode : orderTemplate.getChildren()) {
-                            if (childNode instanceof Label) {
-                                System.out.println("Current child of Order: " + childNode.getId());
-                            }
-                        }*/
-
-                    } catch (IOException e) {
-                        System.out.println("Failed to find orderCard.fxml");
-                    }
-                }
+            if(currentQueue.isEmpty()){
+                orderDisplayContainer.getChildren().clear();
+                return;
             }
+
+            for(DeliveryRequisition order: tempQueue){
+                    System.out.println("CHECKING DISPLAY QUEUE ORDERS: " + order.toString());
+                        try {
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("orderCard.fxml"));
+                            GridPane orderTemplate = loader.load();
+                            OrderCardUIController controller = loader.getController();
+                            controller.updateOrderLabels(order);
+                            orderDisplayContainer.getChildren().add(orderTemplate);
+
+                        } catch (IOException e) {
+                            System.out.println("Failed to find orderCard.fxml");
+                        }
+
+            }
+
 
             selectOrder();
         });
