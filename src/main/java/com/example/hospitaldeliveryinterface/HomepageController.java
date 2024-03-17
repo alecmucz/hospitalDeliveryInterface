@@ -114,7 +114,7 @@ public class HomepageController {
 
     private String currentPage;
     private String selectedCardOrderNum;
-    private Node selectedCard;
+    private Node selectedCard;//for getting selectedOrder
     TextField[] allInputs;
     public void initialize() throws IOException {
         isToggleSettings = false;
