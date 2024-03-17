@@ -36,3 +36,6 @@
 - Pending and Completed class has been removed
 - files have been organized to the specified package
 - Display Pending and Completed Queue updates in real-time for all applications
+
+3/17/2024 11:16 AM - Alec Edit:
+- Bug Fix: If the user enables the LoginVBOX pane with the login button and closes the settings tab, the widgets within LoginVBOX would still be left over in the New Delivery Pane
