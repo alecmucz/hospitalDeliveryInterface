@@ -3,6 +3,7 @@ package com.example.hospitaldeliveryinterface;
 
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
+import com.google.cloud.firestore.EventListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -123,8 +124,8 @@ public class HomepageController {
         selectedCard = null;
         selectedCardOrderNum = null;
         isDelivered = false;
-        DeliveryRequisition.getTotalNumOrders();
-
+        int totalOrders = DataBaseMgmt.getTotalNumOrders();
+        DeliveryRequisition.setOrderNumCount(totalOrders);
 
         currentPage = "Pending";
 
@@ -218,27 +219,40 @@ public class HomepageController {
         }else{
             String fullName = firstnameText.getText() + " " + lastnameText.getText();
             DeliveryRequisition newOrder = new DeliveryRequisition(
+                    DeliveryRequisition.generateOrderNum(),
+                    DeliveryRequisition.currentDateTime(),
                     fullName,
                     locationText.getText(),
                     medicationText.getText(),
                     doseText.getText(),
-                    doseAmountText.getText()
+                    doseAmountText.getText(),
+                    addNoteText.getText()
             );
 
             Pending pendQueue = Pending.getInstance();
             pendQueue.addOrders(newOrder);
+
             if(isEdit && selectedCardOrderNum != null){
+                if(currentPage.equals("Pending")) {
+                    DataBaseMgmt.editOrder("pendingDeliveries", selectedCardOrderNum, newOrder);
+                }
+                if(currentPage.equals("Completed")) {
+                    DataBaseMgmt.editOrder("completedDeliveries", selectedCardOrderNum, newOrder);
+                }
                 //pendQueue.getRemoveOrderByOrderNumber(selectedCardOrderNum);
-                editOrder("pendingDeliveries", selectedCardOrderNum);
+                //DeliveryRequisition toBeDelivered = pendQueue.getPendingOrderByOrderNumber(selectedCardOrderNum);
+
+                displayQueue();
                 isEdit = false;
                 toggleNewDelivery();
                 deselectOrder();
+                clearText();
             }
             else {
-                addToPendingDB(newOrder);
+                DataBaseMgmt.addToDB(newOrder, "pendingDeliveries");
+                displayQueue();
+                clearText();
             }
-            displayQueue();
-            clearText();
 
         }
 
@@ -378,13 +392,13 @@ public class HomepageController {
             buttonToggle(completedButton);
             buttonNotToggle(pendingButton);
             Completed completeQueue = Completed.getInstance();
-            currentQueue = completeQueue.getCompletedQueue();
+            currentQueue = DataBaseMgmt.buildQueue("completedDeliveries");
         }else{
             deliverReturnBtn.setText("Deliver Package");
             buttonToggle(pendingButton);
             buttonNotToggle(completedButton);
             Pending pendQueue = Pending.getInstance();
-            currentQueue = pendQueue.getPendingQueue();
+            currentQueue = DataBaseMgmt.buildQueue("pendingDeliveries");
         }
 
         if(!currentQueue.isEmpty()){
@@ -536,10 +550,15 @@ public class HomepageController {
         Pending pendQueue = Pending.getInstance();
         Completed  completedQueue = Completed.getInstance();
         if(selectedorderNum != null){
-
-            DeliveryRequisition toBeDelivered = pendQueue.getPendingOrderByOrderNumber(selectedCardOrderNum);
-            completedQueue.addOrders(toBeDelivered);
-            pendQueue.getRemoveOrderByOrderNumber(selectedorderNum);
+            if(currentPage.equals("Pending")) {
+                DataBaseMgmt.swapDB(selectedCardOrderNum, "pendingDeliveries","completedDeliveries");
+            }
+            //DeliveryRequisition toBeDelivered = pendQueue.getPendingOrderByOrderNumber(selectedCardOrderNum);
+            //completedQueue.addOrders(toBeDelivered);
+            //pendQueue.getRemoveOrderByOrderNumber(selectedorderNum);
+            if(currentPage.equals("Completed")) {
+                DataBaseMgmt.swapDB(selectedCardOrderNum, "completedDeliveries","pendingDeliveries");
+            }
             isDelivered = false;
             toggleNewDelivery();
             displayQueue();
@@ -633,132 +652,4 @@ public class HomepageController {
             textFieldPassword.clear();
 
     }
-
-    /**
-     * creates a DeliveryRequisition based off user input fields
-     * from New Delivery Form
-     * @return deliveryRequisition object
-     */
-    public DeliveryRequisition createDeliveryRequisition() {
-        DeliveryRequisition deliveryRequisition = new DeliveryRequisition(
-                firstnameText.getText() + " " + lastnameText.getText()
-                , locationText.getText()
-                , medicationText.getText()
-                ,doseText.getText()
-                , doseAmountText.getText());
-
-        return deliveryRequisition;
-    }
-
-    /**
-     * adds a new deliveryRequisition to the pending collection of DB
-     */
-    public void addToPendingDB(DeliveryRequisition deliveryRequisition) {
-
-        DocumentReference docRef = PharmaTracApp.fstore.collection("pendingDeliveries").document(deliveryRequisition.getOrderNumberDisplay());
-
-        Map<String, Object> data = new HashMap<>();
-        data.put("patientName", deliveryRequisition.getPatientName());
-        data.put("location", deliveryRequisition.getPatientLocation());
-        data.put("medication", deliveryRequisition.getMedication());
-        data.put("dose", deliveryRequisition.getDose());
-        data.put("numDoses", deliveryRequisition.getNumDoses());
-        data.put("timeCreated", deliveryRequisition.getDateTime());
-        data.put("notes", addNoteText.getText());
-        data.put("status", "p");
-        //add who entered the order
-        ApiFuture<WriteResult> result = docRef.set(data);
-
-    }
-
-    /**
-     * gives you reference to query a collection
-     *
-     * @param collectionName name of collection  you want to query
-     * @return query the collection you want to query
-     */
-    public ApiFuture<QuerySnapshot> getCollection(String collectionName){
-        ApiFuture<QuerySnapshot> query = PharmaTracApp.fstore.collection(collectionName).get();
-
-        return query;
-    }
-
-    /**
-     * edits an existing order
-     * @param collectionName name of collection the order is currently in
-     * @param orderNumber order number of order you want to edit
-     */
-    public void editOrder(String collectionName, String orderNumber){
-
-        DeliveryRequisition deliveryRequisition = createDeliveryRequisition();
-
-        Map<String, Object> data = new HashMap<>();
-        data.put("patientName", deliveryRequisition.getPatientName());
-        data.put("location", deliveryRequisition.getPatientLocation());
-        data.put("medication", deliveryRequisition.getMedication());
-        data.put("dose", deliveryRequisition.getDose());
-        data.put("numDoses", deliveryRequisition.getNumDoses());
-        data.put("timeCreated", deliveryRequisition.getDateTime());
-        data.put("notes", addNoteText.getText());
-
-        ApiFuture<WriteResult> future = PharmaTracApp.fstore.collection(collectionName).document(orderNumber).set(data);
-        //add who edited and what time they edited
-        DocumentReference docRef = PharmaTracApp.fstore.collection(collectionName).document(orderNumber);
-        ApiFuture<WriteResult> writeResult = docRef.update("timeCreated", FieldValue.serverTimestamp());
-    }
-
-
-
-    /**
-     * @return the total number of orders ever created from the DB
-     */
-
-
-    /**
-     * Reads all order from a collection, pending or completed and puts then into a linked list
-     * @param collectionName collection you want to build the queue from
-     * @return queue of all orders in the target collection
-     */
-    public Queue<DeliveryRequisition> buildQueue(String collectionName) {
-        ApiFuture<QuerySnapshot> query = getCollection(collectionName);
-
-        Queue<DeliveryRequisition> requisitionQueue = new LinkedList<>();
-
-        try {
-            QuerySnapshot querySnapshot = query.get();
-            List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
-            for(QueryDocumentSnapshot document : documents) {
-
-                DeliveryRequisition order = new DeliveryRequisition(
-                        //document.getId()
-                         document.getString("patientName")
-                        , document.getString("location")
-                        , document.getString("medication")
-                        , document.getString("dose")
-                        , document.getString("numDoses")
-                        //, document.getString("timeCreated")
-                );
-
-                requisitionQueue.add(order);
-            }
-            return requisitionQueue;
-
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        } catch (ExecutionException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    /**
-     * moves DeliveryRequisition from pending to completed
-     * or vice versa
-     * @param orderNumber DeliveryRequisition to be swapped
-     * @param collectionFrom origin collection
-     * @param collectionTo destination collection
-     */
-    public void swapDB(String orderNumber, String collectionFrom, String collectionTo){
-
-    }
-
-
 }
