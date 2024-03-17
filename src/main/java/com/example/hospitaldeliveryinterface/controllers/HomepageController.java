@@ -285,6 +285,7 @@ public class HomepageController {
         }else{
             buttonNotToggle(settingsButton);
             settingNavbar.setPrefWidth(0);
+            LoginVbox.setVisible(false);    //Bug Fix: discards widgets within LoginVBOX if the Login button is clicked and settings is closed
         }
 
         isToggleSettings = !isToggleSettings;
