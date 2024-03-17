@@ -1,13 +1,14 @@
 package com.example.hospitaldeliveryinterface;
 
 import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.*;
+import com.google.cloud.firestore.DocumentReference;
+import com.google.cloud.firestore.FieldValue;
+import com.google.cloud.firestore.WriteResult;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
-import java.util.concurrent.ExecutionException;
 
 public class DeliveryRequisition {
     private String patientName;
@@ -16,6 +17,7 @@ public class DeliveryRequisition {
     private String dose;
     private String numDoses;
     private String dateTime;
+    private String notes;
 
     /*
     Need to add:
@@ -29,14 +31,15 @@ public class DeliveryRequisition {
     private  String orderNumberDisplay;
     private static int orderNumCount;
 
-    public DeliveryRequisition(String patientName, String patientLocation, String medication, String dose, String numDoses) {
+    public DeliveryRequisition(String orderNumber, String dateTime, String patientName, String patientLocation, String medication, String dose, String numDoses, String notes) {
         this.patientName = patientName;
         this.patientLocation = patientLocation;
         this.medication = medication;
         this.dose = dose;
         this.numDoses = numDoses;
-        this.dateTime = currentDateTime();
-        this.orderNumberDisplay = generateOrderNum();
+        this.dateTime = dateTime;
+        this.orderNumberDisplay = orderNumber;
+        this.notes = notes;
     }
     public void setPatientName(String patientName) {
         this.patientName = patientName;
@@ -53,6 +56,11 @@ public class DeliveryRequisition {
     public void setNumDoses(String numDoses) {
         this.numDoses = numDoses;
     }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
     public static void setOrderNumCount(int DBcount) {
         orderNumCount = DBcount;
     }
@@ -79,12 +87,14 @@ public class DeliveryRequisition {
     public String getDateTime(){
         return dateTime;
     }
+    public String getNotes() {
+        return notes;
+    }
     public static int getOrderNumCount() {
         return orderNumCount;
     }
 
-    public String generateOrderNum(){
-        getTotalNumOrders();
+    public static String generateOrderNum(){
         orderNumCount++;
         incrementNumOrders();
         System.out.println("Current OrderNumCount: "+ orderNumCount);
@@ -96,7 +106,7 @@ public class DeliveryRequisition {
         return dateString + counterString;
     }
 
-    public String currentDateTime(){
+    public static String currentDateTime(){
 
         LocalDateTime timeNow = LocalDateTime.now();
         DateTimeFormatter format = DateTimeFormatter.ofPattern("MMMM dd, yyyy - hh:mm a");
@@ -121,25 +131,9 @@ public class DeliveryRequisition {
     /**
      * increases the tracker in DB for number of orders
      */
-    public void incrementNumOrders(){
+    public static void incrementNumOrders(){
         DocumentReference docRef = PharmaTracApp.fstore.collection("statistics").document("numOrders");
         final ApiFuture<WriteResult> updateFuture =
                 docRef.update("totalNumOrders", FieldValue.increment(1));
-    }
-    public static void getTotalNumOrders(){
-        CollectionReference statistics = PharmaTracApp.fstore.collection("statistics");
-
-        DocumentReference statisticsRef = statistics.document("numOrders");
-        ApiFuture<DocumentSnapshot> future = statisticsRef.get();
-        try {
-            DocumentSnapshot document = future.get();
-            Number numTotalOrders = (Number) document.get("totalNumOrders");
-            orderNumCount = numTotalOrders.intValue();
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        } catch (ExecutionException e) {
-            throw new RuntimeException(e);
-        }
-
     }
 }
