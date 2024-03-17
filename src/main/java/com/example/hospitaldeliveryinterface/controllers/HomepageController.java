@@ -219,35 +219,42 @@ public class HomepageController {
         if(checkErrors){
             errMessLabel.setText("**Error: Please fill out all required fields.**");
         }else{
-            String fullName = firstnameText.getText() + " " + lastnameText.getText();
-            DeliveryRequisition newOrder = new DeliveryRequisition(
-                    DeliveryRequisition.generateOrderNum(),
-                    DeliveryRequisition.currentDateTime(),
-                    fullName,
-                    locationText.getText(),
-                    medicationText.getText(),
-                    doseText.getText(),
-                    doseAmountText.getText(),
-                    addNoteText.getText()
-            );
+            boolean checkOnlyNum = doseAmountText.getText().matches("[0-9]+");
 
-            if(isEdit && selectedCardOrderNum != null){
-                if(currentPage.equals("Pending")) {
-                    DataBaseMgmt.editOrder("pendingDeliveries", selectedCardOrderNum, newOrder);
+            if(checkOnlyNum){
+                String fullName = firstnameText.getText() + " " + lastnameText.getText();
+                DeliveryRequisition newOrder = new DeliveryRequisition(
+                        DeliveryRequisition.generateOrderNum(),
+                        DeliveryRequisition.currentDateTime(),
+                        fullName,
+                        locationText.getText(),
+                        medicationText.getText(),
+                        doseText.getText(),
+                        doseAmountText.getText(),
+                        addNoteText.getText()
+                );
+
+                if(isEdit && selectedCardOrderNum != null){
+                    if(currentPage.equals("Pending")) {
+                        DataBaseMgmt.editOrder("pendingDeliveries", selectedCardOrderNum, newOrder);
+                    }
+                    if(currentPage.equals("Completed")) {
+                        DataBaseMgmt.editOrder("completedDeliveries", selectedCardOrderNum, newOrder);
+                    }
+
+                    isEdit = false;
+                    toggleNewDelivery();
+                    deselectOrder();
                 }
-                if(currentPage.equals("Completed")) {
-                    DataBaseMgmt.editOrder("completedDeliveries", selectedCardOrderNum, newOrder);
+                else {
+                    DataBaseMgmt.addToDB(newOrder, "pendingDeliveries");
+
                 }
-
-                isEdit = false;
-                toggleNewDelivery();
-                deselectOrder();
+                clearText();
+            }else{
+                errMessLabel.setText("**Error: Only numbers for this field.**");
+                errorBorder(doseAmountText);
             }
-            else {
-                DataBaseMgmt.addToDB(newOrder, "pendingDeliveries");
-
-            }
-            clearText();
         }
     }
 
