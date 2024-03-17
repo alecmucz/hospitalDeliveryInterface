@@ -19,7 +19,7 @@
 
 3/9/2024 6:09 pm -Mitchell Edit:
 -Adjust top navbar
--setting side nav bar implmented
+-setting side nav bar implemented
 
 3/11/2024 1:00 pm - Alec Edit:
 - Toolbar changes according to page
@@ -27,6 +27,12 @@
 
 3/14/2024 12:38 am - Mitchell Edit:
 - Redesign application UI
-- reimplmented new delivery to homepage
-- edit and delivered button works
+- reimplemented new delivery to the homepage
+- The edit and delivered button works
 - Completed and Pending tabs display orders
+
+3/17/2024 3:01 AM - Mitchell/William Edit:
+- created a new method for sending and retrieving documents from Google Firebase
+- Pending and Completed class has been removed
+- files have been organized to the specified package
+- Display Pending and Completed Queue updates in real-time for all applications
