@@ -8,7 +8,7 @@ module com.example.hospitaldeliveryinterface {
     requires com.google.api.apicommon;
     requires com.google.auth;
     requires google.cloud.core;
-
+    requires jsr305;
 
 
     opens com.example.hospitaldeliveryinterface to javafx.fxml;
