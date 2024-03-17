@@ -1,5 +1,7 @@
-package com.example.hospitaldeliveryinterface;
+package com.example.hospitaldeliveryinterface.firebase;
 
+import com.example.hospitaldeliveryinterface.model.DeliveryRequisition;
+import com.example.hospitaldeliveryinterface.PharmaTracApp;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 
