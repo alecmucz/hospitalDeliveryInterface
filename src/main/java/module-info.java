@@ -13,4 +13,10 @@ module com.example.hospitaldeliveryinterface {
 
     opens com.example.hospitaldeliveryinterface to javafx.fxml;
     exports com.example.hospitaldeliveryinterface;
+    exports com.example.hospitaldeliveryinterface.controllers;
+    opens com.example.hospitaldeliveryinterface.controllers to javafx.fxml;
+    exports com.example.hospitaldeliveryinterface.firebase;
+    opens com.example.hospitaldeliveryinterface.firebase to javafx.fxml;
+    exports com.example.hospitaldeliveryinterface.model;
+    opens com.example.hospitaldeliveryinterface.model to javafx.fxml;
 }

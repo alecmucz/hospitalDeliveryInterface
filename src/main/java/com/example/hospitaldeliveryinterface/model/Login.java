@@ -1,4 +1,4 @@
-package com.example.hospitaldeliveryinterface;
+package com.example.hospitaldeliveryinterface.model;
 public class Login {
 
 
