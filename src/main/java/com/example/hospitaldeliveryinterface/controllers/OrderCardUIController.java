@@ -1,10 +1,9 @@
-package com.example.hospitaldeliveryinterface;
+package com.example.hospitaldeliveryinterface.controllers;
 
+import com.example.hospitaldeliveryinterface.model.DeliveryRequisition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.GridPane;
-
-import java.time.LocalDateTime;
 
 public class OrderCardUIController {
 

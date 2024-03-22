@@ -1,5 +1,7 @@
-package com.example.hospitaldeliveryinterface;
+package com.example.hospitaldeliveryinterface.firebase;
 
+import com.example.hospitaldeliveryinterface.model.DeliveryRequisition;
+import com.example.hospitaldeliveryinterface.PharmaTracApp;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 
@@ -56,6 +58,7 @@ public class DataBaseMgmt {
         //add who edited and what time they edited
         //DocumentReference docRef = PharmaTracApp.fstore.collection(collectionName).document(orderNumber);
         //ApiFuture<WriteResult> writeResult = docRef.update("timeCreated", FieldValue.serverTimestamp());
+
     }
 
 
@@ -118,7 +121,7 @@ public class DataBaseMgmt {
                 );
 
                 requisitionQueue.add(order);
-                System.out.println(order.toString());
+                System.out.println("Here are the build Queue Results: " + order.toString());
             }
             return requisitionQueue;
 

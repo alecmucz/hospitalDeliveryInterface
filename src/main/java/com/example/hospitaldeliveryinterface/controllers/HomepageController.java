@@ -1,20 +1,18 @@
-package com.example.hospitaldeliveryinterface;
+package com.example.hospitaldeliveryinterface.controllers;
 
-
-import com.google.api.core.ApiFuture;
-import com.google.cloud.firestore.*;
-import com.google.cloud.firestore.EventListener;
+import com.example.hospitaldeliveryinterface.firebase.DataBaseMgmt;
+import com.example.hospitaldeliveryinterface.firebase.FirebaseListener;
+import com.example.hospitaldeliveryinterface.model.DeliveryRequisition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
-import javafx.stage.Stage;
+
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.ExecutionException;
 
 public class HomepageController {
     @FXML
@@ -53,10 +51,8 @@ public class HomepageController {
     private Button completedButton;
 
 
-
     @FXML
     private BorderPane deliveryFormPane;
-
 
 
     @FXML
@@ -114,9 +110,13 @@ public class HomepageController {
 
     private String currentPage;
     private String selectedCardOrderNum;
-    private Node selectedCard;
+    private Node selectedCard;//for getting selectedOrder
     TextField[] allInputs;
     public void initialize() throws IOException {
+
+        LoginVbox.setVisible(false);
+        vboxSignedIn.setVisible(false);
+
         isToggleSettings = false;
         isNewDelivery = false;
         isNewAddNote = false;
@@ -133,7 +133,6 @@ public class HomepageController {
         toggleAddNote();
 
         settingNavbar.setPrefWidth(0);
-        displayQueue();
         selectOrder();
 
        //Stuff to handle new Delivery
@@ -179,6 +178,9 @@ public class HomepageController {
             }
         });
 
+        FirebaseListener fsListener = new FirebaseListener(this, currentPage);
+        fsListener.onDataDisplay("pendingDeliveries");
+
     }
 
     @FXML
@@ -217,60 +219,59 @@ public class HomepageController {
         if(checkErrors){
             errMessLabel.setText("**Error: Please fill out all required fields.**");
         }else{
-            String fullName = firstnameText.getText() + " " + lastnameText.getText();
-            DeliveryRequisition newOrder = new DeliveryRequisition(
-                    DeliveryRequisition.generateOrderNum(),
-                    DeliveryRequisition.currentDateTime(),
-                    fullName,
-                    locationText.getText(),
-                    medicationText.getText(),
-                    doseText.getText(),
-                    doseAmountText.getText(),
-                    addNoteText.getText()
-            );
+            boolean checkOnlyNum = doseAmountText.getText().matches("[0-9]+");
 
-            Pending pendQueue = Pending.getInstance();
-            pendQueue.addOrders(newOrder);
+            if(checkOnlyNum){
+                String fullName = firstnameText.getText() + " " + lastnameText.getText();
+                DeliveryRequisition newOrder = new DeliveryRequisition(
+                        DeliveryRequisition.generateOrderNum(),
+                        DeliveryRequisition.currentDateTime(),
+                        fullName,
+                        locationText.getText(),
+                        medicationText.getText(),
+                        doseText.getText(),
+                        doseAmountText.getText(),
+                        addNoteText.getText()
+                );
 
-            if(isEdit && selectedCardOrderNum != null){
-                if(currentPage.equals("Pending")) {
-                    DataBaseMgmt.editOrder("pendingDeliveries", selectedCardOrderNum, newOrder);
+                if(isEdit && selectedCardOrderNum != null){
+                    if(currentPage.equals("Pending")) {
+                        DataBaseMgmt.editOrder("pendingDeliveries", selectedCardOrderNum, newOrder);
+                    }
+                    if(currentPage.equals("Completed")) {
+                        DataBaseMgmt.editOrder("completedDeliveries", selectedCardOrderNum, newOrder);
+                    }
+
+                    isEdit = false;
+                    toggleNewDelivery();
+                    deselectOrder();
                 }
-                if(currentPage.equals("Completed")) {
-                    DataBaseMgmt.editOrder("completedDeliveries", selectedCardOrderNum, newOrder);
+                else {
+                    DataBaseMgmt.addToDB(newOrder, "pendingDeliveries");
+
                 }
-                //pendQueue.getRemoveOrderByOrderNumber(selectedCardOrderNum);
-                //DeliveryRequisition toBeDelivered = pendQueue.getPendingOrderByOrderNumber(selectedCardOrderNum);
-
-                displayQueue();
-                isEdit = false;
-                toggleNewDelivery();
-                deselectOrder();
                 clearText();
+            }else{
+                errMessLabel.setText("**Error: Only numbers for this field.**");
+                errorBorder(doseAmountText);
             }
-            else {
-                DataBaseMgmt.addToDB(newOrder, "pendingDeliveries");
-                displayQueue();
-                clearText();
-            }
-
         }
-
     }
 
     @FXML
     void onPendingClick(ActionEvent event) throws IOException {
         System.out.println("Pending Button Clicked");
         currentPage = "Pending";
-        displayQueue();
+        FirebaseListener fsListener = new FirebaseListener(this,currentPage);
+        fsListener.onDataDisplay("pendingDeliveries");
     }
 
     @FXML
     void onCompleteClick(ActionEvent event) throws IOException {
-        System.out.println("Delivery Button Clicked");
+        System.out.println("Completed Button Clicked");
         currentPage = "Completed";
-        displayQueue();
-
+        FirebaseListener fsListener = new FirebaseListener(this,currentPage);
+        fsListener.onDataDisplay("completedDeliveries");
         isEdit = false;
         isNewDelivery = false;
         toggleNewDelivery();
@@ -284,6 +285,7 @@ public class HomepageController {
         }else{
             buttonNotToggle(settingsButton);
             settingNavbar.setPrefWidth(0);
+            LoginVbox.setVisible(false);    //Bug Fix: discards widgets within LoginVBOX if the Login button is clicked and settings is closed
         }
 
         isToggleSettings = !isToggleSettings;
@@ -367,6 +369,7 @@ public class HomepageController {
             deliveryFormPane.setVisible(false);
         }
     }
+
     public void buttonToggle(Button button){
         button.setStyle("-fx-border-color: white; -fx-background-color: #22aae1;");
     }
@@ -383,49 +386,54 @@ public class HomepageController {
         textfield.setStyle("-fx-border-color: grey;");
     }
 
-    public void displayQueue(){
+    public void displayQueue(Queue<DeliveryRequisition> currentQueue, String collectionName){
+        Platform.runLater(() -> {
 
-        orderDisplayContainer.getChildren().clear();
-        Queue<DeliveryRequisition> currentQueue;
-        if(currentPage.equals("Completed")){
-            deliverReturnBtn.setText("Return to Pending");
-            buttonToggle(completedButton);
-            buttonNotToggle(pendingButton);
-            Completed completeQueue = Completed.getInstance();
-            currentQueue = DataBaseMgmt.buildQueue("completedDeliveries");
-        }else{
-            deliverReturnBtn.setText("Deliver Package");
-            buttonToggle(pendingButton);
-            buttonNotToggle(completedButton);
-            Pending pendQueue = Pending.getInstance();
-            currentQueue = DataBaseMgmt.buildQueue("pendingDeliveries");
-        }
+            System.out.println("TESTING DISPLAY QUEUE HAS BEEN CALLED IN HOMEPAGECONTROLLER");
+            System.out.println("CHECKING SIZE OF ORDERS QUEUE IN DISPLAY QUEUE: " + currentQueue.size());
 
-        if(!currentQueue.isEmpty()){
+            Queue<DeliveryRequisition> tempQueue = null;
 
-            for(DeliveryRequisition order: currentQueue){
-                try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("orderCard.fxml"));
-                    GridPane orderTemplate = loader.load();
-                    OrderCardUIController controller = loader.getController();
-                    controller.updateOrderLabels(order);
-                    orderDisplayContainer.getChildren().add(orderTemplate);
-
-                    //Checking child IDs
-                    for (Node childNode : orderTemplate.getChildren()) {
-                        if (childNode instanceof Label) {
-                            System.out.println("Current child of Order: " + childNode.getId());
-                        }
-                    }
-
-                } catch (IOException e) {
-                    System.out.println("Failed to find orderCard.fxml");
-                }
+            if(currentPage.equals("Completed") && collectionName.equals("completedDeliveries")){
+                orderDisplayContainer.getChildren().clear();
+                deliverReturnBtn.setText("Return to Pending");
+                buttonToggle(completedButton);
+                buttonNotToggle(pendingButton);
+                tempQueue = currentQueue;
             }
-        }
 
-        selectOrder();
+            if(currentPage.equals("Pending") && collectionName.equals("pendingDeliveries")){
+                orderDisplayContainer.getChildren().clear();
+                deliverReturnBtn.setText("Deliver Package");
+                buttonToggle(pendingButton);
+                buttonNotToggle(completedButton);
+                tempQueue = currentQueue;
+            }
 
+            if(tempQueue.isEmpty() || tempQueue == null){
+                orderDisplayContainer.getChildren().clear();
+                return;
+            }
+
+
+            for(DeliveryRequisition order: tempQueue){
+                    System.out.println("CHECKING DISPLAY QUEUE ORDERS: " + order.toString());
+                        try {
+                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hospitaldeliveryinterface/OrderCard.fxml"));
+                            GridPane orderTemplate = loader.load();
+                            OrderCardUIController controller = loader.getController();
+                            controller.updateOrderLabels(order);
+                            orderDisplayContainer.getChildren().add(orderTemplate);
+
+                        } catch (IOException e) {
+                            System.out.println("Failed to find OrderCard.fxml");
+                        }
+
+            }
+
+
+            selectOrder();
+        });
     }
 
     public void selectOrder(){
@@ -449,7 +457,7 @@ public class HomepageController {
                                         if ("orderNumDisplay".equals(label.getId())) {
                                             String labelText  = label.getText().substring(1); // Remove the "#" symbol
                                             selectedCardOrderNum = labelText;
-                                            System.out.println("ORDER NUMBER RETRIEVED: " + labelText);
+                                            //System.out.println("ORDER NUMBER RETRIEVED: " + labelText);
                                             break;
                                         }
                                     }
@@ -474,8 +482,6 @@ public class HomepageController {
                 }
             }
     }
-
-
 
     public void deselectOrder(){
         if(selectedCard != null) {
@@ -547,46 +553,21 @@ public class HomepageController {
     public void sendOrderToCompleted(String selectedorderNum){
         System.out.print("sendOrderToComplete method called!!!");
         System.out.println("selectOrderNum: " + selectedorderNum);
-        Pending pendQueue = Pending.getInstance();
-        Completed  completedQueue = Completed.getInstance();
         if(selectedorderNum != null){
             if(currentPage.equals("Pending")) {
                 DataBaseMgmt.swapDB(selectedCardOrderNum, "pendingDeliveries","completedDeliveries");
             }
-            //DeliveryRequisition toBeDelivered = pendQueue.getPendingOrderByOrderNumber(selectedCardOrderNum);
-            //completedQueue.addOrders(toBeDelivered);
-            //pendQueue.getRemoveOrderByOrderNumber(selectedorderNum);
+
             if(currentPage.equals("Completed")) {
                 DataBaseMgmt.swapDB(selectedCardOrderNum, "completedDeliveries","pendingDeliveries");
             }
             isDelivered = false;
             toggleNewDelivery();
-            displayQueue();
-
+            //deselectOrder();
             selectedCard = null;
             selectedCardOrderNum = null;
-            deselectOrder();
         }
-
-
     }
-
-    /*
-    public void handleLoginButton() {
-        FXMLLoader fxmlLoader = new FXMLLoader(PharmaTracApp.class.getResource("Login.fxml"));
-        Stage stage = PharmaTracApp.getStage();
-        Scene scene = PharmaTracApp.getScene();
-        try {
-            scene.setRoot(fxmlLoader.load());
-            stage.setTitle("Demo: DBAccess");
-
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-
-    }
-
-     */
 
     public static boolean textFieldCheck(String username,String password) {
         boolean checker = false;
