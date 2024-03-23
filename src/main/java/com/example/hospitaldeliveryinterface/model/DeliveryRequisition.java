@@ -19,6 +19,9 @@ public class DeliveryRequisition {
     private String numDoses;
     private String dateTime;
     private String notes;
+    private String deliveredBy; // tracks which staff member signed off on the package
+    private String createdBy; // tracks which staff created the delivery/order
+    private String updatedBy;
 
     /*
     Need to add:
@@ -32,7 +35,7 @@ public class DeliveryRequisition {
     private  String orderNumberDisplay;
     private static int orderNumCount;
 
-    public DeliveryRequisition(String orderNumber, String dateTime, String patientName, String patientLocation, String medication, String dose, String numDoses, String notes) {
+    public DeliveryRequisition(String orderNumber, String dateTime, String patientName, String patientLocation, String medication, String dose, String numDoses, String notes, String deliveredBy, String createdBy, String updatedBy) {
         this.patientName = patientName;
         this.patientLocation = patientLocation;
         this.medication = medication;
@@ -41,6 +44,9 @@ public class DeliveryRequisition {
         this.dateTime = dateTime;
         this.orderNumberDisplay = orderNumber;
         this.notes = notes;
+        this.deliveredBy = deliveredBy;
+        this.createdBy = createdBy;
+        this.updatedBy = updatedBy;
     }
     public void setPatientName(String patientName) {
         this.patientName = patientName;
@@ -56,6 +62,17 @@ public class DeliveryRequisition {
     }
     public void setNumDoses(String numDoses) {
         this.numDoses = numDoses;
+    }
+    public void setDeliveredBy(String deliveredBy) {
+        this.deliveredBy = deliveredBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public void setUpdatedBy(String updatedBy) {
+        this.updatedBy = updatedBy;
     }
 
     public void setNotes(String notes) {
@@ -90,6 +107,17 @@ public class DeliveryRequisition {
     }
     public String getNotes() {
         return notes;
+    }
+    public String getDeliveredBy() {
+        return deliveredBy;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public String getUpdatedBy() {
+        return updatedBy;
     }
     public static int getOrderNumCount() {
         return orderNumCount;

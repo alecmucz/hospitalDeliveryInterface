@@ -43,79 +43,167 @@
       </ToolBar>
    </bottom>
    <right>
-      <VBox fx:id="settingNavbar" alignment="TOP_RIGHT" minWidth="-Infinity" prefHeight="548.0" prefWidth="187.0" style="-fx-background-color: #1678a8;" BorderPane.alignment="CENTER">
+      <HBox BorderPane.alignment="CENTER">
          <children>
-            <Button alignment="CENTER" minWidth="0.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="219.0" style="-fx-background-color: transparent; -fx-border-color: transparent transparent white transparent; -fx-border-width: 0 0 3 0;" text="Button1" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font></Button>
-            <Button alignment="CENTER" layoutX="10.0" layoutY="10.0" minWidth="0.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="219.0" style="-fx-background-color: transparent; -fx-border-color: transparent transparent white transparent; -fx-border-width: 0 0 3 0;" text="Button1" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Button>
-            <Button alignment="CENTER" layoutX="10.0" layoutY="55.0" minWidth="0.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="219.0" style="-fx-background-color: transparent; -fx-border-color: transparent transparent white transparent; -fx-border-width: 0 0 3 0;" text="Button1" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Button>
-            <Button fx:id="LoginButtonChange" alignment="CENTER" layoutX="10.0" layoutY="101.0" minWidth="0.0" mnemonicParsing="false" onAction="#handleLoginButtonChange" prefHeight="45.0" prefWidth="219.0" style="-fx-background-color: transparent; -fx-border-color: transparent transparent white transparent; -fx-border-width: 0 0 3 0;" text="Login" textFill="WHITE">
-               <font>
-                  <Font name="System Bold" size="18.0" />
-               </font>
-            </Button>
-            <VBox fx:id="LoginVbox" alignment="TOP_CENTER">
+            <VBox fx:id="adminNavBar" alignment="TOP_RIGHT" minWidth="-Infinity" style="-fx-background-color: #1678a8;">
                <children>
-                  <Label fx:id="us" alignment="CENTER" minWidth="-Infinity" text="Username" textFill="WHITE">
+                  <Button alignment="CENTER" minWidth="0.0" mnemonicParsing="false" prefHeight="72.0" prefWidth="219.0" style="-fx-background-color: transparent; -fx-border-color: transparent transparent white transparent; -fx-border-width: 0 0 3 0;" textFill="WHITE">
                      <font>
-                        <Font name="Tahoma Bold" size="18.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="textFieldUsername" minWidth="-Infinity">
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </TextField>
-                  <Label alignment="CENTER" minWidth="-Infinity" text="Password" textFill="WHITE">
-                     <font>
-                        <Font name="Tahoma Bold" size="18.0" />
-                     </font>
-                  </Label>
-                  <PasswordField fx:id="textFieldPassword">
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                  </PasswordField>
-                  <Button fx:id="LoginButton" alignment="CENTER" minWidth="-Infinity" mnemonicParsing="false" onAction="#handleLoginButton" style="-fx-background-color: #22aae1; -fx-background-radius: 90;" text="Login" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
+                        <Font name="System Bold" size="18.0" />
                      </font>
                   </Button>
+                  <Button alignment="CENTER" minWidth="0.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="219.0" style="-fx-background-color: transparent; -fx-border-color: transparent transparent white transparent; -fx-border-width: 0 0 3 0;" text="Delete Orders" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Button>
+                  <Button alignment="CENTER" minWidth="0.0" mnemonicParsing="false" onAction="#adminCreateUserChange" prefHeight="30.0" prefWidth="219.0" style="-fx-background-color: transparent; -fx-border-color: transparent transparent white transparent; -fx-border-width: 0 0 3 0;" text="Create Users" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Button>
+                  <VBox fx:id="createuservbox" alignment="TOP_CENTER" prefHeight="200.0">
+                     <children>
+                        <Label fx:id="us11" alignment="CENTER" text="First Name" textFill="WHITE">
+                           <font>
+                              <Font name="Tahoma Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <TextField>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </TextField>
+                        <Label fx:id="us111" alignment="CENTER" text="Last Name" textFill="WHITE">
+                           <font>
+                              <Font name="Tahoma Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <TextField>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <Label fx:id="us1" alignment="CENTER" text="Email / Username" textFill="WHITE">
+                           <font>
+                              <Font name="Tahoma Bold" size="18.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </Label>
+                        <TextField fx:id="textFieldUsername1">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <Label alignment="CENTER" text="Password" textFill="WHITE">
+                           <font>
+                              <Font name="Tahoma Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <PasswordField />
+                        <Label alignment="CENTER" text="Confirm Password" textFill="WHITE">
+                           <font>
+                              <Font name="Tahoma Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <PasswordField>
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </PasswordField>
+                        <Button fx:id="createUserButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleLoginButton" style="-fx-background-color: #22aae1; -fx-background-radius: 90;" text="Create User" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                  </VBox>
                </children>
-               <padding>
-                  <Insets left="10.0" right="10.0" />
-               </padding>
-               <VBox.margin>
-                  <Insets />
-               </VBox.margin>
             </VBox>
-            <Pane minWidth="-Infinity" prefHeight="200.0" />
-            <VBox fx:id="vboxSignedIn" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+            <VBox fx:id="settingNavbar" alignment="TOP_RIGHT" minWidth="-Infinity" style="-fx-background-color: #1678a8;">
                <children>
-                  <Label minWidth="-Infinity" text="Signed in as:" textFill="#12dd4c">
+                  <Button alignment="CENTER" minWidth="0.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="219.0" style="-fx-background-color: transparent; -fx-border-color: transparent transparent white transparent; -fx-border-width: 0 0 3 0;" text="Dark Mode" textFill="WHITE">
                      <font>
-                        <Font name="Tahoma Bold" size="14.0" />
+                        <Font name="System Bold" size="18.0" />
                      </font>
-                  </Label>
-                  <Label fx:id="usernameLabel" minWidth="-Infinity" text="Username" textFill="#12dd4c">
+                  </Button>
+                  <Button alignment="CENTER" layoutX="10.0" layoutY="10.0" minWidth="0.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="219.0" style="-fx-background-color: transparent; -fx-border-color: transparent transparent white transparent; -fx-border-width: 0 0 3 0;" text="Language" textFill="WHITE">
                      <font>
-                        <Font name="Tahoma Bold" size="14.0" />
+                        <Font name="System Bold" size="18.0" />
                      </font>
-                  </Label>
+                  </Button>
+                  <Button fx:id="adminButton" alignment="CENTER" layoutX="10.0" layoutY="55.0" minWidth="0.0" mnemonicParsing="false" onAction="#onAdminClick" prefHeight="45.0" prefWidth="219.0" style="-fx-background-color: transparent; -fx-border-color: transparent transparent white transparent; -fx-border-width: 0 0 3 0;" text="Admin Settings" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="LoginButtonChange" alignment="CENTER" layoutX="10.0" layoutY="101.0" minWidth="0.0" mnemonicParsing="false" onAction="#handleLoginButtonChange" prefHeight="45.0" prefWidth="219.0" style="-fx-background-color: transparent; -fx-border-color: transparent transparent white transparent; -fx-border-width: 0 0 3 0;" text="Login" textFill="WHITE">
+                     <font>
+                        <Font name="System Bold" size="18.0" />
+                     </font>
+                  </Button>
+                  <VBox fx:id="LoginVbox" alignment="TOP_CENTER">
+                     <children>
+                        <Label fx:id="us" alignment="CENTER" text="Username" textFill="WHITE">
+                           <font>
+                              <Font name="Tahoma Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <TextField fx:id="textFieldUsername">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </TextField>
+                        <Label alignment="CENTER" text="Password" textFill="WHITE">
+                           <font>
+                              <Font name="Tahoma Bold" size="18.0" />
+                           </font>
+                        </Label>
+                        <PasswordField fx:id="textFieldPassword">
+                           <VBox.margin>
+                              <Insets bottom="10.0" />
+                           </VBox.margin>
+                        </PasswordField>
+                        <Button fx:id="LoginButton" alignment="CENTER" mnemonicParsing="false" onAction="#handleLoginButton" style="-fx-background-color: #22aae1; -fx-background-radius: 90;" text="Log In" textFill="WHITE">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Button>
+                     </children>
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </VBox>
+                  <Pane prefHeight="200.0" />
+                  <VBox fx:id="vboxSignedIn" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label text="User Signed In :" textFill="#12dd4c">
+                           <font>
+                              <Font name="Tahoma Bold" size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="usernameLabel" text="Username" textFill="#12dd4c">
+                           <font>
+                              <Font name="Tahoma Bold" size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </VBox>
                </children>
             </VBox>
          </children>
-      </VBox>
+      </HBox>
    </right>
    <center>
       <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
@@ -317,17 +405,17 @@
                </items>
             </MenuButton>
             <Pane prefHeight="51.0" prefWidth="0.0" HBox.hgrow="ALWAYS" />
-            <Button fx:id="pendingButton" alignment="CENTER" mnemonicParsing="false" onAction="#onPendingClick" prefHeight="39.0" prefWidth="102.0" style="-fx-background-color: trasnsparent;" text="Pending" textFill="WHITE">
+            <Button fx:id="pendingButton" alignment="CENTER" mnemonicParsing="false" onAction="#onPendingClick" prefHeight="39.0" style="-fx-background-color: trasnsparent;" text="Pending" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="completedButton" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#onCompleteClick" prefHeight="39.0" prefWidth="97.0" style="-fx-background-color: transparent;" text="Completed" textFill="WHITE">
+            <Button fx:id="completedButton" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#onCompleteClick" prefHeight="39.0" style="-fx-background-color: transparent;" text="Completed" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="settingsButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSettingClick" prefHeight="39.0" prefWidth="92.0" style="-fx-background-color: transparent;" text="Settings" textFill="WHITE">
+            <Button fx:id="settingsButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSettingClick" prefHeight="39.0" style="-fx-background-color: transparent;" text="Settings" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
