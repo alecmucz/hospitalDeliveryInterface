@@ -19,6 +19,9 @@ public class DeliveryRequisition {
     private String numDoses;
     private String dateTime;
     private String notes;
+    private String deliveredBy; // tracks which staff member signed off on the package
+    private String createdBy; // tracks which staff created the delivery/order
+    private String updatedBy;
 
     /*
     Need to add:
