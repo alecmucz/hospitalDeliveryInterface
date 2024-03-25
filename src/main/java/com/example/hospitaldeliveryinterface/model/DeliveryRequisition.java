@@ -23,19 +23,10 @@ public class DeliveryRequisition {
     private String createdBy; // tracks which staff created the delivery/order
     private String updatedBy;
 
-    /*
-    Need to add:
-    - Deliveredby: tracks which staff member signed off of package
-    - CreatdeBy: tracks which staff created the delivery/order
-    -UpdateBy: tracks who update order if needed
-
-    */
-
-
     private  String orderNumberDisplay;
     private static int orderNumCount;
 
-    public DeliveryRequisition(String orderNumber, String dateTime, String patientName, String patientLocation, String medication, String dose, String numDoses, String notes) {
+    public DeliveryRequisition(String orderNumber, String dateTime, String patientName, String patientLocation, String medication, String dose, String numDoses, String notes, String deliveredBy, String createdBy, String updatedBy) {
         this.patientName = patientName;
         this.patientLocation = patientLocation;
         this.medication = medication;
@@ -44,6 +35,10 @@ public class DeliveryRequisition {
         this.dateTime = dateTime;
         this.orderNumberDisplay = orderNumber;
         this.notes = notes;
+        this.deliveredBy = deliveredBy;
+        this.createdBy = createdBy;
+        this.updatedBy = updatedBy;
+
     }
     public void setPatientName(String patientName) {
         this.patientName = patientName;
@@ -68,6 +63,22 @@ public class DeliveryRequisition {
     public static void setOrderNumCount(int DBcount) {
         orderNumCount = DBcount;
     }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
+    }
+
+    public String getUpdatedBy() {
+        return updatedBy;
+    }
+
+    public void setUpdatedBy(String updatedBy) {
+        this.updatedBy = updatedBy;
+    }
+
+
+
+
     public String getPatientName(){
         return patientName;
     }
@@ -93,6 +104,18 @@ public class DeliveryRequisition {
     }
     public String getNotes() {
         return notes;
+    }
+
+    public String getDeliveredBy() {
+        return deliveredBy;
+    }
+
+    public void setDeliveredBy(String deliveredBy) {
+        this.deliveredBy = deliveredBy;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
     }
     public static int getOrderNumCount() {
         return orderNumCount;
