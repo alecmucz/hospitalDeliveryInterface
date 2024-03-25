@@ -33,6 +33,8 @@ public class HomepageController {
     @FXML
     private VBox LoginVbox;
 
+    @FXML
+    private VBox createuservbox;
 
     @FXML
     private Label usernameLabel;
@@ -99,10 +101,18 @@ public class HomepageController {
     private VBox settingNavbar;
 
     @FXML
+    private VBox adminNavBar;
+
+    @FXML
     private Button settingsButton;
+
+    @FXML
+    private Button adminButton;
 
     //variables created
     private boolean isToggleSettings;
+
+    private boolean isToggleAdmin;
     private boolean isNewDelivery;
     private boolean isNewAddNote;
     private boolean isEdit;
@@ -116,6 +126,7 @@ public class HomepageController {
 
         LoginVbox.setVisible(false);
         vboxSignedIn.setVisible(false);
+        createuservbox.setVisible(false);
 
         isToggleSettings = false;
         isNewDelivery = false;
@@ -133,6 +144,7 @@ public class HomepageController {
         toggleAddNote();
 
         settingNavbar.setPrefWidth(0);
+        adminNavBar.setPrefWidth(0);
         selectOrder();
 
        //Stuff to handle new Delivery
@@ -281,14 +293,26 @@ public class HomepageController {
     void onSettingClick(ActionEvent event) {
         if(!isToggleSettings){
             buttonToggle(settingsButton);
-            settingNavbar.setPrefWidth(161);
+            settingNavbar.setPrefWidth(200);
         }else{
             buttonNotToggle(settingsButton);
             settingNavbar.setPrefWidth(0);
+            adminNavBar.setPrefWidth(0);
             LoginVbox.setVisible(false);    //Bug Fix: discards widgets within LoginVBOX if the Login button is clicked and settings is closed
         }
 
         isToggleSettings = !isToggleSettings;
+    }
+
+    @FXML
+    void onAdminClick(ActionEvent event) {
+        isToggleAdmin = !isToggleAdmin; // Toggle the state at the beginning
+
+        if (isToggleAdmin) {
+            adminNavBar.setPrefWidth(200);
+        } else {
+            adminNavBar.setPrefWidth(0);
+        }
     }
 
     @FXML
@@ -377,6 +401,7 @@ public class HomepageController {
     public void buttonNotToggle(Button button){
         button.setStyle("-fx-border-color: transparent; -fx-background-color: #22aae1;");
     }
+
 
 
     public void errorBorder(TextField textField){
@@ -616,6 +641,11 @@ public class HomepageController {
             LoginVbox.setVisible(true);
             vboxSignedIn.setVisible(false);
         }
+    }
+
+    @FXML
+    void adminCreateUserChange(ActionEvent event){
+        createuservbox.setVisible(!createuservbox.isVisible());
     }
     @FXML
     void handleLoginButton() {
