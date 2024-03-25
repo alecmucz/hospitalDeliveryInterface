@@ -344,7 +344,7 @@
             </ToolBar>
          </top>
       </BorderPane>
-      <VBox fx:id="settingNavbar" alignment="TOP_RIGHT" layoutX="900.0" layoutY="106.0" prefHeight="159.0" prefWidth="140.0" style="-fx-background-color: #22aae1;" visible="false" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="78.0">
+      <VBox fx:id="settingNavbar" alignment="TOP_RIGHT" layoutX="900.0" layoutY="106.0" prefHeight="159.0" prefWidth="140.0" style="-fx-background-color: #22aae1;" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="78.0">
          <children>
             <Button alignment="CENTER" contentDisplay="CENTER" minWidth="0.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="219.0" style="-fx-background-color: transparent;" text="Dark Mode" textAlignment="CENTER" textFill="WHITE">
                <font>
