@@ -492,13 +492,10 @@ public class HomepageController {
     public void selectOrder() {
         for (Node node : orderDisplayContainer.getChildren()) {
             node.setOnMouseClicked(mouseEvent -> {
-                // Check if the clicked node is already selected
                 if (selectedCards.contains(node)) {
-                    // Node is already selected, deselect it
                     node.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: transparent");
                     selectedCards.remove(node);
                 } else {
-                    // Node is not selected, select it
                     if (node instanceof GridPane) {
                         GridPane gridPane = (GridPane) node;
                         gridPane.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: #98FB98");
@@ -506,8 +503,7 @@ public class HomepageController {
                             if (childNode instanceof Label) {
                                 Label label = (Label) childNode;
                                 if ("orderNumDisplay".equals(label.getId())) {
-                                    String labelText = label.getText().substring(1); // Remove the "#" symbol
-                                    // Here you might want to keep track of the selected order numbers as well
+                                    String labelText = label.getText().substring(1);
                                     break;
                                 }
                             }
@@ -515,18 +511,13 @@ public class HomepageController {
                     }
                     selectedCards.add(node);
                 }
-
-                // Update UI based on the current selection
                 updateSelectionDependentUI();
             });
         }
     }
 
     private void updateSelectionDependentUI() {
-        // Here, implement logic to update the UI based on the current selection.
-        // For example, enabling or disabling buttons based on whether any cards are selected.
         isEdit = !selectedCards.isEmpty();
-        // Additional UI updates as necessary.
     }
 
     public void deselectOrder(){
