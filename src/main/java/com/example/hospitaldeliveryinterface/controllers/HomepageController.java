@@ -147,7 +147,7 @@ public class HomepageController {
         adminNavBar.setPrefWidth(0);
         selectOrder();
 
-       //Stuff to handle new Delivery
+        //Stuff to handle new Delivery
         errMessLabel.setText("");
         allInputs = new TextField[]{
                 firstnameText,
@@ -243,7 +243,7 @@ public class HomepageController {
                         medicationText.getText(),
                         doseText.getText(),
                         doseAmountText.getText(),
-                        addNoteText.getText()
+                        addNoteText.getText(), "", "", ""
                 );
 
                 if(isEdit && selectedCardOrderNum != null){
@@ -326,12 +326,39 @@ public class HomepageController {
     }
     @FXML
     void onDeliverReturn(ActionEvent event) {
-        if(selectedCard != null){
-            isDelivered = !isDelivered;
-            isEdit = false;
-            toggleNewDelivery();
-            sendOrderToCompleted(selectedCardOrderNum);
+        System.out.println("Order(s) sent to Delivery Queue");
+        if (!selectedCards.isEmpty()) {
+            for (Node node : selectedCards) {
+                String orderNumber = extractOrderNumberFromNode(node);
+                if (orderNumber != null) {
+                    if (currentPage.equals("Pending")) {
+                        DataBaseMgmt.swapDB(orderNumber, "pendingDeliveries", "completedDeliveries");
+                    } else if (currentPage.equals("Completed")) {
+                        DataBaseMgmt.swapDB(orderNumber, "completedDeliveries", "pendingDeliveries");
+                    }
+                }
+            }
+            clearSelections();
+            updateSelectionDependentUI();
         }
+    }
+
+    private String extractOrderNumberFromNode(Node node) {
+        if (node instanceof GridPane) {
+            for (Node child : ((GridPane) node).getChildren()) {
+                if (child instanceof Label && "orderNumDisplay".equals(child.getId())) {
+                    return ((Label) child).getText().substring(1);
+                }
+            }
+        }
+        return null;
+    }
+
+    private void clearSelections() {
+        for (Node node : selectedCards) {
+            node.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: transparent");
+        }
+        selectedCards.clear();
     }
 
     @FXML
@@ -442,17 +469,17 @@ public class HomepageController {
 
 
             for(DeliveryRequisition order: tempQueue){
-                    System.out.println("CHECKING DISPLAY QUEUE ORDERS: " + order.toString());
-                        try {
-                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hospitaldeliveryinterface/OrderCard.fxml"));
-                            GridPane orderTemplate = loader.load();
-                            OrderCardUIController controller = loader.getController();
-                            controller.updateOrderLabels(order);
-                            orderDisplayContainer.getChildren().add(orderTemplate);
+                System.out.println("CHECKING DISPLAY QUEUE ORDERS: " + order.toString());
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hospitaldeliveryinterface/OrderCard.fxml"));
+                    GridPane orderTemplate = loader.load();
+                    OrderCardUIController controller = loader.getController();
+                    controller.updateOrderLabels(order);
+                    orderDisplayContainer.getChildren().add(orderTemplate);
 
-                        } catch (IOException e) {
-                            System.out.println("Failed to find OrderCard.fxml");
-                        }
+                } catch (IOException e) {
+                    System.out.println("Failed to find OrderCard.fxml");
+                }
 
             }
 
@@ -461,51 +488,36 @@ public class HomepageController {
         });
     }
 
-    public void selectOrder(){
-            for(Node node: orderDisplayContainer.getChildren()){
-                node.setOnMouseClicked(mouseEvent -> {
-                    if(selectedCard != null &&  selectedCard != node){
-                        selectedCard.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: transparent");
-                        selectedCard = null;
-                        isEdit = false;
-                        isDelivered = false;
-                        toggleNewDelivery();
-                    }
-
-                    if(selectedCard != node || selectedCard == null){
-                            if (node instanceof GridPane) {
-                                GridPane gridpane = (GridPane) node;
-                                gridpane.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: #ffbdbd");
-                                for(Node childNode : gridpane.getChildren()){
-                                    if (childNode instanceof Label) {
-                                        Label label = (Label) childNode;
-                                        if ("orderNumDisplay".equals(label.getId())) {
-                                            String labelText  = label.getText().substring(1); // Remove the "#" symbol
-                                            selectedCardOrderNum = labelText;
-                                            //System.out.println("ORDER NUMBER RETRIEVED: " + labelText);
-                                            break;
-                                        }
-                                    }
+    private Set<Node> selectedCards = new HashSet<>();
+    public void selectOrder() {
+        for (Node node : orderDisplayContainer.getChildren()) {
+            node.setOnMouseClicked(mouseEvent -> {
+                if (selectedCards.contains(node)) {
+                    node.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: transparent");
+                    selectedCards.remove(node);
+                } else {
+                    if (node instanceof GridPane) {
+                        GridPane gridPane = (GridPane) node;
+                        gridPane.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: #98FB98");
+                        for (Node childNode : gridPane.getChildren()) {
+                            if (childNode instanceof Label) {
+                                Label label = (Label) childNode;
+                                if ("orderNumDisplay".equals(label.getId())) {
+                                    String labelText = label.getText().substring(1);
+                                    break;
                                 }
                             }
-                        selectedCard = node;
-
-                    }else{
-                        selectedCard.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: transparent");
-
-                        selectedCard = null;
-                        isEdit = false;
-                        isDelivered = false;
-                        toggleNewDelivery();
+                        }
                     }
-                });
-            }
-
-            if(!isEdit){
-                for(Node node: orderDisplayContainer.getChildren()){
-                    node.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: transparent");
+                    selectedCards.add(node);
                 }
-            }
+                updateSelectionDependentUI();
+            });
+        }
+    }
+
+    private void updateSelectionDependentUI() {
+        isEdit = !selectedCards.isEmpty();
     }
 
     public void deselectOrder(){
@@ -650,17 +662,17 @@ public class HomepageController {
     @FXML
     void handleLoginButton() {
 
-            if (textFieldCheck(textFieldUsername.getText(), textFieldPassword.getText()) == false) {
-                showDialogCorrect();
-                LoginVbox.setVisible(false);
-                usernameLabel.setText(String.valueOf(textFieldUsername.getText()));
-                vboxSignedIn.setVisible(true);
-                LoginButtonChange.setText("Sign out");
-            } else{
-                showDialog();
-            }
-            textFieldUsername.clear();
-            textFieldPassword.clear();
+        if (textFieldCheck(textFieldUsername.getText(), textFieldPassword.getText()) == false) {
+            showDialogCorrect();
+            LoginVbox.setVisible(false);
+            usernameLabel.setText(String.valueOf(textFieldUsername.getText()));
+            vboxSignedIn.setVisible(true);
+            LoginButtonChange.setText("Sign out");
+        } else{
+            showDialog();
+        }
+        textFieldUsername.clear();
+        textFieldPassword.clear();
 
     }
 }

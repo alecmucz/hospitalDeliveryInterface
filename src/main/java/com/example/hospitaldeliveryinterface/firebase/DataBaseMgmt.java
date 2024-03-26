@@ -26,6 +26,9 @@ public class DataBaseMgmt {
         data.put("numDoses", deliveryRequisition.getNumDoses());
         data.put("timeCreated", deliveryRequisition.getDateTime());
         data.put("notes", deliveryRequisition.getNotes());
+        data.put("deliveredBy", deliveryRequisition.getDeliveredBy() != null ? deliveryRequisition.getDeliveredBy() : "");
+        data.put("createdBy", deliveryRequisition.getCreatedBy() != null ? deliveryRequisition.getCreatedBy() : "");
+        data.put("updatedBy", deliveryRequisition.getUpdatedBy() != null ? deliveryRequisition.getUpdatedBy() : "");
         if(collectionName.equals("pendingDeliveries")){
             data.put("status", "p");
         }
@@ -53,6 +56,7 @@ public class DataBaseMgmt {
         data.put("numDoses", order.getNumDoses());
         data.put("timeCreated", order.getDateTime());
         data.put("notes", order.getNotes());
+        data.put("updatedBy", Optional.ofNullable(order.getUpdatedBy()).orElse(""));
 
         ApiFuture<WriteResult> future = PharmaTracApp.fstore.collection(collectionName).document(orderNumber).set(data);
         //add who edited and what time they edited
@@ -117,7 +121,10 @@ public class DataBaseMgmt {
                         , document.getString("medication")
                         , document.getString("dose")
                         , document.getString("numDoses")
-                        , document.getString("notes")
+                        , document.getString("notes"),
+                        document.getString("deliveredBy"),
+                        document.getString("createdBy"),
+                        document.getString("updatedBy")
                 );
 
                 requisitionQueue.add(order);
@@ -177,14 +184,17 @@ public class DataBaseMgmt {
         try {
             DocumentSnapshot document = future.get();
             DeliveryRequisition order = new DeliveryRequisition(
-                    document.getId()
-                    ,document.getString("timeCreated")
-                    ,document.getString("patientName")
-                    , document.getString("location")
-                    , document.getString("medication")
-                    , document.getString("dose")
-                    , document.getString("numDoses")
-                    , document.getString("notes")
+                    document.getId(),
+                    document.getString("timeCreated"),
+                    document.getString("patientName"),
+                    document.getString("location"),
+                    document.getString("medication"),
+                    document.getString("dose"),
+                    document.getString("numDoses"),
+                    document.getString("notes"),
+                    document.getString("deliveredBy"),
+                    document.getString("createdBy"),
+                    document.getString("updatedBy")
             );
             return order;
         } catch (InterruptedException e) {
