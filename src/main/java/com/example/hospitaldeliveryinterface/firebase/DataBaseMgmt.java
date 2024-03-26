@@ -54,10 +54,13 @@ public class DataBaseMgmt {
         data.put("dose", order.getDose());
         data.put("numDoses", order.getNumDoses());
         data.put("timeCreated", order.getDateTime());
-        data.put("notes", order.getNotes());
+        //data.put("notes", order.getNotes());
         data.put("updatedBy", Optional.ofNullable(order.getUpdatedBy()).orElse(""));
 
         ApiFuture<WriteResult> future = PharmaTracApp.fstore.collection(collectionName).document(orderNumber).set(data);
+
+        DocumentReference docRef = PharmaTracApp.fstore.collection(collectionName).document(orderNumber);
+        ApiFuture<WriteResult> future1 = docRef.update("notes", order.getNotes());
     }
 
 

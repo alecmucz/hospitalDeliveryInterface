@@ -123,6 +123,11 @@
             <Font name="System Bold" size="14.0" />
          </font>
       </Label>
+      <Label fx:id="notesLabel" prefHeight="27.0" prefWidth="518.0" text="Label" GridPane.columnIndex="3" GridPane.rowIndex="5">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
       <Label alignment="CENTER_RIGHT" layoutX="301.0" layoutY="167.0" prefHeight="30.0" text="**Notes**:" textFill="#1e90f5" GridPane.columnIndex="2" GridPane.rowIndex="5">
          <font>
             <Font name="System Bold" size="14.0" />
@@ -134,11 +139,6 @@
          </font>
       </Label>
       <Label fx:id="updatedByDisplay" prefHeight="27.0" prefWidth="518.0" text="Label" textFill="#34e339" GridPane.columnIndex="3" GridPane.rowIndex="2">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label fx:id="notesLabel" prefHeight="27.0" prefWidth="518.0" text="Label" textFill="#34e339" GridPane.columnIndex="3" GridPane.rowIndex="5">
          <font>
             <Font name="System Bold" size="14.0" />
          </font>
