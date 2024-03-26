@@ -160,9 +160,11 @@ public class HomepageController {
         selectedCardOrderNum = null;
         isDelivered = false;
         toggleCreateUser = false;
-        int totalOrders = DataBaseMgmt.getTotalNumOrders();
-        DeliveryRequisition.setOrderNumCount(totalOrders);
-
+        //int totalOrders = DataBaseMgmt.getTotalNumOrders();
+        //DeliveryRequisition.setOrderNumCount(totalOrders);
+         /*
+        You need to uncomment this part
+         */
         currentPage = "Pending";
 
         toggleNewDelivery();
@@ -219,7 +221,10 @@ public class HomepageController {
         });
 
         FirebaseListener fsListener = new FirebaseListener(this, currentPage);
-        fsListener.onDataDisplay("pendingDeliveries");
+        //fsListener.onDataDisplay("pendingDeliveries");
+        /*
+        You need to uncomment this part
+         */
 
     }
 
@@ -271,7 +276,10 @@ public class HomepageController {
                         medicationText.getText(),
                         doseText.getText(),
                         doseAmountText.getText(),
-                        addNoteText.getText()
+                        addNoteText.getText(),
+                        "",
+                        "",
+                        ""
                 );
 
                 if(isEdit && selectedCardOrderNum != null){
