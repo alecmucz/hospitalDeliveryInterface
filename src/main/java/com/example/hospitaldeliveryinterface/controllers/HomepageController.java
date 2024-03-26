@@ -3,6 +3,7 @@ package com.example.hospitaldeliveryinterface.controllers;
 import com.example.hospitaldeliveryinterface.firebase.DataBaseMgmt;
 import com.example.hospitaldeliveryinterface.firebase.FirebaseListener;
 import com.example.hospitaldeliveryinterface.model.DeliveryRequisition;
+import com.example.hospitaldeliveryinterface.model.Employee;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -160,11 +161,10 @@ public class HomepageController {
         selectedCardOrderNum = null;
         isDelivered = false;
         toggleCreateUser = false;
-        //int totalOrders = DataBaseMgmt.getTotalNumOrders();
-        //DeliveryRequisition.setOrderNumCount(totalOrders);
-         /*
-        You need to uncomment this part
-         */
+        int totalOrders = DataBaseMgmt.getTotalNumOrders();
+        DeliveryRequisition.setOrderNumCount(totalOrders);
+        Employee currentEmployee = null; // employee who is logged in 
+
         currentPage = "Pending";
 
         toggleNewDelivery();

@@ -4,13 +4,15 @@ public class Employee {
     private String firstName;
     private String lastName;
     private int employeeId;
+    private String email;
+
 
     public Employee(String firstName, String lastName, int employeeId){
         this.firstName = firstName;
         this.lastName = lastName;
         this.employeeId = employeeId;
     }
-    public void setFirstName(String fristName){
+    public void setFirstName(String firstName){
         this.firstName = firstName;
     }
     public void setLastName(String lastName) {
@@ -19,6 +21,11 @@ public class Employee {
     public void setEmployeeId() {
         this.employeeId = employeeId;
     }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
     public String getFirstName(){
         return firstName;
     }
@@ -28,5 +35,7 @@ public class Employee {
     public int getEmployeeId() {
         return employeeId;
     }
-
+    public String getEmail() {
+        return email;
+    }
 }
