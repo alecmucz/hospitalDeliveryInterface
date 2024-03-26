@@ -10,7 +10,6 @@ import java.util.concurrent.ExecutionException;
 
 public class DataBaseMgmt {
 
-
     /**
      * adds a new deliveryRequisition to the pending collection of DB
      */
@@ -59,10 +58,6 @@ public class DataBaseMgmt {
         data.put("updatedBy", Optional.ofNullable(order.getUpdatedBy()).orElse(""));
 
         ApiFuture<WriteResult> future = PharmaTracApp.fstore.collection(collectionName).document(orderNumber).set(data);
-        //add who edited and what time they edited
-        //DocumentReference docRef = PharmaTracApp.fstore.collection(collectionName).document(orderNumber);
-        //ApiFuture<WriteResult> writeResult = docRef.update("timeCreated", FieldValue.serverTimestamp());
-
     }
 
 
@@ -165,7 +160,6 @@ public class DataBaseMgmt {
      * @param collectionName collection you are deleting the target order from
      */
     public static void deleteFromDB(String orderNumber, String collectionName) {
-
         PharmaTracApp.fstore.collection(collectionName).document(orderNumber).delete();
     }
 
