@@ -31,6 +31,16 @@ public class OrderCardUIController {
     @FXML
     private GridPane orderTemplate;
 
+    @FXML
+    private Label deliveredByDisplay;
+
+    @FXML
+    private Label updatedByDisplay;
+
+    @FXML
+    private Label createdByDisplay;
+
+
     public void updateOrderLabels(DeliveryRequisition order){
         orderNumDisplay.setText("#"+order.getOrderNumberDisplay());
         patientNameDisplay.setText(order.getPatientName());
@@ -39,7 +49,8 @@ public class OrderCardUIController {
         doseDisplay.setText(order.getDose());
         doseQuantityDisplay.setText(order.getNumDoses());
         dateDisplay.setText(order.getDateTime());
+        deliveredByDisplay.setText(order.getDeliveredBy());
+        createdByDisplay.setText(order.getCreatedBy());
+        updatedByDisplay.setText(order.getUpdatedBy());
     }
-
-
 }

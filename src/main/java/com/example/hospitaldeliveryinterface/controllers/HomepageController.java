@@ -16,7 +16,7 @@ import java.util.*;
 
 public class HomepageController {
     @FXML
-    private VBox vboxSignedIn;
+    private BorderPane LogInVbox;
 
     @FXML
     private Button LoginButton;
@@ -25,37 +25,38 @@ public class HomepageController {
     private Button LoginButtonChange;
 
     @FXML
-    private TextField textFieldUsername;
-
-    @FXML
-    private TextField textFieldPassword;
-
-    @FXML
-    private VBox LoginVbox;
-
-    @FXML
-    private VBox createuservbox;
-
-    @FXML
-    private Label usernameLabel;
-
-    @FXML
-    private Button deliverReturnBtn;
-
-    @FXML
     private Button addNoteBtn;
 
     @FXML
     private TextArea addNoteText;
 
+    @FXML
+    private Button adminButton;
+
+    @FXML
+    private VBox adminNavBar;
+
+    @FXML
+    private VBox adminToolsNav;
+
+    @FXML
+    private ToolBar bottomToolBar;
 
     @FXML
     private Button completedButton;
 
+    @FXML
+    private Button createUserButton;
+
+
+    @FXML
+    private Button deliverReturnBtn;
+
+    @FXML
+    private Label deliveryFormLabel;
 
     @FXML
     private BorderPane deliveryFormPane;
-
 
     @FXML
     private TextField doseAmountText;
@@ -73,9 +74,6 @@ public class HomepageController {
     private MenuButton filterbtn;
 
     @FXML
-    private Label deliveryFormLabel;
-
-    @FXML
     private TextField firstnameText;
 
     @FXML
@@ -84,12 +82,20 @@ public class HomepageController {
     @FXML
     private TextField locationText;
 
+    @FXML
+    private BorderPane mainLayout;
 
     @FXML
     private TextField medicationText;
 
     @FXML
     private Button newDeliveryButton;
+
+    @FXML
+    private AnchorPane notifyBox;
+
+    @FXML
+    private Label notifyMess;
 
     @FXML
     private VBox orderDisplayContainer;
@@ -101,13 +107,31 @@ public class HomepageController {
     private VBox settingNavbar;
 
     @FXML
-    private VBox adminNavBar;
-
-    @FXML
     private Button settingsButton;
 
     @FXML
-    private Button adminButton;
+    private PasswordField textFieldPassword;
+
+    @FXML
+    private TextField textFieldUsername;
+
+    @FXML
+    private TextField textFieldUsername1;
+
+    @FXML
+    private Label us;
+
+    @FXML
+    private Label us1;
+
+    @FXML
+    private Label us11;
+
+    @FXML
+    private Label us111;
+
+    @FXML
+    private Label usernameLabel;
 
     //variables created
     private boolean isToggleSettings;
@@ -117,16 +141,16 @@ public class HomepageController {
     private boolean isNewAddNote;
     private boolean isEdit;
     private boolean isDelivered;
+    private  boolean toggleCreateUser;
 
     private String currentPage;
     private String selectedCardOrderNum;
     private Node selectedCard;//for getting selectedOrder
     TextField[] allInputs;
+    
     public void initialize() throws IOException {
 
-        LoginVbox.setVisible(false);
-        vboxSignedIn.setVisible(false);
-        createuservbox.setVisible(false);
+        LogInVbox.setVisible(false);
 
         isToggleSettings = false;
         isNewDelivery = false;
@@ -135,16 +159,22 @@ public class HomepageController {
         selectedCard = null;
         selectedCardOrderNum = null;
         isDelivered = false;
-        int totalOrders = DataBaseMgmt.getTotalNumOrders();
-        DeliveryRequisition.setOrderNumCount(totalOrders);
-
+        toggleCreateUser = false;
+        //int totalOrders = DataBaseMgmt.getTotalNumOrders();
+        //DeliveryRequisition.setOrderNumCount(totalOrders);
+         /*
+        You need to uncomment this part
+         */
         currentPage = "Pending";
 
         toggleNewDelivery();
         toggleAddNote();
 
-        settingNavbar.setPrefWidth(0);
+        settingNavbar.setVisible(false);
+        adminToolsNav.setVisible(false);
+        notifyBox.setVisible(false);
         adminNavBar.setPrefWidth(0);
+        adminNavBar.setVisible(false);
         selectOrder();
 
        //Stuff to handle new Delivery
@@ -191,7 +221,10 @@ public class HomepageController {
         });
 
         FirebaseListener fsListener = new FirebaseListener(this, currentPage);
-        fsListener.onDataDisplay("pendingDeliveries");
+        //fsListener.onDataDisplay("pendingDeliveries");
+        /*
+        You need to uncomment this part
+         */
 
     }
 
@@ -243,7 +276,10 @@ public class HomepageController {
                         medicationText.getText(),
                         doseText.getText(),
                         doseAmountText.getText(),
-                        addNoteText.getText()
+                        addNoteText.getText(),
+                        "",
+                        "",
+                        ""
                 );
 
                 if(isEdit && selectedCardOrderNum != null){
@@ -293,12 +329,14 @@ public class HomepageController {
     void onSettingClick(ActionEvent event) {
         if(!isToggleSettings){
             buttonToggle(settingsButton);
-            settingNavbar.setPrefWidth(200);
+            settingNavbar.setVisible(true);
         }else{
             buttonNotToggle(settingsButton);
-            settingNavbar.setPrefWidth(0);
-            adminNavBar.setPrefWidth(0);
-            LoginVbox.setVisible(false);    //Bug Fix: discards widgets within LoginVBOX if the Login button is clicked and settings is closed
+            settingNavbar.setVisible(false);
+            LogInVbox.setVisible(false);    //Bug Fix: discards widgets within LoginVBOX if the Login button is clicked and settings is closed
+            adminToolsNav.setVisible(false);
+            isToggleAdmin = false;
+
         }
 
         isToggleSettings = !isToggleSettings;
@@ -309,9 +347,9 @@ public class HomepageController {
         isToggleAdmin = !isToggleAdmin; // Toggle the state at the beginning
 
         if (isToggleAdmin) {
-            adminNavBar.setPrefWidth(200);
+            adminToolsNav.setVisible(true);
         } else {
-            adminNavBar.setPrefWidth(0);
+            adminToolsNav.setVisible(false);
         }
     }
 
@@ -633,28 +671,36 @@ public class HomepageController {
     @FXML
     void handleLoginButtonChange() {
         if (LoginButtonChange.getText().equals("Login")) {
-            LoginVbox.setVisible(true);
+            LogInVbox.setVisible(true);
         }
         else if (LoginButtonChange.getText().equals("Sign out")) {
             showDialogSignOut();
             LoginButtonChange.setText("Login");
-            LoginVbox.setVisible(true);
-            vboxSignedIn.setVisible(false);
+            LogInVbox.setVisible(true);
+
         }
     }
 
     @FXML
     void adminCreateUserChange(ActionEvent event){
-        createuservbox.setVisible(!createuservbox.isVisible());
+
+        if(!toggleCreateUser){
+            adminNavBar.setVisible(true);
+            adminNavBar.setPrefWidth(314);
+        }else {
+            adminNavBar.setPrefWidth(0);
+            adminNavBar.setVisible(false);
+        }
+        toggleCreateUser = !toggleCreateUser;
     }
     @FXML
     void handleLoginButton() {
 
             if (textFieldCheck(textFieldUsername.getText(), textFieldPassword.getText()) == false) {
                 showDialogCorrect();
-                LoginVbox.setVisible(false);
+                LogInVbox.setVisible(false);
                 usernameLabel.setText(String.valueOf(textFieldUsername.getText()));
-                vboxSignedIn.setVisible(true);
+
                 LoginButtonChange.setText("Sign out");
             } else{
                 showDialog();
@@ -662,5 +708,22 @@ public class HomepageController {
             textFieldUsername.clear();
             textFieldPassword.clear();
 
+    }
+
+    @FXML
+    void onReturnToHome(ActionEvent event) {
+        LogInVbox.setVisible(false);
+    }
+
+    @FXML
+    void onCreateUser(ActionEvent event) {
+
+    }
+
+    @FXML
+    void onCloseUserCreate(ActionEvent event) {
+        adminNavBar.setPrefWidth(0);
+        toggleCreateUser = false;
+        adminNavBar.setVisible(false);
     }
 }
