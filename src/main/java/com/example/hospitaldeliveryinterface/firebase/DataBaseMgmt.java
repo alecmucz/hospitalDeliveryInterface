@@ -2,6 +2,7 @@ package com.example.hospitaldeliveryinterface.firebase;
 
 import com.example.hospitaldeliveryinterface.model.DeliveryRequisition;
 import com.example.hospitaldeliveryinterface.PharmaTracApp;
+import com.example.hospitaldeliveryinterface.model.NotifyMessg;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 
@@ -9,6 +10,21 @@ import java.util.*;
 import java.util.concurrent.ExecutionException;
 
 public class DataBaseMgmt {
+
+    //-------------------NEW METHODS CREATED FOR NOTIFYMESSG CLASS---------------->
+
+    public static void addNotifyMessgToDB(String mssgDate, String mssgTime, String mssg){
+        DocumentReference docRef = PharmaTracApp.fstore.collection("notifyHistory").document();
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("date", mssgDate);
+        data.put("time", mssgTime);
+        data.put("message",mssg);
+
+        ApiFuture<WriteResult> result = docRef.set(data);
+    }
+
+    //----------------------------------------------------------------------------->
 
     /**
      * adds a new deliveryRequisition to the pending collection of DB
@@ -54,13 +70,14 @@ public class DataBaseMgmt {
         data.put("dose", order.getDose());
         data.put("numDoses", order.getNumDoses());
         data.put("timeCreated", order.getDateTime());
-        //data.put("notes", order.getNotes());
+        data.put("notes", order.getNotes());
         data.put("updatedBy", Optional.ofNullable(order.getUpdatedBy()).orElse(""));
 
         ApiFuture<WriteResult> future = PharmaTracApp.fstore.collection(collectionName).document(orderNumber).set(data);
+        //add who edited and what time they edited
+        //DocumentReference docRef = PharmaTracApp.fstore.collection(collectionName).document(orderNumber);
+        //ApiFuture<WriteResult> writeResult = docRef.update("timeCreated", FieldValue.serverTimestamp());
 
-        DocumentReference docRef = PharmaTracApp.fstore.collection(collectionName).document(orderNumber);
-        ApiFuture<WriteResult> future1 = docRef.update("notes", order.getNotes());
     }
 
 
@@ -126,7 +143,7 @@ public class DataBaseMgmt {
                 );
 
                 requisitionQueue.add(order);
-                System.out.println("Here are the build Queue Results: " + order.toString());
+                //System.out.println("Here are the build Queue Results: " + order.toString());
             }
             return requisitionQueue;
 
@@ -163,6 +180,7 @@ public class DataBaseMgmt {
      * @param collectionName collection you are deleting the target order from
      */
     public static void deleteFromDB(String orderNumber, String collectionName) {
+
         PharmaTracApp.fstore.collection(collectionName).document(orderNumber).delete();
     }
 

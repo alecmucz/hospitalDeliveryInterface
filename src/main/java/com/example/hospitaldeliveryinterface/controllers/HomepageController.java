@@ -1,9 +1,14 @@
 package com.example.hospitaldeliveryinterface.controllers;
 
+import com.example.hospitaldeliveryinterface.PharmaTracApp;
 import com.example.hospitaldeliveryinterface.firebase.DataBaseMgmt;
 import com.example.hospitaldeliveryinterface.firebase.FirebaseListener;
 import com.example.hospitaldeliveryinterface.model.DeliveryRequisition;
+import com.example.hospitaldeliveryinterface.model.NotifyMessg;
+import javafx.animation.FadeTransition;
 import com.example.hospitaldeliveryinterface.model.Employee;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.UserRecord;
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -12,6 +17,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
+import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.*;
@@ -21,6 +27,12 @@ import static com.example.hospitaldeliveryinterface.firebase.DataBaseMgmt.search
 public class HomepageController {
     @FXML
     private TextField searchBarTextField;
+    @FXML
+    private TextField textFieldPhoneNumber;
+    @FXML
+    private TextField textFieldFullName;
+    @FXML
+    private TextField textFieldPassword1;
     @FXML
     private BorderPane LogInVbox;
 
@@ -100,6 +112,9 @@ public class HomepageController {
     private Label notifyMess;
 
     @FXML
+    private Label notifyDatetime;
+
+    @FXML
     private VBox orderDisplayContainer;
 
     @FXML
@@ -152,6 +167,8 @@ public class HomepageController {
     private boolean isDelivered;
     private  boolean toggleCreateUser;
 
+    private boolean beginNotify;
+
     private String currentPage;
     private String selectedCardOrderNum;
     private Node selectedCard;//for getting selectedOrder
@@ -161,6 +178,7 @@ public class HomepageController {
 
         LogInVbox.setVisible(false);
 
+        beginNotify = false;
         isToggleSettings = false;
         isNewDelivery = false;
         isNewAddNote = false;
@@ -171,7 +189,7 @@ public class HomepageController {
         toggleCreateUser = false;
         int totalOrders = DataBaseMgmt.getTotalNumOrders();
         DeliveryRequisition.setOrderNumCount(totalOrders);
-        Employee currentEmployee = null; // employee who is logged in 
+        Employee currentEmployee = null; // employee who is logged in
 
         searchByChoiceBox.getItems().addAll("patientName","medication","location");
         searchByChoiceBox.setValue("Search By:");
@@ -187,6 +205,9 @@ public class HomepageController {
         notifyBox.setVisible(false);
         adminNavBar.setPrefWidth(0);
         adminNavBar.setVisible(false);
+        notifyMess.setVisible(false);
+        notifyBox.setVisible(false);
+        notifyDatetime.setVisible(false);
         selectOrder();
 
        //Stuff to handle new Delivery
@@ -199,6 +220,11 @@ public class HomepageController {
                 doseAmountText,
                 doseText,
         };
+
+        FirebaseListener.setController(this);
+        FirebaseListener.listenToPendingDeliveries();
+        FirebaseListener.listenToCompletedDeliveries();
+        FirebaseListener.listenToNotifyHistory();
 
 
         firstnameText.textProperty().addListener((observableValue, s, t1) -> {
@@ -232,11 +258,6 @@ public class HomepageController {
             }
         });
 
-        FirebaseListener fsListener = new FirebaseListener(this, currentPage);
-        //fsListener.onDataDisplay("pendingDeliveries");
-        /*
-        You need to uncomment this part
-         */
 
     }
 
@@ -280,8 +301,9 @@ public class HomepageController {
 
             if(checkOnlyNum){
                 String fullName = firstnameText.getText() + " " + lastnameText.getText();
+                String newOrderNum = DeliveryRequisition.generateOrderNum();
                 DeliveryRequisition newOrder = new DeliveryRequisition(
-                        DeliveryRequisition.generateOrderNum(),
+                        newOrderNum,
                         DeliveryRequisition.currentDateTime(),
                         fullName,
                         locationText.getText(),
@@ -295,11 +317,16 @@ public class HomepageController {
                 );
 
                 if(isEdit && selectedCardOrderNum != null){
+                    NotifyMessg.createMessg("edited", "[Employee ID]", selectedCardOrderNum);
+
                     if(currentPage.equals("Pending")) {
                         DataBaseMgmt.editOrder("pendingDeliveries", selectedCardOrderNum, newOrder);
+                        FirebaseListener.listenToPendingDeliveries();
+
                     }
                     if(currentPage.equals("Completed")) {
                         DataBaseMgmt.editOrder("completedDeliveries", selectedCardOrderNum, newOrder);
+                        FirebaseListener.listenToCompletedDeliveries();
                     }
 
                     isEdit = false;
@@ -307,6 +334,7 @@ public class HomepageController {
                     deselectOrder();
                 }
                 else {
+                    NotifyMessg.createMessg("newDelivery", "[Employee ID]", newOrderNum);
                     DataBaseMgmt.addToDB(newOrder, "pendingDeliveries");
 
                 }
@@ -321,20 +349,23 @@ public class HomepageController {
     @FXML
     void onPendingClick(ActionEvent event) throws IOException {
         System.out.println("Pending Button Clicked");
-        currentPage = "Pending";
-        FirebaseListener fsListener = new FirebaseListener(this,currentPage);
-        fsListener.onDataDisplay("pendingDeliveries");
+        if(!currentPage.equals("Pending")){
+            currentPage = "Pending";
+            FirebaseListener.onDataDisplay("pendingDeliveries");
+        }
     }
 
     @FXML
     void onCompleteClick(ActionEvent event) throws IOException {
         System.out.println("Completed Button Clicked");
-        currentPage = "Completed";
-        FirebaseListener fsListener = new FirebaseListener(this,currentPage);
-        fsListener.onDataDisplay("completedDeliveries");
-        isEdit = false;
-        isNewDelivery = false;
-        toggleNewDelivery();
+        if(!currentPage.equals("Completed")){
+            currentPage = "Completed";
+            FirebaseListener.onDataDisplay("completedDeliveries");
+            isEdit = false;
+            isNewDelivery = false;
+            toggleNewDelivery();
+        }
+
     }
 
     @FXML
@@ -464,10 +495,10 @@ public class HomepageController {
     public void displayQueue(Queue<DeliveryRequisition> currentQueue, String collectionName){
         Platform.runLater(() -> {
 
-            System.out.println("TESTING DISPLAY QUEUE HAS BEEN CALLED IN HOMEPAGECONTROLLER");
-            System.out.println("CHECKING SIZE OF ORDERS QUEUE IN DISPLAY QUEUE: " + currentQueue.size());
+            //System.out.println("TESTING DISPLAY QUEUE HAS BEEN CALLED IN HOMEPAGECONTROLLER");
+            //System.out.println("CHECKING SIZE OF ORDERS QUEUE IN DISPLAY QUEUE: " + currentQueue.size());
 
-            Queue<DeliveryRequisition> tempQueue = null;
+            Queue<DeliveryRequisition> tempQueue = new LinkedList<>();
 
             if(currentPage.equals("Completed") && collectionName.equals("completedDeliveries")){
                 orderDisplayContainer.getChildren().clear();
@@ -485,14 +516,15 @@ public class HomepageController {
                 tempQueue = currentQueue;
             }
 
-            if(tempQueue.isEmpty() || tempQueue == null){
+            if(tempQueue == null && tempQueue.isEmpty()){
                 orderDisplayContainer.getChildren().clear();
                 return;
             }
 
 
+
             for(DeliveryRequisition order: tempQueue){
-                    System.out.println("CHECKING DISPLAY QUEUE ORDERS: " + order.toString());
+                   // System.out.println("CHECKING DISPLAY QUEUE ORDERS: " + order.toString());
                         try {
                             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hospitaldeliveryinterface/OrderCard.fxml"));
                             GridPane orderTemplate = loader.load();
@@ -607,6 +639,7 @@ public class HomepageController {
                 case "doseQuantityDisplay":
                     doseAmountText.setText(label.getText());
                     break;
+
                 default:
                     System.out.println("NO ID EXIST ON ORDERCARD");
             }
@@ -631,10 +664,14 @@ public class HomepageController {
         if(selectedorderNum != null){
             if(currentPage.equals("Pending")) {
                 DataBaseMgmt.swapDB(selectedCardOrderNum, "pendingDeliveries","completedDeliveries");
+                NotifyMessg.createMessg("delivered", "[Employee ID]", selectedCardOrderNum);
+                FirebaseListener.onDataDisplay("pendingDeliveries");
             }
 
             if(currentPage.equals("Completed")) {
                 DataBaseMgmt.swapDB(selectedCardOrderNum, "completedDeliveries","pendingDeliveries");
+                NotifyMessg.createMessg("returnToPending", "[Employee ID]", selectedCardOrderNum);
+               FirebaseListener.onDataDisplay("completedDeliveries");
             }
             isDelivered = false;
             toggleNewDelivery();
@@ -656,6 +693,29 @@ public class HomepageController {
         return checker;
 
     }
+    public static boolean textFieldCheckCreatingAccount(String email, String password, String phone) {
+
+        if (email.length() == 0 || password.length() == 0) {
+            System.out.println("Textfield is empty");
+            return false;
+        }
+        if (!(email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"))) {
+            System.out.println("Incorrect email");
+            return false;
+        }
+        if (!(password.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$"))) {
+            System.out.println("Incorrect password");
+            return false;
+        }
+        if (!(phone.matches("^\\+\\d{11}$"))){
+            System.out.println("incorrect phone number");
+            return false;
+        }
+        return true;
+        }
+
+
+
     public void showDialog () {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setHeaderText("Invalid input");
@@ -679,6 +739,23 @@ public class HomepageController {
         alert.setContentText("You are signing out");
         Optional<ButtonType> result = alert.showAndWait();
     }
+
+    public void showDialogCreatedUser() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText("Succesfully Created User");
+        alert.setTitle("Succesfully Created User");
+        alert.setContentText("Succesfully Created User");
+        Optional<ButtonType> result = alert.showAndWait();
+    }
+    public void showDialogCreatedUserError() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText("Unable to create User");
+        alert.setTitle("Unable to create User");
+        alert.setContentText("Unable to create User");
+        Optional<ButtonType> result = alert.showAndWait();
+    }
+
+
 
     @FXML
     void handleLoginButtonChange() {
@@ -722,6 +799,43 @@ public class HomepageController {
 
     }
 
+    public boolean registerUser() {
+        UserRecord.CreateRequest request = new UserRecord.CreateRequest()
+                .setEmail(textFieldUsername1.getText())
+                .setEmailVerified(false)
+                .setPassword(textFieldPassword1.getText())
+                .setPhoneNumber(textFieldPhoneNumber.getText())
+                .setDisplayName(textFieldFullName.getText())
+                .setDisabled(false);
+
+        UserRecord userRecord;
+        try {
+            userRecord = PharmaTracApp.fauth.createUser(request);
+            System.out.println("Successfully created new user with Firebase Uid: " + userRecord.getUid()
+                    + " check Firebase > Authentication > Users tab");
+            //showDialogCreatedUser();
+            return true;
+
+        } catch (FirebaseAuthException ex) {
+            // Logger.getLogger(FirestoreContext.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error creating a new user in the firebase");
+            return false;
+        }
+    }
+
+    public void createUser() {
+        String email = textFieldUsername1.getText();
+        String password = textFieldPassword1.getText();
+        String phone = textFieldPhoneNumber.getText();
+
+        if (textFieldCheckCreatingAccount(email, password, phone)) {
+            registerUser();
+        } else {
+            showDialogCreatedUserError();
+        }
+    }
+
+
     @FXML
     void onReturnToHome(ActionEvent event) {
         LogInVbox.setVisible(false);
@@ -758,5 +872,75 @@ public class HomepageController {
             }
 
         }
+    }
+
+
+    public void displayNotfications(){
+
+        if(!beginNotify){
+
+            beginNotify = true;
+
+            notifyMess.setText("");
+            notifyDatetime.setText("");
+
+
+            notifyBox.setVisible(true);
+            notifyMess.setVisible(true);
+            notifyDatetime.setVisible(true);
+
+
+
+            new Thread(()->{//allows to run independently from the main applicaiton flow
+
+                Queue<NotifyMessg> retrieveMessgQueue = NotifyMessg.getMessgQueue();
+
+                while(!retrieveMessgQueue.isEmpty()){
+                    try {
+                        NotifyMessg selectedNotify = NotifyMessg.removeMessg();
+
+                        if(selectedNotify == null){break;}
+
+                       Platform.runLater(()->{
+                           FadeTransition fade1 = new FadeTransition(Duration.millis(3000), notifyBox);
+                           FadeTransition fade2 = new FadeTransition(Duration.millis(3000), notifyBox);
+                           FadeTransition fade3 = new FadeTransition(Duration.millis(3000), notifyBox);
+
+                           fade1.setFromValue(1.0);
+                           fade1.setToValue(0.0);
+                           fade2.setFromValue(1.0);
+                           fade2.setToValue(0.0);
+                           fade3.setFromValue(1.0);
+                           fade3.setToValue(0.0);
+                           /**
+                           // Set actions when transitions finish
+                           fade1.setOnFinished(event -> notifyBox.setVisible(false));
+                           fade2.setOnFinished(event -> notifyMess.setVisible(false));
+                           fade3.setOnFinished(event -> notifyDatetime.setVisible(false));
+                            */
+                           // Play all fade transitions
+                           fade1.play();
+                           fade2.play();
+                           fade3.play();
+
+                           notifyMess.setText(selectedNotify.getMessage());
+                           notifyDatetime.setText(selectedNotify.getMssgDate()+" - "+selectedNotify.getMssgTime());
+                       });
+                        retrieveMessgQueue = NotifyMessg.getMessgQueue();
+                        Thread.sleep(3000);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                beginNotify = false;
+                notifyBox.setVisible(false);
+                notifyMess.setVisible(false);
+                notifyDatetime.setVisible(false);
+            }).start();
+
+
+        }
+
     }
 }
