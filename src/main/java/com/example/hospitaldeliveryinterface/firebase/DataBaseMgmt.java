@@ -201,4 +201,46 @@ public class DataBaseMgmt {
         }
 
     }
+public static Queue<DeliveryRequisition> search(String searchTerm, String collectionName, String searchParameter) {
+        if(collectionName.equals("Pending")) {
+            collectionName = "pendingDeliveries";
+        }
+        if(collectionName.equals("Completed")) {
+        collectionName = "completedDeliveries";
+        }
+
+    Queue<DeliveryRequisition> searchResults = new LinkedList<>();
+    CollectionReference collectionReference = PharmaTracApp.fstore.collection(collectionName);
+
+    Query query = collectionReference.whereGreaterThanOrEqualTo(searchParameter, searchTerm)
+            .whereLessThanOrEqualTo(searchParameter, searchTerm + "\uf8ff");
+
+    try{
+        ApiFuture<QuerySnapshot> querySnapshot = query.get();
+
+        for(DocumentSnapshot document : querySnapshot.get().getDocuments()) {
+            DeliveryRequisition order = new DeliveryRequisition(
+                    document.getId()
+                    ,document.getString("timeCreated")
+                    ,document.getString("patientName")
+                    , document.getString("location")
+                    , document.getString("medication")
+                    , document.getString("dose")
+                    , document.getString("numDoses")
+                    , document.getString("notes"),
+                    document.getString("deliveredBy"),
+                    document.getString("createdBy"),
+                    document.getString("updatedBy")
+            );
+
+            searchResults.add(order);
+
+        }
+    }catch(InterruptedException | ExecutionException e) {
+        System.out.println("Error executing search");
+    }
+    return searchResults;
+}
+
+
 }

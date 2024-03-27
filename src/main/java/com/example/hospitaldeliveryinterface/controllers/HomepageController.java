@@ -5,6 +5,7 @@ import com.example.hospitaldeliveryinterface.firebase.FirebaseListener;
 import com.example.hospitaldeliveryinterface.model.DeliveryRequisition;
 import com.example.hospitaldeliveryinterface.model.Employee;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +16,11 @@ import javafx.scene.layout.*;
 import java.io.IOException;
 import java.util.*;
 
+import static com.example.hospitaldeliveryinterface.firebase.DataBaseMgmt.search;
+
 public class HomepageController {
+    @FXML
+    private TextField searchBarTextField;
     @FXML
     private BorderPane LogInVbox;
 
@@ -49,7 +54,6 @@ public class HomepageController {
     @FXML
     private Button createUserButton;
 
-
     @FXML
     private Button deliverReturnBtn;
 
@@ -70,9 +74,6 @@ public class HomepageController {
 
     @FXML
     private Label errMessLabel;
-
-    @FXML
-    private MenuButton filterbtn;
 
     @FXML
     private TextField firstnameText;
@@ -105,6 +106,12 @@ public class HomepageController {
     private Button pendingButton;
 
     @FXML
+    private Button searchButton;
+
+    @FXML
+    private ChoiceBox<String> searchByChoiceBox;
+
+    @FXML
     private VBox settingNavbar;
 
     @FXML
@@ -133,6 +140,7 @@ public class HomepageController {
 
     @FXML
     private Label usernameLabel;
+
 
     //variables created
     private boolean isToggleSettings;
@@ -164,6 +172,10 @@ public class HomepageController {
         int totalOrders = DataBaseMgmt.getTotalNumOrders();
         DeliveryRequisition.setOrderNumCount(totalOrders);
         Employee currentEmployee = null; // employee who is logged in 
+
+        searchByChoiceBox.getItems().addAll("patientName","medication","location");
+        searchByChoiceBox.setValue("Search By:");
+
 
         currentPage = "Pending";
 
@@ -725,5 +737,26 @@ public class HomepageController {
         adminNavBar.setPrefWidth(0);
         toggleCreateUser = false;
         adminNavBar.setVisible(false);
+    }
+
+    public void searchButton() {
+        orderDisplayContainer.getChildren().clear();
+
+        Queue<DeliveryRequisition> searchResults = search(searchBarTextField.getText(),currentPage, searchByChoiceBox.getValue());
+
+        for(DeliveryRequisition order: searchResults){
+            System.out.println("CHECKING SEARCH ORDERS: " + order.toString());
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hospitaldeliveryinterface/OrderCard.fxml"));
+                GridPane orderTemplate = loader.load();
+                OrderCardUIController controller = loader.getController();
+                controller.updateOrderLabels(order);
+                orderDisplayContainer.getChildren().add(orderTemplate);
+
+            } catch (IOException e) {
+                System.out.println("Failed to find OrderCard.fxml");
+            }
+
+        }
     }
 }
