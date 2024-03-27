@@ -5,6 +5,9 @@ import com.example.hospitaldeliveryinterface.firebase.FirebaseListener;
 import com.example.hospitaldeliveryinterface.model.DeliveryRequisition;
 import com.example.hospitaldeliveryinterface.model.NotifyMessg;
 import javafx.animation.FadeTransition;
+import com.example.hospitaldeliveryinterface.model.Employee;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.UserRecord;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,6 +21,12 @@ import java.io.IOException;
 import java.util.*;
 
 public class HomepageController {
+    @FXML
+    private TextField textFieldPhoneNumber;
+    @FXML
+    private TextField textFieldFullName;
+    @FXML
+    private TextField textFieldPassword1;
     @FXML
     private BorderPane LogInVbox;
 
@@ -171,6 +180,7 @@ public class HomepageController {
         toggleCreateUser = false;
         int totalOrders = DataBaseMgmt.getTotalNumOrders();
         DeliveryRequisition.setOrderNumCount(totalOrders);
+        Employee currentEmployee = null; // employee who is logged in
 
         currentPage = "Pending";
 
@@ -670,6 +680,29 @@ public class HomepageController {
         return checker;
 
     }
+    public static boolean textFieldCheckCreatingAccount(String email, String password, String phone) {
+
+        if (email.length() == 0 || password.length() == 0) {
+            System.out.println("Textfield is empty");
+            return false;
+        }
+        if (!(email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"))) {
+            System.out.println("Incorrect email");
+            return false;
+        }
+        if (!(password.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$"))) {
+            System.out.println("Incorrect password");
+            return false;
+        }
+        if (!(phone.matches("^\\+\\d{11}$"))){
+            System.out.println("incorrect phone number");
+            return false;
+        }
+        return true;
+        }
+
+
+
     public void showDialog () {
         Alert alert = new Alert(Alert.AlertType.WARNING);
         alert.setHeaderText("Invalid input");
@@ -693,6 +726,23 @@ public class HomepageController {
         alert.setContentText("You are signing out");
         Optional<ButtonType> result = alert.showAndWait();
     }
+
+    public void showDialogCreatedUser() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText("Succesfully Created User");
+        alert.setTitle("Succesfully Created User");
+        alert.setContentText("Succesfully Created User");
+        Optional<ButtonType> result = alert.showAndWait();
+    }
+    public void showDialogCreatedUserError() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setHeaderText("Unable to create User");
+        alert.setTitle("Unable to create User");
+        alert.setContentText("Unable to create User");
+        Optional<ButtonType> result = alert.showAndWait();
+    }
+
+
 
     @FXML
     void handleLoginButtonChange() {
@@ -735,6 +785,43 @@ public class HomepageController {
             textFieldPassword.clear();
 
     }
+
+    public boolean registerUser() {
+        UserRecord.CreateRequest request = new UserRecord.CreateRequest()
+                .setEmail(textFieldUsername1.getText())
+                .setEmailVerified(false)
+                .setPassword(textFieldPassword1.getText())
+                .setPhoneNumber(textFieldPhoneNumber.getText())
+                .setDisplayName(textFieldFullName.getText())
+                .setDisabled(false);
+
+        UserRecord userRecord;
+        try {
+            userRecord = PharmaTracApp.fauth.createUser(request);
+            System.out.println("Successfully created new user with Firebase Uid: " + userRecord.getUid()
+                    + " check Firebase > Authentication > Users tab");
+            //showDialogCreatedUser();
+            return true;
+
+        } catch (FirebaseAuthException ex) {
+            // Logger.getLogger(FirestoreContext.class.getName()).log(Level.SEVERE, null, ex);
+            System.out.println("Error creating a new user in the firebase");
+            return false;
+        }
+    }
+
+    public void createUser() {
+        String email = textFieldUsername1.getText();
+        String password = textFieldPassword1.getText();
+        String phone = textFieldPhoneNumber.getText();
+
+        if (textFieldCheckCreatingAccount(email, password, phone)) {
+            registerUser();
+        } else {
+            showDialogCreatedUserError();
+        }
+    }
+
 
     @FXML
     void onReturnToHome(ActionEvent event) {

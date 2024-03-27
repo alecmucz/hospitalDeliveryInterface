@@ -20,7 +20,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="748.0" prefWidth="1056.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hospitaldeliveryinterface.controllers.HomepageController">
+<AnchorPane prefHeight="748.0" prefWidth="1056.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hospitaldeliveryinterface.controllers.HomepageController">
    <children>
       <BorderPane fx:id="mainLayout" prefHeight="752.0" prefWidth="1027.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <bottom>
@@ -164,22 +164,22 @@
                   </BorderPane>
                   <VBox fx:id="adminNavBar" alignment="TOP_CENTER" minWidth="-Infinity" prefHeight="613.0" prefWidth="277.0" spacing="10.0" style="-fx-background-color: #1678a8;">
                      <children>
-                        <Label fx:id="us11" alignment="CENTER" minWidth="-Infinity" prefHeight="23.0" prefWidth="238.0" text="First Name" textFill="WHITE">
+                        <Label fx:id="us11" alignment="CENTER" minWidth="-Infinity" prefHeight="23.0" prefWidth="238.0" text="Full Name" textFill="WHITE">
                            <font>
                               <Font name="Tahoma Bold" size="18.0" />
                            </font>
                         </Label>
-                        <TextField minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0">
+                        <TextField fx:id="textFieldFullName" minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>
                         </TextField>
-                        <Label fx:id="us111" alignment="CENTER" minWidth="-Infinity" prefHeight="23.0" prefWidth="130.0" text="Last Name" textFill="WHITE">
+                        <Label fx:id="us111" alignment="CENTER" minWidth="-Infinity" prefHeight="23.0" prefWidth="130.0" text="Phone Number" textFill="WHITE">
                            <font>
                               <Font name="Tahoma Bold" size="18.0" />
                            </font>
                         </Label>
-                        <TextField minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0">
+                        <TextField fx:id="textFieldPhoneNumber" minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0" text="+">
                            <VBox.margin>
                               <Insets bottom="10.0" />
                            </VBox.margin>
@@ -202,18 +202,18 @@
                               <Font name="Tahoma Bold" size="18.0" />
                            </font>
                         </Label>
-                        <PasswordField minWidth="-Infinity" prefHeight="25.0" prefWidth="0.0" />
+                        <PasswordField fx:id="textFieldPassword1" minWidth="-Infinity" prefHeight="25.0" prefWidth="0.0" />
                         <Label alignment="CENTER" minWidth="-Infinity" prefHeight="23.0" prefWidth="174.0" text="Confirm Password" textFill="WHITE">
                            <font>
                               <Font name="Tahoma Bold" size="18.0" />
                            </font>
                         </Label>
-                        <PasswordField minWidth="-Infinity" prefHeight="25.0" prefWidth="0.0">
+                        <PasswordField fx:id="textFieldConfirmPassword" minWidth="-Infinity" prefHeight="25.0" prefWidth="0.0">
                            <VBox.margin>
                               <Insets />
                            </VBox.margin>
                         </PasswordField>
-                        <Button fx:id="createUserButton" alignment="CENTER" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCreateUser" prefHeight="29.0" prefWidth="0.0" style="-fx-background-color: #22aae1; -fx-background-radius: 90;" text="Create User" textFill="WHITE">
+                        <Button fx:id="createUserButton" alignment="CENTER" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#createUser" prefHeight="29.0" prefWidth="0.0" style="-fx-background-color: #22aae1; -fx-background-radius: 90;" text="Create User" textFill="WHITE">
                            <font>
                               <Font name="System Bold" size="14.0" />
                            </font>
