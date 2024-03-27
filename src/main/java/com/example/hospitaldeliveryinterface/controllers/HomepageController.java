@@ -10,6 +10,7 @@ import com.example.hospitaldeliveryinterface.model.Employee;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -21,7 +22,11 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.util.*;
 
+import static com.example.hospitaldeliveryinterface.firebase.DataBaseMgmt.search;
+
 public class HomepageController {
+    @FXML
+    private TextField searchBarTextField;
     @FXML
     private TextField textFieldPhoneNumber;
     @FXML
@@ -61,7 +66,6 @@ public class HomepageController {
     @FXML
     private Button createUserButton;
 
-
     @FXML
     private Button deliverReturnBtn;
 
@@ -82,9 +86,6 @@ public class HomepageController {
 
     @FXML
     private Label errMessLabel;
-
-    @FXML
-    private MenuButton filterbtn;
 
     @FXML
     private TextField firstnameText;
@@ -120,6 +121,12 @@ public class HomepageController {
     private Button pendingButton;
 
     @FXML
+    private Button searchButton;
+
+    @FXML
+    private ChoiceBox<String> searchByChoiceBox;
+
+    @FXML
     private VBox settingNavbar;
 
     @FXML
@@ -148,6 +155,7 @@ public class HomepageController {
 
     @FXML
     private Label usernameLabel;
+
 
     //variables created
     private boolean isToggleSettings;
@@ -182,6 +190,10 @@ public class HomepageController {
         int totalOrders = DataBaseMgmt.getTotalNumOrders();
         DeliveryRequisition.setOrderNumCount(totalOrders);
         Employee currentEmployee = null; // employee who is logged in
+
+        searchByChoiceBox.getItems().addAll("patientName","medication","location");
+        searchByChoiceBox.setValue("Search By:");
+
 
         currentPage = "Pending";
 
@@ -841,20 +853,33 @@ public class HomepageController {
         adminNavBar.setVisible(false);
     }
 
+    public void searchButton() {
+        orderDisplayContainer.getChildren().clear();
+
+        Queue<DeliveryRequisition> searchResults = search(searchBarTextField.getText(),currentPage, searchByChoiceBox.getValue());
+
+        for(DeliveryRequisition order: searchResults){
+            System.out.println("CHECKING SEARCH ORDERS: " + order.toString());
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hospitaldeliveryinterface/OrderCard.fxml"));
+                GridPane orderTemplate = loader.load();
+                OrderCardUIController controller = loader.getController();
+                controller.updateOrderLabels(order);
+                orderDisplayContainer.getChildren().add(orderTemplate);
+
+            } catch (IOException e) {
+                System.out.println("Failed to find OrderCard.fxml");
+            }
+
+        }
+    }
+
 
     public void displayNotfications(){
 
         if(!beginNotify){
 
             beginNotify = true;
-
-            notifyMess.setText("");
-            notifyDatetime.setText("");
-
-
-            notifyBox.setVisible(true);
-            notifyMess.setVisible(true);
-            notifyDatetime.setVisible(true);
 
 
 
@@ -872,6 +897,15 @@ public class HomepageController {
                            FadeTransition fade1 = new FadeTransition(Duration.millis(3000), notifyBox);
                            FadeTransition fade2 = new FadeTransition(Duration.millis(3000), notifyBox);
                            FadeTransition fade3 = new FadeTransition(Duration.millis(3000), notifyBox);
+
+                           notifyMess.setText("");
+                           notifyDatetime.setText("");
+
+
+                           notifyBox.setVisible(true);
+                           notifyMess.setVisible(true);
+                           notifyDatetime.setVisible(true);
+
 
                            fade1.setFromValue(1.0);
                            fade1.setToValue(0.0);
