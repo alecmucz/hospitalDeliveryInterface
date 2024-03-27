@@ -2,6 +2,7 @@ package com.example.hospitaldeliveryinterface.firebase;
 
 import com.example.hospitaldeliveryinterface.model.DeliveryRequisition;
 import com.example.hospitaldeliveryinterface.PharmaTracApp;
+import com.example.hospitaldeliveryinterface.model.NotifyMessg;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 
@@ -10,6 +11,20 @@ import java.util.concurrent.ExecutionException;
 
 public class DataBaseMgmt {
 
+    //-------------------NEW METHODS CREATED FOR NOTIFYMESSG CLASS---------------->
+
+    public static void addNotifyMessgToDB(String mssgDate, String mssgTime, String mssg){
+        DocumentReference docRef = PharmaTracApp.fstore.collection("notifyHistory").document();
+
+        Map<String, Object> data = new HashMap<>();
+        data.put("date", mssgDate);
+        data.put("time", mssgTime);
+        data.put("message",mssg);
+
+        ApiFuture<WriteResult> result = docRef.set(data);
+    }
+
+    //----------------------------------------------------------------------------->
 
     /**
      * adds a new deliveryRequisition to the pending collection of DB
@@ -128,7 +143,7 @@ public class DataBaseMgmt {
                 );
 
                 requisitionQueue.add(order);
-                System.out.println("Here are the build Queue Results: " + order.toString());
+                //System.out.println("Here are the build Queue Results: " + order.toString());
             }
             return requisitionQueue;
 

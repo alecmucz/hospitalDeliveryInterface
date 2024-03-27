@@ -29,6 +29,9 @@ public class OrderCardUIController {
     private Label patientNameDisplay;
 
     @FXML
+    private Label notesDisplay;
+
+    @FXML
     private GridPane orderTemplate;
 
     @FXML
