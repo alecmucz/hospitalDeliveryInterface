@@ -42,8 +42,6 @@ public class OrderCardUIController {
 
     @FXML
     private Label createdByDisplay;
-    @FXML
-    private Label notesLabel;
 
 
     public void updateOrderLabels(DeliveryRequisition order){
@@ -57,6 +55,6 @@ public class OrderCardUIController {
         deliveredByDisplay.setText(order.getDeliveredBy());
         createdByDisplay.setText(order.getCreatedBy());
         updatedByDisplay.setText(order.getUpdatedBy());
-        notesLabel.setText(order.getNotes());
+        notesDisplay.setText(order.getNotes());
     }
 }
