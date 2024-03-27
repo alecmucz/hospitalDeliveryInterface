@@ -429,11 +429,19 @@
             </VBox>
          </center>
       </BorderPane>
-      <AnchorPane fx:id="notifyBox" layoutX="724.0" layoutY="488.0" prefHeight="136.0" prefWidth="229.0" visible="false" AnchorPane.bottomAnchor="59.0" AnchorPane.rightAnchor="0.0">
+      <AnchorPane fx:id="notifyBox" layoutX="724.0" layoutY="488.0" prefHeight="136.0" prefWidth="229.0" AnchorPane.bottomAnchor="59.0" AnchorPane.leftAnchor="0.0">
          <children>
             <Pane layoutX="11.333333333333334" layoutY="25.333333333333332" prefHeight="102.0" prefWidth="207.0" style="-fx-background-color: #22aae1;" AnchorPane.bottomAnchor="9.0" AnchorPane.leftAnchor="11.0" AnchorPane.rightAnchor="11.0" AnchorPane.topAnchor="25.0">
                <children>
-                  <Label fx:id="notifyMess" alignment="CENTER" contentDisplay="CENTER" layoutX="1.0" layoutY="11.0" prefHeight="78.0" prefWidth="208.0" text="[This will have a random Message]" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                  <Label fx:id="notifyMess" alignment="CENTER" contentDisplay="CENTER" layoutX="-3.0" layoutY="28.0" prefHeight="74.0" prefWidth="214.0" text="[This will have a random Message]" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+                     <font>
+                        <Font name="System Bold" size="12.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="notifyDatetime" alignment="CENTER" layoutY="-1.0" prefHeight="31.0" prefWidth="207.0" text="03/27/2024 - 1:12PM" textFill="WHITE" wrapText="true">
                      <font>
                         <Font name="System Bold" size="12.0" />
                      </font>
