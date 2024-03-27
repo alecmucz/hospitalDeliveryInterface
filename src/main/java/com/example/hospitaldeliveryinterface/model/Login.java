@@ -1,4 +1,9 @@
 package com.example.hospitaldeliveryinterface.model;
+
+import com.example.hospitaldeliveryinterface.PharmaTracApp;
+import com.google.firebase.auth.FirebaseAuthException;
+import com.google.firebase.auth.UserRecord;
+
 public class Login {
 
 
@@ -34,4 +39,5 @@ public class Login {
     public void setLogin(boolean login) {
         this.login = login;
     }
+
 }
