@@ -881,14 +881,6 @@ public class HomepageController {
 
             beginNotify = true;
 
-            notifyMess.setText("");
-            notifyDatetime.setText("");
-
-
-            notifyBox.setVisible(true);
-            notifyMess.setVisible(true);
-            notifyDatetime.setVisible(true);
-
 
 
             new Thread(()->{//allows to run independently from the main applicaiton flow
@@ -905,6 +897,15 @@ public class HomepageController {
                            FadeTransition fade1 = new FadeTransition(Duration.millis(3000), notifyBox);
                            FadeTransition fade2 = new FadeTransition(Duration.millis(3000), notifyBox);
                            FadeTransition fade3 = new FadeTransition(Duration.millis(3000), notifyBox);
+
+                           notifyMess.setText("");
+                           notifyDatetime.setText("");
+
+
+                           notifyBox.setVisible(true);
+                           notifyMess.setVisible(true);
+                           notifyDatetime.setVisible(true);
+
 
                            fade1.setFromValue(1.0);
                            fade1.setToValue(0.0);
