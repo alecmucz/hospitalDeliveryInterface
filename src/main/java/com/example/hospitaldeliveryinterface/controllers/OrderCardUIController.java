@@ -3,7 +3,9 @@ package com.example.hospitaldeliveryinterface.controllers;
 import com.example.hospitaldeliveryinterface.model.DeliveryRequisition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
+import javafx.scene.text.TextFlow;
 
 public class OrderCardUIController {
 
@@ -29,7 +31,7 @@ public class OrderCardUIController {
     private Label patientNameDisplay;
 
     @FXML
-    private Label notesDisplay;
+    private TextArea notesDisplay;
 
     @FXML
     private GridPane orderTemplate;

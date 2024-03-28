@@ -26,14 +26,6 @@ import static com.example.hospitaldeliveryinterface.firebase.DataBaseMgmt.search
 
 public class HomepageController {
     @FXML
-    private TextField searchBarTextField;
-    @FXML
-    private TextField textFieldPhoneNumber;
-    @FXML
-    private TextField textFieldFullName;
-    @FXML
-    private TextField textFieldPassword1;
-    @FXML
     private BorderPane LogInVbox;
 
     @FXML
@@ -109,16 +101,22 @@ public class HomepageController {
     private AnchorPane notifyBox;
 
     @FXML
-    private Label notifyMess;
+    private Label notifyDatetime;
 
     @FXML
-    private Label notifyDatetime;
+    private Label notifyMess;
 
     @FXML
     private VBox orderDisplayContainer;
 
     @FXML
     private Button pendingButton;
+
+    @FXML
+    private Button reportsButton;
+
+    @FXML
+    private TextField searchBarTextField;
 
     @FXML
     private Button searchButton;
@@ -133,7 +131,19 @@ public class HomepageController {
     private Button settingsButton;
 
     @FXML
+    private PasswordField textFieldConfirmPassword;
+
+    @FXML
+    private TextField textFieldFullName;
+
+    @FXML
     private PasswordField textFieldPassword;
+
+    @FXML
+    private PasswordField textFieldPassword1;
+
+    @FXML
+    private TextField textFieldPhoneNumber;
 
     @FXML
     private TextField textFieldUsername;
@@ -155,6 +165,7 @@ public class HomepageController {
 
     @FXML
     private Label usernameLabel;
+
 
 
     //variables created
@@ -367,6 +378,19 @@ public class HomepageController {
         }
 
     }
+    @FXML
+    void onReportsClick(ActionEvent event) throws IOException {
+        System.out.println("Reports Button Clicked");
+        if(!currentPage.equals("Reports")) {
+            currentPage = "Reports";
+            toggleNewDelivery();
+            orderDisplayContainer.getChildren().clear();
+            deliverReturnBtn.setText("Deliver Package");
+            buttonToggle(reportsButton);
+            buttonNotToggle(pendingButton);
+            buttonNotToggle(completedButton);
+        }
+    }
 
     @FXML
     void onSettingClick(ActionEvent event) {
@@ -403,7 +427,6 @@ public class HomepageController {
         isDelivered = false;
         toggleNewDelivery();
         selectOrder();
-
     }
     @FXML
     void onDeliverReturn(ActionEvent event) {
@@ -505,6 +528,7 @@ public class HomepageController {
                 deliverReturnBtn.setText("Return to Pending");
                 buttonToggle(completedButton);
                 buttonNotToggle(pendingButton);
+                buttonNotToggle(reportsButton);
                 tempQueue = currentQueue;
             }
 
@@ -512,6 +536,7 @@ public class HomepageController {
                 orderDisplayContainer.getChildren().clear();
                 deliverReturnBtn.setText("Deliver Package");
                 buttonToggle(pendingButton);
+                buttonNotToggle(reportsButton);
                 buttonNotToggle(completedButton);
                 tempQueue = currentQueue;
             }
