@@ -4,11 +4,33 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7e1c1fe8-19dc-4e88-bc9d-fc845d4c4708" name="Changes" comment="-hide files">
+    <list default="true" id="7e1c1fe8-19dc-4e88-bc9d-fc845d4c4708" name="Changes" comment="Login-Email authentication">
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_3_25_2024_5_13_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_3_25_2024_5_13_PM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_3_25_2024_5_14_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_3_25_2024_5_14_PM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_3_25_2024_5_15_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_3_25_2024_5_15_PM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_3_25_2024_6_03_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_3_25_2024_6_03_PM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_3_25_2024_7_04_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_3_25_2024_7_04_PM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_3_25_2024_7_18_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_3_25_2024_7_18_PM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_3_25_2024_7_19_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_3_25_2024_7_19_PM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_3_25_2024_7_20_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_3_25_2024_7_20_PM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_3_26_2024_3_38_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_3_26_2024_3_38_PM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_3_26_2024_3_42_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_3_26_2024_3_42_PM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_3_27_2024_10_02_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_3_27_2024_10_02_PM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_3_27_2024_10_07_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_3_27_2024_10_07_PM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_3_27_2024_10_10_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_3_27_2024_10_10_PM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_3_27_2024_10_10_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_3_27_2024_10_10_PM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_3_30_2024_4_10_AM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_3_30_2024_4_10_AM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_25_2024_7_05_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_25_2024_7_05_PM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_25_2024_7_06_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_25_2024_7_06_PM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_26_2024_3_41_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_26_2024_3_41_PM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_27_2024_10_03_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_27_2024_10_03_PM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_27_2024_10_08_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_27_2024_10_08_PM__Changes_.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_1.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_rebase__Changes_1.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hospitaldeliveryinterface/PharmaTracApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/hospitaldeliveryinterface/PharmaTracApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hospitaldeliveryinterface/controllers/HomepageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/hospitaldeliveryinterface/controllers/HomepageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/hospitaldeliveryinterface/Homepage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/hospitaldeliveryinterface/Homepage.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hospitaldeliveryinterface/controllers/LoginController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hospitaldeliveryinterface/firebase/DataBaseMgmt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/hospitaldeliveryinterface/firebase/DataBaseMgmt.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hospitaldeliveryinterface/model/Employee.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/hospitaldeliveryinterface/model/Employee.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -54,6 +76,9 @@
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 6
 }</component>
@@ -71,7 +96,7 @@
     &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;Mitchell__branch&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Irvin__branch&quot;,
     &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
     &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
     &quot;last_opened_file_path&quot;: &quot;C:/Users/wcars/OneDrive/Desktop/School/hospitalDeliveryInterface&quot;,
@@ -125,8 +150,8 @@
       <workItem from="1711490716964" duration="21471000" />
       <workItem from="1711520657027" duration="5976000" />
       <workItem from="1711581340042" duration="760000" />
-      <workItem from="1711783628418" duration="2138000" />
-      <workItem from="1711788274133" duration="2192000" />
+      <workItem from="1711591920791" duration="6827000" />
+      <workItem from="1711657579004" duration="7921000" />
     </task>
     <task id="LOCAL-00001" summary="@author Alec Muczynski&#10;Implemented the Pending stage">
       <option name="closed" value="true" />
@@ -272,23 +297,7 @@
       <option name="project" value="LOCAL" />
       <updated>1711429570934</updated>
     </task>
-    <task id="LOCAL-00019" summary="-Optimize read usage for listeners and other method calls">
-      <option name="closed" value="true" />
-      <created>1711786808788</created>
-      <option name="number" value="00019" />
-      <option name="presentableId" value="LOCAL-00019" />
-      <option name="project" value="LOCAL" />
-      <updated>1711786808788</updated>
-    </task>
-    <task id="LOCAL-00020" summary="-hide files">
-      <option name="closed" value="true" />
-      <created>1711788728121</created>
-      <option name="number" value="00020" />
-      <option name="presentableId" value="LOCAL-00020" />
-      <option name="project" value="LOCAL" />
-      <updated>1711788728121</updated>
-    </task>
-    <option name="localTasksCounter" value="21" />
+    <option name="localTasksCounter" value="19" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -319,10 +328,7 @@
     <MESSAGE value="Organized files into packages or folders" />
     <MESSAGE value="- Implemented Admin Nav Bar&#10;- DeliveryRequisition Class Attributes" />
     <MESSAGE value="- commented out firebase related code blocks" />
-    <MESSAGE value="-implemented simple search &#10;-got rid of unused firebaseauth class" />
-    <MESSAGE value="-Optimize read usage for listeners and other method calls" />
-    <MESSAGE value="-hide files" />
-    <option name="LAST_COMMIT_MESSAGE" value="-hide files" />
+    <option name="LAST_COMMIT_MESSAGE" value="- commented out firebase related code blocks" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

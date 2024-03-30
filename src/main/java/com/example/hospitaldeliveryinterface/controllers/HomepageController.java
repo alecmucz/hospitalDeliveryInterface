@@ -22,16 +22,24 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 
 import static com.example.hospitaldeliveryinterface.firebase.DataBaseMgmt.search;
+import static com.example.hospitaldeliveryinterface.firebase.DataBaseMgmt.updateLoginStatus;
 
 public class HomepageController {
     @FXML
+    private TextField textFieldConfirmPassword;
+    @FXML
+    private TextArea createUserError;
+    @FXML
+    private TextField textFieldEmployeeID;
+    @FXML
     private TextField searchBarTextField;
     @FXML
-    private TextField textFieldPhoneNumber;
+    private TextField textFieldFirstName;
     @FXML
-    private TextField textFieldFullName;
+    private TextField textFieldLastName;
     @FXML
     private TextField textFieldPassword1;
     @FXML
@@ -140,7 +148,7 @@ public class HomepageController {
     private TextField textFieldUsername;
 
     @FXML
-    private TextField textFieldUsername1;
+    private TextField textFieldEmail;
 
     @FXML
     private Label us;
@@ -174,6 +182,8 @@ public class HomepageController {
     private String selectedCardOrderNum;
     private Node selectedCard;//for getting selectedOrder
     TextField[] allInputs;
+
+    TextField[] createUserInputs;
     
     public void initialize() throws IOException {
 
@@ -220,6 +230,14 @@ public class HomepageController {
                 locationText,
                 doseAmountText,
                 doseText,
+        };
+        createUserInputs = new TextField[]{
+                textFieldEmployeeID,
+                textFieldFirstName,
+                textFieldLastName,
+                textFieldEmail,
+                textFieldPassword1,
+                textFieldConfirmPassword,
         };
 
         FirebaseListener.setController(this);
@@ -707,26 +725,7 @@ public class HomepageController {
         return checker;
 
     }
-    public static boolean textFieldCheckCreatingAccount(String email, String password, String phone) {
 
-        if (email.length() == 0 || password.length() == 0) {
-            System.out.println("Textfield is empty");
-            return false;
-        }
-        if (!(email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$"))) {
-            System.out.println("Incorrect email");
-            return false;
-        }
-        if (!(password.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$"))) {
-            System.out.println("Incorrect password");
-            return false;
-        }
-        if (!(phone.matches("^\\+\\d{11}$"))){
-            System.out.println("incorrect phone number");
-            return false;
-        }
-        return true;
-        }
 
 
 
@@ -754,32 +753,21 @@ public class HomepageController {
         Optional<ButtonType> result = alert.showAndWait();
     }
 
-    public void showDialogCreatedUser() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setHeaderText("Succesfully Created User");
-        alert.setTitle("Succesfully Created User");
-        alert.setContentText("Succesfully Created User");
-        Optional<ButtonType> result = alert.showAndWait();
-    }
-    public void showDialogCreatedUserError() {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setHeaderText("Unable to create User");
-        alert.setTitle("Unable to create User");
-        alert.setContentText("Unable to create User");
-        Optional<ButtonType> result = alert.showAndWait();
-    }
-
-
 
     @FXML
     void handleLoginButtonChange() {
         if (LoginButtonChange.getText().equals("Login")) {
+            textFieldUsername.clear();
+            textFieldPassword.clear();
             LogInVbox.setVisible(true);
         }
         else if (LoginButtonChange.getText().equals("Sign out")) {
             showDialogSignOut();
+            DataBaseMgmt.updateLoginStatus(Employee.getCurrentLogin(),"False");
+            Employee.setCurrentLogin(null);
             LoginButtonChange.setText("Login");
-            LogInVbox.setVisible(true);
+            usernameLabel.setText("");
+            //LogInVbox.setVisible(true);
 
         }
     }
@@ -815,11 +803,11 @@ public class HomepageController {
 
     public boolean registerUser() {
         UserRecord.CreateRequest request = new UserRecord.CreateRequest()
-                .setEmail(textFieldUsername1.getText())
+                .setEmail(textFieldEmail.getText())
                 .setEmailVerified(false)
                 .setPassword(textFieldPassword1.getText())
-                .setPhoneNumber(textFieldPhoneNumber.getText())
-                .setDisplayName(textFieldFullName.getText())
+                .setPhoneNumber(textFieldLastName.getText())
+                .setDisplayName(textFieldFirstName.getText())
                 .setDisabled(false);
 
         UserRecord userRecord;
@@ -837,17 +825,83 @@ public class HomepageController {
         }
     }
 
-    public void createUser() {
-        String email = textFieldUsername1.getText();
-        String password = textFieldPassword1.getText();
-        String phone = textFieldPhoneNumber.getText();
+    public void createUser() throws ExecutionException, InterruptedException {
 
-        if (textFieldCheckCreatingAccount(email, password, phone)) {
-            registerUser();
+        boolean checkErrors = false;
+        //enhanced for loop, loops through array full of textFields
+        for (TextField childInput : createUserInputs) {
+            //if statement to check if its empty
+            if(childInput.getText().isEmpty()) {
+                errorBorder(childInput);
+                checkErrors = true;
+            }
+        }
+        //checking if checkError equals true
+        if(checkErrors) {
+            createUserError.setText("**Error: Please fill out all text fields");
         } else {
-            showDialogCreatedUserError();
+            Map<String, Object> isUserExist = DataBaseMgmt.retrieveUserData(textFieldEmployeeID.getText(), "employees");
+            if (isUserExist != null) {
+                createUserError.setText("**Error: Account " + textFieldEmployeeID.getText() + " already exist");
+            } else {
+                //init calls method that has return value of string
+                String requiredCheck = Employee.textFieldCheckCreatingAccount(
+                        textFieldEmployeeID.getText(),
+                        textFieldFirstName.getText(),
+                        textFieldLastName.getText(),
+                        textFieldEmail.getText(),
+                        textFieldPassword1.getText(),
+                        textFieldConfirmPassword.getText()
+                );
+                if (requiredCheck.equals("Successful!")) {
+                    DataBaseMgmt.addCreateUserDB(
+                            textFieldEmployeeID.getText(),
+                            textFieldFirstName.getText(),
+                            textFieldLastName.getText(),
+                            textFieldPassword1.getText(),
+                            textFieldEmployeeID.getText(),
+                            textFieldEmail.getText());
+                    createUserError.setText(requiredCheck);
+                } else {
+                    createUserError.setText(requiredCheck);
+                }
+            }
         }
     }
+
+    public void loginUser() throws ExecutionException, InterruptedException {
+        if(textFieldUsername.getText().isEmpty() || textFieldPassword.getText().isEmpty()) {
+            System.out.println("Username or Password is empty");
+            return;
+        }
+        // Retrieve user data based on the provided username
+        Map<String, Object> userData = DataBaseMgmt.retrieveUserData(textFieldUsername.getText(),"employees");
+        if (userData != null) {
+            // Check if the provided username and password match the stored username and password
+            String storedUsername = (String) userData.get("Username");
+            String storedPassword = (String) userData.get("Password");
+            if (storedPassword.equals(textFieldPassword.getText())) {
+                // Password matches
+                showDialogCorrect();
+                DataBaseMgmt.updateLoginStatus(textFieldUsername.getText(),"True");
+                LogInVbox.setVisible(false);
+                LoginButtonChange.setText("Sign out");
+                Employee.setCurrentLogin(textFieldUsername.getText());
+                usernameLabel.setText(textFieldUsername.getText());
+                System.out.println("Logged in");
+
+            } else {
+                // Password does not match
+                System.out.println("Password is incorrect");
+            }
+        } else {
+            // User does not exist in the database
+            System.out.println("User does not exist");
+        }
+    }
+
+
+
 
 
     @FXML
