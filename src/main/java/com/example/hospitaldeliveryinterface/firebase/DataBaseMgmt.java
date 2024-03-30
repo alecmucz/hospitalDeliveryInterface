@@ -3,6 +3,7 @@ package com.example.hospitaldeliveryinterface.firebase;
 import com.example.hospitaldeliveryinterface.model.DeliveryRequisition;
 import com.example.hospitaldeliveryinterface.PharmaTracApp;
 import com.example.hospitaldeliveryinterface.model.NotifyMessg;
+import com.example.hospitaldeliveryinterface.model.QueueSaves;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 
@@ -14,7 +15,7 @@ public class DataBaseMgmt {
     //-------------------NEW METHODS CREATED FOR NOTIFYMESSG CLASS---------------->
 
     public static void addNotifyMessgToDB(String mssgDate, String mssgTime, String mssg){
-        DocumentReference docRef = PharmaTracApp.fstore.collection("notifyHistory").document();
+        DocumentReference docRef = PharmaTracApp.fstore.collection("notifyHistory").document("notifyMessage");
 
         Map<String, Object> data = new HashMap<>();
         data.put("date", mssgDate);
@@ -117,41 +118,42 @@ public class DataBaseMgmt {
      * @param collectionName collection you want to build the queue from
      * @return queue of all orders in the target collection
      */
-    public static Queue<DeliveryRequisition> buildQueue(String collectionName) {
-        ApiFuture<QuerySnapshot> query = getCollection(collectionName);
+    public static Queue<DeliveryRequisition> buildQueue(QuerySnapshot querySnaps, String collectionName) {
 
         Queue<DeliveryRequisition> requisitionQueue = new LinkedList<>();
 
-        try {
-            QuerySnapshot querySnapshot = query.get();
-            List<QueryDocumentSnapshot> documents = querySnapshot.getDocuments();
+        List<QueryDocumentSnapshot> documents = querySnaps.getDocuments();
 
-            for(QueryDocumentSnapshot document : documents) {
+        for(QueryDocumentSnapshot document : documents) {
 
-                DeliveryRequisition order = new DeliveryRequisition(
-                        document.getId()
-                        ,document.getString("timeCreated")
-                        ,document.getString("patientName")
-                        , document.getString("location")
-                        , document.getString("medication")
-                        , document.getString("dose")
-                        , document.getString("numDoses")
-                        , document.getString("notes"),
-                        document.getString("deliveredBy"),
-                        document.getString("createdBy"),
-                        document.getString("updatedBy")
-                );
+            DeliveryRequisition order = new DeliveryRequisition(
+                    document.getId()
+                    ,document.getString("timeCreated")
+                    ,document.getString("patientName")
+                    , document.getString("location")
+                    , document.getString("medication")
+                    , document.getString("dose")
+                    , document.getString("numDoses")
+                    , document.getString("notes"),
+                    document.getString("deliveredBy"),
+                    document.getString("createdBy"),
+                    document.getString("updatedBy")
+            );
 
-                requisitionQueue.add(order);
+            requisitionQueue.add(order);
                 //System.out.println("Here are the build Queue Results: " + order.toString());
-            }
-            return requisitionQueue;
-
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        } catch (ExecutionException e) {
-            throw new RuntimeException(e);
         }
+
+        if(collectionName.equals("completedDeliveries")){
+            QueueSaves.setCompletedLatest(requisitionQueue);
+        }
+
+        if(collectionName.equals("pendingDeliveries")){
+            QueueSaves.setPendingLatest(requisitionQueue);
+        }
+
+        return requisitionQueue;
+
     }
     /**
      * moves DeliveryRequisition from pending to completed
