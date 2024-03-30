@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
 
@@ -368,7 +369,7 @@ public class HomepageController {
         System.out.println("Pending Button Clicked");
         if(!currentPage.equals("Pending")){
             currentPage = "Pending";
-            FirebaseListener.onDataDisplay("pendingDeliveries");
+            FirebaseListener.navBarDataDisplay("Pending");
         }
     }
 
@@ -377,13 +378,24 @@ public class HomepageController {
         System.out.println("Completed Button Clicked");
         if(!currentPage.equals("Completed")){
             currentPage = "Completed";
-            FirebaseListener.onDataDisplay("completedDeliveries");
+            FirebaseListener.navBarDataDisplay("Completed");
             isEdit = false;
             isNewDelivery = false;
             toggleNewDelivery();
         }
 
     }
+
+    @FXML
+    void onCompleteDeliverPress(MouseEvent event) {
+        buttonToggle(deliverReturnBtn);
+    }
+
+    @FXML
+    void onCompleteDeliverRelease(MouseEvent event) {
+        buttonNotToggle(deliverReturnBtn);
+    }
+
 
     @FXML
     void onSettingClick(ActionEvent event) {
@@ -682,13 +694,15 @@ public class HomepageController {
             if(currentPage.equals("Pending")) {
                 DataBaseMgmt.swapDB(selectedCardOrderNum, "pendingDeliveries","completedDeliveries");
                 NotifyMessg.createMessg("delivered", "[Employee ID]", selectedCardOrderNum);
-                FirebaseListener.onDataDisplay("pendingDeliveries");
+                FirebaseListener.navBarDataDisplay("Pending");
+
             }
 
             if(currentPage.equals("Completed")) {
                 DataBaseMgmt.swapDB(selectedCardOrderNum, "completedDeliveries","pendingDeliveries");
                 NotifyMessg.createMessg("returnToPending", "[Employee ID]", selectedCardOrderNum);
-               FirebaseListener.onDataDisplay("completedDeliveries");
+                FirebaseListener.navBarDataDisplay("Completed");
+
             }
             isDelivered = false;
             toggleNewDelivery();
