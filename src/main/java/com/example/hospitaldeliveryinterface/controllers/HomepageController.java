@@ -16,6 +16,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
 
@@ -369,6 +370,17 @@ public class HomepageController {
     }
 
     @FXML
+    void onCompleteDeliverPress(MouseEvent event) {
+        buttonToggle(deliverReturnBtn);
+    }
+
+    @FXML
+    void onCompleteDeliverRelease(MouseEvent event) {
+        buttonNotToggle(deliverReturnBtn);
+    }
+
+
+    @FXML
     void onSettingClick(ActionEvent event) {
         if(!isToggleSettings){
             buttonToggle(settingsButton);
@@ -665,12 +677,14 @@ public class HomepageController {
             if(currentPage.equals("Pending")) {
                 DataBaseMgmt.swapDB(selectedCardOrderNum, "pendingDeliveries","completedDeliveries");
                 NotifyMessg.createMessg("delivered", "[Employee ID]", selectedCardOrderNum);
+                FirebaseListener.navBarDataDisplay("Pending");
 
             }
 
             if(currentPage.equals("Completed")) {
                 DataBaseMgmt.swapDB(selectedCardOrderNum, "completedDeliveries","pendingDeliveries");
                 NotifyMessg.createMessg("returnToPending", "[Employee ID]", selectedCardOrderNum);
+                FirebaseListener.navBarDataDisplay("Completed");
 
             }
             isDelivered = false;
