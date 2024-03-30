@@ -6,6 +6,15 @@ public class Employee {
     private int employeeId;
     private String email;
 
+    private static String currentLogin =null;
+
+    public static String getCurrentLogin() {
+        return currentLogin;
+    }
+
+    public static void setCurrentLogin(String currentLogin) {
+        Employee.currentLogin = currentLogin;
+    }
 
     public Employee(String firstName, String lastName, int employeeId){
         this.firstName = firstName;
@@ -39,6 +48,8 @@ public class Employee {
     public String getEmail() {
         return email;
     }
+
+
 
     public static String textFieldCheckCreatingAccount(String employeeID,String firstName,String lastName,String email, String password, String confirmPassword) {
         if(!(employeeID.matches("S\\d{8}"))) {

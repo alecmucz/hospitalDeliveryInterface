@@ -318,6 +318,15 @@ public class DataBaseMgmt {
             throw e; // Rethrow the exception to be handled by the caller
         }
     }
+
+    public static void updateLoginStatus(String employeeId, String status) {
+
+        // Update an existing document
+        DocumentReference docRef = PharmaTracApp.fstore.collection("employees").document(employeeId);
+
+        // (async) Update one field
+        ApiFuture<WriteResult> future = docRef.update("loginStatus", status);
+    }
 }
 
 
