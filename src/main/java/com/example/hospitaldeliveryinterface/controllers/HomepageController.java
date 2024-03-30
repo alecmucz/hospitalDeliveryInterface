@@ -351,7 +351,7 @@ public class HomepageController {
         System.out.println("Pending Button Clicked");
         if(!currentPage.equals("Pending")){
             currentPage = "Pending";
-            FirebaseListener.onDataDisplay("pendingDeliveries");
+            FirebaseListener.navBarDataDisplay("Pending");
         }
     }
 
@@ -360,7 +360,7 @@ public class HomepageController {
         System.out.println("Completed Button Clicked");
         if(!currentPage.equals("Completed")){
             currentPage = "Completed";
-            FirebaseListener.onDataDisplay("completedDeliveries");
+            FirebaseListener.navBarDataDisplay("Completed");
             isEdit = false;
             isNewDelivery = false;
             toggleNewDelivery();
@@ -665,13 +665,13 @@ public class HomepageController {
             if(currentPage.equals("Pending")) {
                 DataBaseMgmt.swapDB(selectedCardOrderNum, "pendingDeliveries","completedDeliveries");
                 NotifyMessg.createMessg("delivered", "[Employee ID]", selectedCardOrderNum);
-                FirebaseListener.onDataDisplay("pendingDeliveries");
+
             }
 
             if(currentPage.equals("Completed")) {
                 DataBaseMgmt.swapDB(selectedCardOrderNum, "completedDeliveries","pendingDeliveries");
                 NotifyMessg.createMessg("returnToPending", "[Employee ID]", selectedCardOrderNum);
-               FirebaseListener.onDataDisplay("completedDeliveries");
+
             }
             isDelivered = false;
             toggleNewDelivery();
