@@ -5,8 +5,6 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="7e1c1fe8-19dc-4e88-bc9d-fc845d4c4708" name="Changes" comment="-Optimize read usage for listeners and other method calls">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_3_27_2024_10_02_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_3_27_2024_10_02_PM__Changes_.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_27_2024_10_03_PM__Changes_.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_3_27_2024_10_03_PM__Changes_.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -104,7 +102,6 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-20.0.2-corretto-20.0.2.1-4caba194b151-5bc9ecd2" />
         <option value="jdk-21.0.2-openjdk-21.0.2-4caba194b151-4f524021" />
       </set>
     </attachedChunks>
@@ -126,6 +123,7 @@
       <workItem from="1711520657027" duration="5976000" />
       <workItem from="1711581340042" duration="760000" />
       <workItem from="1711783628418" duration="2138000" />
+      <workItem from="1711788274133" duration="308000" />
     </task>
     <task id="LOCAL-00001" summary="@author Alec Muczynski&#10;Implemented the Pending stage">
       <option name="closed" value="true" />
@@ -271,7 +269,15 @@
       <option name="project" value="LOCAL" />
       <updated>1711429570934</updated>
     </task>
-    <option name="localTasksCounter" value="19" />
+    <task id="LOCAL-00019" summary="-Optimize read usage for listeners and other method calls">
+      <option name="closed" value="true" />
+      <created>1711786808788</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1711786808788</updated>
+    </task>
+    <option name="localTasksCounter" value="20" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -303,7 +309,8 @@
     <MESSAGE value="- Implemented Admin Nav Bar&#10;- DeliveryRequisition Class Attributes" />
     <MESSAGE value="- commented out firebase related code blocks" />
     <MESSAGE value="-implemented simple search &#10;-got rid of unused firebaseauth class" />
-    <option name="LAST_COMMIT_MESSAGE" value="-implemented simple search &#10;-got rid of unused firebaseauth class" />
+    <MESSAGE value="-Optimize read usage for listeners and other method calls" />
+    <option name="LAST_COMMIT_MESSAGE" value="-Optimize read usage for listeners and other method calls" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
