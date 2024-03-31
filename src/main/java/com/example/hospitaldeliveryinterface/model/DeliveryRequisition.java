@@ -9,7 +9,9 @@ import com.google.cloud.firestore.WriteResult;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.Locale;
+import java.util.Map;
 
 public class DeliveryRequisition {
     private String patientName;
@@ -38,7 +40,6 @@ public class DeliveryRequisition {
         this.deliveredBy = deliveredBy;
         this.createdBy = createdBy;
         this.updatedBy = updatedBy;
-
     }
     public void setPatientName(String patientName) {
         this.patientName = patientName;
@@ -163,4 +164,20 @@ public class DeliveryRequisition {
         final ApiFuture<WriteResult> updateFuture =
                 docRef.update("totalNumOrders", FieldValue.increment(1));
     }
+
+    public static Map<String, Object> orderToMap(DeliveryRequisition order) {
+        Map<String, Object> data = new HashMap<>();
+        data.put("patientName", order.getPatientName());
+        data.put("patientLocation", order.getPatientLocation());
+        data.put("medication", order.getMedication());
+        data.put("dose", order.getDose());
+        data.put("numDoses", order.getNumDoses());
+        data.put("dateTime", order.getDateTime());
+        data.put("notes", order.getNotes());
+        data.put("deliveredBy", order.getDeliveredBy());
+        data.put("createdBy", order.getCreatedBy());
+        data.put("updatedBy", order.getUpdatedBy());
+        return data;
+    }
+
 }

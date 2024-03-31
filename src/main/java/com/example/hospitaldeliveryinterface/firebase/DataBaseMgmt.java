@@ -5,9 +5,15 @@ import com.example.hospitaldeliveryinterface.PharmaTracApp;
 import com.example.hospitaldeliveryinterface.model.NotifyMessg;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
+import com.google.firebase.cloud.FirestoreClient;
+import com.google.cloud.firestore.WriteBatch;
+import com.google.cloud.firestore.DocumentReference;
+
 
 import java.util.*;
 import java.util.concurrent.ExecutionException;
+
+import static com.example.hospitaldeliveryinterface.model.DeliveryRequisition.orderToMap;
 
 public class DataBaseMgmt {
 
@@ -160,18 +166,31 @@ public class DataBaseMgmt {
      * @param collectionFrom origin collection
      * @param collectionTo destination collection
      */
-    public static void swapDB(String orderNumber, String collectionFrom, String collectionTo){
-        /*
-        copy the data from it into delivery rec
-        delete the data from pending
-        add the new data to completed
-         */
-        DeliveryRequisition order = findOrder(orderNumber, collectionFrom);
-        if(order != null) {
-            deleteFromDB(orderNumber, collectionFrom);
-            addToDB(order, collectionTo);
+    public static void swapDB(List<String> orderNumbers, String collectionFrom, String collectionTo) {
+        Firestore db = PharmaTracApp.fstore;
+        WriteBatch batch = db.batch();
+
+        for (String orderNumber : orderNumbers) {
+            DocumentReference fromRef = db.collection(collectionFrom).document(orderNumber);
+            DocumentReference toRef = db.collection(collectionTo).document(orderNumber);
+
+            DeliveryRequisition order = findOrder(orderNumber, collectionFrom); // Consider optimizing this part
+
+            if (order != null) {
+                batch.delete(fromRef);
+                Map<String, Object> data = orderToMap(order);
+                batch.set(toRef, data);
+            }
         }
 
+        // Commit the batch
+        ApiFuture<List<WriteResult>> future = batch.commit();
+        try {
+            List<WriteResult> writeResults = future.get();
+            System.out.println("Successfully moved " + writeResults.size() + " orders from " + collectionFrom + " to " + collectionTo);
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+        }
     }
 
     /**
@@ -259,6 +278,5 @@ public static Queue<DeliveryRequisition> search(String searchTerm, String collec
     }
     return searchResults;
 }
-
 
 }

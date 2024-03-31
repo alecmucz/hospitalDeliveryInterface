@@ -172,6 +172,7 @@ public class HomepageController {
     private String currentPage;
     private String selectedCardOrderNum;
     private Node selectedCard;//for getting selectedOrder
+    private Set<String> selectedOrders = new HashSet<>();
     TextField[] allInputs;
     
     public void initialize() throws IOException {
@@ -348,8 +349,9 @@ public class HomepageController {
 
     @FXML
     void onPendingClick(ActionEvent event) throws IOException {
+        clearSelections(); // Clear selections before switching
         System.out.println("Pending Button Clicked");
-        if(!currentPage.equals("Pending")){
+        if (!currentPage.equals("Pending")) {
             currentPage = "Pending";
             FirebaseListener.onDataDisplay("pendingDeliveries");
         }
@@ -357,17 +359,16 @@ public class HomepageController {
 
     @FXML
     void onCompleteClick(ActionEvent event) throws IOException {
+        clearSelections(); // Clear selections before switching
         System.out.println("Completed Button Clicked");
-        if(!currentPage.equals("Completed")){
+        if (!currentPage.equals("Completed")) {
             currentPage = "Completed";
             FirebaseListener.onDataDisplay("completedDeliveries");
             isEdit = false;
             isNewDelivery = false;
             toggleNewDelivery();
         }
-
     }
-
     @FXML
     void onSettingClick(ActionEvent event) {
         if(!isToggleSettings){
@@ -407,11 +408,19 @@ public class HomepageController {
     }
     @FXML
     void onDeliverReturn(ActionEvent event) {
-        if(selectedCard != null){
-            isDelivered = !isDelivered;
-            isEdit = false;
-            toggleNewDelivery();
-            sendOrderToCompleted(selectedCardOrderNum);
+        if (!selectedOrders.isEmpty()) {
+
+            String collectionFrom = currentPage.equals("Pending") ? "pendingDeliveries" : "completedDeliveries";
+            String collectionTo = currentPage.equals("Pending") ? "completedDeliveries" : "pendingDeliveries";
+
+            List<String> orderNumbers = new ArrayList<>(selectedOrders);
+
+            DataBaseMgmt.swapDB(orderNumbers, collectionFrom, collectionTo);
+
+            clearSelections();
+
+            FirebaseListener.onDataDisplay(collectionFrom);
+            FirebaseListener.onDataDisplay(collectionTo);
         }
     }
 
@@ -524,7 +533,6 @@ public class HomepageController {
 
 
             for(DeliveryRequisition order: tempQueue){
-                   // System.out.println("CHECKING DISPLAY QUEUE ORDERS: " + order.toString());
                         try {
                             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hospitaldeliveryinterface/OrderCard.fxml"));
                             GridPane orderTemplate = loader.load();
@@ -544,50 +552,40 @@ public class HomepageController {
     }
 
     public void selectOrder(){
-            for(Node node: orderDisplayContainer.getChildren()){
-                node.setOnMouseClicked(mouseEvent -> {
-                    if(selectedCard != null &&  selectedCard != node){
-                        selectedCard.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: transparent");
-                        selectedCard = null;
-                        isEdit = false;
-                        isDelivered = false;
-                        toggleNewDelivery();
+        for(Node node: orderDisplayContainer.getChildren()){
+            node.setOnMouseClicked(mouseEvent -> {
+                String orderNum = getOrderNumFromNode(node);
+                if(selectedOrders.contains(orderNum)){
+                    selectedOrders.remove(orderNum);
+                    deselectNode(node);
+                } else {
+                    selectedOrders.add(orderNum);
+                    selectNode(node);
+                }
+            });
+        }
+    }
+
+    private void selectNode(Node node){
+        node.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: #98FF98");
+    }
+
+    private void deselectNode(Node node){
+        node.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: transparent");
+    }
+
+    private String getOrderNumFromNode(Node node){
+        if (node instanceof GridPane) {
+            for(Node childNode : ((GridPane)node).getChildren()){
+                if (childNode instanceof Label) {
+                    Label label = (Label) childNode;
+                    if ("orderNumDisplay".equals(label.getId())) {
+                        return label.getText().substring(1);
                     }
-
-                    if(selectedCard != node || selectedCard == null){
-                            if (node instanceof GridPane) {
-                                GridPane gridpane = (GridPane) node;
-                                gridpane.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: #ffbdbd");
-                                for(Node childNode : gridpane.getChildren()){
-                                    if (childNode instanceof Label) {
-                                        Label label = (Label) childNode;
-                                        if ("orderNumDisplay".equals(label.getId())) {
-                                            String labelText  = label.getText().substring(1); // Remove the "#" symbol
-                                            selectedCardOrderNum = labelText;
-                                            //System.out.println("ORDER NUMBER RETRIEVED: " + labelText);
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                        selectedCard = node;
-
-                    }else{
-                        selectedCard.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: transparent");
-
-                        selectedCard = null;
-                        isEdit = false;
-                        isDelivered = false;
-                        toggleNewDelivery();
-                    }
-                });
-            }
-
-            if(!isEdit){
-                for(Node node: orderDisplayContainer.getChildren()){
-                    node.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: transparent");
                 }
             }
+        }
+        return null;
     }
 
     public void deselectOrder(){
@@ -657,29 +655,6 @@ public class HomepageController {
         errMessLabel.setText("");
     }
 
-
-    public void sendOrderToCompleted(String selectedorderNum){
-        System.out.print("sendOrderToComplete method called!!!");
-        System.out.println("selectOrderNum: " + selectedorderNum);
-        if(selectedorderNum != null){
-            if(currentPage.equals("Pending")) {
-                DataBaseMgmt.swapDB(selectedCardOrderNum, "pendingDeliveries","completedDeliveries");
-                NotifyMessg.createMessg("delivered", "[Employee ID]", selectedCardOrderNum);
-                FirebaseListener.onDataDisplay("pendingDeliveries");
-            }
-
-            if(currentPage.equals("Completed")) {
-                DataBaseMgmt.swapDB(selectedCardOrderNum, "completedDeliveries","pendingDeliveries");
-                NotifyMessg.createMessg("returnToPending", "[Employee ID]", selectedCardOrderNum);
-               FirebaseListener.onDataDisplay("completedDeliveries");
-            }
-            isDelivered = false;
-            toggleNewDelivery();
-            //deselectOrder();
-            selectedCard = null;
-            selectedCardOrderNum = null;
-        }
-    }
 
     public static boolean textFieldCheck(String username,String password) {
         boolean checker = false;
@@ -943,5 +918,11 @@ public class HomepageController {
 
         }
 
+    }
+    public void clearSelections() {
+        for (Node node : orderDisplayContainer.getChildren()) {
+            deselectNode(node);
+        }
+        selectedOrders.clear();
     }
 }
