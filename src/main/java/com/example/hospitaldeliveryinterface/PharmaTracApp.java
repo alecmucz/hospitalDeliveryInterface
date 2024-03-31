@@ -7,6 +7,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import net.suuft.libretranslate.Language;
+import net.suuft.libretranslate.Translator;
 
 import java.io.IOException;
 

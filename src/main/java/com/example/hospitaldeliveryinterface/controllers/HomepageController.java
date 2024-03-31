@@ -22,6 +22,14 @@ import javafx.util.Duration;
 
 import java.io.IOException;
 import java.util.*;
+import net.suuft.libretranslate.Translator;
+import net.suuft.libretranslate.Language;
+
+
+
+
+
+
 
 import static com.example.hospitaldeliveryinterface.firebase.DataBaseMgmt.search;
 
@@ -157,6 +165,8 @@ public class HomepageController {
     @FXML
     private Label usernameLabel;
 
+    @FXML
+    private MenuButton languageMenu;
 
     //variables created
     private boolean isToggleSettings;
@@ -175,8 +185,10 @@ public class HomepageController {
     private Node selectedCard;//for getting selectedOrder
     TextField[] allInputs;
     
-    public void initialize() throws IOException {
+    public void initialize(){
+        
 
+        populateLanguageMenu();
         LogInVbox.setVisible(false);
 
         beginNotify = false;
@@ -262,6 +274,55 @@ public class HomepageController {
 
     }
 
+
+/**************************MITCHELL LANGUAGE STUFF*************************/
+
+
+public void changeLanguage(String selectedLang){
+
+
+
+
+}
+public void populateLanguageMenu(){
+
+        HashMap<String,String> languagesMap = new HashMap<>();
+
+        languagesMap.put("English","en");
+        languagesMap.put("Spanish","es");
+
+
+        for (Map.Entry<String, String> entry : languagesMap.entrySet()) {
+
+            CheckBox tempCheckBox = new CheckBox(entry.getKey());
+            tempCheckBox.setOnAction(event -> {
+                for (MenuItem menuItem : languageMenu.getItems()) {
+                    if (menuItem instanceof CustomMenuItem) {
+                        CustomMenuItem customMenuItem = (CustomMenuItem) menuItem;
+                        CheckBox checkBox = (CheckBox) customMenuItem.getContent();
+                        if (checkBox != tempCheckBox) {
+                            checkBox.setSelected(false);
+                        }
+                    }
+                }
+                CheckBox selectedCheckBox = (CheckBox) event.getSource();
+                String selectedLanguage = selectedCheckBox.getText();
+                languageMenu.setText("Language: " + selectedLanguage);
+                changeLanguage(entry.getValue());
+
+            });
+
+            CustomMenuItem tempCustomItem = new CustomMenuItem(tempCheckBox);
+            languageMenu.getItems().add(tempCustomItem);
+        }
+
+        languageMenu.setText("Language: English");
+
+    }
+
+
+
+    /***********************************************************************************/
     @FXML
     void onAddNote(ActionEvent event) {
 
