@@ -5,6 +5,7 @@ import com.google.firebase.database.core.utilities.Tree;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.CustomMenuItem;
 import javafx.scene.control.MenuItem;
+import net.suuft.libretranslate.Translator;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,37 +15,40 @@ public class MitchTextTranslate {
 
     private static TreeMap<String, String> languagesMap = new TreeMap<>();
 
-    private static HashMap<String, String> engBtnText = new HashMap<>();
-    private static HashMap<String,String> engLblText = new HashMap<>();
+    public  static HashMap<String,String[]> storedLang = new HashMap<>();
 
 
-
-    public static HashMap<String, String> getEngBtnText() {
-        return engBtnText;
+    public static HashMap<String, String[]> getStoredLang() {
+        return storedLang;
     }
 
-    public static void setEngBtnText(HashMap<String, String> engBtnText) {
-        MitchTextTranslate.engBtnText = engBtnText;
+    public static void addOrUpdateEntry(String[] defaultLang) {
+        System.out.println("addOrUpdateEntry is called ");
+        System.out.println("Length of defaultLang: " + defaultLang.length);
+        System.out.println("Length of languageMap: "+ languagesMap.size());
+
+        String[] originLang = defaultLang;
+
+        for (Map.Entry<String, String> entry : languagesMap.entrySet()) {
+            // Create a new array for each language translation
+            String[] tempLang = new String[originLang.length];
+
+            for (int i = 0; i < originLang.length; i++) {
+                tempLang[i] = Translator.translate("en", entry.getValue(), originLang[i]);
+            }
+            System.out.println("Has been added: " + entry.getKey());
+
+            // Store the translations for the current language
+            storedLang.put(entry.getKey(), tempLang);
+        }
     }
-
-    public static void setEngLblText(HashMap<String, String> engLblText) {
-        MitchTextTranslate.engLblText = engLblText;
-    }
-
-    public static HashMap<String, String> getEngLblText() {
-        return engLblText;
-    }
-
-
 
 
     public static TreeMap<String, String> getLanguagesMap() {
         return languagesMap;
     }
 
-    public static void setLanguagesMap(TreeMap<String, String> languagesMap) {
-        MitchTextTranslate.languagesMap = languagesMap;
-    }
+
 
     public static void initialLanguages(){
 

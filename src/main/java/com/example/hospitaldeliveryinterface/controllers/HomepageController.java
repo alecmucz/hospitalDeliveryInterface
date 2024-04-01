@@ -209,7 +209,23 @@ public class HomepageController {
 
     public void initialize(){
 
-        defaultEnglishText();
+        LangToggleBtn = new String[]{
+                "Completed",
+                "Pending",
+                "Settings",
+                "Deliver Package",
+                "Return To Pending",
+                "Edit Delivery",
+                "Close Edit Delivery",
+                "+ New Delivery",
+                "Close New Delivery",
+                "Admin Tools",
+                "Login",
+                "Sign Out",
+                "Delete Orders",
+                "Create Users"
+        };
+
 
         MitchTextTranslate.initialLanguages();
         populateLanguageMenu();
@@ -311,59 +327,27 @@ public class HomepageController {
 
 /**************************MITCHELL LANGUAGE STUFF*************************/
 
-public void defaultEnglishText(){
+public void setUpLangText(String[] langTextChange){
 
+    newDeliveryButton.setText(isNewDelivery?langTextChange[8]:langTextChange[7]);
+    editBtn.setText(isEdit?langTextChange[6]:langTextChange[5]);
 
+    settingsButton.setText(langTextChange[2]);
+    completedButton.setText(langTextChange[0]);
+    pendingButton.setText(langTextChange[1]);
+    createUserBtn.setText(langTextChange[13]);
+    deleteOrdersBtn.setText(langTextChange[12]);
+    adminButton.setText("< "+langTextChange[9]);
+    LoginButtonChange.setText(langTextChange[10]);
 
-    LangToggleBtn = new String[]{
-            "Completed",
-            "Pending",
-            "Settings",
-            "Deliver Package",
-            "Return To Pending",
-            "Edit Delivery",
-            "Close Edit Delivery",
-            "+ New Delivery",
-            "Close New Delivery",
-            "Admin Tools",
-            "Login",
-            "Sign Out",
-            "Delete Orders",
-            "Create Users"
-    };
-}
-
-public void changeLanguage(String newLang){
-
-    defaultEnglishText();
-
-
-    if(!newLang.equals("en")) {
-
-        for(int i = 0; i < LangToggleBtn.length; i++){
-            LangToggleBtn[i] = Translator.translate("en", newLang,  LangToggleBtn[i]);
-        }
-    }else{
-        defaultEnglishText();
-    }
-
-    newDeliveryButton.setText(isNewDelivery?LangToggleBtn[8]:LangToggleBtn[7]);
-    editBtn.setText(isEdit?LangToggleBtn[6]:LangToggleBtn[5]);
-
-    settingsButton.setText(LangToggleBtn[2]);
-    completedButton.setText(LangToggleBtn[0]);
-    pendingButton.setText(LangToggleBtn[1]);
-    createUserBtn.setText(LangToggleBtn[13]);
-    deleteOrdersBtn.setText(LangToggleBtn[12]);
-    adminButton.setText("< "+LangToggleBtn[9]);
 
     switch (currentPage){
         case "Pending":
-            deliverReturnBtn.setText(LangToggleBtn[3]);
+            deliverReturnBtn.setText(langTextChange[3]);
             break;
         case "Completed":
 
-            deliverReturnBtn.setText(LangToggleBtn[4]);
+            deliverReturnBtn.setText(langTextChange[4]);
             break;
 
         default:
@@ -373,8 +357,6 @@ public void changeLanguage(String newLang){
 
 }
 public void populateLanguageMenu(){
-
-
 
         for (Map.Entry<String, String> entry : MitchTextTranslate.getLanguagesMap().entrySet()) {
 
@@ -392,7 +374,13 @@ public void populateLanguageMenu(){
                 CheckBox selectedCheckBox = (CheckBox) event.getSource();
                 String selectedLanguage = selectedCheckBox.getText();
                 languageMenu.setText("Language: " + selectedLanguage);
-                changeLanguage(entry.getValue());
+
+                HashMap<String,String[]> checkStoredLang = MitchTextTranslate.getStoredLang();
+
+                if(checkStoredLang.containsKey(entry.getKey())){
+                    LangToggleBtn = checkStoredLang.get(entry.getKey());
+                    setUpLangText(LangToggleBtn);
+                }
 
             });
 
@@ -405,6 +393,7 @@ public void populateLanguageMenu(){
         }
         languageMenu.setMaxHeight(200);
         languageMenu.setText("Language: English");
+         MitchTextTranslate.addOrUpdateEntry(LangToggleBtn);
 }
 
 
