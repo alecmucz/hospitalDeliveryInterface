@@ -11,6 +11,7 @@ module com.example.hospitaldeliveryinterface {
     requires jsr305;
     requires java.net.http;
     requires libretranslate.java;
+    requires java.desktop;
     //requires google.api.translate.java;
     //requires com.google.firebase:firebase-auth
 

@@ -4,6 +4,7 @@ import com.example.hospitaldeliveryinterface.PharmaTracApp;
 import com.example.hospitaldeliveryinterface.firebase.DataBaseMgmt;
 import com.example.hospitaldeliveryinterface.firebase.FirebaseListener;
 import com.example.hospitaldeliveryinterface.model.DeliveryRequisition;
+import com.example.hospitaldeliveryinterface.model.MitchTextTranslate;
 import com.example.hospitaldeliveryinterface.model.NotifyMessg;
 import javafx.animation.FadeTransition;
 import com.example.hospitaldeliveryinterface.model.Employee;
@@ -19,11 +20,12 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.util.Duration;
+import net.suuft.libretranslate.Translator;
 
 import java.io.IOException;
 import java.util.*;
-import net.suuft.libretranslate.Translator;
-import net.suuft.libretranslate.Language;
+
+
 
 
 
@@ -88,6 +90,12 @@ public class HomepageController {
 
     @FXML
     private Label deliveryFormLabel;
+
+    @FXML
+    private Button deleteOrdersBtn;
+
+    @FXML
+    private Button createUserBtn;
 
     @FXML
     private BorderPane deliveryFormPane;
@@ -191,14 +199,22 @@ public class HomepageController {
     private String currentPage;
     private String selectedCardOrderNum;
     private Node selectedCard;//for getting selectedOrder
-    TextField[] allInputs;
+    private TextField[] allInputs;
 
-    TextField[] createUserInputs;
+    private TextField[] createUserInputs;
+
+    private Button[] toolBarBtn;
+
+   private String[] LangToggleBtn;
 
     public void initialize(){
 
+        defaultEnglishText();
 
+        MitchTextTranslate.initialLanguages();
         populateLanguageMenu();
+
+
         LogInVbox.setVisible(false);
 
         beginNotify = false;
@@ -295,22 +311,72 @@ public class HomepageController {
 
 /**************************MITCHELL LANGUAGE STUFF*************************/
 
+public void defaultEnglishText(){
 
-public void changeLanguage(String selectedLang){
 
 
+    LangToggleBtn = new String[]{
+            "Completed",
+            "Pending",
+            "Settings",
+            "Deliver Package",
+            "Return To Pending",
+            "Edit Delivery",
+            "Close Edit Delivery",
+            "+ New Delivery",
+            "Close New Delivery",
+            "Admin Tools",
+            "Login",
+            "Sign Out",
+            "Delete Orders",
+            "Create Users"
+    };
+}
+
+public void changeLanguage(String newLang){
+
+    defaultEnglishText();
+
+
+    if(!newLang.equals("en")) {
+
+        for(int i = 0; i < LangToggleBtn.length; i++){
+            LangToggleBtn[i] = Translator.translate("en", newLang,  LangToggleBtn[i]);
+        }
+    }else{
+        defaultEnglishText();
+    }
+
+    newDeliveryButton.setText(isNewDelivery?LangToggleBtn[8]:LangToggleBtn[7]);
+    editBtn.setText(isEdit?LangToggleBtn[6]:LangToggleBtn[5]);
+
+    settingsButton.setText(LangToggleBtn[2]);
+    completedButton.setText(LangToggleBtn[0]);
+    pendingButton.setText(LangToggleBtn[1]);
+    createUserBtn.setText(LangToggleBtn[13]);
+    deleteOrdersBtn.setText(LangToggleBtn[12]);
+    adminButton.setText("< "+LangToggleBtn[9]);
+
+    switch (currentPage){
+        case "Pending":
+            deliverReturnBtn.setText(LangToggleBtn[3]);
+            break;
+        case "Completed":
+
+            deliverReturnBtn.setText(LangToggleBtn[4]);
+            break;
+
+        default:
+            System.out.println("No Page/Tab exist on Application!");
+    }
 
 
 }
 public void populateLanguageMenu(){
 
-        HashMap<String,String> languagesMap = new HashMap<>();
-
-        languagesMap.put("English","en");
-        languagesMap.put("Spanish","es");
 
 
-        for (Map.Entry<String, String> entry : languagesMap.entrySet()) {
+        for (Map.Entry<String, String> entry : MitchTextTranslate.getLanguagesMap().entrySet()) {
 
             CheckBox tempCheckBox = new CheckBox(entry.getKey());
             tempCheckBox.setOnAction(event -> {
@@ -332,11 +398,15 @@ public void populateLanguageMenu(){
 
             CustomMenuItem tempCustomItem = new CustomMenuItem(tempCheckBox);
             languageMenu.getItems().add(tempCustomItem);
+
+            if ("English".equals(entry.getKey())) {
+                tempCheckBox.setSelected(true);
+            }
         }
-
+        languageMenu.setMaxHeight(200);
         languageMenu.setText("Language: English");
+}
 
-    }
 
 
 
@@ -431,6 +501,7 @@ public void populateLanguageMenu(){
         System.out.println("Pending Button Clicked");
         if(!currentPage.equals("Pending")){
             currentPage = "Pending";
+            deliverReturnBtn.setText(LangToggleBtn[3]);
             FirebaseListener.navBarDataDisplay("Pending");
         }
     }
@@ -440,6 +511,7 @@ public void populateLanguageMenu(){
         System.out.println("Completed Button Clicked");
         if(!currentPage.equals("Completed")){
             currentPage = "Completed";
+            deliverReturnBtn.setText(LangToggleBtn[4]);
             FirebaseListener.navBarDataDisplay("Completed");
             isEdit = false;
             isNewDelivery = false;
@@ -529,14 +601,13 @@ public void populateLanguageMenu(){
         }
 
         if(isEdit){
-
-            editBtn.setText("Close Edit Delivery");
+            editBtn.setText(LangToggleBtn[6]);
             buttonToggle(editBtn);
             buttonNotToggle(newDeliveryButton);
         }
 
         if(!isEdit || isDelivered){
-            editBtn.setText("Edit Delivery");
+            editBtn.setText(LangToggleBtn[5]);
             buttonNotToggle(editBtn);
         }
 
@@ -545,13 +616,13 @@ public void populateLanguageMenu(){
             selectedCardOrderNum = null;
             clearText();
             deliveryFormLabel.setText("New Delivery Form");
-            newDeliveryButton.setText("Close New Delivery");
+            newDeliveryButton.setText(LangToggleBtn[8]);
             buttonToggle(newDeliveryButton);
             buttonNotToggle(editBtn);
         }
 
         if(!isNewDelivery){
-            newDeliveryButton.setText("+ New Delivery");
+            newDeliveryButton.setText(LangToggleBtn[7]);
             buttonNotToggle(newDeliveryButton);
         }
 
@@ -591,9 +662,9 @@ public void populateLanguageMenu(){
 
             Queue<DeliveryRequisition> tempQueue = new LinkedList<>();
 
+
             if(currentPage.equals("Completed") && collectionName.equals("completedDeliveries")){
-                orderDisplayContainer.getChildren().clear();
-                deliverReturnBtn.setText("Return to Pending");
+                 orderDisplayContainer.getChildren().clear();
                 buttonToggle(completedButton);
                 buttonNotToggle(pendingButton);
                 tempQueue = currentQueue;
@@ -601,7 +672,6 @@ public void populateLanguageMenu(){
 
             if(currentPage.equals("Pending") && collectionName.equals("pendingDeliveries")){
                 orderDisplayContainer.getChildren().clear();
-                deliverReturnBtn.setText("Deliver Package");
                 buttonToggle(pendingButton);
                 buttonNotToggle(completedButton);
                 tempQueue = currentQueue;
@@ -730,6 +800,8 @@ public void populateLanguageMenu(){
                 case "doseQuantityDisplay":
                     doseAmountText.setText(label.getText());
                     break;
+                case "notesDisplay":
+                    addNoteText.setText(label.getText());
 
                 default:
                     System.out.println("NO ID EXIST ON ORDERCARD");
@@ -756,14 +828,14 @@ public void populateLanguageMenu(){
             if(currentPage.equals("Pending")) {
                 DataBaseMgmt.swapDB(selectedCardOrderNum, "pendingDeliveries","completedDeliveries");
                 NotifyMessg.createMessg("delivered", "[Employee ID]", selectedCardOrderNum);
-                FirebaseListener.navBarDataDisplay("Pending");
+               // FirebaseListener.navBarDataDisplay("Pending");
 
             }
 
             if(currentPage.equals("Completed")) {
                 DataBaseMgmt.swapDB(selectedCardOrderNum, "completedDeliveries","pendingDeliveries");
                 NotifyMessg.createMessg("returnToPending", "[Employee ID]", selectedCardOrderNum);
-                FirebaseListener.navBarDataDisplay("Completed");
+               // FirebaseListener.navBarDataDisplay("Completed");
 
             }
             isDelivered = false;

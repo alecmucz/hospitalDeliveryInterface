@@ -19,24 +19,24 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="577.0" prefWidth="1104.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hospitaldeliveryinterface.controllers.HomepageController">
+<AnchorPane prefHeight="500.0" prefWidth="984.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hospitaldeliveryinterface.controllers.HomepageController">
    <children>
-      <BorderPane fx:id="mainLayout" prefHeight="752.0" prefWidth="1027.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <BorderPane fx:id="mainLayout" prefHeight="706.0" prefWidth="929.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <bottom>
-            <ToolBar fx:id="bottomToolBar" prefHeight="10.0" prefWidth="819.0" style="-fx-background-color: #22aae1; -fx-border-color: #1e90f5 transparent transparent transparent; -fx-border-width: 3 0 0 0;" BorderPane.alignment="CENTER">
+            <ToolBar fx:id="bottomToolBar" nodeOrientation="LEFT_TO_RIGHT" prefHeight="10.0" prefWidth="819.0" style="-fx-background-color: #22aae1; -fx-border-color: #1e90f5 transparent transparent transparent; -fx-border-width: 3 0 0 0;" BorderPane.alignment="CENTER">
                <items>
-                  <Button fx:id="deliverReturnBtn" mnemonicParsing="false" onAction="#onDeliverReturn" onMousePressed="#onCompleteDeliverPress" onMouseReleased="#onCompleteDeliverRelease" prefHeight="38.0" prefWidth="178.0" style="-fx-background-color: transparent;" text="Deliver Package" textFill="WHITE">
+                  <Button fx:id="deliverReturnBtn" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onDeliverReturn" onMousePressed="#onCompleteDeliverPress" onMouseReleased="#onCompleteDeliverRelease" prefHeight="38.0" prefWidth="178.0" style="-fx-background-color: transparent;" text="Deliver Package" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="editBtn" mnemonicParsing="false" onAction="#onEditDelivery" prefHeight="36.0" prefWidth="178.0" style="-fx-background-color: transparent;" text="Edit Delivery" textFill="WHITE">
+                  <Button fx:id="editBtn" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onEditDelivery" prefHeight="36.0" prefWidth="178.0" style="-fx-background-color: transparent;" text="Edit Delivery" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Button>
                   <Pane prefHeight="45.0" prefWidth="180.0" style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS" />
-                  <Button fx:id="newDeliveryButton" mnemonicParsing="false" onAction="#onNewDelivery" prefHeight="36.0" prefWidth="161.0" style="-fx-background-color: wtransparenthite;" text="+ New Delivery" textFill="WHITE">
+                  <Button fx:id="newDeliveryButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onNewDelivery" prefHeight="36.0" prefWidth="161.0" style="-fx-background-color: wtransparenthite;" text="+ New Delivery" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -93,7 +93,7 @@
                         </HBox>
                      </bottom>
                      <center>
-                        <VBox focusTraversable="true" prefHeight="468.0" prefWidth="300.0" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
+                        <VBox focusTraversable="true" prefHeight="428.0" prefWidth="300.0" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
                            <children>
                               <Label alignment="TOP_LEFT" contentDisplay="TOP" prefHeight="8.0" prefWidth="292.0" text="Patient Information" textFill="#1e90f5">
                                  <font>
@@ -241,7 +241,7 @@
             </HBox>
          </center>
          <top>
-            <ToolBar style="-fx-background-color: #22aae1; -fx-border-color: transparent transparent #1e90f5 transparent; -fx-border-width: 0 0 3 0;" BorderPane.alignment="CENTER">
+            <ToolBar nodeOrientation="LEFT_TO_RIGHT" style="-fx-background-color: #22aae1; -fx-border-color: transparent transparent #1e90f5 transparent; -fx-border-width: 0 0 3 0;" BorderPane.alignment="CENTER">
                <items>
                   <ImageView fitHeight="71.0" fitWidth="208.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -256,20 +256,23 @@
                      </font>
                   </Button>
                   <Pane prefHeight="63.0" prefWidth="0.0" HBox.hgrow="ALWAYS" />
-                  <Button fx:id="pendingButton" alignment="CENTER" mnemonicParsing="false" onAction="#onPendingClick" prefHeight="39.0" style="-fx-background-color: trasnsparent;" text="Pending" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="completedButton" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#onCompleteClick" prefHeight="39.0" style="-fx-background-color: transparent;" text=" Completed" textFill="WHITE">
+                  <Button fx:id="pendingButton" alignment="CENTER" mnemonicParsing="false" onAction="#onPendingClick" prefHeight="39.0" style="-fx-background-color: trasnsparent;" text="Pending" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                      <padding>
-                        <Insets right="10.0" />
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
                   </Button>
-                  <Label fx:id="usernameLabel" alignment="CENTER" prefHeight="39.0" style="-fx-border-color: transparent transparent transparent white; -fx-border-width: 0 0 0 3;" text="Nobody Login" textAlignment="CENTER" textFill="#ffc800">
+                  <Button fx:id="completedButton" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#onCompleteClick" prefHeight="39.0" style="-fx-background-color: transparent;" text=" Completed" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
+                  </Button>
+                  <Label fx:id="usernameLabel" alignment="CENTER" prefHeight="39.0" textAlignment="CENTER" textFill="#ffc800">
                      <font>
                         <Font name="Tahoma Bold" size="14.0" />
                      </font>
@@ -277,33 +280,36 @@
                         <Insets left="10.0" />
                      </padding>
                   </Label>
-                  <Button fx:id="settingsButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSettingClick" prefHeight="39.0" prefWidth="100.0" style="-fx-background-color: transparent;" text="Settings" textFill="WHITE">
+                  <Button fx:id="settingsButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSettingClick" prefHeight="39.0" prefWidth="77.0" style="-fx-background-color: transparent;" text="Settings" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
                   </Button>
                </items>
             </ToolBar>
          </top>
       </BorderPane>
-      <VBox fx:id="settingNavbar" alignment="CENTER" layoutX="900.0" layoutY="106.0" prefHeight="159.0" style="-fx-background-color: #22aae1;" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="78.0">
+      <VBox fx:id="settingNavbar" alignment="CENTER" layoutX="900.0" layoutY="106.0" prefHeight="159.0" prefWidth="204.0" style="-fx-background-color: #22aae1;" AnchorPane.rightAnchor="-3.0" AnchorPane.topAnchor="78.0">
          <children>
-            <Button alignment="CENTER" contentDisplay="CENTER" minWidth="0.0" mnemonicParsing="false" prefHeight="45.0" style="-fx-background-color: transparent;" text="Dark Mode" textAlignment="CENTER" textFill="WHITE">
+            <Button alignment="CENTER" contentDisplay="CENTER" minWidth="0.0" mnemonicParsing="false" prefHeight="45.0" style="-fx-background-color: transparent;" text="Dark Mode" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <MenuButton fx:id="languageMenu" alignment="CENTER" mnemonicParsing="false" prefHeight="25.0" prefWidth="164.0" style="-fx-background-color: transparent;" text="Language: English" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+            <MenuButton fx:id="languageMenu" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" popupSide="RIGHT" prefHeight="25.0" prefWidth="164.0" style="-fx-background-color: transparent;" text="Language: Indonesian" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS" wrapText="true">
                <font>
-                  <Font name="System Bold" size="14.0" />
+                  <Font name="System Bold" size="12.0" />
                </font>
             </MenuButton>
-            <Button fx:id="adminButton" alignment="CENTER" minWidth="0.0" mnemonicParsing="false" onAction="#onAdminClick" prefHeight="45.0" style="-fx-background-color: transparent;" text="&lt; Admin Tools" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="adminButton" alignment="CENTER" minWidth="0.0" mnemonicParsing="false" onAction="#onAdminClick" prefHeight="45.0" style="-fx-background-color: transparent;" text="&lt; Admin Tools" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="LoginButtonChange" alignment="CENTER" minWidth="0.0" mnemonicParsing="false" onAction="#handleLoginButtonChange" prefHeight="36.0" prefWidth="167.0" style="-fx-background-color: transparent; -fx-border-color: white transparent transparent transparent; -fx-border-width: 1 0 0 0;" text="Login" textAlignment="RIGHT" textFill="WHITE">
+            <Button fx:id="LoginButtonChange" alignment="CENTER" minWidth="0.0" mnemonicParsing="false" onAction="#handleLoginButtonChange" prefHeight="36.0" prefWidth="167.0" style="-fx-background-color: transparent; -fx-border-color: white transparent transparent transparent; -fx-border-width: 1 0 0 0;" text="Login" textAlignment="RIGHT" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -315,12 +321,12 @@
       </VBox>
       <VBox fx:id="adminToolsNav" alignment="TOP_RIGHT" layoutX="945.0" layoutY="465.0" prefHeight="90.0" style="-fx-background-color: #22aae1;" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="167.0">
          <children>
-            <Button alignment="CENTER" minWidth="0.0" mnemonicParsing="false" prefHeight="33.0" style="-fx-background-color: transparent;" text="Delete Orders " textFill="WHITE">
+            <Button fx:id="deleteOrdersBtn" alignment="CENTER" contentDisplay="CENTER" minWidth="0.0" mnemonicParsing="false" prefHeight="33.0" style="-fx-background-color: transparent;" text="Delete Orders " textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button alignment="CENTER" minWidth="0.0" mnemonicParsing="false" onAction="#adminCreateUserChange" prefHeight="37.0" prefWidth="120.0" style="-fx-background-color: transparent;" text="Create Users" textFill="WHITE">
+            <Button fx:id="createUserBtn" alignment="CENTER" minWidth="0.0" mnemonicParsing="false" onAction="#adminCreateUserChange" prefHeight="37.0" prefWidth="120.0" style="-fx-background-color: transparent;" text="Create Users" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -330,7 +336,7 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
       </VBox>
-      <BorderPane fx:id="LogInVbox" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: rgba(0,0,0,0.75);" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <BorderPane fx:id="LogInVbox" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: rgba(0,0,0,0.75);" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
             <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="252.0" prefWidth="385.0" spacing="4.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
                <children>

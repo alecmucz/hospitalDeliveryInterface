@@ -7,8 +7,8 @@ import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-import net.suuft.libretranslate.Language;
 import net.suuft.libretranslate.Translator;
+
 
 import java.io.IOException;
 
@@ -29,7 +29,7 @@ public class PharmaTracApp extends Application {
         stage = theStage;
         FXMLLoader fxmlLoader = new FXMLLoader(PharmaTracApp.class.getResource("Homepage.fxml"));
 
-        scene = new Scene(fxmlLoader.load(),900,500);
+        scene = new Scene(fxmlLoader.load(),929,706);
         stage.setTitle("PharmaTrac");
         stage.setScene(scene);
         stage.show();
@@ -44,6 +44,9 @@ public class PharmaTracApp extends Application {
     }
 
     public static void main(String[] args) {
+        System.out.println("PharmaTrac is loading up.");
+        String textTranslate = Translator.translate("en","es", "PharmaTrac is loading up.");
+        System.out.println("Spanish: " + textTranslate);
         launch();
     }
 }
