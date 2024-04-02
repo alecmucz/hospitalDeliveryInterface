@@ -209,23 +209,7 @@ public class HomepageController {
 
     public void initialize(){
 
-        LangToggleBtn = new String[]{
-                "Completed",
-                "Pending",
-                "Settings",
-                "Deliver Package",
-                "Return To Pending",
-                "Edit Delivery",
-                "Close Edit Delivery",
-                "+ New Delivery",
-                "Close New Delivery",
-                "Admin Tools",
-                "Login",
-                "Sign Out",
-                "Delete Orders",
-                "Create Users"
-        };
-
+        LangToggleBtn = MitchTextTranslate.defaultEnglishText();
 
         MitchTextTranslate.initialLanguages();
         populateLanguageMenu();
@@ -393,7 +377,6 @@ public void populateLanguageMenu(){
         }
         languageMenu.setMaxHeight(200);
         languageMenu.setText("Language: English");
-         MitchTextTranslate.addOrUpdateEntry(LangToggleBtn);
 }
 
 

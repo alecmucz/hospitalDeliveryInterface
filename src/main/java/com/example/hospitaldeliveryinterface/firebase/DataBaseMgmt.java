@@ -2,11 +2,13 @@ package com.example.hospitaldeliveryinterface.firebase;
 
 import com.example.hospitaldeliveryinterface.model.DeliveryRequisition;
 import com.example.hospitaldeliveryinterface.PharmaTracApp;
+import com.example.hospitaldeliveryinterface.model.MitchTextTranslate;
 import com.example.hospitaldeliveryinterface.model.NotifyMessg;
 import com.example.hospitaldeliveryinterface.model.QueueSaves;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
+import net.suuft.libretranslate.Translator;
 
 import java.util.*;
 import java.util.concurrent.ExecutionException;
@@ -28,6 +30,64 @@ public class DataBaseMgmt {
 
     //----------------------------------------------------------------------------->
 
+    /**************For initial firebase check for language stored in collection and its values**************/
+    public static HashMap<String,String[]> initialLanguageCheck(TreeMap<String,String> initialLanguageMap){
+        CollectionReference LanguageCollection = PharmaTracApp.fstore.collection("LanguageStorage");
+        HashMap<String,String[]> storedLang = new HashMap<>();
+
+        for (Map.Entry<String, String> entry : initialLanguageMap.entrySet()) {
+
+            DocumentReference docRef = LanguageCollection.document(entry.getKey());
+            ApiFuture<DocumentSnapshot> future = docRef.get();
+
+            try {
+                DocumentSnapshot document = future.get();
+
+                if (document.exists()) {
+                    System.out.println("IT EXISTS in LanguageStorage Collection: " + entry.getKey());
+
+                    List<String> defaultSetUpValue = (List<String>) document.get("defualtSetUp");
+
+                    String[] defaultSetUpArray = defaultSetUpValue.toArray(new String[0]);
+                    storedLang.put(entry.getKey(), defaultSetUpArray);
+
+                } else {
+                    System.out.println("Need to add Language Defaults to LanguageStorage Collection: " + entry.getKey());
+                    String[] defaultEnglsihText = MitchTextTranslate.defaultEnglishText();
+                    String[] tempStirngArr = defaultEnglsihText;
+
+                    for(int i = 0; i < defaultEnglsihText.length; i++){
+                        tempStirngArr[i] = Translator.translate("en", entry.getValue(), defaultEnglsihText[i]);
+                    }
+
+                    storedLang.put(entry.getKey(), tempStirngArr);
+
+                    List<String> StringListToDB = new ArrayList<>(Arrays.asList(tempStirngArr));
+
+                    Map<String, Object> data = new HashMap<>();
+                    data.put("defualtSetUp", StringListToDB);
+                    ApiFuture<WriteResult> result = docRef.set(data);
+                    try {
+                        WriteResult writeResult = result.get();
+                        System.out.println("Document created at: " + writeResult.getUpdateTime() + " for " + entry.getKey());
+                    } catch (Exception e) {
+                        System.err.println("Error adding document: " + e.getMessage());
+                    }
+
+                }
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            } catch (ExecutionException e) {
+                throw new RuntimeException(e);
+            }
+
+        }
+
+        return storedLang;
+
+    }
+
+    /*******************************************************************************************/
     /**
      * adds a new deliveryRequisition to the pending collection of DB
      */

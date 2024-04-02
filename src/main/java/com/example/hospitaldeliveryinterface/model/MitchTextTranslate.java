@@ -1,6 +1,7 @@
 package com.example.hospitaldeliveryinterface.model;
 
 import com.example.hospitaldeliveryinterface.controllers.HomepageController;
+import com.example.hospitaldeliveryinterface.firebase.DataBaseMgmt;
 import com.google.firebase.database.core.utilities.Tree;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.CustomMenuItem;
@@ -48,8 +49,25 @@ public class MitchTextTranslate {
         return languagesMap;
     }
 
-
-
+   public static String[] defaultEnglishText()
+   {
+       return new String[]{
+               "Completed",
+               "Pending",
+               "Settings",
+               "Deliver Package",
+               "Return To Pending",
+               "Edit Delivery",
+               "Close Edit Delivery",
+               "+ New Delivery",
+               "Close New Delivery",
+               "Admin Tools",
+               "Login",
+               "Sign Out",
+               "Delete Orders",
+               "Create Users"
+       };
+   }
     public static void initialLanguages(){
 
         languagesMap.put("Arabic", "ar");
@@ -82,6 +100,9 @@ public class MitchTextTranslate {
         languagesMap.put("Swedish", "sv");
         languagesMap.put("Turkish", "tr");
         languagesMap.put("Ukrainian", "uk");
+
+
+        storedLang = DataBaseMgmt.initialLanguageCheck(languagesMap);
 
     }
 
