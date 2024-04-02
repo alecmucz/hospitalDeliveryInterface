@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextArea?>
@@ -19,7 +18,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="500.0" prefWidth="984.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hospitaldeliveryinterface.controllers.HomepageController">
+<AnchorPane fx:id="rootPane" prefHeight="500.0" prefWidth="984.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hospitaldeliveryinterface.controllers.HomepageController">
    <children>
       <BorderPane fx:id="mainLayout" prefHeight="706.0" prefWidth="929.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <bottom>
@@ -299,11 +298,11 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <MenuButton fx:id="languageMenu" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" popupSide="RIGHT" prefHeight="25.0" prefWidth="164.0" style="-fx-background-color: transparent;" text="Language: Indonesian" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS" wrapText="true">
+            <Button fx:id="changeLanguageBtn" mnemonicParsing="false" onAction="#onChangeLanguageClick" prefHeight="25.0" prefWidth="244.0" style="-fx-background-color: transparent;" text="Language: Indonesian" textFill="WHITE">
                <font>
-                  <Font name="System Bold" size="12.0" />
+                  <Font name="System Bold" size="14.0" />
                </font>
-            </MenuButton>
+            </Button>
             <Button fx:id="adminButton" alignment="CENTER" minWidth="0.0" mnemonicParsing="false" onAction="#onAdminClick" prefHeight="45.0" style="-fx-background-color: transparent;" text="&lt; Admin Tools" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                <font>
                   <Font name="System Bold" size="14.0" />

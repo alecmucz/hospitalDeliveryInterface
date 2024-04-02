@@ -38,6 +38,11 @@ import static com.example.hospitaldeliveryinterface.firebase.DataBaseMgmt.search
 import static com.example.hospitaldeliveryinterface.firebase.DataBaseMgmt.updateLoginStatus;
 
 public class HomepageController {
+
+
+
+    @FXML
+    private Button changeLanguageBtn;
     @FXML
     private TextField textFieldConfirmPassword;
     @FXML
@@ -167,6 +172,9 @@ public class HomepageController {
     private TextField textFieldEmail;
 
     @FXML
+    private AnchorPane rootPane;
+
+    @FXML
     private Label us;
 
     @FXML
@@ -181,8 +189,6 @@ public class HomepageController {
     @FXML
     private Label usernameLabel;
 
-    @FXML
-    private MenuButton languageMenu;
 
     //variables created
     private boolean isToggleSettings;
@@ -207,12 +213,15 @@ public class HomepageController {
 
    private String[] LangToggleBtn;
 
+    private AnchorPane languageMenuUI;
+    private LanguageMenuController languageMenuController;
+
     public void initialize(){
 
         LangToggleBtn = MitchTextTranslate.defaultEnglishText();
 
         MitchTextTranslate.initialLanguages();
-        populateLanguageMenu();
+        setUpLanguageMenu();
 
 
         LogInVbox.setVisible(false);
@@ -340,49 +349,48 @@ public void setUpLangText(String[] langTextChange){
 
 
 }
-public void populateLanguageMenu(){
 
-        for (Map.Entry<String, String> entry : MitchTextTranslate.getLanguagesMap().entrySet()) {
-
-            CheckBox tempCheckBox = new CheckBox(entry.getKey());
-            tempCheckBox.setOnAction(event -> {
-                for (MenuItem menuItem : languageMenu.getItems()) {
-                    if (menuItem instanceof CustomMenuItem) {
-                        CustomMenuItem customMenuItem = (CustomMenuItem) menuItem;
-                        CheckBox checkBox = (CheckBox) customMenuItem.getContent();
-                        if (checkBox != tempCheckBox) {
-                            checkBox.setSelected(false);
-                        }
-                    }
-                }
-                CheckBox selectedCheckBox = (CheckBox) event.getSource();
-                String selectedLanguage = selectedCheckBox.getText();
-                languageMenu.setText("Language: " + selectedLanguage);
-
-                HashMap<String,String[]> checkStoredLang = MitchTextTranslate.getStoredLang();
-
-                if(checkStoredLang.containsKey(entry.getKey())){
-                    LangToggleBtn = checkStoredLang.get(entry.getKey());
-                    setUpLangText(LangToggleBtn);
-                }
-
-            });
-
-            CustomMenuItem tempCustomItem = new CustomMenuItem(tempCheckBox);
-            languageMenu.getItems().add(tempCustomItem);
-
-            if ("English".equals(entry.getKey())) {
-                tempCheckBox.setSelected(true);
-            }
+    @FXML
+    void onChangeLanguageClick(ActionEvent event) {
+        if (languageMenuUI != null) {
+            languageMenuUI.setVisible(!languageMenuUI.isVisible());
         }
-        languageMenu.setMaxHeight(200);
-        languageMenu.setText("Language: English");
+    }
+
+    public void setLangToggleBtn(String[] newText) {
+       LangToggleBtn = newText;
+        setUpLangText(LangToggleBtn);
+
+    }
+public void setUpLanguageMenu(){
+
+        changeLanguageBtn.setText("Language: English");
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hospitaldeliveryinterface/LanguageMenu.fxml"));
+            languageMenuUI = loader.load();
+            languageMenuController = loader.getController();
+
+            languageMenuController.setButton(changeLanguageBtn);
+            languageMenuController.setHomeController(this);
+
+            rootPane.getChildren().add(languageMenuUI);
+
+            AnchorPane.setTopAnchor(languageMenuUI, 127.0);
+            AnchorPane.setRightAnchor(languageMenuUI, 200.0);
+
+            languageMenuUI.setVisible(false);
+
+        } catch (IOException e) {
+            System.out.println("Failed to find OrderCard.fxml");
+        }
+
 }
 
 
 
 
-    /***********************************************************************************/
+    /********************************Language Menu ENDS****************************/
     @FXML
     void onAddNote(ActionEvent event) {
 
