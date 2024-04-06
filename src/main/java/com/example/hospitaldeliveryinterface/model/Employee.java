@@ -6,7 +6,7 @@ public class Employee {
     private int employeeId;
     private String email;
 
-    private static String currentLogin =null;
+    private static String currentLogin = null;
 
     public static String getCurrentLogin() {
         return currentLogin;

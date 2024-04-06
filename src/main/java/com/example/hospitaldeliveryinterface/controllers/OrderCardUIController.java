@@ -1,11 +1,12 @@
 package com.example.hospitaldeliveryinterface.controllers;
 
-import com.example.hospitaldeliveryinterface.model.DeliveryRequisition;
+import
+        com.example.hospitaldeliveryinterface.model.DeliveryRequisition;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
-import javafx.scene.text.TextFlow;
+import javafx.scene.layout.HBox;
 
 public class OrderCardUIController {
 
@@ -34,16 +35,12 @@ public class OrderCardUIController {
     private TextArea notesDisplay;
 
     @FXML
-    private GridPane orderTemplate;
+    private HBox orderTemplate;
 
     @FXML
     private Label deliveredByDisplay;
 
-    @FXML
-    private Label updatedByDisplay;
 
-    @FXML
-    private Label createdByDisplay;
 
 
     public void updateOrderLabels(DeliveryRequisition order){
@@ -54,9 +51,7 @@ public class OrderCardUIController {
         doseDisplay.setText(order.getDose());
         doseQuantityDisplay.setText(order.getNumDoses());
         dateDisplay.setText(order.getDateTime());
-        deliveredByDisplay.setText(order.getDeliveredBy());
-        createdByDisplay.setText(order.getCreatedBy());
-        updatedByDisplay.setText(order.getUpdatedBy());
+        deliveredByDisplay.setText(order.getDeliveryInfo());
         notesDisplay.setText(order.getNotes());
     }
 }

@@ -5,143 +5,122 @@
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<GridPane fx:id="orderTemplate" alignment="CENTER_LEFT" hgap="20.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="236.0" prefWidth="575.0" style="-fx-background-color: transparent; -fx-border-color: #22aae1; -fx-border-width: 2;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hospitaldeliveryinterface.controllers.OrderCardUIController">
-  <columnConstraints>
-    <ColumnConstraints halignment="RIGHT" maxWidth="504.66666666666663" minWidth="10.0" prefWidth="119.33333333333331" />
-    <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="484.6666323343913" minWidth="0.0" prefWidth="120.66672261555988" />
-      <ColumnConstraints halignment="LEFT" maxWidth="484.6666323343913" minWidth="10.0" prefWidth="104.33333333333331" />
-      <ColumnConstraints halignment="LEFT" hgrow="SOMETIMES" maxWidth="484.6666323343913" minWidth="10.0" prefWidth="147.66666666666669" />
-  </columnConstraints>
-  <rowConstraints>
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-    <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-      <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-  </rowConstraints>
+<HBox fx:id="orderTemplate" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="236.0" prefWidth="862.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hospitaldeliveryinterface.controllers.OrderCardUIController">
    <children>
-      <Label alignment="CENTER_RIGHT" prefHeight="30.0" text="Order:" textFill="#1e90f5">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER_RIGHT" prefHeight="30.0" text="Patient Name:" textFill="#1e90f5" GridPane.rowIndex="1">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER_RIGHT" prefHeight="30.0" text="Location:" textFill="#1e90f5" GridPane.rowIndex="2">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER_RIGHT" prefHeight="30.0" text="Medication:" textFill="#1e90f5" GridPane.rowIndex="3">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER_RIGHT" prefHeight="30.0" text="Dose:" textFill="#1e90f5" GridPane.rowIndex="4">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER_RIGHT" prefHeight="30.0" text="Date Created:" textFill="#1e90f5" GridPane.columnIndex="2" GridPane.rowIndex="1">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER_RIGHT" prefHeight="30.0" text="Number of Doses" textFill="#1e90f5" GridPane.rowIndex="5">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label fx:id="orderNumDisplay" prefHeight="27.0" prefWidth="499.0" text="Label" textFill="#ff8800" GridPane.columnIndex="1">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label fx:id="patientNameDisplay" prefHeight="27.0" prefWidth="489.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label fx:id="locationDisplay" prefHeight="27.0" prefWidth="528.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label fx:id="medicationDisplay" prefHeight="27.0" prefWidth="517.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label fx:id="doseDisplay" prefHeight="27.0" prefWidth="493.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="4">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label fx:id="doseQuantityDisplay" prefHeight="27.0" prefWidth="497.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="5">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Label>
-      <Label fx:id="dateDisplay" prefHeight="27.0" prefWidth="518.0" text="Label" textFill="#34e339" GridPane.columnIndex="3" GridPane.rowIndex="1">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER_RIGHT" prefHeight="30.0" text="Created By:" textFill="#1e90f5" GridPane.columnIndex="2">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label fx:id="createdByDisplay" prefHeight="27.0" prefWidth="518.0" text="Label" textFill="#34e339" GridPane.columnIndex="3">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER_RIGHT" prefHeight="30.0" text="Delivered Date:" textFill="#1e90f5" GridPane.columnIndex="2" GridPane.rowIndex="3">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER_RIGHT" layoutX="301.0" layoutY="131.0" prefHeight="30.0" text="Delivered By:" textFill="#1e90f5" GridPane.columnIndex="2" GridPane.rowIndex="4">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label prefHeight="27.0" prefWidth="518.0" text="Label" textFill="#34e339" GridPane.columnIndex="3" GridPane.rowIndex="3">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label fx:id="deliveredByDisplay" prefHeight="27.0" prefWidth="518.0" text="Label" textFill="#34e339" GridPane.columnIndex="3" GridPane.rowIndex="4">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER_RIGHT" layoutX="301.0" layoutY="167.0" prefHeight="30.0" text="**Notes**:" textFill="#1e90f5" GridPane.columnIndex="2" GridPane.rowIndex="5">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label alignment="CENTER_RIGHT" prefHeight="30.0" text="Updated By:" textFill="#1e90f5" GridPane.columnIndex="2" GridPane.rowIndex="2">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <Label fx:id="updatedByDisplay" prefHeight="27.0" prefWidth="518.0" text="Label" textFill="#34e339" GridPane.columnIndex="3" GridPane.rowIndex="2">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Label>
-      <TextArea fx:id="notesDisplay" editable="false" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="3" GridPane.rowIndex="5" />
+      <GridPane alignment="CENTER_LEFT" hgap="20.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="236.0" prefWidth="496.0" style="-fx-background-color: transparent; -fx-border-color: #22aae1; -fx-border-width: 2;" HBox.hgrow="ALWAYS">
+         <columnConstraints>
+            <ColumnConstraints halignment="RIGHT" maxWidth="504.66666666666663" minWidth="10.0" prefWidth="119.33333333333331" />
+            <ColumnConstraints halignment="LEFT" hgrow="ALWAYS" maxWidth="484.6666323343913" minWidth="0.0" prefWidth="108.0" />
+            <ColumnConstraints halignment="RIGHT" maxWidth="484.6666323343913" minWidth="10.0" prefWidth="101.0" />
+            <ColumnConstraints halignment="LEFT" hgrow="NEVER" maxWidth="484.6666323343913" minWidth="10.0" prefWidth="167.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+         </rowConstraints>
+         <children>
+            <Label alignment="CENTER_RIGHT" prefHeight="30.0" text="Order:" textFill="#1e90f5">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER_RIGHT" prefHeight="30.0" text="Patient Name:" textFill="#1e90f5" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER_RIGHT" prefHeight="30.0" text="Location:" textFill="#1e90f5" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER_RIGHT" prefHeight="30.0" text="Medication:" textFill="#1e90f5" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER_RIGHT" prefHeight="30.0" text="Dose:" textFill="#1e90f5" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER_RIGHT" prefHeight="30.0" text="Date Created:" textFill="#1e90f5" GridPane.rowIndex="4">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER_RIGHT" prefHeight="30.0" text="Number of Doses" textFill="#1e90f5" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="orderNumDisplay" prefHeight="27.0" prefWidth="499.0" text="Label" textFill="#ff8800" GridPane.columnIndex="1">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="patientNameDisplay" prefHeight="27.0" prefWidth="489.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="locationDisplay" prefHeight="27.0" prefWidth="528.0" text="Label" GridPane.columnIndex="3" GridPane.hgrow="NEVER" GridPane.rowIndex="1">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="medicationDisplay" prefHeight="27.0" prefWidth="517.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="doseDisplay" prefHeight="27.0" prefWidth="211.0" text="Label" GridPane.columnIndex="3" GridPane.hgrow="NEVER" GridPane.rowIndex="2">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="doseQuantityDisplay" prefHeight="27.0" prefWidth="497.0" text="Label" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="dateDisplay" prefHeight="27.0" prefWidth="518.0" text="Label" textFill="#34e339" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER_RIGHT" layoutX="301.0" layoutY="131.0" prefHeight="30.0" text="Delivered By:" textFill="#1e90f5" GridPane.columnIndex="2" GridPane.rowIndex="4">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="deliveredByDisplay" prefHeight="27.0" prefWidth="518.0" text="Label" textFill="#34e339" GridPane.columnIndex="3" GridPane.hgrow="NEVER" GridPane.rowIndex="4">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </GridPane>
+      <VBox prefHeight="236.0" prefWidth="173.0">
+         <children>
+            <Label alignment="CENTER_RIGHT" prefHeight="30.0" text="**Notes**:" textFill="#1e90f5">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <TextArea fx:id="notesDisplay" editable="false" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="202.0" prefWidth="283.0" />
+         </children>
+      </VBox>
    </children>
-   <padding>
-      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-   </padding>
-</GridPane>
+</HBox>

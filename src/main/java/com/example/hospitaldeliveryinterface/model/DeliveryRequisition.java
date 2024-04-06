@@ -8,8 +8,6 @@ import com.google.cloud.firestore.WriteResult;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
-import java.util.Locale;
 
 public class DeliveryRequisition {
     private String patientName;
@@ -19,9 +17,8 @@ public class DeliveryRequisition {
     private String numDoses;
     private String dateTime;
     private String notes;
-    private String deliveredBy; // tracks which staff member signed off on the package
-    private String createdBy; // tracks which staff created the delivery/order
-    private String updatedBy;
+    private String deliveryInfo; // tracks which staff member signed off on the package
+    private String orderCreationRecord; // tracks which staff created the delivery/order
 
     private  String orderNumberDisplay;
     private static int orderNumCount;
@@ -37,9 +34,8 @@ public class DeliveryRequisition {
         this.dateTime = dateTime;
         this.orderNumberDisplay = orderNumber;
         this.notes = notes;
-        this.deliveredBy = deliveredBy;
-        this.createdBy = createdBy;
-        this.updatedBy = updatedBy;
+        this.deliveryInfo = deliveredBy;
+        this.orderCreationRecord = createdBy;
 
     }
     public void setPatientName(String patientName) {
@@ -66,20 +62,9 @@ public class DeliveryRequisition {
         orderNumCount = DBcount;
     }
 
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
+    public void setOrderCreationRecord(String orderCreationRecord) {
+        this.orderCreationRecord = orderCreationRecord;
     }
-
-    public String getUpdatedBy() {
-        return updatedBy;
-    }
-
-    public void setUpdatedBy(String updatedBy) {
-        this.updatedBy = updatedBy;
-    }
-
-
-
 
     public String getPatientName(){
         return patientName;
@@ -108,16 +93,16 @@ public class DeliveryRequisition {
         return notes;
     }
 
-    public String getDeliveredBy() {
-        return deliveredBy;
+    public String getDeliveryInfo() {
+        return deliveryInfo;
     }
 
-    public void setDeliveredBy(String deliveredBy) {
-        this.deliveredBy = deliveredBy;
+    public void setDeliveryInfo(String deliveryInfo) {
+        this.deliveryInfo = deliveryInfo;
     }
 
-    public String getCreatedBy() {
-        return createdBy;
+    public String getOrderCreationRecord() {
+        return orderCreationRecord;
     }
     public static int getOrderNumCount() {
         return orderNumCount;
@@ -165,4 +150,6 @@ public class DeliveryRequisition {
         final ApiFuture<WriteResult> updateFuture =
                 docRef.update("totalNumOrders", FieldValue.increment(1));
     }
+
+
 }

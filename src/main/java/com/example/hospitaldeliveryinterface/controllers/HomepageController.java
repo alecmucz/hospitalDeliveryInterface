@@ -132,8 +132,7 @@ public class HomepageController {
     @FXML
     private Button reportsButton;
 
-    @FXML
-    private TextField searchBarTextField;
+
 
     @FXML
     private Button searchButton;
@@ -147,8 +146,7 @@ public class HomepageController {
     @FXML
     private Button settingsButton;
 
-    @FXML
-    private PasswordField textFieldConfirmPassword;
+
 
     @FXML
     private TextField textFieldFullName;
@@ -156,8 +154,7 @@ public class HomepageController {
     @FXML
     private PasswordField textFieldPassword;
 
-    @FXML
-    private PasswordField textFieldPassword1;
+
 
     @FXML
     private TextField textFieldPhoneNumber;
@@ -219,7 +216,7 @@ public class HomepageController {
         toggleCreateUser = false;
         int totalOrders = DataBaseMgmt.getTotalNumOrders();
         DeliveryRequisition.setOrderNumCount(totalOrders);
-        Employee currentEmployee = null; // employee who is logged in
+
 
         searchByChoiceBox.getItems().addAll("patientName","medication","location");
         searchByChoiceBox.setValue("Search By:");
@@ -373,7 +370,7 @@ public class HomepageController {
                 }
                 else {
                     NotifyMessg.createMessg("newDelivery", "[Employee ID]", newOrderNum);
-                    DataBaseMgmt.addToDB(newOrder, "pendingDeliveries");
+                    DataBaseMgmt.addToDB(newOrder, "pendingDeliveries",true);
 
                 }
                 clearText();
@@ -590,7 +587,7 @@ public class HomepageController {
                    // System.out.println("CHECKING DISPLAY QUEUE ORDERS: " + order.toString());
                         try {
                             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hospitaldeliveryinterface/OrderCard.fxml"));
-                            GridPane orderTemplate = loader.load();
+                            HBox orderTemplate = loader.load();
                             OrderCardUIController controller = loader.getController();
                             controller.updateOrderLabels(order);
                             orderDisplayContainer.getChildren().add(orderTemplate);
@@ -618,19 +615,27 @@ public class HomepageController {
                     }
 
                     if(selectedCard != node || selectedCard == null){
-                            if (node instanceof GridPane) {
-                                GridPane gridpane = (GridPane) node;
-                                gridpane.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: #ffbdbd");
-                                for(Node childNode : gridpane.getChildren()){
-                                    if (childNode instanceof Label) {
-                                        Label label = (Label) childNode;
-                                        if ("orderNumDisplay".equals(label.getId())) {
-                                            String labelText  = label.getText().substring(1); // Remove the "#" symbol
-                                            selectedCardOrderNum = labelText;
-                                            //System.out.println("ORDER NUMBER RETRIEVED: " + labelText);
-                                            break;
+                            if (node instanceof HBox) {
+                                HBox hbox = (HBox) node;
+                                hbox.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: #ffbdbd");
+                                for(Node childNode : hbox.getChildren()){
+                                    if (childNode instanceof GridPane) {
+                                        GridPane gridPane = (GridPane) childNode;
+                                        for(Node gridpaneNode : gridPane.getChildren()) {
+                                            if (gridpaneNode instanceof Label) {
+                                                Label label = (Label) gridpaneNode;
+                                                System.out.println(label.getId());
+                                                if ("orderNumDisplay".equals(label.getId())) {
+                                                    String labelText  = label.getText().substring(1); // Remove the "#" symbol
+                                                    selectedCardOrderNum = labelText;
+                                                    System.out.println("order selected");
+                                                    System.out.println("ORDER NUMBER RETRIEVED: " + labelText);
+                                                    break;
+                                                }
+                                            }
                                         }
                                     }
+
                                 }
                             }
                         selectedCard = node;
@@ -667,11 +672,16 @@ public class HomepageController {
         deliveryFormLabel.setText("Edit Delivery Form");
         clearText();
 
-        if(selectCard instanceof GridPane){
-            GridPane gridpane = (GridPane) selectCard;
-            for(Node selectChild: gridpane.getChildren()){
-                if(selectChild instanceof Label){
-                    setTextFieldFromLabel((Label)selectChild);
+        if(selectCard instanceof HBox){
+            HBox hBoxpane = (HBox) selectCard;
+            for(Node selectChild: hBoxpane.getChildren()){
+                if (selectChild instanceof GridPane) {
+                    GridPane gridPane = (GridPane) selectChild;
+                    for(Node gridpaneNode : gridPane.getChildren()){
+                        if(gridpaneNode instanceof Label){
+                            setTextFieldFromLabel((Label)gridpaneNode);
+                        }
+                    }
                 }
             }
         }
@@ -680,7 +690,7 @@ public class HomepageController {
     }
 
     public void setTextFieldFromLabel(Label label){
-        if(label.getId() != null){
+        if(label.getId() != null && !label.getText().isEmpty()){
             switch (label.getId()){
                 case "patientNameDisplay":
                     String[] fullName = label.getText().split(" ");
@@ -721,10 +731,10 @@ public class HomepageController {
     }
 
 
-    public void sendOrderToCompleted(String selectedorderNum){
+    public void sendOrderToCompleted(String selectedOrderNum){
         System.out.print("sendOrderToComplete method called!!!");
-        System.out.println("selectOrderNum: " + selectedorderNum);
-        if(selectedorderNum != null){
+        System.out.println("selectOrderNum: " + selectedOrderNum);
+        if(selectedOrderNum != null){
             if(currentPage.equals("Pending")) {
                 DataBaseMgmt.swapDB(selectedCardOrderNum, "pendingDeliveries","completedDeliveries");
                 NotifyMessg.createMessg("delivered", "[Employee ID]", selectedCardOrderNum);
@@ -963,7 +973,7 @@ public class HomepageController {
             System.out.println("CHECKING SEARCH ORDERS: " + order.toString());
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hospitaldeliveryinterface/OrderCard.fxml"));
-                GridPane orderTemplate = loader.load();
+                HBox orderTemplate = loader.load();
                 OrderCardUIController controller = loader.getController();
                 controller.updateOrderLabels(order);
                 orderDisplayContainer.getChildren().add(orderTemplate);

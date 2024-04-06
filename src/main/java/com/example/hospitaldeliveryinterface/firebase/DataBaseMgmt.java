@@ -2,12 +2,12 @@ package com.example.hospitaldeliveryinterface.firebase;
 
 import com.example.hospitaldeliveryinterface.model.DeliveryRequisition;
 import com.example.hospitaldeliveryinterface.PharmaTracApp;
-import com.example.hospitaldeliveryinterface.model.NotifyMessg;
 import com.example.hospitaldeliveryinterface.model.QueueSaves;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
-import com.google.firebase.cloud.FirestoreClient;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 
@@ -31,7 +31,7 @@ public class DataBaseMgmt {
     /**
      * adds a new deliveryRequisition to the pending collection of DB
      */
-    public static void addToDB(DeliveryRequisition deliveryRequisition, String collectionName) {
+    public static void addToDB(DeliveryRequisition deliveryRequisition, String collectionName, Boolean newOrder) {
 
         DocumentReference docRef = PharmaTracApp.fstore.collection(collectionName).document(deliveryRequisition.getOrderNumberDisplay());
 
@@ -42,10 +42,14 @@ public class DataBaseMgmt {
         data.put("dose", deliveryRequisition.getDose());
         data.put("numDoses", deliveryRequisition.getNumDoses());
         data.put("timeCreated", deliveryRequisition.getDateTime());
-        data.put("notes", deliveryRequisition.getNotes());
-        data.put("deliveredBy", deliveryRequisition.getDeliveredBy() != null ? deliveryRequisition.getDeliveredBy() : "");
-        data.put("createdBy", deliveryRequisition.getCreatedBy() != null ? deliveryRequisition.getCreatedBy() : "");
-        data.put("updatedBy", deliveryRequisition.getUpdatedBy() != null ? deliveryRequisition.getUpdatedBy() : "");
+        if(newOrder){
+            data.put("notes", "ORDER CREATED: "+ getDateAndTime() + "\n" + deliveryRequisition.getNotes() + "\n");
+        }
+        else {
+            data.put("notes", "ORDER MOVED: "+ getDateAndTime() + "\n" + deliveryRequisition.getNotes() + "\n");
+        }
+        data.put("deliveredBy", deliveryRequisition.getDeliveryInfo() != null ? deliveryRequisition.getDeliveryInfo() : "");
+        data.put("createdBy", deliveryRequisition.getOrderCreationRecord() != null ? deliveryRequisition.getOrderCreationRecord() : "");
         if (collectionName.equals("pendingDeliveries")) {
             data.put("status", "p");
         } else {
@@ -72,15 +76,10 @@ public class DataBaseMgmt {
         data.put("dose", order.getDose());
         data.put("numDoses", order.getNumDoses());
         data.put("timeCreated", order.getDateTime());
-        data.put("notes", order.getNotes());
-        data.put("updatedBy", Optional.ofNullable(order.getUpdatedBy()).orElse(""));
+        data.put("notes", "ORDER EDITED: " + getDateAndTime() + "\n" + order.getNotes() + "\n" );
 
         ApiFuture<WriteResult> future = PharmaTracApp.fstore.collection(collectionName).document(orderNumber).set(data);
-        //add who edited and what time they edited
-        //DocumentReference docRef = PharmaTracApp.fstore.collection(collectionName).document(orderNumber);
-        //ApiFuture<WriteResult> writeResult = docRef.update("timeCreated", FieldValue.serverTimestamp());
-
-    }
+        }
 
 
 
@@ -177,7 +176,7 @@ public class DataBaseMgmt {
         DeliveryRequisition order = findOrder(orderNumber, collectionFrom);
         if (order != null) {
             deleteFromDB(orderNumber, collectionFrom);
-            addToDB(order, collectionTo);
+            addToDB(order, collectionTo, false);
         }
 
     }
@@ -326,6 +325,13 @@ public class DataBaseMgmt {
 
         // (async) Update one field
         ApiFuture<WriteResult> future = docRef.update("loginStatus", status);
+    }
+    private static String getDateAndTime() {
+        LocalDateTime currentTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM/dd/yy kk:mm");
+        String dateString = currentTime.format(formatter);
+
+        return dateString;
     }
 }
 
