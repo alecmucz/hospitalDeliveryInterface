@@ -376,7 +376,7 @@
             </VBox>
          </center>
       </BorderPane>
-      <AnchorPane fx:id="notifyBox" layoutX="724.0" layoutY="488.0" prefHeight="139.0" prefWidth="285.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="10.0">
+      <AnchorPane fx:id="notifyBox" layoutX="724.0" layoutY="488.0" prefHeight="139.0" prefWidth="285.0" visible="false" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="10.0">
          <children>
             <VBox alignment="BOTTOM_LEFT" layoutY="85.0" prefHeight="115.0" prefWidth="251.0" style="-fx-background-color: #22aae1;">
                <children>

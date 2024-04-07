@@ -1075,9 +1075,6 @@ public void setUpLanguageMenu(){
                         if(selectedNotify == null){break;}
 
                        Platform.runLater(()->{
-                           FadeTransition fade1 = new FadeTransition(Duration.millis(3000), notifyBox);
-                           FadeTransition fade2 = new FadeTransition(Duration.millis(3000), notifyBox);
-                           FadeTransition fade3 = new FadeTransition(Duration.millis(3000), notifyBox);
 
                            notifyMess.setText("");
                            notifyDatetime.setText("");
@@ -1086,6 +1083,13 @@ public void setUpLanguageMenu(){
                            notifyBox.setVisible(true);
                            notifyMess.setVisible(true);
                            notifyDatetime.setVisible(true);
+
+
+                           FadeTransition fade1 = new FadeTransition(Duration.millis(3000), notifyBox);
+                           FadeTransition fade2 = new FadeTransition(Duration.millis(3000), notifyBox);
+                           FadeTransition fade3 = new FadeTransition(Duration.millis(3000), notifyBox);
+
+
 
 
                            fade1.setFromValue(1.0);
