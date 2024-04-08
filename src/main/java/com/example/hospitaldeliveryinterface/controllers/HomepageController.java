@@ -326,7 +326,10 @@ public class HomepageController {
             boolean checkOnlyNum = doseAmountText.getText().matches("[0-9]+");
 
             if(checkOnlyNum){
-                String fullName = firstnameText.getText() + " " + lastnameText.getText();
+                String firstnoWhiteSpace = firstnameText.getText().replaceAll("\\s","");
+                String lastnoWhiteSpace = lastnameText.getText().replaceAll("\\s","");
+
+                String fullName = firstnoWhiteSpace + " " + lastnoWhiteSpace;
                 String newOrderNum = DeliveryRequisition.generateOrderNum();
                 DeliveryRequisition newOrder = new DeliveryRequisition(
                         newOrderNum,
@@ -678,7 +681,7 @@ public class HomepageController {
                     break;
 
                 default:
-                    System.out.println("NO ID EXIST ON ORDERCARD");
+                    System.out.println("NO ID EXIST ON ORDERCARD: " + label.getId());
             }
         }
 
