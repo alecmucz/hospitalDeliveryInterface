@@ -1,11 +1,6 @@
 package com.example.hospitaldeliveryinterface.model;
 
-import com.example.hospitaldeliveryinterface.controllers.HomepageController;
 import com.example.hospitaldeliveryinterface.firebase.DataBaseMgmt;
-import com.google.firebase.database.core.utilities.Tree;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.CustomMenuItem;
-import javafx.scene.control.MenuItem;
 import net.suuft.libretranslate.Translator;
 
 import java.util.HashMap;
