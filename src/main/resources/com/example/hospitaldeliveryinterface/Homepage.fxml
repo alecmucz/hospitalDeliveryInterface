@@ -227,7 +227,15 @@
                               <Font size="14.0" />
                            </font>
                         </Button>
-                        <TextArea fx:id="createUserError" prefHeight="200.0" prefWidth="200.0" />
+                        <HBox fx:id="errorMessageHbox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" visible="false">
+                           <children>
+                              <Label fx:id="createUserError" text="Label" textFill="RED">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </HBox>
                      </children>
                      <opaqueInsets>
                         <Insets />
@@ -318,7 +326,7 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
       </VBox>
-      <VBox fx:id="adminToolsNav" alignment="TOP_RIGHT" layoutX="945.0" layoutY="465.0" prefHeight="90.0" style="-fx-background-color: #22aae1;" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="167.0">
+      <VBox fx:id="adminToolsNav" alignment="TOP_RIGHT" layoutX="945.0" layoutY="465.0" prefHeight="90.0" style="-fx-background-color: #22aae1;" visible="false" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="167.0">
          <children>
             <Button fx:id="deleteOrdersBtn" alignment="CENTER" contentDisplay="CENTER" minWidth="0.0" mnemonicParsing="false" prefHeight="33.0" style="-fx-background-color: transparent;" text="Delete Orders " textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                <font>
@@ -337,12 +345,15 @@
       </VBox>
       <BorderPane fx:id="LogInVbox" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: rgba(0,0,0,0.75);" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
-            <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="252.0" prefWidth="385.0" spacing="4.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+            <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="294.0" prefWidth="385.0" spacing="4.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
                <children>
-                  <Label fx:id="us" prefHeight="59.0" prefWidth="366.0" text="Employee Login" textFill="#22aae1">
+                  <Label fx:id="us" prefHeight="30.0" prefWidth="180.0" text="Employee Login" textFill="#22aae1">
                      <font>
                         <Font name="Tahoma" size="24.0" />
                      </font>
+                     <VBox.margin>
+                        <Insets bottom="10.0" />
+                     </VBox.margin>
                   </Label>
                   <TextField fx:id="textFieldUsername" prefHeight="38.0" prefWidth="316.0" promptText="Username" style="-fx-background-color: lightgrey; -fx-text-fill: grey; -fx-prompt-text-fill: gray;">
                      <VBox.margin>
@@ -369,16 +380,25 @@
                      </VBox.margin>
                   </Button>
                   <Button mnemonicParsing="false" onAction="#onReturnToHome" prefHeight="25.0" prefWidth="129.0" style="-fx-background-color: transparent;" text="Return to Homepage" textFill="#22aae1" underline="true" />
+                  <HBox fx:id="loginErrorHbox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" visible="false">
+                     <children>
+                        <Label fx:id="labelLoginError" text="Label">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </HBox>
                </children>
                <padding>
-                  <Insets left="25.0" right="25.0" />
+                  <Insets left="25.0" right="25.0" top="25.0" />
                </padding>
             </VBox>
          </center>
       </BorderPane>
       <AnchorPane fx:id="notifyBox" layoutX="724.0" layoutY="488.0" prefHeight="139.0" prefWidth="285.0" visible="false" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="10.0">
          <children>
-            <VBox alignment="BOTTOM_LEFT" layoutY="85.0" prefHeight="115.0" prefWidth="251.0" style="-fx-background-color: #22aae1;">
+            <VBox alignment="BOTTOM_LEFT" layoutY="85.0" prefHeight="115.0" prefWidth="251.0" style="-fx-background-color: #22aae1;" visible="false">
                <children>
                   <Label fx:id="notifyDatetime" alignment="CENTER" prefHeight="37.0" prefWidth="245.0" text="03/27/2024 - 1:12PM" textFill="WHITE" wrapText="true">
                      <font>

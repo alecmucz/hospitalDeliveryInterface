@@ -19,6 +19,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import javafx.util.Duration;
 import net.suuft.libretranslate.Translator;
 
@@ -44,9 +45,15 @@ public class HomepageController {
     @FXML
     private Button changeLanguageBtn;
     @FXML
+    private HBox loginErrorHbox;
+    @FXML
+    private Label labelLoginError;
+    @FXML
+    private HBox errorMessageHbox;
+    @FXML
     private TextField textFieldConfirmPassword;
     @FXML
-    private TextArea createUserError;
+    private Label createUserError;
     @FXML
     private TextField textFieldEmployeeID;
     @FXML
@@ -430,7 +437,10 @@ public void setUpLanguageMenu(){
             boolean checkOnlyNum = doseAmountText.getText().matches("[0-9]+");
 
             if(checkOnlyNum){
-                String fullName = firstnameText.getText() + " " + lastnameText.getText();
+                String firstnoWhiteSpace = firstnameText.getText().replaceAll("\\s","");
+                String lastnoWhiteSpace = lastnameText.getText().replaceAll("\\s","");
+
+                String fullName = firstnoWhiteSpace + " " + lastnoWhiteSpace;
                 String newOrderNum = DeliveryRequisition.generateOrderNum();
                 DeliveryRequisition newOrder = new DeliveryRequisition(
                         newOrderNum,
@@ -627,10 +637,10 @@ public void setUpLanguageMenu(){
 
 
 
-    public void errorBorder(TextField textField){
+    public  void errorBorder(TextField textField){
         textField.setStyle("-fx-border-color: red;");
     }
-    public void defaultBorder(TextField textfield){
+    public  void defaultBorder(TextField textfield){
         textfield.setStyle("-fx-border-color: grey;");
     }
 
@@ -784,7 +794,7 @@ public void setUpLanguageMenu(){
                     addNoteText.setText(label.getText());
 
                 default:
-                    System.out.println("NO ID EXIST ON ORDERCARD");
+                    System.out.println("NO ID EXIST ON ORDERCARD: " + label.getId());
             }
         }
 
@@ -939,23 +949,31 @@ public void setUpLanguageMenu(){
     }
 
     public void createUser() throws ExecutionException, InterruptedException {
-
+        for (TextField childInput : createUserInputs) {
+            defaultBorder(childInput);
+        }
+        createUserError.setStyle("-fx-text-fill: red;");
         boolean checkErrors = false;
         //enhanced for loop, loops through array full of textFields
         for (TextField childInput : createUserInputs) {
             //if statement to check if its empty
-            if(childInput.getText().isEmpty()) {
+            if (childInput.getText().isEmpty()) {
                 errorBorder(childInput);
                 checkErrors = true;
             }
         }
         //checking if checkError equals true
-        if(checkErrors) {
+        if (checkErrors) {
+            errorMessageHbox.setVisible(true);
             createUserError.setText("**Error: Please fill out all text fields");
+
         } else {
             Map<String, Object> isUserExist = DataBaseMgmt.retrieveUserData(textFieldEmployeeID.getText(), "employees");
             if (isUserExist != null) {
+                errorMessageHbox.setVisible(true);
                 createUserError.setText("**Error: Account " + textFieldEmployeeID.getText() + " already exist");
+                //for loop goes through every text field and clears it
+                clearFieldsAndBorders();
             } else {
                 //init calls method that has return value of string
                 String requiredCheck = Employee.textFieldCheckCreatingAccount(
@@ -966,7 +984,50 @@ public void setUpLanguageMenu(){
                         textFieldPassword1.getText(),
                         textFieldConfirmPassword.getText()
                 );
-                if (requiredCheck.equals("Successful!")) {
+
+                // If validation fails, display error message and apply error borders
+                if (!requiredCheck.equals("Successful!")) {
+                    errorMessageHbox.setVisible(true);
+                    createUserError.setText(requiredCheck);
+                    createUserError.setStyle("-fx-text-fill: red;");
+
+                    // Apply error borders to text fields based on validation results
+                    if (requiredCheck.contains("staff ID")) {
+                        errorBorder(textFieldEmployeeID);
+                        errorMessageHbox.setVisible(true);
+                        createUserError.setText(requiredCheck);
+                    }
+                    if (requiredCheck.contains("First name")) {
+                        errorBorder(textFieldFirstName);
+                        errorMessageHbox.setVisible(true);
+                        createUserError.setText(requiredCheck);
+                    }
+                    if (requiredCheck.contains("Last name")) {
+                        errorBorder(textFieldLastName);
+                        errorMessageHbox.setVisible(true);
+                        createUserError.setText(requiredCheck);
+                    }
+                    if (requiredCheck.contains("email format")) {
+                        errorBorder(textFieldEmail);
+                        errorMessageHbox.setVisible(true);
+                        createUserError.setText(requiredCheck);
+                    }
+                    if (requiredCheck.contains("password")) {
+                        errorBorder(textFieldPassword1);
+                        errorBorder(textFieldConfirmPassword);
+                        errorMessageHbox.setVisible(true);
+                        createUserError.setText(requiredCheck);
+                    }
+                    if(requiredCheck.contains("lower and upper")) {
+                        errorBorder(textFieldPassword1);
+                        errorBorder(textFieldConfirmPassword);
+                        errorMessageHbox.setVisible(true);
+                        createUserError.setText(requiredCheck);
+                    }
+                } else {
+                    // User creation successful, add user to database
+                    errorMessageHbox.setVisible(true);
+                    createUserError.setStyle("-fx-text-fill: green;");
                     DataBaseMgmt.addCreateUserDB(
                             textFieldEmployeeID.getText(),
                             textFieldFirstName.getText(),
@@ -974,17 +1035,35 @@ public void setUpLanguageMenu(){
                             textFieldPassword1.getText(),
                             textFieldEmployeeID.getText(),
                             textFieldEmail.getText());
+
+                    // Clear all text fields and reset borders to default
+                    clearFieldsAndBorders();
                     createUserError.setText(requiredCheck);
-                } else {
-                    createUserError.setText(requiredCheck);
+                    defaultBorder(textFieldEmployeeID);
+                    defaultBorder(textFieldFirstName);
+                    defaultBorder(textFieldLastName);
+                    defaultBorder(textFieldEmail);
+                    defaultBorder(textFieldPassword1);
+                    defaultBorder(textFieldConfirmPassword);
                 }
             }
         }
     }
+    private void clearFieldsAndBorders() {
+        for (TextField childInput : createUserInputs) {
+            defaultBorder(childInput);
+            childInput.clear();
+        }
+    }
 
     public void loginUser() throws ExecutionException, InterruptedException {
+        loginErrorHbox.setVisible(false);
         if(textFieldUsername.getText().isEmpty() || textFieldPassword.getText().isEmpty()) {
-            System.out.println("Username or Password is empty");
+            labelLoginError.setText("Username or Password is empty");
+            labelLoginError.setStyle("-fx-text-fill: red;");
+            loginErrorHbox.setVisible(true);
+            errorBorder(textFieldUsername);
+            errorBorder(textFieldPassword);
             return;
         }
         // Retrieve user data based on the provided username
@@ -995,21 +1074,30 @@ public void setUpLanguageMenu(){
             String storedPassword = (String) userData.get("Password");
             if (storedPassword.equals(textFieldPassword.getText())) {
                 // Password matches
-                showDialogCorrect();
                 DataBaseMgmt.updateLoginStatus(textFieldUsername.getText(),"True");
                 LogInVbox.setVisible(false);
                 LoginButtonChange.setText("Sign out");
                 Employee.setCurrentLogin(textFieldUsername.getText());
                 usernameLabel.setText(textFieldUsername.getText());
                 System.out.println("Logged in");
+                //changes text and style and changes it back to default border
+                showDialogCorrect();
+                defaultBorder(textFieldUsername);
+                defaultBorder(textFieldPassword);
 
             } else {
                 // Password does not match
-                System.out.println("Password is incorrect");
+                labelLoginError.setText("Password is incorrect");
+                labelLoginError.setStyle("-fx-text-fill: red;");
+                loginErrorHbox.setVisible(true);
+                errorBorder(textFieldPassword);
             }
         } else {
             // User does not exist in the database
-            System.out.println("User does not exist");
+            labelLoginError.setText("User does not exist");
+            labelLoginError.setStyle("-fx-text-fill: red;");
+            loginErrorHbox.setVisible(true);
+            errorBorder(textFieldUsername);
         }
     }
 
@@ -1020,6 +1108,9 @@ public void setUpLanguageMenu(){
     @FXML
     void onReturnToHome(ActionEvent event) {
         LogInVbox.setVisible(false);
+        loginErrorHbox.setVisible(false);
+        defaultBorder(textFieldUsername);
+        defaultBorder(textFieldPassword);
     }
 
     @FXML
@@ -1032,6 +1123,8 @@ public void setUpLanguageMenu(){
         adminNavBar.setPrefWidth(0);
         toggleCreateUser = false;
         adminNavBar.setVisible(false);
+        clearFieldsAndBorders();
+        errorMessageHbox.setVisible(false);
     }
 
     public void searchButton() {
