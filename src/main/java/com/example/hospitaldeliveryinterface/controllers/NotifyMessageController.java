@@ -3,6 +3,7 @@ package com.example.hospitaldeliveryinterface.controllers;
 import com.example.hospitaldeliveryinterface.firebase.FirebaseListener;
 import com.example.hospitaldeliveryinterface.model.NotifyMessg;
 import javafx.animation.FadeTransition;
+import javafx.animation.TranslateTransition;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -59,27 +60,17 @@ public class NotifyMessageController {
                             notifyMess.setVisible(true);
                             notifyDatetime.setVisible(true);
 
-                            FadeTransition fade1 = new FadeTransition(Duration.millis(3000), notifyBox);
-                            FadeTransition fade2 = new FadeTransition(Duration.millis(3000), notifyBox);
-                            FadeTransition fade3 = new FadeTransition(Duration.millis(3000), notifyBox);
+                            TranslateTransition transition = new TranslateTransition(Duration.millis(1000), notifyBox);
+                            transition.setFromX(-300);
+                            transition.setToX(0);
 
-                            fade1.setFromValue(1.0);
-                            fade1.setToValue(0.0);
-                            fade2.setFromValue(1.0);
-                            fade2.setToValue(0.0);
-                            fade3.setFromValue(1.0);
-                            fade3.setToValue(0.0);
-
-                            // Play all fade transitions
-                            fade1.play();
-                            fade2.play();
-                            fade3.play();
+                            transition.play();
 
                             notifyMess.setText(selectedNotify.getMessage());
                             notifyDatetime.setText(selectedNotify.getMssgDate()+" - "+selectedNotify.getMssgTime());
                         });
                         retrieveMessgQueue = NotifyMessg.getMessgQueue();
-                        Thread.sleep(3000);
+                        Thread.sleep(2000);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

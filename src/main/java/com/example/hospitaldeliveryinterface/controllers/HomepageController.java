@@ -512,15 +512,11 @@ public class HomepageController {
             if(ToggleTracking.getCurrentTab().equals("Pending")) {
                 DataBaseMgmt.swapDB(ToggleTracking.getSelectedCardOrderNum(), "pendingDeliveries","completedDeliveries");
                 NotifyMessg.createMessg("delivered", "[Employee ID]", ToggleTracking.getSelectedCardOrderNum());
-               // FirebaseListener.navBarDataDisplay("Pending");
-
             }
 
             if(ToggleTracking.getCurrentTab().equals("Completed")) {
                 DataBaseMgmt.swapDB(ToggleTracking.getSelectedCardOrderNum(), "completedDeliveries","pendingDeliveries");
                 NotifyMessg.createMessg("returnToPending", "[Employee ID]", ToggleTracking.getSelectedCardOrderNum());
-               // FirebaseListener.navBarDataDisplay("Completed");
-
             }
 
             toggleNewDelivery();
