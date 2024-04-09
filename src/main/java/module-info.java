@@ -9,6 +9,7 @@ module com.example.hospitaldeliveryinterface {
     requires com.google.auth;
     requires google.cloud.core;
     requires jsr305;
+
     //requires com.google.firebase:firebase-auth
 
 

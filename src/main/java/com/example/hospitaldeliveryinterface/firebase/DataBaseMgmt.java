@@ -69,6 +69,21 @@ public class DataBaseMgmt {
      */
     public static void editOrder(String collectionName, String orderNumber, DeliveryRequisition order) {
 
+        CollectionReference collectionReference = PharmaTracApp.fstore.collection(collectionName);
+
+        DocumentReference docRef = collectionReference.document(orderNumber);
+        ApiFuture<DocumentSnapshot> future = docRef.get();
+        String currentNotes;
+        try {
+            DocumentSnapshot document = future.get();
+            currentNotes = (String) document.get("notes");
+        } catch (ExecutionException e) {
+            throw new RuntimeException(e);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+
+
         Map<String, Object> data = new HashMap<>();
         data.put("patientName", order.getPatientName());
         data.put("location", order.getPatientLocation());
@@ -76,10 +91,10 @@ public class DataBaseMgmt {
         data.put("dose", order.getDose());
         data.put("numDoses", order.getNumDoses());
         data.put("timeCreated", order.getDateTime());
-        data.put("notes", "ORDER EDITED: " + getDateAndTime() + "\n" + order.getNotes() + "\n" );
+        data.put("notes", "ORDER EDITED: " + getDateAndTime() + "\n" + order.getNotes() + "\n" + currentNotes);
 
-        ApiFuture<WriteResult> future = PharmaTracApp.fstore.collection(collectionName).document(orderNumber).set(data);
-        }
+        ApiFuture<WriteResult> future2 = PharmaTracApp.fstore.collection(collectionName).document(orderNumber).set(data);
+    }
 
 
 
