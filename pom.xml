@@ -48,10 +48,9 @@
     </dependency>
     <dependency>
       <groupId>com.algolia</groupId>
-      <artifactId>algoliasearch</artifactId>
-      <version>LATEST</version>
+      <artifactId>algoliasearch-apache-uber</artifactId>
+      <version>3.16.5</version>
     </dependency>
-
   </dependencies>
 
   <build>
