@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="LogInVbox" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: rgba(0,0,0,0.75);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hospitaldeliveryinterface.controllers.LoginFormController">
+   <center>
+      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="294.0" prefWidth="385.0" spacing="4.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="us" prefHeight="30.0" prefWidth="180.0" text="Employee Login" textFill="#22aae1">
+               <font>
+                  <Font name="Tahoma" size="24.0" />
+               </font>
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="textFieldUsername" prefHeight="38.0" prefWidth="316.0" promptText="Username" style="-fx-background-color: lightgrey; -fx-text-fill: grey; -fx-prompt-text-fill: gray;">
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </TextField>
+            <PasswordField fx:id="textFieldPassword" prefHeight="36.0" prefWidth="316.0" promptText="Password" style="-fx-background-color: lightgrey; -fx-prompt-text-fill: grey; -fx-text-fill: gray;">
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </PasswordField>
+            <Button fx:id="LoginButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#loginUser" prefHeight="44.0" prefWidth="358.0" style="-fx-background-color: #22aae1;" text="Log In" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#onReturnToHome" prefHeight="25.0" prefWidth="129.0" style="-fx-background-color: transparent;" text="Return to Homepage" textFill="#22aae1" underline="true" />
+            <HBox fx:id="loginErrorHbox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" visible="false">
+               <children>
+                  <Label fx:id="labelLoginError" text="Label">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets left="25.0" right="25.0" top="25.0" />
+         </padding>
+      </VBox>
+   </center>
+</BorderPane>
