@@ -34,7 +34,10 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Pane prefHeight="45.0" prefWidth="180.0" style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS" />
+                  <Pane prefHeight="45.0" prefWidth="180.0" style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS">
+                     <children>
+                        <Button layoutX="12.0" layoutY="2.0" mnemonicParsing="false" onAction="#testAlgoloa" prefHeight="37.0" prefWidth="68.0" text="Test" />
+                     </children></Pane>
                   <Button fx:id="newDeliveryButton" mnemonicParsing="false" onAction="#onNewDelivery" prefHeight="36.0" prefWidth="161.0" style="-fx-background-color: wtransparenthite;" text="+ New Delivery" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="14.0" />
@@ -334,7 +337,7 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
       </VBox>
-      <BorderPane fx:id="LogInVbox" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: rgba(0,0,0,0.75);" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <BorderPane fx:id="LogInVbox" layoutX="366.0" layoutY="324.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="382.0" prefWidth="738.0" style="-fx-background-color: rgba(0,0,0,0.75);" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <center>
             <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="252.0" prefWidth="385.0" spacing="4.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
                <children>

@@ -51,9 +51,9 @@ public class DataBaseMgmt {
         data.put("deliveredBy", deliveryRequisition.getDeliveryInfo() != null ? deliveryRequisition.getDeliveryInfo() : "");
         data.put("createdBy", deliveryRequisition.getOrderCreationRecord() != null ? deliveryRequisition.getOrderCreationRecord() : "");
         if (collectionName.equals("pendingDeliveries")) {
-            data.put("status", "p");
+            data.put("status", "pending");
         } else {
-            data.put("status", "c");
+            data.put("status", "completed");
         }
         //add who entered the order
         ApiFuture<WriteResult> result = docRef.set(data);
@@ -154,8 +154,7 @@ public class DataBaseMgmt {
                     , document.getString("numDoses")
                     , document.getString("notes"),
                     document.getString("deliveredBy"),
-                    document.getString("createdBy"),
-                    document.getString("updatedBy")
+                    document.getString("createdBy")
             );
 
             requisitionQueue.add(order);
@@ -232,8 +231,7 @@ public class DataBaseMgmt {
                     document.getString("numDoses"),
                     document.getString("notes"),
                     document.getString("deliveredBy"),
-                    document.getString("createdBy"),
-                    document.getString("updatedBy")
+                    document.getString("createdBy")
             );
             return order;
         } catch (InterruptedException e) {
@@ -272,8 +270,7 @@ public class DataBaseMgmt {
                         , document.getString("numDoses")
                         , document.getString("notes"),
                         document.getString("deliveredBy"),
-                        document.getString("createdBy"),
-                        document.getString("updatedBy")
+                        document.getString("createdBy")
                 );
 
                 searchResults.add(order);

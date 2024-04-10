@@ -24,6 +24,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 
+import static com.example.hospitaldeliveryinterface.Algolia.AlgoloiaMgmt.createNewIndex;
 import static com.example.hospitaldeliveryinterface.firebase.DataBaseMgmt.search;
 import static com.example.hospitaldeliveryinterface.firebase.DataBaseMgmt.updateLoginStatus;
 
@@ -347,9 +348,9 @@ public class HomepageController {
                         doseAmountText.getText(),
                         addNoteText.getText(),
                         "",
-                        "",
                         ""
                 );
+
 
                 if(isEdit && selectedCardOrderNum != null){
                     NotifyMessg.createMessg("edited", "[Employee ID]", selectedCardOrderNum);
@@ -739,7 +740,6 @@ public class HomepageController {
                 DataBaseMgmt.swapDB(selectedCardOrderNum, "pendingDeliveries","completedDeliveries");
                 NotifyMessg.createMessg("delivered", "[Employee ID]", selectedCardOrderNum);
                 FirebaseListener.navBarDataDisplay("Pending");
-
             }
 
             if(currentPage.equals("Completed")) {
@@ -1054,5 +1054,8 @@ public class HomepageController {
 
         }
 
+    }
+    public void testAlgoloa() {
+        createNewIndex();
     }
 }

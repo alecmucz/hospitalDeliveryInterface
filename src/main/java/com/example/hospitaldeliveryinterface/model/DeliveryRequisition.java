@@ -1,5 +1,6 @@
 package com.example.hospitaldeliveryinterface.model;
 
+import com.algolia.search.com.fasterxml.jackson.annotation.JsonProperty;
 import com.example.hospitaldeliveryinterface.PharmaTracApp;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
@@ -19,13 +20,14 @@ public class DeliveryRequisition {
     private String notes;
     private String deliveryInfo; // tracks which staff member signed off on the package
     private String orderCreationRecord; // tracks which staff created the delivery/order
-
+    @JsonProperty("objectID")
     private  String orderNumberDisplay;
     private static int orderNumCount;
+    private String status;
 
 
 
-    public DeliveryRequisition(String orderNumber, String dateTime, String patientName, String patientLocation, String medication, String dose, String numDoses, String notes, String deliveredBy, String createdBy, String updatedBy) {
+    public DeliveryRequisition(String orderNumber, String dateTime, String patientName, String patientLocation, String medication, String dose, String numDoses, String notes, String deliveryInfo, String createdBy) {
         this.patientName = patientName;
         this.patientLocation = patientLocation;
         this.medication = medication;
@@ -34,9 +36,8 @@ public class DeliveryRequisition {
         this.dateTime = dateTime;
         this.orderNumberDisplay = orderNumber;
         this.notes = notes;
-        this.deliveryInfo = deliveredBy;
+        this.deliveryInfo = deliveryInfo;
         this.orderCreationRecord = createdBy;
-
     }
     public void setPatientName(String patientName) {
         this.patientName = patientName;
@@ -91,6 +92,12 @@ public class DeliveryRequisition {
     }
     public String getNotes() {
         return notes;
+    }
+    public String getStatus(){
+        return status;
+    }
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public String getDeliveryInfo() {
