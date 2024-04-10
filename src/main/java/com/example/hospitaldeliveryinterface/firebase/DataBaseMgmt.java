@@ -136,6 +136,7 @@ public class DataBaseMgmt {
         DocumentReference docRef = collectionReference.document(orderNumber);
         ApiFuture<DocumentSnapshot> future = docRef.get();
         String currentNotes;
+
         try {
             DocumentSnapshot document = future.get();
             currentNotes = (String) document.get("notes");

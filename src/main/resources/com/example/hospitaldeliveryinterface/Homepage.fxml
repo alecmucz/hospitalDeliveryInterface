@@ -34,9 +34,8 @@
                   </Button>
                   <Pane prefHeight="45.0" prefWidth="180.0" style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS">
                      <children>
-                        <Button layoutX="12.0" layoutY="2.0" mnemonicParsing="false" onAction="#testAlgoloa" prefHeight="37.0" prefWidth="68.0" text="Test" />
+                        <Button layoutX="12.0" layoutY="2.0" mnemonicParsing="false" prefHeight="37.0" prefWidth="68.0" text="Test" />
                      </children></Pane>
-                  <Button fx:id="newDeliveryButton" mnemonicParsing="false" onAction="#onNewDelivery" prefHeight="36.0" prefWidth="161.0" style="-fx-background-color: wtransparenthite;" text="+ New Delivery" textFill="WHITE">
                   <Pane prefHeight="45.0" prefWidth="180.0" style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS" />
                   <Button fx:id="newDeliveryButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onNewDelivery" prefHeight="36.0" prefWidth="161.0" style="-fx-background-color: wtransparenthite;" text="+ New Delivery" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                      <font>

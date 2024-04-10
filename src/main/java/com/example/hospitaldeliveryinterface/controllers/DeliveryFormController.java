@@ -14,6 +14,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
 
 public class DeliveryFormController {
 
@@ -141,7 +142,6 @@ public class DeliveryFormController {
                         doseAmountText.getText(),
                         addNoteText.getText(),
                         "",
-                        "",
                         ""
                 );
 
@@ -163,7 +163,7 @@ public class DeliveryFormController {
                 }
                 else {
                     NotifyMessg.createMessg("newDelivery", "[Employee ID]", newOrderNum);
-                    DataBaseMgmt.addToDB(newOrder, "pendingDeliveries");
+                    DataBaseMgmt.addToDB(newOrder, "pendingDeliveries",true);
 
                 }
                 clearText();
@@ -216,11 +216,16 @@ public class DeliveryFormController {
         deliveryFormLabel.setText("Edit Delivery Form");
         clearText();
 
-        if(selectCard instanceof GridPane){
-            GridPane gridpane = (GridPane) selectCard;
-            for(Node selectChild: gridpane.getChildren()){
-                if(selectChild instanceof Label){
-                    setTextFieldFromLabel((Label)selectChild);
+        if(selectCard instanceof HBox){
+            HBox hBoxpane = (HBox) selectCard;
+            for(Node selectChild: hBoxpane.getChildren()){
+                if (selectChild instanceof GridPane) {
+                    GridPane gridPane = (GridPane) selectChild;
+                    for(Node gridpaneNode : gridPane.getChildren()){
+                        if(gridpaneNode instanceof Label){
+                            setTextFieldFromLabel((Label)gridpaneNode);
+                        }
+                    }
                 }
             }
         }

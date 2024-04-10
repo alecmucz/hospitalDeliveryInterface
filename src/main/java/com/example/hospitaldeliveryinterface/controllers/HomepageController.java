@@ -104,8 +104,8 @@ public class HomepageController {
 
         LangToggleBtn = MitchTextTranslate.defaultEnglishText();
 
-        MitchTextTranslate.initialLanguages();
-        setUpLanguageMenu();
+        //MitchTextTranslate.initialLanguages();
+        //setUpLanguageMenu();
 
         ToggleTracking.setCurrentTab("Pending");
         ToggleTracking.setSelectedCardOrderNum(null);
@@ -116,8 +116,8 @@ public class HomepageController {
         selectedCard = null;
 
         isToggleSettings = false;
-        int totalOrders = DataBaseMgmt.getTotalNumOrders();
-        DeliveryRequisition.setOrderNumCount(totalOrders);
+        //int totalOrders = DataBaseMgmt.getTotalNumOrders();
+        //DeliveryRequisition.setOrderNumCount(totalOrders);
 
         searchByChoiceBox.getItems().addAll("patientName","medication","location");
         searchByChoiceBox.setValue("Search By:");
@@ -129,10 +129,12 @@ public class HomepageController {
 
         selectOrder();
 
+        /*
         FirebaseListener.setController(this);
         FirebaseListener.listenToPendingDeliveries();
         FirebaseListener.listenToCompletedDeliveries();
         FirebaseListener.listenToNotifyHistory();
+         */
     }
     /****************initial SETUP BEGINS HERE**************************/
 
@@ -304,8 +306,8 @@ public class HomepageController {
     @FXML
     void onReportsClick(ActionEvent event) throws IOException {
         System.out.println("Reports Button Clicked");
-        if(!currentPage.equals("Reports")) {
-            currentPage = "Reports";
+        if(!ToggleTracking.getCurrentTab().equals("Reports")) {
+            ToggleTracking.setCurrentTab("Reports");
             toggleNewDelivery();
             orderDisplayContainer.getChildren().clear();
             deliverReturnBtn.setText("Deliver Package");
