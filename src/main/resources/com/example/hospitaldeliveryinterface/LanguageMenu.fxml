@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="languagePane" prefHeight="410.0" prefWidth="310.0" style="-fx-background-color: #22aae1;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hospitaldeliveryinterface.controllers.LanguageMenuController">
+   <children>
+      <GridPane fx:id="languageGrid" alignment="CENTER" hgap="5.0" layoutX="-1.0" layoutY="-1.0" prefHeight="307.0" prefWidth="342.0" vgap="5.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+            <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="106.0" style="-fx-background-color: transparent;" text="Arabic" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button layoutX="9.0" layoutY="10.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="106.0" style="-fx-background-color: transparent;" text="Catalan" textFill="WHITE" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button layoutX="9.0" layoutY="53.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="106.0" style="-fx-background-color: transparent;" text="Azerbaijani" textFill="WHITE" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="106.0" style="-fx-background-color: transparent;" text="Chinese" textFill="WHITE" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="106.0" style="-fx-background-color: transparent;" text="Czech" textFill="WHITE" GridPane.rowIndex="4">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="106.0" style="-fx-background-color: transparent;" text="Danish" textFill="WHITE" GridPane.rowIndex="5">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="106.0" style="-fx-background-color: transparent;" text="French" textFill="WHITE" GridPane.columnIndex="1">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="106.0" style="-fx-background-color: transparent;" text="Korean" textFill="WHITE" GridPane.columnIndex="2">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="106.0" style="-fx-background-color: transparent;" text="German" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="106.0" style="-fx-background-color: transparent;" text="Greek" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="106.0" style="-fx-background-color: transparent;" text="Dutch" textFill="WHITE" GridPane.rowIndex="6">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="106.0" style="-fx-background-color: transparent;" text="Hebrew" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="106.0" style="-fx-background-color: transparent;" text="Hindi" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="106.0" style="-fx-background-color: transparent;" text="Hungarian" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="106.0" style="-fx-background-color: transparent;" text="Indonesian" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="6">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="106.0" style="-fx-background-color: transparent;" text="English" textFill="WHITE" GridPane.rowIndex="7">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="106.0" style="-fx-background-color: transparent;" text="Esperanto" textFill="WHITE" GridPane.rowIndex="8">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="106.0" style="-fx-background-color: transparent;" text="Finnish" textFill="WHITE" GridPane.rowIndex="9">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="106.0" style="-fx-background-color: transparent;" text="Persian" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="1">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="106.0" style="-fx-background-color: transparent;" text="Polish" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="2">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="106.0" style="-fx-background-color: transparent;" text="Portuguese" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="3">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="106.0" style="-fx-background-color: transparent;" text="Russian" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="4">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="106.0" style="-fx-background-color: transparent;" text="Slovak" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="5">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="106.0" style="-fx-background-color: transparent;" text="Spanish" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="6">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="106.0" style="-fx-background-color: transparent;" text="Irish" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="7">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="106.0" style="-fx-background-color: transparent;" text="Swedish" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="7">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="106.0" style="-fx-background-color: transparent;" text="Italian" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="8">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="106.0" style="-fx-background-color: transparent;" text="Turkish" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="8">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="106.0" style="-fx-background-color: transparent;" text="Japanese" textFill="WHITE" GridPane.columnIndex="1" GridPane.rowIndex="9">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <Button mnemonicParsing="false" prefHeight="38.0" prefWidth="106.0" style="-fx-background-color: transparent;" text="Ukrainian" textFill="WHITE" GridPane.columnIndex="2" GridPane.rowIndex="9">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+         </children>
+      </GridPane>
+   </children>
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+</AnchorPane>

@@ -12,6 +12,10 @@ module com.example.hospitaldeliveryinterface {
     requires algoliasearch.apache.uber;
 
 
+    requires java.net.http;
+    requires libretranslate.java;
+    requires java.desktop;
+    //requires google.api.translate.java;
     //requires com.google.firebase:firebase-auth
 
 

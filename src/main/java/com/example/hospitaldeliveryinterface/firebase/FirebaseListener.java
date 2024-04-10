@@ -2,6 +2,7 @@ package com.example.hospitaldeliveryinterface.firebase;
 
 import com.example.hospitaldeliveryinterface.PharmaTracApp;
 import com.example.hospitaldeliveryinterface.controllers.HomepageController;
+import com.example.hospitaldeliveryinterface.controllers.NotifyMessageController;
 import com.example.hospitaldeliveryinterface.firebase.DataBaseMgmt;
 import com.example.hospitaldeliveryinterface.model.DeliveryRequisition;
 import com.example.hospitaldeliveryinterface.model.NotifyMessg;
@@ -20,11 +21,13 @@ public class FirebaseListener {
 
     private static HomepageController controller;
 
+
     private static boolean initializeNotify = false;
 
     public static void setController(HomepageController control) {
         controller = control;
     }
+
 
 
     public static void listenToPendingDeliveries() {
@@ -97,7 +100,7 @@ public class FirebaseListener {
             NotifyMessg.addMessg(createMessg);
             System.out.println("New document added: " + document.getId());
 
-            controller.displayNotfications();
+            controller.onNotifyMessage();
 
         }catch (Exception e){
             System.err.println("Error finding notification message for document ID " + document.getId() + ": " + e.getMessage());

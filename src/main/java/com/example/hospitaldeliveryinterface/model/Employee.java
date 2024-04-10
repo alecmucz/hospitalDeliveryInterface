@@ -1,6 +1,26 @@
 package com.example.hospitaldeliveryinterface.model;
 
+import com.example.hospitaldeliveryinterface.controllers.HomepageController;
+import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+
 public class Employee {
+    @FXML
+    private TextField textFieldEmployeeID;
+    @FXML
+    private TextField textFieldFirstName;
+    @FXML
+    private TextField textFieldLastName;
+    @FXML
+    private TextField textFieldEmail;
+    @FXML
+    private TextField textFieldPassword1;
+    @FXML
+    private TextField textFieldConfirmPassword;
+
+
+
     private String firstName;
     private String lastName;
     private int employeeId;
@@ -51,13 +71,13 @@ public class Employee {
 
 
 
+
     public static String textFieldCheckCreatingAccount(String employeeID,String firstName,String lastName,String email, String password, String confirmPassword) {
         if(!(employeeID.matches("S\\d{8}"))) {
-
             return "**Error : Input doesn't follow staff ID format ex:S01234567";
+
         }
         if(!(firstName.matches("[A-Za-z]+"))) {
-
             return "**Error : First name must be only letters";
         }
         if(!(lastName.matches("[A-Za-z]+"))) {
@@ -74,6 +94,9 @@ public class Employee {
             return "**Error: Confirm password does not match the password text field above";
         }
         return "Successful!";
+    }
+    public static void errorBorder(TextField textField) {
+        textField.setStyle("-fx-border-color: red;");
     }
 }
 

@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane fx:id="deliveryFormPane" focusTraversable="true" minWidth="-Infinity" prefHeight="560.0" prefWidth="320.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hospitaldeliveryinterface.controllers.DeliveryFormController">
+   <padding>
+      <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+   </padding>
+   <top>
+      <VBox prefHeight="33.0" prefWidth="292.0" style="-fx-background-color: transparent;" BorderPane.alignment="TOP_LEFT">
+         <children>
+            <Label fx:id="deliveryFormLabel" alignment="TOP_LEFT" contentDisplay="TOP" prefHeight="52.0" prefWidth="292.0" text="New Delivery Form" textFill="#1e90f5">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label alignment="TOP_LEFT" contentDisplay="TOP" prefHeight="59.0" prefWidth="292.0" text="Please fill all the required fields." />
+         </children>
+      </VBox>
+   </top>
+   <bottom>
+      <HBox alignment="TOP_RIGHT" prefHeight="33.0" prefWidth="309.0" spacing="10.0" style="-fx-background-color: transparent;" BorderPane.alignment="TOP_LEFT">
+         <children>
+            <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#onClearText" prefHeight="33.0" prefWidth="85.0" style="-fx-background-color: red;" text="Clear" textFill="WHITE" HBox.hgrow="ALWAYS">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+            <Label fx:id="errMessLabel" prefHeight="33.0" prefWidth="157.0" text="**Error: Something happened that was bad. **" textFill="RED" wrapText="true" HBox.hgrow="ALWAYS">
+               <font>
+                  <Font size="11.0" />
+               </font>
+            </Label>
+            <Button alignment="CENTER" contentDisplay="RIGHT" layoutX="253.0" layoutY="10.0" mnemonicParsing="false" onAction="#onSubmitOrder" prefHeight="33.0" prefWidth="86.0" style="-fx-background-color: #1adca2;" text="Submit" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+   </bottom>
+   <center>
+      <VBox focusTraversable="true" prefHeight="428.0" prefWidth="300.0" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
+         <children>
+            <Label alignment="TOP_LEFT" contentDisplay="TOP" prefHeight="8.0" prefWidth="292.0" text="Patient Information" textFill="#1e90f5">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="10.0" layoutY="10.0" prefHeight="28.0" prefWidth="292.0" text="Name" />
+            <HBox prefHeight="9.0" prefWidth="292.0" spacing="10.0">
+               <children>
+                  <TextField fx:id="firstnameText" prefHeight="2.0" prefWidth="141.0" promptText="First" />
+                  <TextField fx:id="lastnameText" promptText="Last" />
+               </children>
+            </HBox>
+            <Label prefHeight="28.0" prefWidth="292.0" text="Location" />
+            <HBox prefHeight="9.0" prefWidth="292.0" spacing="10.0">
+               <children>
+                  <TextField fx:id="locationText" prefHeight="2.0" prefWidth="141.0" />
+                  <Pane prefHeight="25.0" prefWidth="150.0" />
+               </children>
+            </HBox>
+            <Label alignment="TOP_LEFT" contentDisplay="TOP" prefHeight="8.0" prefWidth="292.0" text="Medication Information" textFill="#1e90f5">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+               <padding>
+                  <Insets top="10.0" />
+               </padding>
+            </Label>
+            <Label prefHeight="28.0" prefWidth="292.0" text="Medication (Name/Strength)" />
+            <HBox prefHeight="9.0" prefWidth="292.0" spacing="10.0">
+               <children>
+                  <TextField fx:id="medicationText" prefHeight="49.0" prefWidth="141.0" />
+                  <Pane prefHeight="25.0" prefWidth="150.0" />
+               </children>
+            </HBox>
+            <HBox prefHeight="32.0" prefWidth="289.0" spacing="10.0">
+               <children>
+                  <Label prefHeight="32.0" prefWidth="78.0" text="Dose" />
+                  <Label prefHeight="43.0" prefWidth="92.0" text="Dose Quantity" />
+               </children>
+            </HBox>
+            <HBox prefHeight="9.0" prefWidth="292.0" spacing="34.0">
+               <children>
+                  <TextField fx:id="doseText" prefHeight="25.0" prefWidth="53.0" />
+                  <TextField fx:id="doseAmountText" prefHeight="25.0" prefWidth="58.0" />
+               </children>
+            </HBox>
+            <Button fx:id="addNoteBtn" mnemonicParsing="false" onAction="#onAddNote" prefHeight="27.0" prefWidth="102.0" style="-fx-background-color: #22aae1;" text="Add Note" textFill="WHITE">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+            </Button>
+            <TextArea fx:id="addNoteText" prefHeight="114.0" prefWidth="300.0">
+               <VBox.margin>
+                  <Insets top="10.0" />
+               </VBox.margin>
+            </TextArea>
+         </children>
+         <padding>
+            <Insets bottom="10.0" top="10.0" />
+         </padding>
+      </VBox>
+   </center>
+</BorderPane>

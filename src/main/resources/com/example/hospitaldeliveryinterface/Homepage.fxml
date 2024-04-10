@@ -4,9 +4,7 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.ScrollPane?>
-<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
 <?import javafx.scene.image.Image?>
@@ -18,18 +16,18 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="577.0" prefWidth="1104.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hospitaldeliveryinterface.controllers.HomepageController">
+<AnchorPane fx:id="rootPane" prefHeight="627.0" prefWidth="888.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hospitaldeliveryinterface.controllers.HomepageController">
    <children>
-      <BorderPane fx:id="mainLayout" prefHeight="752.0" prefWidth="1027.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <BorderPane fx:id="mainLayout" prefHeight="706.0" prefWidth="929.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <bottom>
-            <ToolBar fx:id="bottomToolBar" prefHeight="10.0" prefWidth="1139.0" style="-fx-background-color: #22aae1; -fx-border-color: #1e90f5 transparent transparent transparent; -fx-border-width: 3 0 0 0;" BorderPane.alignment="CENTER">
+            <ToolBar fx:id="bottomToolBar" nodeOrientation="LEFT_TO_RIGHT" prefHeight="10.0" prefWidth="819.0" style="-fx-background-color: #22aae1; -fx-border-color: #1e90f5 transparent transparent transparent; -fx-border-width: 3 0 0 0;" BorderPane.alignment="CENTER">
                <items>
-                  <Button fx:id="deliverReturnBtn" mnemonicParsing="false" onAction="#onDeliverReturn" onMousePressed="#onCompleteDeliverPress" onMouseReleased="#onCompleteDeliverRelease" prefHeight="38.0" prefWidth="178.0" style="-fx-background-color: transparent;" text="Deliver Package" textFill="WHITE">
+                  <Button fx:id="deliverReturnBtn" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onDeliverReturn" onMousePressed="#onCompleteDeliverPress" onMouseReleased="#onCompleteDeliverRelease" prefHeight="38.0" prefWidth="178.0" style="-fx-background-color: transparent;" text="Deliver Package" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="editBtn" mnemonicParsing="false" onAction="#onEditDelivery" prefHeight="36.0" prefWidth="178.0" style="-fx-background-color: transparent;" text="Edit Delivery" textFill="WHITE">
+                  <Button fx:id="editBtn" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onEditDelivery" prefHeight="36.0" prefWidth="178.0" style="-fx-background-color: transparent;" text="Edit Delivery" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -39,6 +37,8 @@
                         <Button layoutX="12.0" layoutY="2.0" mnemonicParsing="false" onAction="#testAlgoloa" prefHeight="37.0" prefWidth="68.0" text="Test" />
                      </children></Pane>
                   <Button fx:id="newDeliveryButton" mnemonicParsing="false" onAction="#onNewDelivery" prefHeight="36.0" prefWidth="161.0" style="-fx-background-color: wtransparenthite;" text="+ New Delivery" textFill="WHITE">
+                  <Pane prefHeight="45.0" prefWidth="180.0" style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS" />
+                  <Button fx:id="newDeliveryButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onNewDelivery" prefHeight="36.0" prefWidth="161.0" style="-fx-background-color: wtransparenthite;" text="+ New Delivery" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -47,7 +47,7 @@
             </ToolBar>
          </bottom>
          <center>
-            <HBox prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+            <HBox fx:id="mainContainer" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
                   <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="545.0" prefWidth="351.0" HBox.hgrow="ALWAYS">
                      <content>
@@ -57,200 +57,18 @@
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
                   </ScrollPane>
-                  <BorderPane fx:id="deliveryFormPane" focusTraversable="true" minWidth="-Infinity" prefHeight="560.0" prefWidth="320.0">
-                     <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </padding>
-                     <top>
-                        <VBox prefHeight="33.0" prefWidth="292.0" style="-fx-background-color: transparent;" BorderPane.alignment="TOP_LEFT">
-                           <children>
-                              <Label fx:id="deliveryFormLabel" alignment="TOP_LEFT" contentDisplay="TOP" prefHeight="52.0" prefWidth="292.0" text="New Delivery Form" textFill="#1e90f5">
-                                 <font>
-                                    <Font name="System Bold" size="16.0" />
-                                 </font>
-                              </Label>
-                              <Label alignment="TOP_LEFT" contentDisplay="TOP" prefHeight="59.0" prefWidth="292.0" text="Please fill all the required fields." />
-                           </children>
-                        </VBox>
-                     </top>
-                     <bottom>
-                        <HBox alignment="TOP_RIGHT" prefHeight="33.0" prefWidth="309.0" spacing="10.0" style="-fx-background-color: transparent;" BorderPane.alignment="TOP_LEFT">
-                           <children>
-                              <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#onClearText" prefHeight="33.0" prefWidth="85.0" style="-fx-background-color: red;" text="Clear" textFill="WHITE" HBox.hgrow="ALWAYS">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Button>
-                              <Label fx:id="errMessLabel" prefHeight="33.0" prefWidth="157.0" text="**Error: Something happened that was bad. **" textFill="RED" wrapText="true" HBox.hgrow="ALWAYS">
-                                 <font>
-                                    <Font size="11.0" />
-                                 </font>
-                              </Label>
-                              <Button alignment="CENTER" contentDisplay="RIGHT" layoutX="253.0" layoutY="10.0" mnemonicParsing="false" onAction="#onSubmitOrder" prefHeight="33.0" prefWidth="86.0" style="-fx-background-color: #1adca2;" text="Submit" textFill="WHITE">
-                                 <font>
-                                    <Font name="System Bold" size="12.0" />
-                                 </font>
-                              </Button>
-                           </children>
-                        </HBox>
-                     </bottom>
-                     <center>
-                        <VBox focusTraversable="true" prefHeight="468.0" prefWidth="300.0" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
-                           <children>
-                              <Label alignment="TOP_LEFT" contentDisplay="TOP" prefHeight="8.0" prefWidth="292.0" text="Patient Information" textFill="#1e90f5">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                              </Label>
-                              <Label layoutX="10.0" layoutY="10.0" prefHeight="28.0" prefWidth="292.0" text="Name" />
-                              <HBox prefHeight="9.0" prefWidth="292.0" spacing="10.0">
-                                 <children>
-                                    <TextField fx:id="firstnameText" prefHeight="2.0" prefWidth="141.0" promptText="First" />
-                                    <TextField fx:id="lastnameText" promptText="Last" />
-                                 </children>
-                              </HBox>
-                              <Label prefHeight="28.0" prefWidth="292.0" text="Location" />
-                              <HBox prefHeight="9.0" prefWidth="292.0" spacing="10.0">
-                                 <children>
-                                    <TextField fx:id="locationText" prefHeight="2.0" prefWidth="141.0" />
-                                    <Pane prefHeight="25.0" prefWidth="150.0" />
-                                 </children>
-                              </HBox>
-                              <Label alignment="TOP_LEFT" contentDisplay="TOP" prefHeight="8.0" prefWidth="292.0" text="Medication Information" textFill="#1e90f5">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                                 <padding>
-                                    <Insets top="10.0" />
-                                 </padding>
-                              </Label>
-                              <Label prefHeight="28.0" prefWidth="292.0" text="Medication (Name/Strength)" />
-                              <HBox prefHeight="9.0" prefWidth="292.0" spacing="10.0">
-                                 <children>
-                                    <TextField fx:id="medicationText" prefHeight="49.0" prefWidth="141.0" />
-                                    <Pane prefHeight="25.0" prefWidth="150.0" />
-                                 </children>
-                              </HBox>
-                              <HBox prefHeight="32.0" prefWidth="289.0" spacing="10.0">
-                                 <children>
-                                    <Label prefHeight="32.0" prefWidth="78.0" text="Dose" />
-                                    <Label prefHeight="43.0" prefWidth="92.0" text="Dose Quantity" />
-                                 </children>
-                              </HBox>
-                              <HBox prefHeight="9.0" prefWidth="292.0" spacing="34.0">
-                                 <children>
-                                    <TextField fx:id="doseText" prefHeight="25.0" prefWidth="53.0" />
-                                    <TextField fx:id="doseAmountText" prefHeight="25.0" prefWidth="58.0" />
-                                 </children>
-                              </HBox>
-                              <Button fx:id="addNoteBtn" mnemonicParsing="false" onAction="#onAddNote" prefHeight="27.0" prefWidth="102.0" style="-fx-background-color: #22aae1;" text="Add Note" textFill="WHITE">
-                                 <VBox.margin>
-                                    <Insets top="10.0" />
-                                 </VBox.margin>
-                                 <font>
-                                    <Font name="System Bold" size="13.0" />
-                                 </font>
-                              </Button>
-                              <TextArea fx:id="addNoteText" prefHeight="114.0" prefWidth="300.0">
-                                 <VBox.margin>
-                                    <Insets top="10.0" />
-                                 </VBox.margin>
-                              </TextArea>
-                           </children>
-                           <padding>
-                              <Insets bottom="10.0" top="10.0" />
-                           </padding>
-                        </VBox>
-                     </center>
-                  </BorderPane>
-                  <VBox fx:id="adminNavBar" alignment="TOP_CENTER" minWidth="-Infinity" prefHeight="613.0" prefWidth="277.0" spacing="10.0" style="-fx-background-color: #1678a8;">
-                     <children>
-                        <Label fx:id="us112" alignment="CENTER" layoutX="30.0" layoutY="30.0" minWidth="-Infinity" prefHeight="23.0" prefWidth="238.0" text="EmployeeID" textFill="WHITE">
-                           <font>
-                              <Font name="Tahoma Bold" size="18.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="textFieldEmployeeID" layoutX="30.0" layoutY="96.0" minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0" />
-                        <Label fx:id="us11" alignment="CENTER" minWidth="-Infinity" prefHeight="23.0" prefWidth="238.0" text="First Name" textFill="WHITE">
-                           <font>
-                              <Font name="Tahoma Bold" size="18.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="textFieldFirstName" minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                        </TextField>
-                        <Label fx:id="us111" alignment="CENTER" minWidth="-Infinity" prefHeight="23.0" prefWidth="130.0" text="Last Name" textFill="WHITE">
-                           <font>
-                              <Font name="Tahoma Bold" size="18.0" />
-                           </font>
-                        </Label>
-                        <TextField fx:id="textFieldLastName" minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0">
-                           <VBox.margin>
-                              <Insets bottom="10.0" />
-                           </VBox.margin>
-                        </TextField>
-                        <Label fx:id="us1" alignment="CENTER" minWidth="-Infinity" prefHeight="23.0" prefWidth="167.0" text="Email" textFill="WHITE">
-                           <font>
-                              <Font name="Tahoma Bold" size="18.0" />
-                           </font>
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                        </Label>
-                        <TextField fx:id="textFieldEmail" minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0">
-                           <VBox.margin>
-                              <Insets bottom="10.0" />
-                           </VBox.margin>
-                        </TextField>
-                        <Label alignment="CENTER" minWidth="-Infinity" prefHeight="23.0" prefWidth="115.0" text="Password" textFill="WHITE">
-                           <font>
-                              <Font name="Tahoma Bold" size="18.0" />
-                           </font>
-                        </Label>
-                        <PasswordField fx:id="textFieldPassword1" minWidth="-Infinity" prefHeight="25.0" prefWidth="0.0" />
-                        <Label alignment="CENTER" minWidth="-Infinity" prefHeight="23.0" prefWidth="174.0" text="Confirm Password" textFill="WHITE">
-                           <font>
-                              <Font name="Tahoma Bold" size="18.0" />
-                           </font>
-                        </Label>
-                        <PasswordField fx:id="textFieldConfirmPassword" minWidth="-Infinity" prefHeight="25.0" prefWidth="0.0">
-                           <VBox.margin>
-                              <Insets />
-                           </VBox.margin>
-                        </PasswordField>
-                        <Button fx:id="createUserButton" alignment="CENTER" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#createUser" prefHeight="29.0" prefWidth="0.0" style="-fx-background-color: #22aae1; -fx-background-radius: 90;" text="Create User" textFill="WHITE">
-                           <font>
-                              <Font name="System Bold" size="14.0" />
-                           </font>
-                        </Button>
-                        <Button alignment="CENTER" layoutX="30.0" layoutY="393.0" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCloseUserCreate" prefHeight="29.0" prefWidth="0.0" style="-fx-background-color: transparent;" text="Close User Create" textFill="WHITE" underline="true">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </Button>
-                        <TextArea fx:id="createUserError" prefHeight="200.0" prefWidth="200.0" />
-                     </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <padding>
-                        <Insets left="20.0" right="20.0" top="20.0" />
-                     </padding>
-                  </VBox>
                </children>
             </HBox>
          </center>
          <top>
-            <ToolBar style="-fx-background-color: #22aae1; -fx-border-color: transparent transparent #1e90f5 transparent; -fx-border-width: 0 0 3 0;" BorderPane.alignment="CENTER">
+            <ToolBar nodeOrientation="LEFT_TO_RIGHT" style="-fx-background-color: #22aae1; -fx-border-color: transparent transparent #1e90f5 transparent; -fx-border-width: 0 0 3 0;" BorderPane.alignment="CENTER">
                <items>
-                  <ImageView fitHeight="71.0" fitWidth="208.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="62.0" fitWidth="186.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@PharmaTracLogo.png" />
                      </image>
                   </ImageView>
-                  <TextField fx:id="searchBarTextField" prefHeight="39.0" prefWidth="259.0" promptText="Search" />
+                  <TextField fx:id="searchBarTextField" prefHeight="39.0" prefWidth="181.0" promptText="Search" />
                   <ChoiceBox fx:id="searchByChoiceBox" layoutY="24.0" prefHeight="25.0" prefWidth="106.0" styleClass="settings-choicebox" />
                   <Button fx:id="searchButton" alignment="CENTER" mnemonicParsing="false" onAction="#searchButton" prefHeight="39.0" prefWidth="84.0" style="-fx-background-color: trasnsparent;-fx-border-color: white;" text="Search" textFill="WHITE">
                      <font>
@@ -258,17 +76,20 @@
                      </font>
                   </Button>
                   <Pane prefHeight="63.0" prefWidth="0.0" HBox.hgrow="ALWAYS" />
-                  <Button fx:id="pendingButton" alignment="CENTER" mnemonicParsing="false" onAction="#onPendingClick" prefHeight="39.0" style="-fx-background-color: trasnsparent;" text="Pending" textFill="WHITE">
+                  <Button fx:id="pendingButton" alignment="CENTER" mnemonicParsing="false" onAction="#onPendingClick" prefHeight="39.0" style="-fx-background-color: trasnsparent;" text="Pending" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
                   </Button>
                   <Button fx:id="completedButton" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#onCompleteClick" prefHeight="39.0" prefWidth="92.0" style="-fx-background-color: transparent;" text="Completed" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                      <padding>
-                        <Insets right="10.0" />
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
                      </padding>
                   </Button>
                   <Button fx:id="reportsButton" alignment="CENTER" layoutX="886.0" layoutY="22.0" mnemonicParsing="false" onAction="#onReportsClick" prefHeight="39.0" prefWidth="84.0" style="-fx-background-color: trasnsparent;" text="Reports" textFill="WHITE">
@@ -284,33 +105,36 @@
                         <Insets left="10.0" />
                      </padding>
                   </Label>
-                  <Button fx:id="settingsButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSettingClick" prefHeight="39.0" prefWidth="100.0" style="-fx-background-color: transparent;" text="Settings" textFill="WHITE">
+                  <Button fx:id="settingsButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSettingClick" prefHeight="39.0" prefWidth="77.0" style="-fx-background-color: transparent;" text="Settings" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
+                     <padding>
+                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                     </padding>
                   </Button>
                </items>
             </ToolBar>
          </top>
       </BorderPane>
-      <VBox fx:id="settingNavbar" alignment="TOP_RIGHT" layoutX="900.0" layoutY="106.0" prefHeight="159.0" prefWidth="140.0" style="-fx-background-color: #22aae1;" visible="false" AnchorPane.rightAnchor="8.0" AnchorPane.topAnchor="78.0">
+      <VBox fx:id="settingNavbar" alignment="CENTER" layoutX="900.0" layoutY="106.0" prefHeight="159.0" prefWidth="204.0" style="-fx-background-color: #22aae1;" AnchorPane.rightAnchor="-3.0" AnchorPane.topAnchor="75.0">
          <children>
-            <Button alignment="CENTER" contentDisplay="CENTER" minWidth="0.0" mnemonicParsing="false" prefHeight="45.0" style="-fx-background-color: transparent;" text="Dark Mode" textAlignment="CENTER" textFill="WHITE">
+            <Button alignment="CENTER" contentDisplay="CENTER" minWidth="0.0" mnemonicParsing="false" prefHeight="45.0" style="-fx-background-color: transparent;" text="Dark Mode" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button alignment="CENTER" contentDisplay="CENTER" minWidth="0.0" mnemonicParsing="false" prefHeight="45.0" style="-fx-background-color: transparent;" text="Language" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="changeLanguageBtn" mnemonicParsing="false" onAction="#onChangeLanguageClick" prefHeight="25.0" prefWidth="244.0" style="-fx-background-color: transparent;" text="Language: Indonesian" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="adminButton" alignment="CENTER" minWidth="0.0" mnemonicParsing="false" onAction="#onAdminClick" prefHeight="45.0" style="-fx-background-color: transparent;" text="&lt; Admin Tools" textAlignment="CENTER" textFill="WHITE">
+            <Button fx:id="adminButton" alignment="CENTER" minWidth="0.0" mnemonicParsing="false" onAction="#onAdminClick" prefHeight="45.0" style="-fx-background-color: transparent;" text="&lt; Admin Tools" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="LoginButtonChange" alignment="CENTER" minWidth="0.0" mnemonicParsing="false" onAction="#handleLoginButtonChange" prefHeight="36.0" prefWidth="167.0" style="-fx-background-color: transparent; -fx-border-color: white transparent transparent transparent; -fx-border-width: 1 0 0 0;" text="Login" textAlignment="RIGHT" textFill="WHITE">
+            <Button fx:id="LoginButtonChange" alignment="CENTER" minWidth="0.0" mnemonicParsing="false" onAction="#handleLoginButtonChange" prefHeight="36.0" prefWidth="167.0" style="-fx-background-color: transparent; -fx-border-color: white transparent transparent transparent; -fx-border-width: 1 0 0 0;" text="Login" textAlignment="RIGHT" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -322,12 +146,12 @@
       </VBox>
       <VBox fx:id="adminToolsNav" alignment="TOP_RIGHT" layoutX="945.0" layoutY="465.0" prefHeight="90.0" prefWidth="134.0" style="-fx-background-color: #22aae1;" visible="false" AnchorPane.rightAnchor="150.0" AnchorPane.topAnchor="167.0">
          <children>
-            <Button alignment="CENTER" minWidth="0.0" mnemonicParsing="false" prefHeight="33.0" style="-fx-background-color: transparent;" text="Delete Orders " textFill="WHITE">
+            <Button fx:id="deleteOrdersBtn" alignment="CENTER" contentDisplay="CENTER" minWidth="0.0" mnemonicParsing="false" prefHeight="33.0" style="-fx-background-color: transparent;" text="Delete Orders " textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button alignment="CENTER" minWidth="0.0" mnemonicParsing="false" onAction="#adminCreateUserChange" prefHeight="37.0" prefWidth="120.0" style="-fx-background-color: transparent;" text="Create Users" textFill="WHITE">
+            <Button fx:id="createUserBtn" alignment="CENTER" minWidth="0.0" mnemonicParsing="false" onAction="#onCreateUserClick" prefHeight="37.0" prefWidth="120.0" style="-fx-background-color: transparent;" text="Create Users" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -337,70 +161,5 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
       </VBox>
-      <BorderPane fx:id="LogInVbox" layoutX="366.0" layoutY="324.0" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="382.0" prefWidth="738.0" style="-fx-background-color: rgba(0,0,0,0.75);" visible="false" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <center>
-            <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="252.0" prefWidth="385.0" spacing="4.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
-               <children>
-                  <Label fx:id="us" prefHeight="59.0" prefWidth="366.0" text="Employee Login" textFill="#22aae1">
-                     <font>
-                        <Font name="Tahoma" size="24.0" />
-                     </font>
-                  </Label>
-                  <TextField fx:id="textFieldUsername" prefHeight="38.0" prefWidth="316.0" promptText="Username" style="-fx-background-color: lightgrey; -fx-text-fill: grey; -fx-prompt-text-fill: gray;">
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </TextField>
-                  <PasswordField fx:id="textFieldPassword" prefHeight="36.0" prefWidth="316.0" promptText="Password" style="-fx-background-color: lightgrey; -fx-prompt-text-fill: grey; -fx-text-fill: gray;">
-                     <VBox.margin>
-                        <Insets bottom="10.0" />
-                     </VBox.margin>
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                  </PasswordField>
-                  <Button fx:id="LoginButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#loginUser" prefHeight="44.0" prefWidth="358.0" style="-fx-background-color: #22aae1;" text="Log In" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="18.0" />
-                     </font>
-                     <VBox.margin>
-                        <Insets />
-                     </VBox.margin>
-                  </Button>
-                  <Button mnemonicParsing="false" onAction="#onReturnToHome" prefHeight="25.0" prefWidth="129.0" style="-fx-background-color: transparent;" text="Return to Homepage" textFill="#22aae1" underline="true" />
-               </children>
-               <padding>
-                  <Insets left="25.0" right="25.0" />
-               </padding>
-            </VBox>
-         </center>
-      </BorderPane>
-      <AnchorPane fx:id="notifyBox" layoutX="724.0" layoutY="488.0" prefHeight="139.0" prefWidth="285.0" AnchorPane.bottomAnchor="70.0" AnchorPane.leftAnchor="10.0">
-         <children>
-            <VBox alignment="BOTTOM_LEFT" layoutY="85.0" prefHeight="115.0" prefWidth="251.0" style="-fx-background-color: #22aae1;">
-               <children>
-                  <Label fx:id="notifyDatetime" alignment="CENTER" prefHeight="37.0" prefWidth="245.0" text="03/27/2024 - 1:12PM" textFill="WHITE" wrapText="true">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                     <padding>
-                        <Insets left="10.0" right="10.0" top="10.0" />
-                     </padding>
-                  </Label>
-                  <Label fx:id="notifyMess" alignment="CENTER" contentDisplay="CENTER" prefHeight="98.0" prefWidth="245.0" text="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA" textAlignment="CENTER" textFill="WHITE" wrapText="true">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                     <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-                     </padding>
-                  </Label>
-               </children>
-            </VBox>
-         </children>
-      </AnchorPane>
    </children>
 </AnchorPane>

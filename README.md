@@ -1,5 +1,12 @@
 3/6/2024 - Push by Alec, Pending stage implementation
 
+4/9/24 10:49 - Will Edit
+- Changed ordercard UI to better display the notes secition 
+- added fuction to track all user actions taken on an order
+- tracks creation, edits and moves between queues
+- added reports page for new seach function
+- supports swapping between pages
+
 3/9/2024 3:04 am - Mitchell Edit:
 - Revise Homepage UI
 - Created New Delivery Form
