@@ -4,7 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7e1c1fe8-19dc-4e88-bc9d-fc845d4c4708" name="Changes" comment="working on multi select">
+    <list default="true" id="7e1c1fe8-19dc-4e88-bc9d-fc845d4c4708" name="Changes" comment="commit for multiselect">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -372,7 +372,15 @@
       <option name="project" value="LOCAL" />
       <updated>1712797732445</updated>
     </task>
-    <option name="localTasksCounter" value="30" />
+    <task id="LOCAL-00030" summary="commit for multiselect">
+      <option name="closed" value="true" />
+      <created>1712869180764</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1712869180764</updated>
+    </task>
+    <option name="localTasksCounter" value="31" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -413,7 +421,8 @@
     <MESSAGE value="- Im a genius / Very epic stuff / made it even better" />
     <MESSAGE value="reduce homepage controoler codebase from 1400-ish to less than 600 lines" />
     <MESSAGE value="working on multi select" />
-    <option name="LAST_COMMIT_MESSAGE" value="working on multi select" />
+    <MESSAGE value="commit for multiselect" />
+    <option name="LAST_COMMIT_MESSAGE" value="commit for multiselect" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
