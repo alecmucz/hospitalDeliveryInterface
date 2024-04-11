@@ -63,6 +63,8 @@ public class HomepageController {
     @FXML
     private Label usernameLabel;
 
+    private MultiSelectController multiSelectController = new MultiSelectController();
+
 
     //variables created
     private boolean isToggleSettings;
