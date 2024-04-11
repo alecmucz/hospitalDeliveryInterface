@@ -1,5 +1,12 @@
 3/6/2024 - Push by Alec, Pending stage implementation
 
+4/9/24 10:49 - Will Edit
+- Changed ordercard UI to better display the notes secition 
+- added fuction to track all user actions taken on an order
+- tracks creation, edits and moves between queues
+- added reports page for new seach function
+- supports swapping between pages
+
 3/9/2024 3:04 am - Mitchell Edit:
 - Revise Homepage UI
 - Created New Delivery Form
@@ -39,3 +46,8 @@
 
 3/17/2024 11:16 AM - Alec Edit:
 - Bug Fix: If the user enables the LoginVBOX pane with the login button and closes the settings tab, the widgets within LoginVBOX would still be left over in the New Delivery Pane
+
+3/27/24 11:08 PM - Alec Edit:
+ - Cleaned up GUI (set proper widths throughout toolbar and navbars so buttons arent being cut off)
+ - Made search button nice (should probably implement search drop down to function the same as the settings button and navbar)
+ - Will be working on selecting multiple orders and performing functions (Deliver,Send back to Pending,Delete) those selections.

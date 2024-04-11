@@ -9,11 +9,28 @@
   <version>1.0-SNAPSHOT</version>
   <name>hospitalDeliveryInterface</name>
 
+  <repositories>
+    <repository>
+      <id>clojars.org</id>
+      <url>https://repo.clojars.org</url>
+    </repository>
+  </repositories>
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 <junit.version>5.10.0</junit.version>  </properties>
 
   <dependencies>
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <version>2.9.1</version>
+    </dependency>
+    <dependency>
+      <groupId>net.clojars.suuft</groupId>
+      <artifactId>libretranslate-java</artifactId>
+      <version>1.0.5</version>
+    </dependency>
     <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-controls</artifactId>
@@ -41,12 +58,6 @@
       <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
-    <dependency>
-      <groupId>com.google.firebase</groupId>
-      <artifactId>firebase-admin</artifactId>
-      <version>9.2.0</version>
-    </dependency>
-
   </dependencies>
 
   <build>

@@ -2,8 +2,11 @@ package com.example.hospitaldeliveryinterface.firebase;
 
 import com.example.hospitaldeliveryinterface.PharmaTracApp;
 import com.example.hospitaldeliveryinterface.controllers.HomepageController;
+import com.example.hospitaldeliveryinterface.controllers.NotifyMessageController;
 import com.example.hospitaldeliveryinterface.firebase.DataBaseMgmt;
+import com.example.hospitaldeliveryinterface.model.DeliveryRequisition;
 import com.example.hospitaldeliveryinterface.model.NotifyMessg;
+import com.example.hospitaldeliveryinterface.model.QueueSaves;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
 
@@ -11,16 +14,20 @@ import javax.annotation.Nullable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class FirebaseListener {
 
     private static HomepageController controller;
+
 
     private static boolean initializeNotify = false;
 
     public static void setController(HomepageController control) {
         controller = control;
     }
+
 
 
     public static void listenToPendingDeliveries() {
@@ -34,8 +41,8 @@ public class FirebaseListener {
                     return;
                 }
 
-                    System.out.println("PendingDeliveries Collection has been UPDATED");
-                    onDataDisplay("pendingDeliveries");
+                System.out.println("PendingDeliveries Collection has been UPDATED");
+                onDataDisplay(queryDocumentSnapshots, "pendingDeliveries");
 
             }
 
@@ -53,7 +60,7 @@ public class FirebaseListener {
                 }
 
                     System.out.println("CompletedDeliveries Collection has been UPDATED");
-                    onDataDisplay("completedDeliveries");
+                    onDataDisplay(queryDocumentSnapshots, "completedDeliveries");
 
             }
         });
@@ -61,30 +68,22 @@ public class FirebaseListener {
 
     public static void listenToNotifyHistory() {
         System.out.println("Notfication listener has been called");
-        PharmaTracApp.fstore.collection("notifyHistory").addSnapshotListener(new EventListener<QuerySnapshot>() {
-            @Override
-            public void onEvent(@Nullable QuerySnapshot queryDocumentSnapshots, @Nullable FirestoreException e) {
-                if (e != null) {
+        PharmaTracApp.fstore.collection("notifyHistory").document("notifyMessage").addSnapshotListener((documentSnapshot, e) -> {
+            if (e != null) {
                     System.err.println("Listen failed: " + e);
                     return;
-                }
-
-                if (queryDocumentSnapshots != null && initializeNotify) {
-                    System.out.println("Notfication listener is ACTIVE");
-                    System.out.println("Notify History Collection has been UPDATED");
-                    for (DocumentChange documentChange : queryDocumentSnapshots.getDocumentChanges()) {
-                        if (documentChange.getType() == DocumentChange.Type.ADDED) {
-                            DocumentSnapshot documentSnapshot = documentChange.getDocument();
-                            // Process the newly added document
-                            System.out.println("New MESSAGE HAS BEEN RETRIEVED: " + documentSnapshot.getId());
-                            processAddedDocument(documentSnapshot);
-                        }
-                    }
-
-                }
-
-                initializeNotify = true;
             }
+
+            if (documentSnapshot != null && documentSnapshot.exists() && initializeNotify) {
+                System.out.println("Notfication listener is ACTIVE");
+                System.out.println("Notify History Collection has been UPDATED");
+
+                System.out.println("New MESSAGE HAS BEEN RETRIEVED: " + documentSnapshot.getId());
+                processAddedDocument(documentSnapshot);
+            }
+
+            initializeNotify = true;
+
         });
 
     }
@@ -101,19 +100,37 @@ public class FirebaseListener {
             NotifyMessg.addMessg(createMessg);
             System.out.println("New document added: " + document.getId());
 
-            controller.displayNotfications();
+            controller.onNotifyMessage();
 
         }catch (Exception e){
             System.err.println("Error finding notification message for document ID " + document.getId() + ": " + e.getMessage());
 
         }
     }
-    public static void onDataDisplay(String collectionName) {
+    public static void onDataDisplay(QuerySnapshot querySnaps, String collectionName) {
         try {
-            controller.displayQueue(DataBaseMgmt.buildQueue(collectionName), collectionName);
+            controller.displayQueue(DataBaseMgmt.buildQueue(querySnaps, collectionName), collectionName);
         } catch (Exception e) {
             System.err.println("Error displaying data from collection " + collectionName + ": " + e.getMessage());
         }
+    }
+
+    public static void navBarDataDisplay(String tabType){
+
+        Queue<DeliveryRequisition> tempQueue = new LinkedList<>();
+        String collectionName = "";
+
+        if(tabType.equals("Completed")){
+            tempQueue = QueueSaves.getCompletedLatest();
+            collectionName = "completedDeliveries";
+        }
+
+        if(tabType.equals("Pending")){
+            tempQueue = QueueSaves.getPendingLatest();
+            collectionName = "pendingDeliveries";
+        }
+
+        controller.displayQueue(tempQueue, collectionName);
     }
 
 }
