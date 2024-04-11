@@ -119,10 +119,13 @@ public class HomepageController {
 
         selectOrder();
 
+
         FirebaseListener.setController(this);
         FirebaseListener.listenToPendingDeliveries();
         FirebaseListener.listenToCompletedDeliveries();
         FirebaseListener.listenToNotifyHistory();
+
+
     }
     /****************initial SETUP BEGINS HERE**************************/
 
