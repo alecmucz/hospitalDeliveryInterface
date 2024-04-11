@@ -44,8 +44,8 @@ public class OrderCardUIController {
     private Label createdByDisplay;
 
     private DeliveryRequisition order;
-    private MultiSelectController multiSelectController; // Reference to the MultiSelectController
-    private boolean isSelected = false; // Initial selection state
+    private MultiSelectController multiSelectController;
+    private boolean isSelected = false;
 
     public void setOrder(DeliveryRequisition order) {
         this.order = order;
@@ -73,7 +73,7 @@ public class OrderCardUIController {
     }
 
     private void setSelectedStyle() {
-        orderTemplate.setStyle("-fx-border-color: #009688; -fx-background-color: #B2DFDB;");
+        orderTemplate.setStyle("-fx-border-color: #009688; -fx-background-color: #98FF98;");
     }
 
     private void setUnselectedStyle() {
