@@ -43,7 +43,42 @@ public class OrderCardUIController {
     @FXML
     private Label createdByDisplay;
 
+    private DeliveryRequisition order;
+    private MultiSelectController multiSelectController;
+    private boolean isSelected = false;
 
+    public void setOrder(DeliveryRequisition order) {
+        this.order = order;
+        updateOrderLabels(order);
+    }
+
+    public void setMultiSelectController(MultiSelectController multiSelectController) {
+        this.multiSelectController = multiSelectController;
+    }
+
+    @FXML
+    public void initialize() {
+        orderTemplate.setOnMouseClicked(event -> toggleSelection());
+    }
+
+    private void toggleSelection() {
+        isSelected = !isSelected;
+        if (isSelected) {
+            setSelectedStyle();
+            multiSelectController.selectOrder(order);
+        } else {
+            setUnselectedStyle();
+            multiSelectController.deselectOrder(order.getOrderNumberDisplay());
+        }
+    }
+
+    private void setSelectedStyle() {
+        orderTemplate.setStyle("-fx-border-color: #009688; -fx-background-color: #98FF98;");
+    }
+
+    private void setUnselectedStyle() {
+        orderTemplate.setStyle("-fx-background-color: transparent; -fx-border-color: #22aae1;");
+    }
     public void updateOrderLabels(DeliveryRequisition order){
         orderNumDisplay.setText("#"+order.getOrderNumberDisplay());
         patientNameDisplay.setText(order.getPatientName());

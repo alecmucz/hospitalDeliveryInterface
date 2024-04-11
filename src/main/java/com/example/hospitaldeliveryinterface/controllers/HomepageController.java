@@ -63,6 +63,8 @@ public class HomepageController {
     @FXML
     private Label usernameLabel;
 
+    private MultiSelectController multiSelectController = new MultiSelectController();
+
 
     //variables created
     private boolean isToggleSettings;
@@ -417,6 +419,28 @@ public class HomepageController {
         button.setStyle("-fx-border-color: transparent; -fx-background-color: #22aae1;");
     }
 
+
+    public void displayQueue(Queue<DeliveryRequisition> currentQueue, String collectionName){
+        Platform.runLater(() -> {
+            orderDisplayContainer.getChildren().clear();
+            for(DeliveryRequisition order: currentQueue){
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hospitaldeliveryinterface/OrderCard.fxml"));
+                    GridPane orderTemplate = loader.load();
+                    OrderCardUIController controller = loader.getController();
+                    controller.setOrder(order);
+                    controller.setMultiSelectController(multiSelectController); // Set MultiSelectController
+                    controller.updateOrderLabels(order);
+                    orderDisplayContainer.getChildren().add(orderTemplate);
+                } catch (IOException e) {
+                    System.out.println("Failed to find OrderCard.fxml");
+                }
+            }
+        });
+    }
+
+
+    /*
     public void displayQueue(Queue<DeliveryRequisition> currentQueue, String collectionName){
         Platform.runLater(() -> {
             //System.out.println("TESTING DISPLAY QUEUE HAS BEEN CALLED IN HOMEPAGECONTROLLER");
@@ -458,6 +482,8 @@ public class HomepageController {
             selectOrder();
         });
     }
+
+     */
 
     public void selectOrder(){
             for(Node node: orderDisplayContainer.getChildren()){
