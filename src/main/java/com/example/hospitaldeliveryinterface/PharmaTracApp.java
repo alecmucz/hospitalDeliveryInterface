@@ -44,9 +44,9 @@ public class PharmaTracApp extends Application {
     }
 
     public static void main(String[] args) {
-        System.out.println("PharmaTrac is loading up.");
-        String textTranslate = Translator.translate("en","es", "PharmaTrac is loading up.");
-        System.out.println("Spanish: " + textTranslate);
+        //System.out.println("PharmaTrac is loading up.");
+       // String textTranslate = Translator.translate("en","es", "PharmaTrac is loading up.");
+        //System.out.println("Spanish: " + textTranslate);
         launch();
     }
 }
