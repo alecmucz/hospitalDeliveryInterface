@@ -1,3 +1,25 @@
-#mainContainer{
+
+/*CSS for homepage.fxml*/
+.tool-bar{
+    -fx-background-color: #22aae1;
+    -fx-border-color:  transparent transparent #1e90f5 transparent;
+    -fx-border-width: 0 0 3 0;
+}
+
+#settingNavbar, #adminToolsNav{
+    -fx-background-color: #22aae1;
+}
+
+#mainOrderScroll, #orderDisplayContainer{
+    -fx-background-color: white;
+}
+/*CSS for homepage.fxml ends*/
+
+/*CSS for OrderCard.fxml*/
+#orderTemplate{
+    -fx-background-color: transparent;
+    -fx-border-color:  #22aae1;
+    -fx-border-width: 2;
 
 }
+

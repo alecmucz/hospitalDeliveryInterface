@@ -18,9 +18,9 @@
 
 <AnchorPane fx:id="rootPane" prefHeight="627.0" prefWidth="888.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hospitaldeliveryinterface.controllers.HomepageController">
    <children>
-      <BorderPane fx:id="mainLayout" prefHeight="706.0" prefWidth="929.0" style="-fx-background-color: white;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <BorderPane fx:id="mainLayout" prefHeight="706.0" prefWidth="929.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <bottom>
-            <ToolBar fx:id="bottomToolBar" nodeOrientation="LEFT_TO_RIGHT" prefHeight="10.0" prefWidth="819.0" style="-fx-background-color: #22aae1; -fx-border-color: #1e90f5 transparent transparent transparent; -fx-border-width: 3 0 0 0;" BorderPane.alignment="CENTER">
+            <ToolBar fx:id="bottomToolBar" nodeOrientation="LEFT_TO_RIGHT" prefHeight="10.0" prefWidth="819.0" stylesheets="@lightMode.css" BorderPane.alignment="CENTER">
                <items>
                   <Button fx:id="deliverReturnBtn" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onDeliverReturn" onMousePressed="#onCompleteDeliverPress" onMouseReleased="#onCompleteDeliverRelease" prefHeight="38.0" prefWidth="178.0" style="-fx-background-color: transparent;" text="Deliver Package" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                      <font>
@@ -44,9 +44,9 @@
          <center>
             <HBox fx:id="mainContainer" prefHeight="100.0" prefWidth="200.0" BorderPane.alignment="CENTER">
                <children>
-                  <ScrollPane fitToHeight="true" fitToWidth="true" prefHeight="545.0" prefWidth="351.0" HBox.hgrow="ALWAYS">
+                  <ScrollPane fx:id="mainOrderScroll" fitToHeight="true" fitToWidth="true" prefHeight="545.0" prefWidth="351.0" stylesheets="@lightMode.css" HBox.hgrow="ALWAYS">
                      <content>
-                        <VBox fx:id="orderDisplayContainer" prefHeight="538.0" prefWidth="382.0" spacing="20.0" />
+                        <VBox fx:id="orderDisplayContainer" prefHeight="538.0" prefWidth="382.0" spacing="20.0" stylesheets="@lightMode.css" />
                      </content>
                      <padding>
                         <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
@@ -56,7 +56,7 @@
             </HBox>
          </center>
          <top>
-            <ToolBar nodeOrientation="LEFT_TO_RIGHT" style="-fx-background-color: #22aae1; -fx-border-color: transparent transparent #1e90f5 transparent; -fx-border-width: 0 0 3 0;" BorderPane.alignment="CENTER">
+            <ToolBar nodeOrientation="LEFT_TO_RIGHT" stylesheets="@lightMode.css" BorderPane.alignment="CENTER">
                <items>
                   <ImageView fitHeight="62.0" fitWidth="186.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -65,7 +65,7 @@
                   </ImageView>
                   <TextField fx:id="searchBarTextField" prefHeight="39.0" prefWidth="181.0" promptText="Search" />
                   <ChoiceBox fx:id="searchByChoiceBox" layoutY="24.0" prefHeight="25.0" prefWidth="106.0" styleClass="settings-choicebox" />
-                  <Button fx:id="searchButton" alignment="CENTER" mnemonicParsing="false" onAction="#searchButton" prefHeight="39.0" prefWidth="84.0" style="-fx-background-color: trasnsparent;-fx-border-color: white;" text="Search" textFill="WHITE">
+                  <Button fx:id="searchButton" alignment="CENTER" mnemonicParsing="false" onAction="#onSearchClick" prefHeight="39.0" prefWidth="84.0" text="Search" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -107,9 +107,26 @@
             </ToolBar>
          </top>
       </BorderPane>
-      <VBox fx:id="settingNavbar" alignment="CENTER" layoutX="900.0" layoutY="106.0" prefHeight="159.0" prefWidth="204.0" style="-fx-background-color: #22aae1;" AnchorPane.rightAnchor="-3.0" AnchorPane.topAnchor="75.0">
+      <VBox fx:id="adminToolsNav" alignment="TOP_RIGHT" layoutX="945.0" layoutY="465.0" prefHeight="90.0" stylesheets="@lightMode.css" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="167.0">
          <children>
-            <Button alignment="CENTER" contentDisplay="CENTER" minWidth="0.0" mnemonicParsing="false" prefHeight="45.0" style="-fx-background-color: transparent;" text="Dark Mode" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
+            <Button fx:id="deleteOrdersBtn" alignment="CENTER" contentDisplay="CENTER" minWidth="0.0" mnemonicParsing="false" prefHeight="33.0" style="-fx-background-color: transparent;" text="Delete Orders " textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+            <Button fx:id="createUserBtn" alignment="CENTER" minWidth="0.0" mnemonicParsing="false" onAction="#onCreateUserClick" prefHeight="37.0" prefWidth="120.0" style="-fx-background-color: transparent;" text="Create Users" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Button>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </VBox>
+      <VBox fx:id="settingNavbar" alignment="CENTER" prefHeight="159.0" prefWidth="204.0" stylesheets="@lightMode.css" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="76.0">
+         <children>
+            <Button fx:id="darkLightBtn" alignment="CENTER" contentDisplay="CENTER" minWidth="0.0" mnemonicParsing="false" onAction="#onDarkLightClick" prefHeight="45.0" style="-fx-background-color: transparent;" text="Dark Mode" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -125,23 +142,6 @@
                </font>
             </Button>
             <Button fx:id="LoginButtonChange" alignment="CENTER" minWidth="0.0" mnemonicParsing="false" onAction="#handleLoginButtonChange" prefHeight="36.0" prefWidth="167.0" style="-fx-background-color: transparent; -fx-border-color: white transparent transparent transparent; -fx-border-width: 1 0 0 0;" text="Login" textAlignment="RIGHT" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Button>
-         </children>
-         <padding>
-            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
-         </padding>
-      </VBox>
-      <VBox fx:id="adminToolsNav" alignment="TOP_RIGHT" layoutX="945.0" layoutY="465.0" prefHeight="90.0" style="-fx-background-color: #22aae1;" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="167.0">
-         <children>
-            <Button fx:id="deleteOrdersBtn" alignment="CENTER" contentDisplay="CENTER" minWidth="0.0" mnemonicParsing="false" prefHeight="33.0" style="-fx-background-color: transparent;" text="Delete Orders " textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Button>
-            <Button fx:id="createUserBtn" alignment="CENTER" minWidth="0.0" mnemonicParsing="false" onAction="#onCreateUserClick" prefHeight="37.0" prefWidth="120.0" style="-fx-background-color: transparent;" text="Create Users" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>

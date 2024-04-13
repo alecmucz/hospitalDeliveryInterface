@@ -1,0 +1,15 @@
+/*CSS for homepage.fxml*/
+.tool-bar{
+    -fx-background-color: #262424;
+    -fx-border-color:  transparent transparent #525252 transparent;
+    -fx-border-width: 0 0 3 0;
+}
+
+#settingNavbar, #adminToolsNav{
+    -fx-background-color: #262424;
+}
+
+#mainOrderScroll, #orderDisplayContainer{
+    -fx-background-color: #151515;
+}
+/*CSS for homepage.fxml ends*/

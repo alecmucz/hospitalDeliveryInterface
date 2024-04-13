@@ -1,5 +1,6 @@
 package com.example.hospitaldeliveryinterface.controllers;
 
+import com.example.hospitaldeliveryinterface.PharmaTracApp;
 import com.example.hospitaldeliveryinterface.firebase.DataBaseMgmt;
 import com.example.hospitaldeliveryinterface.firebase.FirebaseListener;
 import com.example.hospitaldeliveryinterface.model.*;
@@ -8,10 +9,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+
+import javax.print.DocFlavor;
 import java.io.IOException;
+import java.net.URL;
 import java.util.*;
 import static com.example.hospitaldeliveryinterface.firebase.DataBaseMgmt.search;
 
@@ -63,12 +68,21 @@ public class HomepageController {
     @FXML
     private Label usernameLabel;
 
+    @FXML
+    private ScrollPane mainOrderScroll;
+
+    @FXML
+    private Button darkLightBtn;
 
     //variables created
     private boolean isToggleSettings;
     private boolean isToggleAdmin;
     private Node selectedCard;
     private String[] LangToggleBtn;
+
+    private boolean isLightMode;
+
+    private Node[] homePageColorChanges;
 
     /***Menus and controllers for different components of application********/
     private AnchorPane languageMenuUI;
@@ -82,15 +96,15 @@ public class HomepageController {
     private BorderPane loginFormUI;
     private LoginFormController loginFormController;
 
-    /****************************************************************************/
+    private List<GridPane> orderCardUI;
 
+    /****************************************************************************/
     public void initialize(){
 
         setUpDeliveryForm();
         setUpCreateUserForm();
         setUpNotifyMessage();
         setUpLoginForm();
-
 
         LangToggleBtn = MitchTextTranslate.defaultEnglishText();
 
@@ -125,6 +139,7 @@ public class HomepageController {
         FirebaseListener.listenToCompletedDeliveries();
         FirebaseListener.listenToNotifyHistory();
 
+        isLightMode = true;
 
     }
     /****************initial SETUP BEGINS HERE**************************/
@@ -271,6 +286,33 @@ public class HomepageController {
 
     }
     /********************************Language Menu ENDS****************************/
+    /*******************************handle dark/light mode changes*********************/
+    @FXML
+    void onDarkLightClick(ActionEvent event) {
+        handleDarkLightChanges();
+    }
+
+    public void handleDarkLightChanges(){
+        URL sheetStatus = null;
+        if(isLightMode){
+            System.out.println("Style mode change to: Dark Mode");
+            darkLightBtn.setText("Light Mode");
+            sheetStatus = getClass().getResource("/com/example/hospitaldeliveryinterface/darkMode.css");
+        }else{
+            System.out.println("Style mode change to: Light Mode");
+            darkLightBtn.setText("Dark Mode");
+            sheetStatus = getClass().getResource("/com/example/hospitaldeliveryinterface/lightMode.css");
+        }
+
+        Scene currentScene = PharmaTracApp.getScene();
+        currentScene.getStylesheets().clear();
+        currentScene.getStylesheets().add(sheetStatus.toExternalForm());
+
+        isLightMode = !isLightMode;
+    }
+
+
+    /*********************************************************************************/
     @FXML
     void onPendingClick(ActionEvent event) throws IOException {
         System.out.println("Pending Button Clicked");
@@ -452,6 +494,7 @@ public class HomepageController {
                             GridPane orderTemplate = loader.load();
                             OrderCardUIController controller = loader.getController();
                             controller.updateOrderLabels(order);
+                            //orderCardUI.add(orderTemplate);
                             orderDisplayContainer.getChildren().add(orderTemplate);
 
                         } catch (IOException e) {
@@ -557,7 +600,7 @@ public class HomepageController {
         ToggleTracking.setisCreateUser(!ToggleTracking.getIsCreateUser());
     }
 
-    public void searchButton() {
+    public void onSearchClick() {
         orderDisplayContainer.getChildren().clear();
 
         Queue<DeliveryRequisition> searchResults = search(searchBarTextField.getText(),ToggleTracking.getCurrentTab(), searchByChoiceBox.getValue());

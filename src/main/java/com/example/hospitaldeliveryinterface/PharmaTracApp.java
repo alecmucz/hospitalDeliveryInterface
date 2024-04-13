@@ -35,11 +35,11 @@ public class PharmaTracApp extends Application {
         stage.show();
     }
 
-    static Scene getScene(){
+    public static Scene getScene(){
         return scene;
     }
 
-    static Stage getStage(){
+    public static Stage getStage(){
         return stage;
     }
 
