@@ -125,6 +125,7 @@ public class HomepageController {
         FirebaseListener.listenToPendingDeliveries();
         FirebaseListener.listenToCompletedDeliveries();
         FirebaseListener.listenToNotifyHistory();
+
     }
     /****************initial SETUP BEGINS HERE**************************/
 
@@ -277,6 +278,7 @@ public class HomepageController {
             ToggleTracking.setCurrentTab("Pending");
             deliverReturnBtn.setText(LangToggleBtn[3]);
             FirebaseListener.navBarDataDisplay("Pending");
+            clearAndRefreshSelections();
         }
     }
 
@@ -290,10 +292,21 @@ public class HomepageController {
             ToggleTracking.setIsEdit(false);
             ToggleTracking.setIsNewDelivery(false);
             toggleNewDelivery();
+            clearAndRefreshSelections();
         }
 
     }
+    public void clearAndRefreshSelections() {
+        // Clear selections in the MultiSelectController
+        multiSelectController.clearSelections();
 
+        // Refresh the UI to reflect no selections
+        for (Node node : orderDisplayContainer.getChildren()) {
+            if (node instanceof GridPane) {
+                node.setStyle("-fx-background-color: transparent; -fx-border-color: #22aae1;");
+            }
+        }
+    }
     @FXML
     void onCompleteDeliverPress(MouseEvent event) {
         buttonToggle(deliverReturnBtn);
@@ -345,7 +358,6 @@ public class HomepageController {
         if(ToggleTracking.getSelectedCardOrderNum() != null){
             ToggleTracking.setIsEdit(false);
             toggleNewDelivery();
-            sendOrderToCompleted(ToggleTracking.getSelectedCardOrderNum());
         }
     }
 
@@ -419,28 +431,6 @@ public class HomepageController {
         button.setStyle("-fx-border-color: transparent; -fx-background-color: #22aae1;");
     }
 
-
-    public void displayQueue(Queue<DeliveryRequisition> currentQueue, String collectionName){
-        Platform.runLater(() -> {
-            orderDisplayContainer.getChildren().clear();
-            for(DeliveryRequisition order: currentQueue){
-                try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hospitaldeliveryinterface/OrderCard.fxml"));
-                    GridPane orderTemplate = loader.load();
-                    OrderCardUIController controller = loader.getController();
-                    controller.setOrder(order);
-                    controller.setMultiSelectController(multiSelectController); // Set MultiSelectController
-                    controller.updateOrderLabels(order);
-                    orderDisplayContainer.getChildren().add(orderTemplate);
-                } catch (IOException e) {
-                    System.out.println("Failed to find OrderCard.fxml");
-                }
-            }
-        });
-    }
-
-
-    /*
     public void displayQueue(Queue<DeliveryRequisition> currentQueue, String collectionName){
         Platform.runLater(() -> {
             //System.out.println("TESTING DISPLAY QUEUE HAS BEEN CALLED IN HOMEPAGECONTROLLER");
@@ -482,9 +472,27 @@ public class HomepageController {
             selectOrder();
         });
     }
-
-     */
-
+    public void selectOrder() {
+        for (Node node : orderDisplayContainer.getChildren()) {
+            node.setOnMouseClicked(mouseEvent -> {
+                GridPane gridPane = (GridPane) node;
+                String orderNumber = gridPane.getId();
+                if (multiSelectController.isSelected(orderNumber)) {
+                    multiSelectController.deselectOrder(orderNumber);
+                    gridPane.setStyle("-fx-background-color: transparent; -fx-border-color: #22aae1;");
+                    System.out.println("Deselected order: " + orderNumber);
+                } else {
+                    DeliveryRequisition selectedOrder = DataBaseMgmt.findOrder(orderNumber, "pendingDeliveries"); // Assuming it's from 'pendingDeliveries'
+                    if (selectedOrder != null) {
+                        multiSelectController.selectOrder(selectedOrder);
+                        gridPane.setStyle("-fx-background-color: #ffbdbd; -fx-border-color: #22aae1;");
+                        System.out.println("Selected order: " + orderNumber);
+                    }
+                }
+            });
+        }
+    }
+    /*
     public void selectOrder(){
             for(Node node: orderDisplayContainer.getChildren()){
                 node.setOnMouseClicked(mouseEvent -> {
@@ -531,6 +539,9 @@ public class HomepageController {
             }
     }
 
+     */
+
+    /*
     public void sendOrderToCompleted(String selectedorderNum){
         System.out.print("sendOrderToComplete method called!!!");
         System.out.println("selectOrderNum: " + selectedorderNum);
@@ -550,6 +561,8 @@ public class HomepageController {
             ToggleTracking.setSelectedCardOrderNum(null);
         }
     }
+
+     */
 
     public void showDialogSignOut() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

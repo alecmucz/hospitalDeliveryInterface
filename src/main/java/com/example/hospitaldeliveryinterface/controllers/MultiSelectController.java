@@ -18,13 +18,18 @@ public class MultiSelectController {
     }
 
     public void selectOrder(DeliveryRequisition order) {
-        if (order != null) {
-            this.selectedOrders.put(order.getOrderNumberDisplay(), order);
+        System.out.println("Selecting order: " + order.getOrderNumberDisplay());  // Debugging output
+        if (order != null && !isSelected(order.getOrderNumberDisplay())) {
+            selectedOrders.put(order.getOrderNumberDisplay(), order);
         }
     }
 
+    public HashMap<String, DeliveryRequisition> getSelectedOrders() {
+        return new HashMap<>(this.selectedOrders);
+    }
+
     public void deselectOrder(String orderNumber) {
-        this.selectedOrders.remove(orderNumber);
+        selectedOrders.remove(orderNumber);
     }
 
     public void clearSelections() {

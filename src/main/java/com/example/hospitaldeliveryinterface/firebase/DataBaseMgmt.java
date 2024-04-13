@@ -387,6 +387,7 @@ public class DataBaseMgmt {
         // (async) Update one field
         ApiFuture<WriteResult> future = docRef.update("loginStatus", status);
     }
+
 }
 
 
