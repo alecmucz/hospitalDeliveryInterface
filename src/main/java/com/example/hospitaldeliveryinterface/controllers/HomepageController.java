@@ -62,7 +62,6 @@ public class HomepageController {
     private AnchorPane rootPane;
     @FXML
     private Label usernameLabel;
-    private Set<Node> selectedCards = new HashSet<>();
     private Set<DeliveryRequisition> selectedOrders = new HashSet<>();
 
     //variables created
@@ -272,17 +271,18 @@ public class HomepageController {
     /********************************Language Menu ENDS****************************/
     @FXML
     void onPendingClick(ActionEvent event) throws IOException {
-        System.out.println("Pending Button Clicked");
+        System.out.println("Pending Button Clicked: Clearing Selection");
         if(!ToggleTracking.getCurrentTab().equals("Pending")){
             ToggleTracking.setCurrentTab("Pending");
             deliverReturnBtn.setText(LangToggleBtn[3]);
             FirebaseListener.navBarDataDisplay("Pending");
+            selectedOrders.clear(); //clears the selection of orders when changing screens
         }
     }
 
     @FXML
     void onCompleteClick(ActionEvent event) throws IOException {
-        System.out.println("Completed Button Clicked");
+        System.out.println("Completed Button Clicked: Clearing Selection");
         if(!ToggleTracking.getCurrentTab().equals("Completed")){
             ToggleTracking.setCurrentTab("Completed");
             deliverReturnBtn.setText(LangToggleBtn[4]);
@@ -290,6 +290,7 @@ public class HomepageController {
             ToggleTracking.setIsEdit(false);
             ToggleTracking.setIsNewDelivery(false);
             toggleNewDelivery();
+            selectedOrders.clear(); //clears the selection of orders when changing screens
         }
 
     }
@@ -343,11 +344,24 @@ public class HomepageController {
     @FXML
     void onDeliverReturn(ActionEvent event) {
         System.out.println("Delivery orders button clicked");
-        // Check if any orders are selected at all
-        if (!selectedCards.isEmpty()) {
-            ToggleTracking.setIsEdit(false); // Reset edit mode
-            sendOrderToCompleted(); // Process all selected orders
-            toggleNewDelivery(); // Reset UI states if necessary
+        if (!selectedOrders.isEmpty()) {
+            Iterator<DeliveryRequisition> iterator = selectedOrders.iterator();
+            while (iterator.hasNext()) {
+                DeliveryRequisition order = iterator.next();
+                String collectionFrom = ToggleTracking.getCurrentTab().equals("Pending") ? "pendingDeliveries" : "completedDeliveries";
+                String collectionTo = ToggleTracking.getCurrentTab().equals("Pending") ? "completedDeliveries" : "pendingDeliveries";
+
+                DataBaseMgmt.swapDB(order.getOrderNumberDisplay(), collectionFrom, collectionTo);
+                System.out.println("Swapped order " + order.getOrderNumberDisplay() + " from " + collectionFrom + " to " + collectionTo);
+
+                Node node = findNodeByRequisition(order);
+                if (node != null) {
+                    Platform.runLater(() -> orderDisplayContainer.getChildren().remove(node));
+                }
+                iterator.remove();
+            }
+            toggleNewDelivery();
+            System.out.println("Processed all selected orders for delivery/return.");
         } else {
             System.out.println("No orders selected for delivery/return.");
         }
@@ -358,7 +372,8 @@ public class HomepageController {
         Iterator<DeliveryRequisition> iterator = selectedOrders.iterator();
         while (iterator.hasNext()) {
             DeliveryRequisition requisition = iterator.next();
-            DataBaseMgmt.deleteFromDB(requisition.getOrderNumberDisplay(), getCurrentCollectionName());
+            DataBaseMgmt.deleteFromDB(requisition.getOrderNumberDisplay(),
+                    ToggleTracking.getCurrentTab().equals("Pending") ? "pendingDeliveries" : "completedDeliveries");
             Node node = findNodeByRequisition(requisition);
             if (node != null) {
                 Platform.runLater(() -> {
@@ -379,11 +394,6 @@ public class HomepageController {
         }
         return null; // Not found
     }
-
-    private String getCurrentCollectionName() {
-        return ToggleTracking.getCurrentTab().equals("Pending") ? "pendingDeliveries" : "completedDeliveries";
-    }
-
     @FXML
     void onEditDelivery(ActionEvent event) {
         if(ToggleTracking.getSelectedCardOrderNum() != null){
@@ -571,39 +581,6 @@ public class HomepageController {
     }
 
      */
-
-    public void sendOrderToCompleted(){
-        Set<Node> cardsCopy = new HashSet<>(selectedCards);
-
-        for (Node node : cardsCopy) {
-            if (node instanceof GridPane) {
-                GridPane gridPane = (GridPane) node;
-                String orderNum = gridPane.getId(); // Make sure this ID is correctly assigned to be the order number
-
-                // Swap database entries based on the current tab
-                if (ToggleTracking.getCurrentTab().equals("Pending")) {
-                    DataBaseMgmt.swapDB(orderNum, "pendingDeliveries", "completedDeliveries");
-                    NotifyMessg.createMessg("delivered", "[Employee ID]", orderNum);
-                } else if (ToggleTracking.getCurrentTab().equals("Completed")) {
-                    DataBaseMgmt.swapDB(orderNum, "completedDeliveries", "pendingDeliveries");
-                    NotifyMessg.createMessg("returnToPending", "[Employee ID]", orderNum);
-                }
-
-                // Remove the node from the original set
-                selectedCards.remove(node);
-                // UI update for deselection
-                deselectNode(gridPane);
-            }
-        }
-
-        toggleNewDelivery(); // Reset UI states if necessary
-        selectedCard = null;
-        ToggleTracking.setSelectedCardOrderNum(null);
-    }
-
-
-
-
     public void showDialogSignOut() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText("Logged out");

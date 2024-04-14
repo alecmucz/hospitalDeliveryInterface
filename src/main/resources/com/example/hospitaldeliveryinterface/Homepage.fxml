@@ -22,18 +22,18 @@
          <bottom>
             <ToolBar fx:id="bottomToolBar" nodeOrientation="LEFT_TO_RIGHT" prefHeight="10.0" prefWidth="819.0" style="-fx-background-color: #22aae1; -fx-border-color: #1e90f5 transparent transparent transparent; -fx-border-width: 3 0 0 0;" BorderPane.alignment="CENTER">
                <items>
-                  <Button fx:id="deliverReturnBtn" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onDeliverReturn" onMousePressed="#onCompleteDeliverPress" onMouseReleased="#onCompleteDeliverRelease" prefHeight="38.0" prefWidth="178.0" style="-fx-background-color: transparent;" text="Deliver Package" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
+                  <Button fx:id="deliverReturnBtn" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onDeliverReturn" onMousePressed="#onCompleteDeliverPress" onMouseReleased="#onCompleteDeliverRelease" prefHeight="38.0" style="-fx-background-color: transparent;" text="Deliver Package" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Button>
-                  <Button fx:id="editBtn" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onEditDelivery" prefHeight="36.0" prefWidth="178.0" style="-fx-background-color: transparent;" text="Edit Delivery" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
+                  <Button fx:id="editBtn" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onEditDelivery" prefHeight="36.0" style="-fx-background-color: transparent;" text="Edit Delivery" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Button>
                   <Pane prefHeight="45.0" prefWidth="180.0" style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS" />
-                  <Button fx:id="newDeliveryButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onNewDelivery" prefHeight="36.0" prefWidth="161.0" style="-fx-background-color: wtransparenthite;" text="+ New Delivery" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
+                  <Button fx:id="newDeliveryButton" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onNewDelivery" prefHeight="36.0" style="-fx-background-color: wtransparenthite;" text="+ New Delivery" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
