@@ -9,6 +9,9 @@ module com.example.hospitaldeliveryinterface {
     requires com.google.auth;
     requires google.cloud.core;
     requires jsr305;
+    requires algoliasearch.apache.uber;
+
+
     requires java.net.http;
     requires libretranslate.java;
     requires java.desktop;
@@ -23,5 +26,5 @@ module com.example.hospitaldeliveryinterface {
     exports com.example.hospitaldeliveryinterface.firebase;
     opens com.example.hospitaldeliveryinterface.firebase to javafx.fxml;
     exports com.example.hospitaldeliveryinterface.model;
-    opens com.example.hospitaldeliveryinterface.model to javafx.fxml;
+    opens com.example.hospitaldeliveryinterface.model to javafx.fxml, algoliasearch.apache.uber;
 }

@@ -1,7 +1,10 @@
 package com.example.hospitaldeliveryinterface;
 
-import com.example.hospitaldeliveryinterface.controllers.HomepageController;
+import com.algolia.search.SearchClient;
+import com.example.hospitaldeliveryinterface.Algolia.AlgoliaContext;
+import com.example.hospitaldeliveryinterface.firebase.DataBaseMgmt;
 import com.example.hospitaldeliveryinterface.firebase.FirestoreContext;
+import com.example.hospitaldeliveryinterface.model.Employee;
 import com.google.cloud.firestore.Firestore;
 import com.google.firebase.auth.FirebaseAuth;
 import javafx.application.Application;
@@ -22,12 +25,15 @@ public class PharmaTracApp extends Application {
     private final FirestoreContext contxtFirebase = new FirestoreContext();
     private static Scene scene;
     private static Stage stage;
+    public static SearchClient aClient;
+    private static AlgoliaContext client = new AlgoliaContext();
 
     @Override
     public void start(Stage theStage) throws IOException {
 
         fstore = contxtFirebase.firebase();
         fauth = FirebaseAuth.getInstance();
+       aClient = client.algoliaClient();
 
         stage = theStage;
         FXMLLoader fxmlloader = new FXMLLoader(PharmaTracApp.class.getResource("Homepage.fxml"));
@@ -37,6 +43,18 @@ public class PharmaTracApp extends Application {
         stage.setScene(scene);
         scene.getStylesheets().add(PharmaTracApp.class.getResource("lightMode.css").toExternalForm());
         stage.show();
+
+        // Add shutdown hook
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            // Update login status to "False" for the current user
+            if (Employee.getCurrentLogin() != null) {
+                try {
+                    DataBaseMgmt.updateLoginStatus(Employee.getCurrentLogin(),"False");
+                } catch (Exception e) {
+                    e.printStackTrace(); // Handle the exception appropriately
+                }
+            }
+        }));
     }
 
     public static Scene getScene(){
