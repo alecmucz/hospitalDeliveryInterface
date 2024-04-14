@@ -1,5 +1,6 @@
 package com.example.hospitaldeliveryinterface.controllers;
 
+import com.example.hospitaldeliveryinterface.Algolia.AlgoliaMgmt;
 import com.example.hospitaldeliveryinterface.firebase.DataBaseMgmt;
 import com.example.hospitaldeliveryinterface.firebase.FirebaseListener;
 import com.example.hospitaldeliveryinterface.model.*;
@@ -15,7 +16,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
 
-import static com.example.hospitaldeliveryinterface.Algolia.AlgoloiaMgmt.createNewIndex;
+import static com.example.hospitaldeliveryinterface.Algolia.AlgoliaMgmt.createNewIndex;
 import static com.example.hospitaldeliveryinterface.firebase.DataBaseMgmt.search;
 
 public class HomepageController {
@@ -608,5 +609,8 @@ public class HomepageController {
             }
 
         }
+    }
+    public void testButton() {
+        AlgoliaMgmt.search("test");
     }
 }

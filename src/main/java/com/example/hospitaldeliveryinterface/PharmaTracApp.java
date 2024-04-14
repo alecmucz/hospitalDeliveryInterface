@@ -21,15 +21,15 @@ public class PharmaTracApp extends Application {
     private final FirestoreContext contxtFirebase = new FirestoreContext();
     private static Scene scene;
     private static Stage stage;
-    //public static SearchClient aClient;
-    //private static AlgoliaContext client = new AlgoliaContext();
+    public static SearchClient aClient;
+    private static AlgoliaContext client = new AlgoliaContext();
 
     @Override
     public void start(Stage theStage) throws IOException {
 
         fstore = contxtFirebase.firebase();
         fauth = FirebaseAuth.getInstance();
-       //aClient = client.algoliaClient();
+       aClient = client.algoliaClient();
 
         stage = theStage;
         FXMLLoader fxmlLoader = new FXMLLoader(PharmaTracApp.class.getResource("Homepage.fxml"));

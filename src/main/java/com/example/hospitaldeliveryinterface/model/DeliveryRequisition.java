@@ -25,7 +25,9 @@ public class DeliveryRequisition {
     private static int orderNumCount;
     private String status;
 
+    public DeliveryRequisition() {
 
+    }
 
     public DeliveryRequisition(String orderNumber, String dateTime, String patientName, String patientLocation, String medication, String dose, String numDoses, String notes, String deliveryInfo, String createdBy) {
         this.patientName = patientName;
