@@ -96,8 +96,6 @@ public class HomepageController {
     private BorderPane loginFormUI;
     private LoginFormController loginFormController;
 
-    private List<GridPane> orderCardUI;
-
     /****************************************************************************/
     public void initialize(){
 
@@ -280,6 +278,11 @@ public class HomepageController {
         if (languageMenuUI != null) {
             languageMenuUI.setVisible(!languageMenuUI.isVisible());
         }
+
+        if(isToggleAdmin){
+            adminToolsNav.setVisible(false);
+            isToggleAdmin = false;
+        }
     }
     public void setLangToggleBtn(String[] newText) {
        LangToggleBtn = newText;
@@ -369,8 +372,10 @@ public class HomepageController {
 
         if (isToggleAdmin) {
             adminToolsNav.setVisible(true);
+           languageMenuUI.setVisible(false);
         } else {
             adminToolsNav.setVisible(false);
+
         }
     }
 
@@ -495,7 +500,6 @@ public class HomepageController {
                             GridPane orderTemplate = loader.load();
                             OrderCardUIController controller = loader.getController();
                             controller.updateOrderLabels(order);
-                            //orderCardUI.add(orderTemplate);
                             orderDisplayContainer.getChildren().add(orderTemplate);
 
                         } catch (IOException e) {
