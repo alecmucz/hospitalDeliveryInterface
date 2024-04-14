@@ -3,6 +3,7 @@ package com.example.hospitaldeliveryinterface.controllers;
 import com.example.hospitaldeliveryinterface.firebase.DataBaseMgmt;
 import com.example.hospitaldeliveryinterface.model.DeliveryRequisition;
 import com.example.hospitaldeliveryinterface.model.QueueSaves;
+import com.example.hospitaldeliveryinterface.model.ToggleTracking;
 
 import java.util.HashMap;
 
@@ -17,23 +18,11 @@ public class MultiSelectController {
         return selectedOrders.containsKey(orderNumber);
     }
 
-    public void selectOrder(DeliveryRequisition order) {
-        System.out.println("Selecting order: " + order.getOrderNumberDisplay());  // Debugging output
-        if (order != null && !isSelected(order.getOrderNumberDisplay())) {
-            selectedOrders.put(order.getOrderNumberDisplay(), order);
-        }
-    }
 
-    public HashMap<String, DeliveryRequisition> getSelectedOrders() {
-        return new HashMap<>(this.selectedOrders);
-    }
-
-    public void deselectOrder(String orderNumber) {
-        selectedOrders.remove(orderNumber);
-    }
 
     public void clearSelections() {
-        this.selectedOrders.clear();
+        selectedOrders.clear();
+        ToggleTracking.setSelectedCardOrderNum(null);
     }
 
 

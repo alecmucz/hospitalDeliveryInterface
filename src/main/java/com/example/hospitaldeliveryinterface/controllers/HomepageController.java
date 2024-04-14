@@ -62,9 +62,7 @@ public class HomepageController {
     private AnchorPane rootPane;
     @FXML
     private Label usernameLabel;
-
-    private MultiSelectController multiSelectController = new MultiSelectController();
-
+    private Set<Node> selectedCards = new HashSet<>();
 
     //variables created
     private boolean isToggleSettings;
@@ -278,7 +276,6 @@ public class HomepageController {
             ToggleTracking.setCurrentTab("Pending");
             deliverReturnBtn.setText(LangToggleBtn[3]);
             FirebaseListener.navBarDataDisplay("Pending");
-            clearAndRefreshSelections();
         }
     }
 
@@ -292,21 +289,10 @@ public class HomepageController {
             ToggleTracking.setIsEdit(false);
             ToggleTracking.setIsNewDelivery(false);
             toggleNewDelivery();
-            clearAndRefreshSelections();
         }
 
     }
-    public void clearAndRefreshSelections() {
-        // Clear selections in the MultiSelectController
-        multiSelectController.clearSelections();
 
-        // Refresh the UI to reflect no selections
-        for (Node node : orderDisplayContainer.getChildren()) {
-            if (node instanceof GridPane) {
-                node.setStyle("-fx-background-color: transparent; -fx-border-color: #22aae1;");
-            }
-        }
-    }
     @FXML
     void onCompleteDeliverPress(MouseEvent event) {
         buttonToggle(deliverReturnBtn);
@@ -355,9 +341,14 @@ public class HomepageController {
     }
     @FXML
     void onDeliverReturn(ActionEvent event) {
-        if(ToggleTracking.getSelectedCardOrderNum() != null){
-            ToggleTracking.setIsEdit(false);
-            toggleNewDelivery();
+        System.out.println("Delivery orders button clicked");
+        // Check if any orders are selected at all
+        if (!selectedCards.isEmpty()) {
+            ToggleTracking.setIsEdit(false); // Reset edit mode
+            sendOrderToCompleted(); // Process all selected orders
+            toggleNewDelivery(); // Reset UI states if necessary
+        } else {
+            System.out.println("No orders selected for delivery/return.");
         }
     }
 
@@ -476,21 +467,27 @@ public class HomepageController {
         for (Node node : orderDisplayContainer.getChildren()) {
             node.setOnMouseClicked(mouseEvent -> {
                 GridPane gridPane = (GridPane) node;
-                String orderNumber = gridPane.getId();
-                if (multiSelectController.isSelected(orderNumber)) {
-                    multiSelectController.deselectOrder(orderNumber);
-                    gridPane.setStyle("-fx-background-color: transparent; -fx-border-color: #22aae1;");
-                    System.out.println("Deselected order: " + orderNumber);
+                if (selectedCards.contains(node)) {
+                    // Deselect the node
+                    deselectNode(gridPane);
                 } else {
-                    DeliveryRequisition selectedOrder = DataBaseMgmt.findOrder(orderNumber, "pendingDeliveries"); // Assuming it's from 'pendingDeliveries'
-                    if (selectedOrder != null) {
-                        multiSelectController.selectOrder(selectedOrder);
-                        gridPane.setStyle("-fx-background-color: #ffbdbd; -fx-border-color: #22aae1;");
-                        System.out.println("Selected order: " + orderNumber);
-                    }
+                    // Select the node
+                    selectNode(gridPane);
                 }
             });
         }
+    }
+
+    private void selectNode(GridPane node) {
+        selectedCards.add(node);
+        node.setStyle("-fx-background-color: #98FF98; -fx-border-color: #22aae1; -fx-border-width: 2;");
+        System.out.println("Selected order: " + node.getId());
+    }
+
+    private void deselectNode(GridPane node) {
+        selectedCards.remove(node);
+        node.setStyle("-fx-background-color: transparent; -fx-border-color: #22aae1; -fx-border-width: 2;");
+        System.out.println("Deselected order: " + node.getId());
     }
     /*
     public void selectOrder(){
@@ -541,28 +538,37 @@ public class HomepageController {
 
      */
 
-    /*
-    public void sendOrderToCompleted(String selectedorderNum){
-        System.out.print("sendOrderToComplete method called!!!");
-        System.out.println("selectOrderNum: " + selectedorderNum);
-        if(selectedorderNum != null){
-            if(ToggleTracking.getCurrentTab().equals("Pending")) {
-                DataBaseMgmt.swapDB(ToggleTracking.getSelectedCardOrderNum(), "pendingDeliveries","completedDeliveries");
-                NotifyMessg.createMessg("delivered", "[Employee ID]", ToggleTracking.getSelectedCardOrderNum());
-            }
+    public void sendOrderToCompleted(){
+        Set<Node> cardsCopy = new HashSet<>(selectedCards);
 
-            if(ToggleTracking.getCurrentTab().equals("Completed")) {
-                DataBaseMgmt.swapDB(ToggleTracking.getSelectedCardOrderNum(), "completedDeliveries","pendingDeliveries");
-                NotifyMessg.createMessg("returnToPending", "[Employee ID]", ToggleTracking.getSelectedCardOrderNum());
-            }
+        for (Node node : cardsCopy) {
+            if (node instanceof GridPane) {
+                GridPane gridPane = (GridPane) node;
+                String orderNum = gridPane.getId(); // Make sure this ID is correctly assigned to be the order number
 
-            toggleNewDelivery();
-            selectedCard = null;
-            ToggleTracking.setSelectedCardOrderNum(null);
+                // Swap database entries based on the current tab
+                if (ToggleTracking.getCurrentTab().equals("Pending")) {
+                    DataBaseMgmt.swapDB(orderNum, "pendingDeliveries", "completedDeliveries");
+                    NotifyMessg.createMessg("delivered", "[Employee ID]", orderNum);
+                } else if (ToggleTracking.getCurrentTab().equals("Completed")) {
+                    DataBaseMgmt.swapDB(orderNum, "completedDeliveries", "pendingDeliveries");
+                    NotifyMessg.createMessg("returnToPending", "[Employee ID]", orderNum);
+                }
+
+                // Remove the node from the original set
+                selectedCards.remove(node);
+                // UI update for deselection
+                deselectNode(gridPane);
+            }
         }
+
+        toggleNewDelivery(); // Reset UI states if necessary
+        selectedCard = null;
+        ToggleTracking.setSelectedCardOrderNum(null);
     }
 
-     */
+
+
 
     public void showDialogSignOut() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);

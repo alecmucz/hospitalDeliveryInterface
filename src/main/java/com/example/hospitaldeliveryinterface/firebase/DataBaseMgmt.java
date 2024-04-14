@@ -229,6 +229,7 @@ public class DataBaseMgmt {
      * @param collectionTo   destination collection
      */
     public static void swapDB(String orderNumber, String collectionFrom, String collectionTo) {
+        System.out.println("SwapDB called");
         /*
         copy the data from it into delivery rec
         delete the data from pending
