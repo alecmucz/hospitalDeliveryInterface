@@ -14,6 +14,9 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.HBox;
+
+import static com.example.hospitaldeliveryinterface.Algolia.AlgoliaMgmt.createNewIndex;
 
 public class DeliveryFormController {
 
@@ -149,6 +152,11 @@ public class DeliveryFormController {
 
                 String fullName = firstnoWhiteSpace + " " + lastnoWhiteSpace;
                 String newOrderNum = DeliveryRequisition.generateOrderNum();
+
+
+                if(ToggleTracking.getIsEdit()){
+                   newOrderNum = ToggleTracking.getSelectedCardOrderNum();
+                }
                 DeliveryRequisition newOrder = new DeliveryRequisition(
                         newOrderNum,
                         DeliveryRequisition.currentDateTime(),
@@ -159,21 +167,22 @@ public class DeliveryFormController {
                         doseAmountText.getText(),
                         addNoteText.getText(),
                         "",
-                        "",
                         ""
                 );
 
                 if(ToggleTracking.getIsEdit() && ToggleTracking.getSelectedCardOrderNum() != null){
                     NotifyMessg.createMessg("edited", "[Employee ID]", ToggleTracking.getSelectedCardOrderNum());
 
+
                     if(ToggleTracking.getCurrentTab().equals("Pending")) {
                         DataBaseMgmt.editOrder("pendingDeliveries", ToggleTracking.getSelectedCardOrderNum(), newOrder);
                         FirebaseListener.listenToPendingDeliveries();
-
+                        createNewIndex(newOrder);
                     }
                     if(ToggleTracking.getCurrentTab().equals("Completed")) {
                         DataBaseMgmt.editOrder("completedDeliveries", ToggleTracking.getSelectedCardOrderNum(), newOrder);
                         FirebaseListener.listenToCompletedDeliveries();
+                        createNewIndex(newOrder);
                     }
 
                     ToggleTracking.setIsEdit(false);
@@ -181,8 +190,8 @@ public class DeliveryFormController {
                 }
                 else {
                     NotifyMessg.createMessg("newDelivery", "[Employee ID]", newOrderNum);
-                    DataBaseMgmt.addToDB(newOrder, "pendingDeliveries");
-
+                    DataBaseMgmt.addToDB(newOrder, "pendingDeliveries",true);
+                    createNewIndex(newOrder);
                 }
                 clearText();
             }else{
@@ -234,11 +243,16 @@ public class DeliveryFormController {
         deliveryFormLabel.setText("Edit Delivery Form");
         clearText();
 
-        if(selectCard instanceof GridPane){
-            GridPane gridpane = (GridPane) selectCard;
-            for(Node selectChild: gridpane.getChildren()){
-                if(selectChild instanceof Label){
-                    setTextFieldFromLabel((Label)selectChild);
+        if(selectCard instanceof HBox){
+            HBox hBoxpane = (HBox) selectCard;
+            for(Node selectChild: hBoxpane.getChildren()){
+                if (selectChild instanceof GridPane) {
+                    GridPane gridPane = (GridPane) selectChild;
+                    for(Node gridpaneNode : gridPane.getChildren()){
+                        if(gridpaneNode instanceof Label){
+                            setTextFieldFromLabel((Label)gridpaneNode);
+                        }
+                    }
                 }
             }
         }

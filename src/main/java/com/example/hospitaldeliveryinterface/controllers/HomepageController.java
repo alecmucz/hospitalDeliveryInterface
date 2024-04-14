@@ -1,5 +1,6 @@
 package com.example.hospitaldeliveryinterface.controllers;
 
+import com.example.hospitaldeliveryinterface.Algolia.AlgoliaMgmt;
 import com.example.hospitaldeliveryinterface.PharmaTracApp;
 import com.example.hospitaldeliveryinterface.firebase.DataBaseMgmt;
 import com.example.hospitaldeliveryinterface.firebase.FirebaseListener;
@@ -18,7 +19,8 @@ import javax.print.DocFlavor;
 import java.io.IOException;
 import java.net.URL;
 import java.util.*;
-import static com.example.hospitaldeliveryinterface.firebase.DataBaseMgmt.search;
+
+import static com.example.hospitaldeliveryinterface.Algolia.AlgoliaMgmt.searchAlgolia;
 
 public class HomepageController {
     @FXML
@@ -55,6 +57,12 @@ public class HomepageController {
     private VBox orderDisplayContainer;
     @FXML
     private Button pendingButton;
+
+    @FXML
+    private Button reportsButton;
+
+
+
     @FXML
     private Button searchButton;
     @FXML
@@ -73,6 +81,7 @@ public class HomepageController {
 
     @FXML
     private Button darkLightBtn;
+
 
     //variables created
     private boolean isToggleSettings;
@@ -139,6 +148,7 @@ public class HomepageController {
 
         isLightMode = true;
         rootPane.getStylesheets().clear();
+
 
     }
     /****************initial SETUP BEGINS HERE**************************/
@@ -338,6 +348,19 @@ public class HomepageController {
         }
 
     }
+    @FXML
+    void onReportsClick(ActionEvent event) throws IOException {
+        System.out.println("Reports Button Clicked");
+        if(!ToggleTracking.getCurrentTab().equals("Reports")) {
+            ToggleTracking.setCurrentTab("Reports");
+            toggleNewDelivery();
+            orderDisplayContainer.getChildren().clear();
+            deliverReturnBtn.setText("Deliver Package");
+            buttonToggle(reportsButton);
+            buttonNotToggle(pendingButton);
+            buttonNotToggle(completedButton);
+        }
+    }
 
     @FXML
     void onCompleteDeliverPress(MouseEvent event) {
@@ -478,12 +501,14 @@ public class HomepageController {
                  orderDisplayContainer.getChildren().clear();
                 buttonToggle(completedButton);
                 buttonNotToggle(pendingButton);
+                buttonNotToggle(reportsButton);
                 tempQueue = currentQueue;
             }
 
             if(ToggleTracking.getCurrentTab().equals("Pending") && collectionName.equals("pendingDeliveries")){
                 orderDisplayContainer.getChildren().clear();
                 buttonToggle(pendingButton);
+                buttonNotToggle(reportsButton);
                 buttonNotToggle(completedButton);
                 tempQueue = currentQueue;
             }
@@ -497,7 +522,7 @@ public class HomepageController {
                    // System.out.println("CHECKING DISPLAY QUEUE ORDERS: " + order.toString());
                         try {
                             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hospitaldeliveryinterface/OrderCard.fxml"));
-                            GridPane orderTemplate = loader.load();
+                            HBox orderTemplate = loader.load();
                             OrderCardUIController controller = loader.getController();
                             controller.updateOrderLabels(order);
                             orderDisplayContainer.getChildren().add(orderTemplate);
@@ -508,6 +533,32 @@ public class HomepageController {
             }
             selectOrder();
         });
+    }
+
+    /**
+     * Displays a queue of search results to the homepage
+     * @param searchQueue, queue of delivery requisitions that holds the search results
+     */
+    public void displaySearchResults(Queue<DeliveryRequisition> searchQueue) {
+
+        orderDisplayContainer.getChildren().clear();
+        if(searchQueue == null && searchQueue.isEmpty()){
+
+            return;
+        }
+
+        for(DeliveryRequisition order: searchQueue){
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hospitaldeliveryinterface/OrderCard.fxml"));
+                HBox orderTemplate = loader.load();
+                OrderCardUIController controller = loader.getController();
+                controller.updateOrderLabels(order);
+                orderDisplayContainer.getChildren().add(orderTemplate);
+
+            } catch (IOException e) {
+                System.out.println("Failed to find OrderCard.fxml");
+            }
+        }
     }
 
     public void selectOrder(){
@@ -521,19 +572,27 @@ public class HomepageController {
                     }
 
                     if(selectedCard != node || selectedCard == null){
-                            if (node instanceof GridPane) {
-                                GridPane gridpane = (GridPane) node;
-                                gridpane.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: #ffbdbd");
-                                for(Node childNode : gridpane.getChildren()){
-                                    if (childNode instanceof Label) {
-                                        Label label = (Label) childNode;
-                                        if ("orderNumDisplay".equals(label.getId())) {
-                                            String labelText  = label.getText().substring(1); // Remove the "#" symbol
-                                            ToggleTracking.setSelectedCardOrderNum(labelText);
-                                            //System.out.println("ORDER NUMBER RETRIEVED: " + labelText);
-                                            break;
+                            if (node instanceof HBox) {
+                                HBox hbox = (HBox) node;
+                                hbox.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: #ffbdbd");
+                                for(Node childNode : hbox.getChildren()){
+                                    if (childNode instanceof GridPane) {
+                                        GridPane gridPane = (GridPane) childNode;
+                                        for(Node gridpaneNode : gridPane.getChildren()) {
+                                            if (gridpaneNode instanceof Label) {
+                                                Label label = (Label) gridpaneNode;
+                                                System.out.println(label.getId());
+                                                if ("orderNumDisplay".equals(label.getId())) {
+                                                    String labelText  = label.getText().substring(1); // Remove the "#" symbol
+                                                    ToggleTracking.setSelectedCardOrderNum(labelText);
+                                                    System.out.println("order selected");
+                                                    System.out.println("ORDER NUMBER RETRIEVED: " + labelText);
+                                                    break;
+                                                }
+                                            }
                                         }
                                     }
+
                                 }
                             }
                         selectedCard = node;
@@ -614,6 +673,24 @@ public class HomepageController {
     }
 
     public void onSearchClick() {
+
+        if(!ToggleTracking.getCurrentTab().equals("Reports")) {
+            ToggleTracking.setCurrentTab("Reports");
+            toggleNewDelivery();
+            orderDisplayContainer.getChildren().clear();
+            deliverReturnBtn.setText("Deliver Package");
+            buttonToggle(reportsButton);
+            buttonNotToggle(pendingButton);
+            buttonNotToggle(completedButton);
+        }
+
+        Queue<DeliveryRequisition> tempQueue = searchAlgolia(searchBarTextField.getText());
+        displaySearchResults(tempQueue);
+
+
+
+        //this code below searches the DB using a firebase query
+        /*
         orderDisplayContainer.getChildren().clear();
 
         Queue<DeliveryRequisition> searchResults = search(searchBarTextField.getText(),ToggleTracking.getCurrentTab(), searchByChoiceBox.getValue());
@@ -622,7 +699,7 @@ public class HomepageController {
             System.out.println("CHECKING SEARCH ORDERS: " + order.toString());
             try {
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hospitaldeliveryinterface/OrderCard.fxml"));
-                GridPane orderTemplate = loader.load();
+                HBox orderTemplate = loader.load();
                 OrderCardUIController controller = loader.getController();
                 controller.updateOrderLabels(order);
                 orderDisplayContainer.getChildren().add(orderTemplate);
@@ -632,5 +709,10 @@ public class HomepageController {
             }
 
         }
+
+         */
+    }
+    public void testButton() {
+        searchAlgolia("test");
     }
 }
