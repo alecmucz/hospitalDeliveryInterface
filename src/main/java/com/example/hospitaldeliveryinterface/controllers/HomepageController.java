@@ -62,9 +62,7 @@ public class HomepageController {
     private AnchorPane rootPane;
     @FXML
     private Label usernameLabel;
-
-    private MultiSelectController multiSelectController = new MultiSelectController();
-
+    private Set<DeliveryRequisition> selectedOrders = new HashSet<>();
 
     //variables created
     private boolean isToggleSettings;
@@ -125,6 +123,7 @@ public class HomepageController {
         FirebaseListener.listenToPendingDeliveries();
         FirebaseListener.listenToCompletedDeliveries();
         FirebaseListener.listenToNotifyHistory();
+
     }
     /****************initial SETUP BEGINS HERE**************************/
 
@@ -272,17 +271,18 @@ public class HomepageController {
     /********************************Language Menu ENDS****************************/
     @FXML
     void onPendingClick(ActionEvent event) throws IOException {
-        System.out.println("Pending Button Clicked");
+        System.out.println("Pending Button Clicked: Clearing Selection");
         if(!ToggleTracking.getCurrentTab().equals("Pending")){
             ToggleTracking.setCurrentTab("Pending");
             deliverReturnBtn.setText(LangToggleBtn[3]);
             FirebaseListener.navBarDataDisplay("Pending");
+            selectedOrders.clear(); //clears the selection of orders when changing screens
         }
     }
 
     @FXML
     void onCompleteClick(ActionEvent event) throws IOException {
-        System.out.println("Completed Button Clicked");
+        System.out.println("Completed Button Clicked: Clearing Selection");
         if(!ToggleTracking.getCurrentTab().equals("Completed")){
             ToggleTracking.setCurrentTab("Completed");
             deliverReturnBtn.setText(LangToggleBtn[4]);
@@ -290,6 +290,7 @@ public class HomepageController {
             ToggleTracking.setIsEdit(false);
             ToggleTracking.setIsNewDelivery(false);
             toggleNewDelivery();
+            selectedOrders.clear(); //clears the selection of orders when changing screens
         }
 
     }
@@ -342,13 +343,57 @@ public class HomepageController {
     }
     @FXML
     void onDeliverReturn(ActionEvent event) {
-        if(ToggleTracking.getSelectedCardOrderNum() != null){
-            ToggleTracking.setIsEdit(false);
+        System.out.println("Delivery orders button clicked");
+        if (!selectedOrders.isEmpty()) {
+            Iterator<DeliveryRequisition> iterator = selectedOrders.iterator();
+            while (iterator.hasNext()) {
+                DeliveryRequisition order = iterator.next();
+                String collectionFrom = ToggleTracking.getCurrentTab().equals("Pending") ? "pendingDeliveries" : "completedDeliveries";
+                String collectionTo = ToggleTracking.getCurrentTab().equals("Pending") ? "completedDeliveries" : "pendingDeliveries";
+
+                DataBaseMgmt.swapDB(order.getOrderNumberDisplay(), collectionFrom, collectionTo);
+                System.out.println("Swapped order " + order.getOrderNumberDisplay() + " from " + collectionFrom + " to " + collectionTo);
+
+                Node node = findNodeByRequisition(order);
+                if (node != null) {
+                    Platform.runLater(() -> orderDisplayContainer.getChildren().remove(node));
+                }
+                iterator.remove();
+            }
             toggleNewDelivery();
-            sendOrderToCompleted(ToggleTracking.getSelectedCardOrderNum());
+            System.out.println("Processed all selected orders for delivery/return.");
+        } else {
+            System.out.println("No orders selected for delivery/return.");
         }
     }
 
+    @FXML
+    void onDeleteSelectedOrders(ActionEvent event) {
+        Iterator<DeliveryRequisition> iterator = selectedOrders.iterator();
+        while (iterator.hasNext()) {
+            DeliveryRequisition requisition = iterator.next();
+            DataBaseMgmt.deleteFromDB(requisition.getOrderNumberDisplay(),
+                    ToggleTracking.getCurrentTab().equals("Pending") ? "pendingDeliveries" : "completedDeliveries");
+            Node node = findNodeByRequisition(requisition);
+            if (node != null) {
+                Platform.runLater(() -> {
+                    orderDisplayContainer.getChildren().remove(node);
+                });
+            }
+            iterator.remove();
+        }
+        if (orderDisplayContainer.getChildren().isEmpty()) {
+        }
+    }
+
+    private Node findNodeByRequisition(DeliveryRequisition requisition) {
+        for (Node node : orderDisplayContainer.getChildren()) {
+            if (requisition.equals(node.getUserData())) {
+                return node;
+            }
+        }
+        return null; // Not found
+    }
     @FXML
     void onEditDelivery(ActionEvent event) {
         if(ToggleTracking.getSelectedCardOrderNum() != null){
@@ -419,28 +464,6 @@ public class HomepageController {
         button.setStyle("-fx-border-color: transparent; -fx-background-color: #22aae1;");
     }
 
-
-    public void displayQueue(Queue<DeliveryRequisition> currentQueue, String collectionName){
-        Platform.runLater(() -> {
-            orderDisplayContainer.getChildren().clear();
-            for(DeliveryRequisition order: currentQueue){
-                try {
-                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hospitaldeliveryinterface/OrderCard.fxml"));
-                    GridPane orderTemplate = loader.load();
-                    OrderCardUIController controller = loader.getController();
-                    controller.setOrder(order);
-                    controller.setMultiSelectController(multiSelectController); // Set MultiSelectController
-                    controller.updateOrderLabels(order);
-                    orderDisplayContainer.getChildren().add(orderTemplate);
-                } catch (IOException e) {
-                    System.out.println("Failed to find OrderCard.fxml");
-                }
-            }
-        });
-    }
-
-
-    /*
     public void displayQueue(Queue<DeliveryRequisition> currentQueue, String collectionName){
         Platform.runLater(() -> {
             //System.out.println("TESTING DISPLAY QUEUE HAS BEEN CALLED IN HOMEPAGECONTROLLER");
@@ -466,25 +489,51 @@ public class HomepageController {
                 return;
             }
 
-            for(DeliveryRequisition order: tempQueue){
-                   // System.out.println("CHECKING DISPLAY QUEUE ORDERS: " + order.toString());
-                        try {
-                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hospitaldeliveryinterface/OrderCard.fxml"));
-                            GridPane orderTemplate = loader.load();
-                            OrderCardUIController controller = loader.getController();
-                            controller.updateOrderLabels(order);
-                            orderDisplayContainer.getChildren().add(orderTemplate);
+            for (DeliveryRequisition order : tempQueue) {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hospitaldeliveryinterface/OrderCard.fxml"));
+                    GridPane orderTemplate = loader.load();
+                    OrderCardUIController controller = loader.getController();
+                    controller.updateOrderLabels(order);
+                    orderDisplayContainer.getChildren().add(orderTemplate);
 
-                        } catch (IOException e) {
-                            System.out.println("Failed to find OrderCard.fxml");
-                        }
+                    // Link the DeliveryRequisition with the GridPane
+                    orderTemplate.setUserData(order);
+                } catch (IOException e) {
+                    System.out.println("Failed to find OrderCard.fxml");
+                }
             }
             selectOrder();
         });
     }
+    public void selectOrder() {
+        for (Node node : orderDisplayContainer.getChildren()) {
+            node.setOnMouseClicked(mouseEvent -> {
+                GridPane gridPane = (GridPane) node;
+                DeliveryRequisition requisition = (DeliveryRequisition) gridPane.getUserData();
+                if (selectedOrders.contains(requisition)) {
+                    // Deselect the order
+                    deselectNode(gridPane);
+                    selectedOrders.remove(requisition);
+                } else {
+                    // Select the order
+                    selectNode(gridPane);
+                    selectedOrders.add(requisition);
+                }
+            });
+        }
+    }
 
-     */
+    private void selectNode(GridPane node) {
+        node.setStyle("-fx-background-color: #98FF98; -fx-border-color: #22aae1; -fx-border-width: 2;");
+        System.out.println("Selected order: " + ((DeliveryRequisition) node.getUserData()).getOrderNumberDisplay());
+    }
 
+    private void deselectNode(GridPane node) {
+        node.setStyle("-fx-background-color: transparent; -fx-border-color: #22aae1; -fx-border-width: 2;");
+        System.out.println("Deselected order: " + ((DeliveryRequisition) node.getUserData()).getOrderNumberDisplay());
+    }
+    /*
     public void selectOrder(){
             for(Node node: orderDisplayContainer.getChildren()){
                 node.setOnMouseClicked(mouseEvent -> {
@@ -531,26 +580,7 @@ public class HomepageController {
             }
     }
 
-    public void sendOrderToCompleted(String selectedorderNum){
-        System.out.print("sendOrderToComplete method called!!!");
-        System.out.println("selectOrderNum: " + selectedorderNum);
-        if(selectedorderNum != null){
-            if(ToggleTracking.getCurrentTab().equals("Pending")) {
-                DataBaseMgmt.swapDB(ToggleTracking.getSelectedCardOrderNum(), "pendingDeliveries","completedDeliveries");
-                NotifyMessg.createMessg("delivered", "[Employee ID]", ToggleTracking.getSelectedCardOrderNum());
-            }
-
-            if(ToggleTracking.getCurrentTab().equals("Completed")) {
-                DataBaseMgmt.swapDB(ToggleTracking.getSelectedCardOrderNum(), "completedDeliveries","pendingDeliveries");
-                NotifyMessg.createMessg("returnToPending", "[Employee ID]", ToggleTracking.getSelectedCardOrderNum());
-            }
-
-            toggleNewDelivery();
-            selectedCard = null;
-            ToggleTracking.setSelectedCardOrderNum(null);
-        }
-    }
-
+     */
     public void showDialogSignOut() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText("Logged out");

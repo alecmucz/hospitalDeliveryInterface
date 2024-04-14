@@ -229,6 +229,7 @@ public class DataBaseMgmt {
      * @param collectionTo   destination collection
      */
     public static void swapDB(String orderNumber, String collectionFrom, String collectionTo) {
+        System.out.println("SwapDB called");
         /*
         copy the data from it into delivery rec
         delete the data from pending
@@ -249,7 +250,7 @@ public class DataBaseMgmt {
      * @param collectionName collection you are deleting the target order from
      */
     public static void deleteFromDB(String orderNumber, String collectionName) {
-
+        System.out.println("deleteFromDB called");
         PharmaTracApp.fstore.collection(collectionName).document(orderNumber).delete();
     }
 
@@ -387,6 +388,35 @@ public class DataBaseMgmt {
         // (async) Update one field
         ApiFuture<WriteResult> future = docRef.update("loginStatus", status);
     }
+
+    public static Queue<DeliveryRequisition> getQueue(String collectionName) {
+        Queue<DeliveryRequisition> queue = new LinkedList<>();
+        ApiFuture<QuerySnapshot> future = PharmaTracApp.fstore.collection(collectionName).get();
+        try {
+            QuerySnapshot querySnapshot = future.get();  // This blocks on the future, consider using an asynchronous approach if performance is an issue.
+            for (DocumentSnapshot document : querySnapshot.getDocuments()) {
+                DeliveryRequisition order = new DeliveryRequisition(
+                        document.getId(),
+                        document.getString("timeCreated"),
+                        document.getString("patientName"),
+                        document.getString("location"),
+                        document.getString("medication"),
+                        document.getString("dose"),
+                        document.getString("numDoses"),
+                        document.getString("notes"),
+                        document.getString("deliveredBy"),
+                        document.getString("createdBy"),
+                        document.getString("updatedBy")
+                );
+                queue.add(order);
+            }
+        } catch (InterruptedException | ExecutionException e) {
+            e.printStackTrace();
+            System.out.println("Error retrieving documents: " + e.getMessage());
+        }
+        return queue;
+    }
+
 }
 
 

@@ -58,6 +58,11 @@
       <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
+      <dependency>
+          <groupId>com.google.cloud</groupId>
+          <artifactId>google-cloud-firestore</artifactId>
+          <version>3.13.0</version>
+      </dependency>
   </dependencies>
 
   <build>
