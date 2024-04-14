@@ -7,6 +7,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
 import java.util.Map;
 import java.util.Optional;
@@ -27,18 +28,18 @@ public class LoginFormController {
     private HBox loginErrorHbox;
 
     @FXML
+    private VBox loginPanel;
+
+    @FXML
     private PasswordField textFieldPassword;
 
     @FXML
     private TextField textFieldUsername;
 
-    @FXML
-    private Label us;
-
     private HomepageController controller;
     public void initialize(){
         LogInVbox.setVisible(false);
-
+        LogInVbox.getStylesheets().clear();
     }
 
     public void setHomepageController(HomepageController control){
