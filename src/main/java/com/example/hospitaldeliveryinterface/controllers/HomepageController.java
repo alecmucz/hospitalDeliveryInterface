@@ -533,54 +533,7 @@ public class HomepageController {
         node.setStyle("-fx-background-color: transparent; -fx-border-color: #22aae1; -fx-border-width: 2;");
         System.out.println("Deselected order: " + ((DeliveryRequisition) node.getUserData()).getOrderNumberDisplay());
     }
-    /*
-    public void selectOrder(){
-            for(Node node: orderDisplayContainer.getChildren()){
-                node.setOnMouseClicked(mouseEvent -> {
-                    if(selectedCard != null &&  selectedCard != node){
-                        selectedCard.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: transparent");
-                        selectedCard = null;
-                        ToggleTracking.setIsEdit(false);
-                        toggleNewDelivery();
-                    }
 
-                    if(selectedCard != node || selectedCard == null){
-                            if (node instanceof GridPane) {
-                                GridPane gridpane = (GridPane) node;
-                                gridpane.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: #ffbdbd");
-                                for(Node childNode : gridpane.getChildren()){
-                                    if (childNode instanceof Label) {
-                                        Label label = (Label) childNode;
-                                        if ("orderNumDisplay".equals(label.getId())) {
-                                            String labelText  = label.getText().substring(1); // Remove the "#" symbol
-                                            ToggleTracking.setSelectedCardOrderNum(labelText);
-                                            //System.out.println("ORDER NUMBER RETRIEVED: " + labelText);
-                                            break;
-                                        }
-                                    }
-                                }
-                            }
-                        selectedCard = node;
-
-                    }else{
-                        selectedCard.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: transparent");
-
-                        selectedCard = null;
-                        ToggleTracking.setIsEdit(false);
-
-                        toggleNewDelivery();
-                    }
-                });
-            }
-
-            if(!ToggleTracking.getIsEdit()){
-                for(Node node: orderDisplayContainer.getChildren()){
-                    node.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: transparent");
-                }
-            }
-    }
-
-     */
     public void showDialogSignOut() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText("Logged out");
