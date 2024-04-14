@@ -89,7 +89,7 @@ public class HomepageController {
     private LanguageMenuController languageMenuController;
     private BorderPane deliveryFormUI;
     private DeliveryFormController deliveryFormController;
-    private VBox createUserFormUI;
+    private BorderPane createUserFormUI;
     private CreateUserController createUserController;
     private AnchorPane notifyMessageUI;
     private NotifyMessageController notifyMessageController;
@@ -126,7 +126,7 @@ public class HomepageController {
         searchByChoiceBox.getItems().addAll("patientName","medication","location");
         searchByChoiceBox.setValue("Search By:");
 
-        toggleNewDelivery();
+        //toggleNewDelivery();
 
         settingNavbar.setVisible(false);
         adminToolsNav.setVisible(false);
@@ -140,6 +140,7 @@ public class HomepageController {
         FirebaseListener.listenToNotifyHistory();
 
         isLightMode = true;
+        rootPane.getStylesheets().clear();
 
     }
     /****************initial SETUP BEGINS HERE**************************/
@@ -293,24 +294,22 @@ public class HomepageController {
     }
 
     public void handleDarkLightChanges(){
-        URL sheetStatus = null;
-        if(isLightMode){
-            System.out.println("Style mode change to: Dark Mode");
+        String currentStyleSheet = "";
+        if (isLightMode) {
             darkLightBtn.setText("Light Mode");
-            sheetStatus = getClass().getResource("/com/example/hospitaldeliveryinterface/darkMode.css");
-        }else{
-            System.out.println("Style mode change to: Light Mode");
+            currentStyleSheet = "darkMode.css";
+
+        } else {
             darkLightBtn.setText("Dark Mode");
-            sheetStatus = getClass().getResource("/com/example/hospitaldeliveryinterface/lightMode.css");
+            currentStyleSheet = "lightMode.css";
         }
 
         Scene currentScene = PharmaTracApp.getScene();
         currentScene.getStylesheets().clear();
-        currentScene.getStylesheets().add(sheetStatus.toExternalForm());
-
+        currentScene.getStylesheets().add(PharmaTracApp.class.getResource(currentStyleSheet).toExternalForm());
         isLightMode = !isLightMode;
-    }
 
+    }
 
     /*********************************************************************************/
     @FXML
@@ -455,11 +454,13 @@ public class HomepageController {
     }
 
     public void buttonToggle(Button button){
-        button.setStyle("-fx-border-color: white; -fx-background-color: #22aae1;");
+        button.getStyleClass().clear();
+        button.getStyleClass().add("isToggled");
     }
 
     public void buttonNotToggle(Button button){
-        button.setStyle("-fx-border-color: transparent; -fx-background-color: #22aae1;");
+        button.getStyleClass().clear();
+        button.getStyleClass().add("isNotToggled");
     }
 
     public void displayQueue(Queue<DeliveryRequisition> currentQueue, String collectionName){
@@ -583,6 +584,10 @@ public class HomepageController {
     void handleLoginButtonChange() {
         if (LoginButtonChange.getText().equals("Login")) {
             loginFormController.setLoginVBoxVisibility(true);
+            adminToolsNav.setVisible(false);
+            settingNavbar.setVisible(false);
+            buttonNotToggle(settingsButton);
+            isToggleSettings = false;
         }
         else if (LoginButtonChange.getText().equals("Sign out")) {
             showDialogSignOut();
@@ -598,6 +603,10 @@ public class HomepageController {
     void onCreateUserClick(ActionEvent event){
         createUserController.onCreateUserForm();
         ToggleTracking.setisCreateUser(!ToggleTracking.getIsCreateUser());
+        adminToolsNav.setVisible(false);
+        settingNavbar.setVisible(false);
+        buttonNotToggle(settingsButton);
+        isToggleSettings = false;
     }
 
     public void onSearchClick() {

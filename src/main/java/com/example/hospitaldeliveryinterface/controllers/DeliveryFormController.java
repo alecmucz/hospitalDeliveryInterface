@@ -33,7 +33,13 @@ public class DeliveryFormController {
     private TextField doseAmountText;
 
     @FXML
+    private Label doseQuantlbl;
+
+    @FXML
     private TextField doseText;
+
+    @FXML
+    private Label doselbl;
 
     @FXML
     private Label errMessLabel;
@@ -48,7 +54,19 @@ public class DeliveryFormController {
     private TextField locationText;
 
     @FXML
+    private Label locationlbl;
+
+    @FXML
+    private Label medDescriplbl;
+
+    @FXML
     private TextField medicationText;
+
+    @FXML
+    private Label nameLbl;
+
+    @FXML
+    private Label formDescriplbl;
 
     /***Non FXML Components***/
     private TextField[] allInputs;

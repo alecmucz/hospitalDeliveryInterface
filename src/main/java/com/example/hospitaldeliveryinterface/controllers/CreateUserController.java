@@ -12,6 +12,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
@@ -20,8 +21,12 @@ import java.util.concurrent.ExecutionException;
 
 public class CreateUserController {
 
+
     @FXML
-    private VBox adminNavBar;
+    private BorderPane adminNavBar;
+
+    @FXML
+    private VBox adminVBox;
 
     @FXML
     private Button createUserButton;
@@ -50,19 +55,6 @@ public class CreateUserController {
     @FXML
     private PasswordField textFieldPassword1;
 
-    @FXML
-    private Label us1;
-
-    @FXML
-    private Label us11;
-
-    @FXML
-    private Label us111;
-
-    @FXML
-    private Label us112;
-
-
     /**non fxml components***/
     private TextField[] createUserInputs;
 
@@ -75,6 +67,8 @@ public class CreateUserController {
                 textFieldPassword1,
                 textFieldConfirmPassword,
         };
+
+        adminNavBar.getStylesheets().clear();
     }
 
     @FXML
@@ -209,7 +203,7 @@ public class CreateUserController {
     public void onCreateUserForm(){
         if(!ToggleTracking.getIsCreateUser()){
             adminNavBar.setVisible(true);
-            adminNavBar.setPrefWidth(314);
+            adminNavBar.setPrefWidth(277);
         }else {
             adminNavBar.setPrefWidth(0);
             adminNavBar.setVisible(false);
