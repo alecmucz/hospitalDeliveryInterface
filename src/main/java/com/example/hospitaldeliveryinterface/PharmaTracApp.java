@@ -1,6 +1,8 @@
 package com.example.hospitaldeliveryinterface;
 
+import com.example.hospitaldeliveryinterface.firebase.DataBaseMgmt;
 import com.example.hospitaldeliveryinterface.firebase.FirestoreContext;
+import com.example.hospitaldeliveryinterface.model.Employee;
 import com.google.cloud.firestore.Firestore;
 import com.google.firebase.auth.FirebaseAuth;
 import javafx.application.Application;
@@ -33,6 +35,18 @@ public class PharmaTracApp extends Application {
         stage.setTitle("PharmaTrac");
         stage.setScene(scene);
         stage.show();
+
+        // Add shutdown hook
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
+            // Update login status to "False" for the current user
+            if (Employee.getCurrentLogin() != null) {
+                try {
+                    DataBaseMgmt.updateLoginStatus(Employee.getCurrentLogin(),"False");
+                } catch (Exception e) {
+                    e.printStackTrace(); // Handle the exception appropriately
+                }
+            }
+        }));
     }
 
     static Scene getScene(){

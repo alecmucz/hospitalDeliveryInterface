@@ -15,6 +15,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
@@ -158,11 +161,13 @@ public class CreateUserController {
                     // User creation successful, add user to database
                     errorMessageHbox.setVisible(true);
                     createUserError.setStyle("-fx-text-fill: green;");
+                    //Hash the password using SHA-256
+                    String hashedPassword = hashPassword(textFieldPassword1.getText());
                     DataBaseMgmt.addCreateUserDB(
                             textFieldEmployeeID.getText(),
                             textFieldFirstName.getText(),
                             textFieldLastName.getText(),
-                            textFieldPassword1.getText(),
+                            hashedPassword,
                             textFieldEmployeeID.getText(),
                             textFieldEmail.getText());
 
@@ -177,6 +182,17 @@ public class CreateUserController {
                      defaultBorder(textFieldConfirmPassword);**/
                 }
             }
+        }
+    }
+    //this uses SHA-256 algorithm and hashes the password for create user
+    private String hashPassword(String password) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(password.getBytes());
+            return Base64.getEncoder().encodeToString(hash);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace(); // Handle the exception appropriately
+            return null; // Or throw an exception
         }
     }
 
