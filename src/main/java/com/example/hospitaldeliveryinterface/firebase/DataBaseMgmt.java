@@ -250,7 +250,7 @@ public class DataBaseMgmt {
      * @param collectionName collection you are deleting the target order from
      */
     public static void deleteFromDB(String orderNumber, String collectionName) {
-
+        System.out.println("deleteFromDB called");
         PharmaTracApp.fstore.collection(collectionName).document(orderNumber).delete();
     }
 

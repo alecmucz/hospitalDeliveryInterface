@@ -63,6 +63,7 @@ public class HomepageController {
     @FXML
     private Label usernameLabel;
     private Set<Node> selectedCards = new HashSet<>();
+    private Set<DeliveryRequisition> selectedOrders = new HashSet<>();
 
     //variables created
     private boolean isToggleSettings;
@@ -353,6 +354,37 @@ public class HomepageController {
     }
 
     @FXML
+    void onDeleteSelectedOrders(ActionEvent event) {
+        Iterator<DeliveryRequisition> iterator = selectedOrders.iterator();
+        while (iterator.hasNext()) {
+            DeliveryRequisition requisition = iterator.next();
+            DataBaseMgmt.deleteFromDB(requisition.getOrderNumberDisplay(), getCurrentCollectionName());
+            Node node = findNodeByRequisition(requisition);
+            if (node != null) {
+                Platform.runLater(() -> {
+                    orderDisplayContainer.getChildren().remove(node);
+                });
+            }
+            iterator.remove();
+        }
+        if (orderDisplayContainer.getChildren().isEmpty()) {
+        }
+    }
+
+    private Node findNodeByRequisition(DeliveryRequisition requisition) {
+        for (Node node : orderDisplayContainer.getChildren()) {
+            if (requisition.equals(node.getUserData())) {
+                return node;
+            }
+        }
+        return null; // Not found
+    }
+
+    private String getCurrentCollectionName() {
+        return ToggleTracking.getCurrentTab().equals("Pending") ? "pendingDeliveries" : "completedDeliveries";
+    }
+
+    @FXML
     void onEditDelivery(ActionEvent event) {
         if(ToggleTracking.getSelectedCardOrderNum() != null){
             ToggleTracking.setIsEdit(!ToggleTracking.getIsEdit());
@@ -447,18 +479,19 @@ public class HomepageController {
                 return;
             }
 
-            for(DeliveryRequisition order: tempQueue){
-                   // System.out.println("CHECKING DISPLAY QUEUE ORDERS: " + order.toString());
-                        try {
-                            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hospitaldeliveryinterface/OrderCard.fxml"));
-                            GridPane orderTemplate = loader.load();
-                            OrderCardUIController controller = loader.getController();
-                            controller.updateOrderLabels(order);
-                            orderDisplayContainer.getChildren().add(orderTemplate);
+            for (DeliveryRequisition order : tempQueue) {
+                try {
+                    FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hospitaldeliveryinterface/OrderCard.fxml"));
+                    GridPane orderTemplate = loader.load();
+                    OrderCardUIController controller = loader.getController();
+                    controller.updateOrderLabels(order);
+                    orderDisplayContainer.getChildren().add(orderTemplate);
 
-                        } catch (IOException e) {
-                            System.out.println("Failed to find OrderCard.fxml");
-                        }
+                    // Link the DeliveryRequisition with the GridPane
+                    orderTemplate.setUserData(order);
+                } catch (IOException e) {
+                    System.out.println("Failed to find OrderCard.fxml");
+                }
             }
             selectOrder();
         });
@@ -467,27 +500,28 @@ public class HomepageController {
         for (Node node : orderDisplayContainer.getChildren()) {
             node.setOnMouseClicked(mouseEvent -> {
                 GridPane gridPane = (GridPane) node;
-                if (selectedCards.contains(node)) {
-                    // Deselect the node
+                DeliveryRequisition requisition = (DeliveryRequisition) gridPane.getUserData();
+                if (selectedOrders.contains(requisition)) {
+                    // Deselect the order
                     deselectNode(gridPane);
+                    selectedOrders.remove(requisition);
                 } else {
-                    // Select the node
+                    // Select the order
                     selectNode(gridPane);
+                    selectedOrders.add(requisition);
                 }
             });
         }
     }
 
     private void selectNode(GridPane node) {
-        selectedCards.add(node);
         node.setStyle("-fx-background-color: #98FF98; -fx-border-color: #22aae1; -fx-border-width: 2;");
-        System.out.println("Selected order: " + node.getId());
+        System.out.println("Selected order: " + ((DeliveryRequisition) node.getUserData()).getOrderNumberDisplay());
     }
 
     private void deselectNode(GridPane node) {
-        selectedCards.remove(node);
         node.setStyle("-fx-background-color: transparent; -fx-border-color: #22aae1; -fx-border-width: 2;");
-        System.out.println("Deselected order: " + node.getId());
+        System.out.println("Deselected order: " + ((DeliveryRequisition) node.getUserData()).getOrderNumberDisplay());
     }
     /*
     public void selectOrder(){
