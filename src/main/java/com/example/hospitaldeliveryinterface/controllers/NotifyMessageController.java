@@ -8,11 +8,13 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
 import javafx.util.Duration;
 
 import java.util.Queue;
 
 public class NotifyMessageController {
+
 
     @FXML
     private AnchorPane notifyBox;
@@ -22,6 +24,9 @@ public class NotifyMessageController {
 
     @FXML
     private Label notifyMess;
+
+    @FXML
+    private VBox notifyPanel;
 
 
     private  boolean beginNotify;
@@ -33,6 +38,8 @@ public class NotifyMessageController {
         notifyMess.setVisible(false);
         notifyBox.setVisible(false);
         notifyDatetime.setVisible(false);
+
+        notifyBox.getStylesheets().clear();
     }
 
     public void displayNotfications(){
@@ -60,7 +67,7 @@ public class NotifyMessageController {
                             notifyMess.setVisible(true);
                             notifyDatetime.setVisible(true);
 
-                            TranslateTransition transition = new TranslateTransition(Duration.millis(1000), notifyBox);
+                            TranslateTransition transition = new TranslateTransition(Duration.millis(500), notifyBox);
                             transition.setFromX(-300);
                             transition.setToX(0);
 
@@ -70,7 +77,7 @@ public class NotifyMessageController {
                             notifyDatetime.setText(selectedNotify.getMssgDate()+" - "+selectedNotify.getMssgTime());
                         });
                         retrieveMessgQueue = NotifyMessg.getMessgQueue();
-                        Thread.sleep(2000);
+                        Thread.sleep(2500);
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }

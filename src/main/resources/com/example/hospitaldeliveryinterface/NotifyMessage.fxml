@@ -6,9 +6,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="notifyBox" prefHeight="139.0" prefWidth="285.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hospitaldeliveryinterface.controllers.NotifyMessageController">
+<AnchorPane fx:id="notifyBox" prefHeight="139.0" prefWidth="285.0" stylesheets="@lightMode.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hospitaldeliveryinterface.controllers.NotifyMessageController">
    <children>
-      <VBox alignment="BOTTOM_LEFT" layoutY="85.0" prefHeight="115.0" prefWidth="251.0" style="-fx-background-color: #22aae1;">
+      <VBox fx:id="notifyPanel" alignment="BOTTOM_LEFT" layoutY="85.0" prefHeight="115.0" prefWidth="251.0">
          <children>
             <Label fx:id="notifyDatetime" alignment="CENTER" prefHeight="37.0" prefWidth="245.0" text="03/27/2024 - 1:12PM" textFill="WHITE" wrapText="true">
                <font>

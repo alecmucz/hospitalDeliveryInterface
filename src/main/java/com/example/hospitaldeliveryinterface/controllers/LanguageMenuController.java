@@ -39,6 +39,8 @@ public class LanguageMenuController {
                 }
             }
         }
+
+        languagePane.getStylesheets().clear();
     }
     public void setButton(Button button) {
         languageButton = button;
