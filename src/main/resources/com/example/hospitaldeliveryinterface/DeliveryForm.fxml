@@ -16,14 +16,14 @@
       <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
    </padding>
    <top>
-      <VBox prefHeight="33.0" prefWidth="292.0" style="-fx-background-color: transparent;" BorderPane.alignment="TOP_LEFT">
+      <VBox prefHeight="33.0" prefWidth="292.0" BorderPane.alignment="TOP_LEFT">
          <children>
             <Label fx:id="deliveryFormLabel" alignment="TOP_LEFT" contentDisplay="TOP" prefHeight="52.0" prefWidth="292.0" text="New Delivery Form" textFill="#1e90f5">
                <font>
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <Label alignment="TOP_LEFT" contentDisplay="TOP" prefHeight="59.0" prefWidth="292.0" text="Please fill all the required fields." />
+            <Label fx:id="formDescriplbl" alignment="TOP_LEFT" contentDisplay="TOP" prefHeight="59.0" prefWidth="292.0" text="Please fill all the required fields." />
          </children>
       </VBox>
    </top>
@@ -56,14 +56,14 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label layoutX="10.0" layoutY="10.0" prefHeight="28.0" prefWidth="292.0" text="Name" />
+            <Label fx:id="nameLbl" layoutX="10.0" layoutY="10.0" prefHeight="28.0" prefWidth="292.0" text="Name" />
             <HBox prefHeight="9.0" prefWidth="292.0" spacing="10.0">
                <children>
                   <TextField fx:id="firstnameText" prefHeight="2.0" prefWidth="141.0" promptText="First" />
                   <TextField fx:id="lastnameText" promptText="Last" />
                </children>
             </HBox>
-            <Label prefHeight="28.0" prefWidth="292.0" text="Location" />
+            <Label fx:id="locationlbl" prefHeight="28.0" prefWidth="292.0" text="Location" />
             <HBox prefHeight="9.0" prefWidth="292.0" spacing="10.0">
                <children>
                   <TextField fx:id="locationText" prefHeight="2.0" prefWidth="141.0" />
@@ -78,7 +78,7 @@
                   <Insets top="10.0" />
                </padding>
             </Label>
-            <Label prefHeight="28.0" prefWidth="292.0" text="Medication (Name/Strength)" />
+            <Label fx:id="medDescriplbl" prefHeight="28.0" prefWidth="292.0" text="Medication (Name/Strength)" />
             <HBox prefHeight="9.0" prefWidth="292.0" spacing="10.0">
                <children>
                   <TextField fx:id="medicationText" prefHeight="49.0" prefWidth="141.0" />
@@ -87,8 +87,8 @@
             </HBox>
             <HBox prefHeight="32.0" prefWidth="289.0" spacing="10.0">
                <children>
-                  <Label prefHeight="32.0" prefWidth="78.0" text="Dose" />
-                  <Label prefHeight="43.0" prefWidth="92.0" text="Dose Quantity" />
+                  <Label fx:id="doselbl" prefHeight="32.0" prefWidth="78.0" text="Dose" />
+                  <Label fx:id="doseQuantlbl" prefHeight="32.0" prefWidth="102.0" text="Number of Doses" />
                </children>
             </HBox>
             <HBox prefHeight="9.0" prefWidth="292.0" spacing="34.0">

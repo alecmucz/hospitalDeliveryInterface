@@ -5,91 +5,104 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="adminNavBar" alignment="TOP_CENTER" minWidth="-Infinity" prefHeight="613.0" prefWidth="277.0" spacing="10.0" style="-fx-background-color: #1678a8;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hospitaldeliveryinterface.controllers.CreateUserController">
-   <children>
-      <Label fx:id="us112" alignment="CENTER" layoutX="30.0" layoutY="30.0" minWidth="-Infinity" prefHeight="23.0" prefWidth="238.0" text="EmployeeID" textFill="WHITE">
-         <font>
-            <Font name="Tahoma Bold" size="18.0" />
-         </font>
-      </Label>
-      <TextField fx:id="textFieldEmployeeID" layoutX="30.0" layoutY="96.0" minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0" />
-      <Label fx:id="us11" alignment="CENTER" minWidth="-Infinity" prefHeight="23.0" prefWidth="238.0" text="First Name" textFill="WHITE">
-         <font>
-            <Font name="Tahoma Bold" size="18.0" />
-         </font>
-      </Label>
-      <TextField fx:id="textFieldFirstName" minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0">
-         <VBox.margin>
-            <Insets />
-         </VBox.margin>
-      </TextField>
-      <Label fx:id="us111" alignment="CENTER" minWidth="-Infinity" prefHeight="23.0" prefWidth="130.0" text="Last Name" textFill="WHITE">
-         <font>
-            <Font name="Tahoma Bold" size="18.0" />
-         </font>
-      </Label>
-      <TextField fx:id="textFieldLastName" minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0">
-         <VBox.margin>
-            <Insets bottom="10.0" />
-         </VBox.margin>
-      </TextField>
-      <Label fx:id="us1" alignment="CENTER" minWidth="-Infinity" prefHeight="23.0" prefWidth="167.0" text="Email" textFill="WHITE">
-         <font>
-            <Font name="Tahoma Bold" size="18.0" />
-         </font>
-         <VBox.margin>
-            <Insets />
-         </VBox.margin>
-      </Label>
-      <TextField fx:id="textFieldEmail" minWidth="-Infinity" prefHeight="0.0" prefWidth="0.0">
-         <VBox.margin>
-            <Insets bottom="10.0" />
-         </VBox.margin>
-      </TextField>
-      <Label alignment="CENTER" minWidth="-Infinity" prefHeight="23.0" prefWidth="115.0" text="Password" textFill="WHITE">
-         <font>
-            <Font name="Tahoma Bold" size="18.0" />
-         </font>
-      </Label>
-      <PasswordField fx:id="textFieldPassword1" minWidth="-Infinity" prefHeight="25.0" prefWidth="0.0" />
-      <Label alignment="CENTER" minWidth="-Infinity" prefHeight="23.0" prefWidth="174.0" text="Confirm Password" textFill="WHITE">
-         <font>
-            <Font name="Tahoma Bold" size="18.0" />
-         </font>
-      </Label>
-      <PasswordField fx:id="textFieldConfirmPassword" minWidth="-Infinity" prefHeight="25.0" prefWidth="0.0">
-         <VBox.margin>
-            <Insets />
-         </VBox.margin>
-      </PasswordField>
-      <Button fx:id="createUserButton" alignment="CENTER" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#createUser" prefHeight="29.0" prefWidth="0.0" style="-fx-background-color: #22aae1; -fx-background-radius: 90;" text="Create User" textFill="WHITE">
-         <font>
-            <Font name="System Bold" size="14.0" />
-         </font>
-      </Button>
-      <Button alignment="CENTER" layoutX="30.0" layoutY="393.0" maxWidth="1.7976931348623157E308" minWidth="-Infinity" mnemonicParsing="false" onAction="#onCloseUserCreate" prefHeight="29.0" prefWidth="0.0" style="-fx-background-color: transparent;" text="Close User Create" textFill="WHITE" underline="true">
-         <font>
-            <Font size="14.0" />
-         </font>
-      </Button>
-      <HBox fx:id="errorMessageHbox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" visible="false">
+<BorderPane fx:id="adminNavBar" minWidth="-Infinity" stylesheets="@lightMode.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hospitaldeliveryinterface.controllers.CreateUserController">
+   <center>
+      <VBox fx:id="adminVBox" alignment="TOP_CENTER" minWidth="-Infinity" prefHeight="613.0" prefWidth="277.0" spacing="10.0">
          <children>
-            <Label fx:id="createUserError" text="Label" textFill="RED">
+            <Label layoutX="31.0" layoutY="30.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="23.0" prefWidth="246.0" text="Create User Form" textFill="WHITE">
+               <font>
+                  <Font name="Tahoma Bold" size="18.0" />
+               </font>
+            </Label>
+            <Label layoutX="31.0" layoutY="30.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="22.0" prefWidth="243.0" text="Please fill out all required fields" textFill="WHITE">
+               <font>
+                  <Font name="Tahoma Bold" size="11.0" />
+               </font>
+            </Label>
+            <Label layoutX="30.0" layoutY="30.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="19.0" prefWidth="241.0" text="EmployeeID" textFill="WHITE">
+               <font>
+                  <Font name="Tahoma Bold" size="14.0" />
+               </font>
+            </Label>
+            <TextField fx:id="textFieldEmployeeID" layoutX="30.0" layoutY="96.0" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="28.0" prefWidth="205.0">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </TextField>
+            <Label nodeOrientation="LEFT_TO_RIGHT" prefHeight="23.0" prefWidth="238.0" text="Name" textFill="WHITE">
+               <font>
+                  <Font name="Tahoma Bold" size="14.0" />
+               </font>
+            </Label>
+            <HBox prefHeight="30.0" prefWidth="215.0" spacing="20.0">
+               <children>
+                  <TextField fx:id="textFieldFirstName" prefHeight="28.0" prefWidth="115.0" promptText="First" />
+                  <TextField fx:id="textFieldLastName" prefHeight="28.0" prefWidth="111.0" promptText="Last" />
+               </children>
+            </HBox>
+            <Label nodeOrientation="LEFT_TO_RIGHT" prefHeight="23.0" prefWidth="236.0" text="Email" textFill="WHITE">
+               <font>
+                  <Font name="Tahoma Bold" size="14.0" />
+               </font>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Label>
+            <TextField fx:id="textFieldEmail" prefHeight="25.0" prefWidth="179.0">
+               <VBox.margin>
+                  <Insets bottom="10.0" />
+               </VBox.margin>
+            </TextField>
+            <Label nodeOrientation="LEFT_TO_RIGHT" prefHeight="23.0" prefWidth="240.0" text="Password" textFill="WHITE">
+               <font>
+                  <Font name="Tahoma Bold" size="14.0" />
+               </font>
+            </Label>
+            <PasswordField fx:id="textFieldPassword1" prefHeight="25.0" prefWidth="0.0" />
+            <Label nodeOrientation="LEFT_TO_RIGHT" prefHeight="23.0" prefWidth="239.0" text="Confirm Password" textFill="WHITE">
+               <font>
+                  <Font name="Tahoma Bold" size="14.0" />
+               </font>
+            </Label>
+            <PasswordField fx:id="textFieldConfirmPassword" prefHeight="25.0" prefWidth="0.0">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </PasswordField>
+            <Button fx:id="createUserButton" alignment="CENTER" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#createUser" prefHeight="29.0" prefWidth="0.0" text="Create User" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
-            </Label>
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin>
+            </Button>
+            <Button alignment="CENTER" layoutX="30.0" layoutY="393.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onCloseUserCreate" prefHeight="29.0" prefWidth="0.0" style="-fx-background-color: transparent;" text="Close User Create" textFill="WHITE" underline="true">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <HBox fx:id="errorMessageHbox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" visible="false">
+               <children>
+                  <Label fx:id="createUserError" text="Label" textFill="RED">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
          </children>
-      </HBox>
-   </children>
-   <opaqueInsets>
-      <Insets />
-   </opaqueInsets>
-   <padding>
-      <Insets left="20.0" right="20.0" top="20.0" />
-   </padding>
-</VBox>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <padding>
+            <Insets left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </VBox>
+   </center>
+</BorderPane>

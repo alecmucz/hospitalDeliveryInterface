@@ -1,5 +1,6 @@
 package com.example.hospitaldeliveryinterface.controllers;
 
+import com.example.hospitaldeliveryinterface.PharmaTracApp;
 import com.example.hospitaldeliveryinterface.firebase.DataBaseMgmt;
 import com.example.hospitaldeliveryinterface.firebase.FirebaseListener;
 import com.example.hospitaldeliveryinterface.model.*;
@@ -8,10 +9,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+
+import javax.print.DocFlavor;
 import java.io.IOException;
+import java.net.URL;
 import java.util.*;
 import static com.example.hospitaldeliveryinterface.firebase.DataBaseMgmt.search;
 
@@ -63,6 +68,11 @@ public class HomepageController {
     @FXML
     private Label usernameLabel;
 
+    @FXML
+    private ScrollPane mainOrderScroll;
+
+    @FXML
+    private Button darkLightBtn;
 
     //variables created
     private boolean isToggleSettings;
@@ -70,12 +80,16 @@ public class HomepageController {
     private Node selectedCard;
     private String[] LangToggleBtn;
 
+    private boolean isLightMode;
+
+    private Node[] homePageColorChanges;
+
     /***Menus and controllers for different components of application********/
     private AnchorPane languageMenuUI;
     private LanguageMenuController languageMenuController;
     private BorderPane deliveryFormUI;
     private DeliveryFormController deliveryFormController;
-    private VBox createUserFormUI;
+    private BorderPane createUserFormUI;
     private CreateUserController createUserController;
     private AnchorPane notifyMessageUI;
     private NotifyMessageController notifyMessageController;
@@ -83,14 +97,12 @@ public class HomepageController {
     private LoginFormController loginFormController;
 
     /****************************************************************************/
-
     public void initialize(){
 
         setUpDeliveryForm();
         setUpCreateUserForm();
         setUpNotifyMessage();
         setUpLoginForm();
-
 
         LangToggleBtn = MitchTextTranslate.defaultEnglishText();
 
@@ -112,17 +124,22 @@ public class HomepageController {
         searchByChoiceBox.getItems().addAll("patientName","medication","location");
         searchByChoiceBox.setValue("Search By:");
 
-        toggleNewDelivery();
+        //toggleNewDelivery();
 
         settingNavbar.setVisible(false);
         adminToolsNav.setVisible(false);
 
         selectOrder();
 
+
         FirebaseListener.setController(this);
         FirebaseListener.listenToPendingDeliveries();
         FirebaseListener.listenToCompletedDeliveries();
         FirebaseListener.listenToNotifyHistory();
+
+        isLightMode = true;
+        rootPane.getStylesheets().clear();
+
     }
     /****************initial SETUP BEGINS HERE**************************/
 
@@ -261,6 +278,11 @@ public class HomepageController {
         if (languageMenuUI != null) {
             languageMenuUI.setVisible(!languageMenuUI.isVisible());
         }
+
+        if(isToggleAdmin){
+            adminToolsNav.setVisible(false);
+            isToggleAdmin = false;
+        }
     }
     public void setLangToggleBtn(String[] newText) {
        LangToggleBtn = newText;
@@ -268,6 +290,31 @@ public class HomepageController {
 
     }
     /********************************Language Menu ENDS****************************/
+    /*******************************handle dark/light mode changes*********************/
+    @FXML
+    void onDarkLightClick(ActionEvent event) {
+        handleDarkLightChanges();
+    }
+
+    public void handleDarkLightChanges(){
+        String currentStyleSheet = "";
+        if (isLightMode) {
+            darkLightBtn.setText("Light Mode");
+            currentStyleSheet = "darkMode.css";
+
+        } else {
+            darkLightBtn.setText("Dark Mode");
+            currentStyleSheet = "lightMode.css";
+        }
+
+        Scene currentScene = PharmaTracApp.getScene();
+        currentScene.getStylesheets().clear();
+        currentScene.getStylesheets().add(PharmaTracApp.class.getResource(currentStyleSheet).toExternalForm());
+        isLightMode = !isLightMode;
+
+    }
+
+    /*********************************************************************************/
     @FXML
     void onPendingClick(ActionEvent event) throws IOException {
         System.out.println("Pending Button Clicked");
@@ -325,8 +372,10 @@ public class HomepageController {
 
         if (isToggleAdmin) {
             adminToolsNav.setVisible(true);
+           languageMenuUI.setVisible(false);
         } else {
             adminToolsNav.setVisible(false);
+
         }
     }
 
@@ -410,11 +459,13 @@ public class HomepageController {
     }
 
     public void buttonToggle(Button button){
-        button.setStyle("-fx-border-color: white; -fx-background-color: #22aae1;");
+        button.getStyleClass().clear();
+        button.getStyleClass().add("isToggled");
     }
 
     public void buttonNotToggle(Button button){
-        button.setStyle("-fx-border-color: transparent; -fx-background-color: #22aae1;");
+        button.getStyleClass().clear();
+        button.getStyleClass().add("isNotToggled");
     }
 
     public void displayQueue(Queue<DeliveryRequisition> currentQueue, String collectionName){
@@ -537,6 +588,10 @@ public class HomepageController {
     void handleLoginButtonChange() {
         if (LoginButtonChange.getText().equals("Login")) {
             loginFormController.setLoginVBoxVisibility(true);
+            adminToolsNav.setVisible(false);
+            settingNavbar.setVisible(false);
+            buttonNotToggle(settingsButton);
+            isToggleSettings = false;
         }
         else if (LoginButtonChange.getText().equals("Sign out")) {
             showDialogSignOut();
@@ -552,9 +607,13 @@ public class HomepageController {
     void onCreateUserClick(ActionEvent event){
         createUserController.onCreateUserForm();
         ToggleTracking.setisCreateUser(!ToggleTracking.getIsCreateUser());
+        adminToolsNav.setVisible(false);
+        settingNavbar.setVisible(false);
+        buttonNotToggle(settingsButton);
+        isToggleSettings = false;
     }
 
-    public void searchButton() {
+    public void onSearchClick() {
         orderDisplayContainer.getChildren().clear();
 
         Queue<DeliveryRequisition> searchResults = search(searchBarTextField.getText(),ToggleTracking.getCurrentTab(), searchByChoiceBox.getValue());
