@@ -4,9 +4,8 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7e1c1fe8-19dc-4e88-bc9d-fc845d4c4708" name="Changes" comment="commit for dark/light feature">
+    <list default="true" id="7e1c1fe8-19dc-4e88-bc9d-fc845d4c4708" name="Changes" comment="commit for menu toggle fixes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hospitaldeliveryinterface/controllers/HomepageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/hospitaldeliveryinterface/controllers/HomepageController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -154,7 +153,7 @@
       <workItem from="1712720278919" duration="520000" />
       <workItem from="1712854160750" duration="1740000" />
       <workItem from="1713037444861" duration="7821000" />
-      <workItem from="1713048376031" duration="16620000" />
+      <workItem from="1713048376031" duration="17517000" />
     </task>
     <task id="LOCAL-00001" summary="@author Alec Muczynski&#10;Implemented the Pending stage">
       <option name="closed" value="true" />
@@ -404,7 +403,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713064561250</updated>
     </task>
-    <option name="localTasksCounter" value="32" />
+    <task id="LOCAL-00032" summary="commit for menu toggle fixes">
+      <option name="closed" value="true" />
+      <created>1713065887880</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1713065887880</updated>
+    </task>
+    <option name="localTasksCounter" value="33" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -445,7 +452,8 @@
     <MESSAGE value="- Im a genius / Very epic stuff / made it even better" />
     <MESSAGE value="reduce homepage controoler codebase from 1400-ish to less than 600 lines" />
     <MESSAGE value="commit for dark/light feature" />
-    <option name="LAST_COMMIT_MESSAGE" value="commit for dark/light feature" />
+    <MESSAGE value="commit for menu toggle fixes" />
+    <option name="LAST_COMMIT_MESSAGE" value="commit for menu toggle fixes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
