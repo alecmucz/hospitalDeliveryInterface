@@ -672,7 +672,7 @@ public class HomepageController {
         isToggleSettings = false;
     }
 
-    public void searchButton() {
+    public void onSearchClick() {
 
         if(!ToggleTracking.getCurrentTab().equals("Reports")) {
             ToggleTracking.setCurrentTab("Reports");
