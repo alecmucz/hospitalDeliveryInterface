@@ -11,7 +11,7 @@ import com.example.hospitaldeliveryinterface.model.DeliveryRequisition;
 import java.time.LocalDateTime;
 
 public class AlgoloiaMgmt {
-    private static SearchIndex<DeliveryRequisition> index = PharmaTracApp.aClient.initIndex("orders", DeliveryRequisition.class);
+    //private static SearchIndex<DeliveryRequisition> index = PharmaTracApp.aClient.initIndex("orders", DeliveryRequisition.class);
 
     public static void createNewIndex() {
         DeliveryRequisition test = new DeliveryRequisition("1234567",
@@ -25,7 +25,7 @@ public class AlgoloiaMgmt {
                 "test",
                 "test");
 
-        index.saveObject(test).waitTask();
+       // index.saveObject(test).waitTask();
     }
 
 }
