@@ -16,6 +16,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 
+import static com.example.hospitaldeliveryinterface.Algolia.AlgoliaMgmt.createNewIndex;
+
 public class DeliveryFormController {
 
     @FXML
@@ -131,7 +133,8 @@ public class DeliveryFormController {
                 String lastnoWhiteSpace = lastnameText.getText().replaceAll("\\s","");
 
                 String fullName = firstnoWhiteSpace + " " + lastnoWhiteSpace;
-                String newOrderNum = DeliveryRequisition.generateOrderNum();
+                //String newOrderNum = DeliveryRequisition.generateOrderNum();
+                String newOrderNum = ToggleTracking.getSelectedCardOrderNum();
                 DeliveryRequisition newOrder = new DeliveryRequisition(
                         newOrderNum,
                         DeliveryRequisition.currentDateTime(),
@@ -151,11 +154,12 @@ public class DeliveryFormController {
                     if(ToggleTracking.getCurrentTab().equals("Pending")) {
                         DataBaseMgmt.editOrder("pendingDeliveries", ToggleTracking.getSelectedCardOrderNum(), newOrder);
                         FirebaseListener.listenToPendingDeliveries();
-
+                        createNewIndex(newOrder);
                     }
                     if(ToggleTracking.getCurrentTab().equals("Completed")) {
                         DataBaseMgmt.editOrder("completedDeliveries", ToggleTracking.getSelectedCardOrderNum(), newOrder);
                         FirebaseListener.listenToCompletedDeliveries();
+                        createNewIndex(newOrder);
                     }
 
                     ToggleTracking.setIsEdit(false);
@@ -164,7 +168,7 @@ public class DeliveryFormController {
                 else {
                     NotifyMessg.createMessg("newDelivery", "[Employee ID]", newOrderNum);
                     DataBaseMgmt.addToDB(newOrder, "pendingDeliveries",true);
-
+                    createNewIndex(newOrder);
                 }
                 clearText();
             }else{

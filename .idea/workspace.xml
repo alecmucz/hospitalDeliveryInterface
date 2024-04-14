@@ -4,16 +4,11 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7e1c1fe8-19dc-4e88-bc9d-fc845d4c4708" name="Changes" comment="test commit because of merging msg">
-      <change afterPath="$PROJECT_DIR$/src/main/java/com/example/hospitaldeliveryinterface/Algolia/AlgoliaMgmt.java" afterDir="false" />
+    <list default="true" id="7e1c1fe8-19dc-4e88-bc9d-fc845d4c4708" name="Changes" comment="added search method to AlgoliaMgmt&#10;-only works with hard coded search term &#10;-doesn't return anything &#10;-will print the data for the first term returned in the search">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hospitaldeliveryinterface/Algolia/AlgoloiaMgmt.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hospitaldeliveryinterface/PharmaTracApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/hospitaldeliveryinterface/PharmaTracApp.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hospitaldeliveryinterface/Algolia/AlgoliaMgmt.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/hospitaldeliveryinterface/Algolia/AlgoliaMgmt.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hospitaldeliveryinterface/controllers/DeliveryFormController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/hospitaldeliveryinterface/controllers/DeliveryFormController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hospitaldeliveryinterface/controllers/HomepageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/hospitaldeliveryinterface/controllers/HomepageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hospitaldeliveryinterface/model/DeliveryRequisition.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/hospitaldeliveryinterface/model/DeliveryRequisition.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/com/example/hospitaldeliveryinterface/Homepage.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/com/example/hospitaldeliveryinterface/Homepage.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -145,7 +140,7 @@
       <workItem from="1712717237132" duration="418000" />
       <workItem from="1712854014467" duration="60000" />
       <workItem from="1712854134345" duration="3411000" />
-      <workItem from="1713054793671" duration="9920000" />
+      <workItem from="1713054793671" duration="14595000" />
     </task>
     <task id="LOCAL-00001" summary="@author Alec Muczynski&#10;Implemented the Pending stage">
       <option name="closed" value="true" />
@@ -315,7 +310,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713059151571</updated>
     </task>
-    <option name="localTasksCounter" value="22" />
+    <task id="LOCAL-00022" summary="added search method to AlgoliaMgmt&#10;-only works with hard coded search term &#10;-doesn't return anything &#10;-will print the data for the first term returned in the search">
+      <option name="closed" value="true" />
+      <created>1713073339144</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1713073339144</updated>
+    </task>
+    <option name="localTasksCounter" value="23" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -362,7 +365,8 @@
     <MESSAGE value="fixed user activity log&#10;   - now tracks edits, creation and moving between queues&#10;   -properly adds notes when edits are done&#10;   -orders are able to move between queues" />
     <MESSAGE value="Algolia Search API beginning&#10;-added new package to hold associated classes&#10;-added codebase to initialize the connection with the API on application start up" />
     <MESSAGE value="test commit because of merging msg" />
-    <option name="LAST_COMMIT_MESSAGE" value="test commit because of merging msg" />
+    <MESSAGE value="added search method to AlgoliaMgmt&#10;-only works with hard coded search term &#10;-doesn't return anything &#10;-will print the data for the first term returned in the search" />
+    <option name="LAST_COMMIT_MESSAGE" value="added search method to AlgoliaMgmt&#10;-only works with hard coded search term &#10;-doesn't return anything &#10;-will print the data for the first term returned in the search" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

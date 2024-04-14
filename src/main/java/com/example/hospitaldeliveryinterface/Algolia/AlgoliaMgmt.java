@@ -5,7 +5,6 @@ import com.algolia.search.models.indexing.Query;
 import com.algolia.search.models.indexing.SearchResult;
 import com.example.hospitaldeliveryinterface.PharmaTracApp;
 import com.example.hospitaldeliveryinterface.model.DeliveryRequisition;
-
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -13,21 +12,19 @@ import java.util.Queue;
 public class AlgoliaMgmt {
     private static SearchIndex<DeliveryRequisition> index = PharmaTracApp.aClient.initIndex("orders", DeliveryRequisition.class);
 
-    public static void createNewIndex() {
-        DeliveryRequisition test = new DeliveryRequisition("1234567",
-                "test",
-                "Jon Doe",
-                "18N",
-                "test",
-                "1000mg",
-                "test",
-                "test",
-                "test",
-                "test");
-
-        index.saveObject(test).waitTask();
+    /**
+     * adds a delivery requisition to the Algolia DB, if a record already exist with the same ID the record will be overwritten
+     * @param deliveryRequisition, requisition to bea dded/edited in Algolia
+     */
+    public static void createNewIndex(DeliveryRequisition deliveryRequisition) {
+        index.saveObject(deliveryRequisition).waitTask();
     }
-    public static void search(String searchTerm) {
+
+    /**
+     * takes a search term and queries the Algolia DB and returns a queue of delivery requisitions that match teh search term
+     * @param searchTerm, user input for what to search for
+     */
+    public static Queue<DeliveryRequisition> searchAlgolia(String searchTerm) {
         Queue<DeliveryRequisition> searchResultsQueue = new LinkedList<>();
 
         SearchIndex index = PharmaTracApp.aClient.initIndex("orders", DeliveryRequisition.class);
@@ -36,12 +33,8 @@ public class AlgoliaMgmt {
 
         List<DeliveryRequisition> searchResultsList = searchResultsAlgolia.getHits();
         searchResultsQueue.addAll(searchResultsList);
-        System.out.println(searchResultsQueue.poll());
 
-        //List<SearchHit<DeliveryRequisition>> hits = results.getHits();
+        return searchResultsQueue;
 
-       //for(SearchHit<DeliveryRequisition> searchHit : results.getHits()) {
-         //    searchResults.offer(searchHit.getContent());
-     //   }
     }
 }

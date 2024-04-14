@@ -14,10 +14,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.ExecutionException;
 
-import static com.example.hospitaldeliveryinterface.Algolia.AlgoliaMgmt.createNewIndex;
-import static com.example.hospitaldeliveryinterface.firebase.DataBaseMgmt.search;
+import static com.example.hospitaldeliveryinterface.Algolia.AlgoliaMgmt.searchAlgolia;
 
 public class HomepageController {
     @FXML
@@ -487,6 +485,30 @@ public class HomepageController {
         });
     }
 
+    /**
+     * Displays a queue of search results to the homepage
+     * @param searchQueue, queue of delivery requisitions that holds the search results
+     */
+    public void displaySearchResults(Queue<DeliveryRequisition> searchQueue) {
+        if(searchQueue == null && searchQueue.isEmpty()){
+            orderDisplayContainer.getChildren().clear();
+            return;
+        }
+
+        for(DeliveryRequisition order: searchQueue){
+            try {
+                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hospitaldeliveryinterface/OrderCard.fxml"));
+                HBox orderTemplate = loader.load();
+                OrderCardUIController controller = loader.getController();
+                controller.updateOrderLabels(order);
+                orderDisplayContainer.getChildren().add(orderTemplate);
+
+            } catch (IOException e) {
+                System.out.println("Failed to find OrderCard.fxml");
+            }
+        }
+    }
+
     public void selectOrder(){
             for(Node node: orderDisplayContainer.getChildren()){
                 node.setOnMouseClicked(mouseEvent -> {
@@ -591,6 +613,23 @@ public class HomepageController {
     }
 
     public void searchButton() {
+
+        if(!ToggleTracking.getCurrentTab().equals("Reports")) {
+            ToggleTracking.setCurrentTab("Reports");
+            toggleNewDelivery();
+            orderDisplayContainer.getChildren().clear();
+            deliverReturnBtn.setText("Deliver Package");
+            buttonToggle(reportsButton);
+            buttonNotToggle(pendingButton);
+            buttonNotToggle(completedButton);
+        }
+        Queue<DeliveryRequisition> tempQueue = searchAlgolia(searchBarTextField.getText());
+        displaySearchResults(tempQueue);
+
+
+
+        //this code below searches the DB using a firebase query
+        /*
         orderDisplayContainer.getChildren().clear();
 
         Queue<DeliveryRequisition> searchResults = search(searchBarTextField.getText(),ToggleTracking.getCurrentTab(), searchByChoiceBox.getValue());
@@ -609,8 +648,10 @@ public class HomepageController {
             }
 
         }
+
+         */
     }
     public void testButton() {
-        AlgoliaMgmt.search("test");
+        searchAlgolia("test");
     }
 }
