@@ -490,8 +490,10 @@ public class HomepageController {
      * @param searchQueue, queue of delivery requisitions that holds the search results
      */
     public void displaySearchResults(Queue<DeliveryRequisition> searchQueue) {
+
+        orderDisplayContainer.getChildren().clear();
         if(searchQueue == null && searchQueue.isEmpty()){
-            orderDisplayContainer.getChildren().clear();
+
             return;
         }
 
@@ -623,6 +625,7 @@ public class HomepageController {
             buttonNotToggle(pendingButton);
             buttonNotToggle(completedButton);
         }
+
         Queue<DeliveryRequisition> tempQueue = searchAlgolia(searchBarTextField.getText());
         displaySearchResults(tempQueue);
 

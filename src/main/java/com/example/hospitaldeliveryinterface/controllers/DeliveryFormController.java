@@ -133,8 +133,12 @@ public class DeliveryFormController {
                 String lastnoWhiteSpace = lastnameText.getText().replaceAll("\\s","");
 
                 String fullName = firstnoWhiteSpace + " " + lastnoWhiteSpace;
-                //String newOrderNum = DeliveryRequisition.generateOrderNum();
-                String newOrderNum = ToggleTracking.getSelectedCardOrderNum();
+                String newOrderNum = DeliveryRequisition.generateOrderNum();
+
+
+                if(ToggleTracking.getIsEdit()){
+                   newOrderNum = ToggleTracking.getSelectedCardOrderNum();
+                }
                 DeliveryRequisition newOrder = new DeliveryRequisition(
                         newOrderNum,
                         DeliveryRequisition.currentDateTime(),
@@ -150,6 +154,7 @@ public class DeliveryFormController {
 
                 if(ToggleTracking.getIsEdit() && ToggleTracking.getSelectedCardOrderNum() != null){
                     NotifyMessg.createMessg("edited", "[Employee ID]", ToggleTracking.getSelectedCardOrderNum());
+
 
                     if(ToggleTracking.getCurrentTab().equals("Pending")) {
                         DataBaseMgmt.editOrder("pendingDeliveries", ToggleTracking.getSelectedCardOrderNum(), newOrder);
