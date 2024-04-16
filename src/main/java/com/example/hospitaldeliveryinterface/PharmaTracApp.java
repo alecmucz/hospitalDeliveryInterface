@@ -33,7 +33,7 @@ public class PharmaTracApp extends Application {
 
         fstore = contxtFirebase.firebase();
         fauth = FirebaseAuth.getInstance();
-       aClient = client.algoliaClient();
+        aClient = client.algoliaClient();
 
         stage = theStage;
         FXMLLoader fxmlloader = new FXMLLoader(PharmaTracApp.class.getResource("Homepage.fxml"));
@@ -44,17 +44,21 @@ public class PharmaTracApp extends Application {
         scene.getStylesheets().add(PharmaTracApp.class.getResource("lightMode.css").toExternalForm());
         stage.show();
 
-        // Add shutdown hook
-        Runtime.getRuntime().addShutdownHook(new Thread(() -> {
-            // Update login status to "False" for the current user
-            if (Employee.getCurrentLogin() != null) {
-                try {
-                    DataBaseMgmt.updateLoginStatus(Employee.getCurrentLogin(),"False");
-                } catch (Exception e) {
-                    e.printStackTrace(); // Handle the exception appropriately
-                }
+    }
+
+    public void stop() throws IOException {
+        if(aClient != null){
+            aClient.close();
+        }
+
+        // Update login status to "False" for the current user
+        if (Employee.getCurrentLogin() != null) {
+            try {
+                DataBaseMgmt.updateLoginStatus(Employee.getCurrentLogin(),"False");
+            } catch (Exception e) {
+                e.printStackTrace(); // Handle the exception appropriately
             }
-        }));
+        }
     }
 
     public static Scene getScene(){
