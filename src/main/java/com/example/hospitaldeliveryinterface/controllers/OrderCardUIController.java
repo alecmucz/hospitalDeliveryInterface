@@ -14,6 +14,9 @@ public class OrderCardUIController {
     private Label dateDisplay;
 
     @FXML
+    private Label deliveredByDisplay;
+
+    @FXML
     private Label doseDisplay;
 
     @FXML
@@ -26,21 +29,23 @@ public class OrderCardUIController {
     private Label medicationDisplay;
 
     @FXML
+    private TextArea notesDisplay;
+
+    @FXML
     private Label orderNumDisplay;
 
     @FXML
-    private Label patientNameDisplay;
-
-    @FXML
-    private TextArea notesDisplay;
+    private TextArea orderStatusDisplay;
 
     @FXML
     private HBox orderTemplate;
 
     @FXML
-    private Label deliveredByDisplay;
+    private Label patientNameDisplay;
 
-
+    public void initialize(){
+        orderTemplate.getStylesheets().clear();
+    }
 
 
     public void updateOrderLabels(DeliveryRequisition order){

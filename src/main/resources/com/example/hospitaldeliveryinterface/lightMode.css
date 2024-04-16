@@ -52,9 +52,31 @@
 #medicationDisplay,
 #doseDisplay,
 #doseQuantityDisplay,
-#notesDisplay{
+#notesDisplay,
+#orderStatusDisplay{
     -fx-text-fill: black;
 }
+#orderStatusDisplay,#notesDisplay {
+    -fx-background-color: transparent;
+    -fx-control-inner-background: transparent;
+
+}
+#orderStatusDisplay .scroll-pane,
+#notesDisplay .scroll-pane{
+    -fx-background-color: transparent;
+}
+
+#orderStatusDisplay .scroll-pane .viewport,
+#notesDisplay .scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+
+
+#orderStatusDisplay .scroll-pane .content,
+#notesDisplay .scroll-pane .content{
+    -fx-background-color: transparent;
+}
+
 /*CSS for OrderCard.fxml Ends*/
 
 /*CSS for DeliveryForm.fxml*/
