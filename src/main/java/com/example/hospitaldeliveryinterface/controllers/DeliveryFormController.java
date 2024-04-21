@@ -2,9 +2,7 @@ package com.example.hospitaldeliveryinterface.controllers;
 
 import com.example.hospitaldeliveryinterface.firebase.DataBaseMgmt;
 import com.example.hospitaldeliveryinterface.firebase.FirebaseListener;
-import com.example.hospitaldeliveryinterface.model.DeliveryRequisition;
-import com.example.hospitaldeliveryinterface.model.NotifyMessg;
-import com.example.hospitaldeliveryinterface.model.ToggleTracking;
+import com.example.hospitaldeliveryinterface.model.*;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -15,6 +13,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+
+import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Queue;
 
 import static com.example.hospitaldeliveryinterface.Algolia.AlgoliaMgmt.createNewIndex;
 
@@ -51,6 +53,9 @@ public class DeliveryFormController {
     private TextField firstnameText;
 
     @FXML
+    private Label formDescriplbl;
+
+    @FXML
     private TextField lastnameText;
 
     @FXML
@@ -66,10 +71,13 @@ public class DeliveryFormController {
     private TextField medicationText;
 
     @FXML
-    private Label nameLbl;
+    private Label mrnLbl;
 
     @FXML
-    private Label formDescriplbl;
+    private TextField mrnText;
+
+    @FXML
+    private Label nameLbl;
 
     /***Non FXML Components***/
     private TextField[] allInputs;
@@ -80,6 +88,7 @@ public class DeliveryFormController {
 
         errMessLabel.setText("");
         allInputs = new TextField[]{
+                mrnText,
                 firstnameText,
                 lastnameText,
                 medicationText,
@@ -87,6 +96,12 @@ public class DeliveryFormController {
                 doseAmountText,
                 doseText,
         };
+
+        mrnText.textProperty().addListener((observableValue, s, t1) -> {
+            if(!t1.isEmpty()){
+                defaultBorder(mrnText);
+            }
+        });
 
         firstnameText.textProperty().addListener((observableValue, s, t1) -> {
             if(!t1.isEmpty()){
@@ -152,25 +167,44 @@ public class DeliveryFormController {
 
                 String fullName = firstnoWhiteSpace + " " + lastnoWhiteSpace;
                 String newOrderNum = DeliveryRequisition.generateOrderNum();
-
-
+                String newStringHistoryMess = null;
+                DeliveryRequisition  retrieveOrder = retrieveOrderFromQueueSaves();
+                ArrayList<OrderHistory> tempOrderHIstory = new ArrayList<>();
                 if(ToggleTracking.getIsEdit()){
                    newOrderNum = ToggleTracking.getSelectedCardOrderNum();
+                   if(retrieveOrder.getOrderStatusHistory()!=null){
+                       tempOrderHIstory = retrieveOrder.getOrderStatusHistory();
+                   }
+                    newStringHistoryMess = createOrderHistoryMessage("edit");
+                }else{
+                    newStringHistoryMess = createOrderHistoryMessage("new");
                 }
+                String hasAddNote = null;
+                if(!addNoteText.getText().isEmpty()){
+                    hasAddNote = addNoteText.getText();
+                }
+
+                OrderHistory tempHistory = new OrderHistory(newStringHistoryMess, hasAddNote);
+                tempOrderHIstory.add(tempHistory);
                 DeliveryRequisition newOrder = new DeliveryRequisition(
                         newOrderNum,
                         DeliveryRequisition.currentDateTime(),
+                        mrnText.getText(),
                         fullName,
                         locationText.getText(),
                         medicationText.getText(),
                         doseText.getText(),
                         doseAmountText.getText(),
-                        addNoteText.getText(),
                         "",
-                        ""
+                        "",
+                        tempOrderHIstory
                 );
 
                 if(ToggleTracking.getIsEdit() && ToggleTracking.getSelectedCardOrderNum() != null){
+                    clearText();
+                    closeDeliveryForm();
+                    ToggleTracking.setIsEdit(false);
+
                     NotifyMessg.createMessg("edited", "[Employee ID]", ToggleTracking.getSelectedCardOrderNum());
 
 
@@ -185,15 +219,19 @@ public class DeliveryFormController {
                         createNewIndex(newOrder);
                     }
 
-                    ToggleTracking.setIsEdit(false);
+
 
                 }
                 else {
+                    clearText();
                     NotifyMessg.createMessg("newDelivery", "[Employee ID]", newOrderNum);
                     DataBaseMgmt.addToDB(newOrder, "pendingDeliveries",true);
                     createNewIndex(newOrder);
+
                 }
+
                 clearText();
+
             }else{
                 errMessLabel.setText("**Error: Only numbers for this field.**");
                 errorBorder(doseAmountText);
@@ -205,6 +243,25 @@ public class DeliveryFormController {
 
     /**other methoid helper**/
 
+    public String  createOrderHistoryMessage(String statusType){
+        switch (statusType){
+            case "new":
+                return "["+DeliveryRequisition.currentDateTime()+"]: " + "[EmployeeID goes here] " + "created this order.";
+            case "edit":
+                return "["+DeliveryRequisition.currentDateTime()+"]: " + "[EmployeeID goes here] " + "edited this order.";
+            case "delivery":
+                return "["+DeliveryRequisition.currentDateTime()+"]: " + "[EmployeeID goes here] " + "delivered this order.";
+            case "return":
+                return "["+DeliveryRequisition.currentDateTime()+"]: " + "[EmployeeID goes here] " + "return this order to queue.";
+        }
+
+        return null;
+    }
+
+    public void closeDeliveryForm(){
+        deliveryFormPane.setPrefWidth(0);
+        deliveryFormPane.setVisible(false);
+    }
     public void toggleAddNote(){
         if(ToggleTracking.getIsAddNote()){
             addNoteBtn.setText("Close Note");
@@ -236,63 +293,55 @@ public class DeliveryFormController {
         deliveryFormLabel.setText("New Delivery Form");
         clearText();
     }
-    public void openEditDelivery(Node selectCard){
+    public void openEditDelivery(){
         System.out.println("Edit Delivery is Open");
         deliveryFormPane.setPrefWidth(320);
         deliveryFormPane.setVisible(true);
         deliveryFormLabel.setText("Edit Delivery Form");
         clearText();
 
-        if(selectCard instanceof HBox){
-            HBox hBoxpane = (HBox) selectCard;
-            for(Node selectChild: hBoxpane.getChildren()){
-                if (selectChild instanceof GridPane) {
-                    GridPane gridPane = (GridPane) selectChild;
-                    for(Node gridpaneNode : gridPane.getChildren()){
-                        if(gridpaneNode instanceof Label){
-                            setTextFieldFromLabel((Label)gridpaneNode);
-                        }
-                    }
+        DeliveryRequisition findOrder = retrieveOrderFromQueueSaves();
+
+         if(findOrder != null){
+             setTextFieldFromLabel(findOrder);
+         }
+
+    }
+
+    public DeliveryRequisition retrieveOrderFromQueueSaves(){
+        String retrieveOrderNum = ToggleTracking.getSelectedCardOrderNum();
+        Queue<DeliveryRequisition> tempQueue = null;
+        if(ToggleTracking.getCurrentTab().equals("Pending")){
+            tempQueue = QueueSaves.getPendingLatest();
+        }
+
+        if(ToggleTracking.getCurrentTab().equals("Completed")){
+            tempQueue = QueueSaves.getCompletedLatest();
+        }
+        System.out.println("Quick check: "+ retrieveOrderNum);
+
+        DeliveryRequisition findOrder = null;
+        if(tempQueue != null){
+            for(DeliveryRequisition childOrder: tempQueue){
+                if(childOrder.getOrderNumberDisplay().equals(retrieveOrderNum)){
+                    return childOrder;
+
                 }
             }
         }
 
-
+        return null;
     }
 
-    public void setTextFieldFromLabel(Label label){
-        if(label.getId() != null){
-            switch (label.getId()){
-                case "patientNameDisplay":
-                    String[] fullName = label.getText().split(" ");
-                    firstnameText.setText(fullName[0]);
-                    lastnameText.setText(fullName[1]);
-                    break;
-                case "locationDisplay":
-                    locationText.setText(label.getText());
-                    break;
-
-                case "medicationDisplay":
-                    medicationText.setText(label.getText());
-                    break;
-
-                case "doseDisplay":
-                    doseText.setText(label.getText());
-                    break;
-
-                case "doseQuantityDisplay":
-                    doseAmountText.setText(label.getText());
-                    break;
-                case "notesDisplay":
-                    addNoteText.setText(label.getText());
-
-                default:
-                    System.out.println("NO ID EXIST ON ORDERCARD: " + label.getId());
-            }
-        }
-
-
-
+    public void setTextFieldFromLabel(DeliveryRequisition currentOrder){
+        mrnText.setText(currentOrder.getPatientMrn());
+        String[] fullName = currentOrder.getPatientName().split(" ");
+        firstnameText.setText(fullName[0]);
+        lastnameText.setText(fullName[1]);
+        locationText.setText(currentOrder.getPatientLocation());
+        medicationText.setText(currentOrder.getMedication());
+        doseText.setText(currentOrder.getDose());
+        doseAmountText.setText(currentOrder.getNumDoses());
     }
 
 
