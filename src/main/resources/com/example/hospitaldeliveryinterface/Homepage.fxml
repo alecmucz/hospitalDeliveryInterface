@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
@@ -13,6 +12,7 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -20,22 +20,50 @@
    <children>
       <BorderPane fx:id="mainLayout" prefHeight="706.0" prefWidth="929.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <bottom>
-            <ToolBar fx:id="bottomToolBar" nodeOrientation="LEFT_TO_RIGHT" prefHeight="10.0" prefWidth="819.0" BorderPane.alignment="CENTER">
+            <ToolBar fx:id="bottomToolBar" nodeOrientation="LEFT_TO_RIGHT" prefHeight="39.0" prefWidth="888.0" BorderPane.alignment="CENTER">
                <items>
-                  <Button fx:id="deliverReturnBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onDeliverReturn" onMousePressed="#onCompleteDeliverPress" onMouseReleased="#onCompleteDeliverRelease" prefHeight="38.0" prefWidth="178.0" styleClass="isNotToggled" text="Deliver Package" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Button>
-                  <Button fx:id="editBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onEditDelivery" prefHeight="36.0" prefWidth="178.0" styleClass="isNotToggled" text="Edit Delivery" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Button>
-                  <Pane prefHeight="45.0" prefWidth="180.0" style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS">
+                  <StackPane prefHeight="45.0" prefWidth="503.0">
                      <children>
-                        <Button layoutX="12.0" layoutY="2.0" mnemonicParsing="false" onAction="#testButton" prefHeight="37.0" prefWidth="68.0" text="Test" />
-                     </children></Pane>
+                        <HBox fx:id="editDeliverButtonsHbox" prefHeight="94.0" prefWidth="200.0">
+                           <children>
+                              <Button fx:id="deliverReturnBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onDeliverReturn" onMousePressed="#onCompleteDeliverPress" onMouseReleased="#onCompleteDeliverRelease" prefHeight="38.0" prefWidth="178.0" styleClass="isNotToggled" text="Deliver Package" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets top="5.0" />
+                                 </HBox.margin>
+                              </Button>
+                              <Button fx:id="editBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onEditDelivery" prefHeight="36.0" prefWidth="178.0" styleClass="isNotToggled" text="Edit Delivery" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets top="5.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <HBox fx:id="searchBarHbox" prefHeight="45.0" prefWidth="359.0" visible="false">
+                           <children>
+                              <TextField fx:id="searchBarTextField" prefHeight="33.0" prefWidth="354.0" promptText="Search">
+                                 <HBox.margin>
+                                    <Insets top="5.0" />
+                                 </HBox.margin>
+                              </TextField>
+                              <Button fx:id="searchButton" alignment="CENTER" mnemonicParsing="false" onAction="#onSearchClick" prefHeight="32.0" prefWidth="84.0" styleClass="isNotToggled" text="Search" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="14.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets top="5.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                     </children>
+                  </StackPane>
+                  <Pane prefHeight="45.0" prefWidth="180.0" style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS" />
                   <Pane prefHeight="45.0" prefWidth="180.0" style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS" />
                   <Button fx:id="newDeliveryButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onNewDelivery" prefHeight="36.0" prefWidth="161.0" styleClass="isNotToggled" text="+ New Delivery" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                      <font>
@@ -67,13 +95,6 @@
                         <Image url="@PharmaTracLogo.png" />
                      </image>
                   </ImageView>
-                  <TextField fx:id="searchBarTextField" prefHeight="33.0" prefWidth="151.0" promptText="Search" />
-                  <ChoiceBox fx:id="searchByChoiceBox" layoutY="24.0" prefHeight="25.0" prefWidth="106.0" styleClass="settings-choicebox" />
-                  <Button fx:id="searchButton" alignment="CENTER" mnemonicParsing="false" onAction="#onSearchClick" prefHeight="39.0" prefWidth="84.0" text="Search" textFill="WHITE">
-                     <font>
-                        <Font name="System Bold" size="14.0" />
-                     </font>
-                  </Button>
                   <Pane prefHeight="63.0" prefWidth="0.0" HBox.hgrow="ALWAYS" />
                   <Button fx:id="pendingButton" alignment="CENTER" mnemonicParsing="false" onAction="#onPendingClick" prefHeight="39.0" prefWidth="75.0" styleClass="isNotToggled" text="Pending" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                      <font>
