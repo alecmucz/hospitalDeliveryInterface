@@ -1,6 +1,5 @@
 package com.example.hospitaldeliveryinterface.controllers;
 
-import com.example.hospitaldeliveryinterface.Algolia.AlgoliaMgmt;
 import com.example.hospitaldeliveryinterface.PharmaTracApp;
 import com.example.hospitaldeliveryinterface.firebase.DataBaseMgmt;
 import com.example.hospitaldeliveryinterface.firebase.FirebaseListener;
@@ -16,9 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
-import javax.print.DocFlavor;
 import java.io.IOException;
-import java.net.URL;
 import java.util.*;
 
 import static com.example.hospitaldeliveryinterface.Algolia.AlgoliaMgmt.searchAlgolia;
@@ -61,8 +58,10 @@ public class HomepageController {
 
     @FXML
     private Button reportsButton;
-
-
+    @FXML
+    private HBox searchBarHbox;
+    @FXML
+    private HBox editDeliverButtonsHbox;
 
     @FXML
     private Button searchButton;
@@ -114,6 +113,7 @@ public class HomepageController {
         setUpNotifyMessage();
         setUpLoginForm();
 
+
         LangToggleBtn = MitchTextTranslate.defaultEnglishText();
 
         MitchTextTranslate.initialLanguages();
@@ -130,9 +130,6 @@ public class HomepageController {
         isToggleSettings = false;
         int totalOrders = DataBaseMgmt.getTotalNumOrders();
         DeliveryRequisition.setOrderNumCount(totalOrders);
-
-        searchByChoiceBox.getItems().addAll("patientName","medication","location");
-        searchByChoiceBox.setValue("Search By:");
 
         //toggleNewDelivery();
 
@@ -330,6 +327,9 @@ public class HomepageController {
     @FXML
     void onPendingClick(ActionEvent event) throws IOException {
         System.out.println("Pending Button Clicked");
+        if(ToggleTracking.getCurrentTab().equals("Reports")) {
+            toggleReports();
+        }
         if(!ToggleTracking.getCurrentTab().equals("Pending")){
             ToggleTracking.setCurrentTab("Pending");
             deliverReturnBtn.setText(LangToggleBtn[3]);
@@ -340,6 +340,9 @@ public class HomepageController {
     @FXML
     void onCompleteClick(ActionEvent event) throws IOException {
         System.out.println("Completed Button Clicked");
+        if(ToggleTracking.getCurrentTab().equals("Reports")) {
+            toggleReports();
+        }
         if(!ToggleTracking.getCurrentTab().equals("Completed")){
             ToggleTracking.setCurrentTab("Completed");
             deliverReturnBtn.setText(LangToggleBtn[4]);
@@ -361,6 +364,7 @@ public class HomepageController {
             buttonToggle(reportsButton);
             buttonNotToggle(pendingButton);
             buttonNotToggle(completedButton);
+            toggleReports();
         }
     }
 
@@ -733,33 +737,13 @@ public class HomepageController {
 
         Queue<DeliveryRequisition> tempQueue = searchAlgolia(searchBarTextField.getText());
         displaySearchResults(tempQueue);
-
-
-
-        //this code below searches the DB using a firebase query
-        /*
-        orderDisplayContainer.getChildren().clear();
-
-        Queue<DeliveryRequisition> searchResults = search(searchBarTextField.getText(),ToggleTracking.getCurrentTab(), searchByChoiceBox.getValue());
-
-        for(DeliveryRequisition order: searchResults){
-            System.out.println("CHECKING SEARCH ORDERS: " + order.toString());
-            try {
-                FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hospitaldeliveryinterface/OrderCard.fxml"));
-                HBox orderTemplate = loader.load();
-                OrderCardUIController controller = loader.getController();
-                controller.updateOrderLabels(order);
-                orderDisplayContainer.getChildren().add(orderTemplate);
-
-            } catch (IOException e) {
-                System.out.println("Failed to find OrderCard.fxml");
-            }
-
-        }
-
-         */
     }
-    public void testButton() {
-        searchAlgolia("test");
+
+    /**
+     * turns off unneeded buttons and makes the search bar visible when you go to the reports tab
+     */
+    private void toggleReports() {
+        searchBarHbox.setVisible(!searchBarHbox.isVisible());
+        editDeliverButtonsHbox.setVisible(!editDeliverButtonsHbox.isVisible());
     }
 }
