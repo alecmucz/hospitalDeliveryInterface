@@ -129,7 +129,7 @@ public class OrderCardUIController {
 
         int orderHistRows = calculateNumRows(orderStatusDisplay);
 
-       if(orderHistRows > 6){
+       if(orderHistRows > 5){
            viewOrderHistoryMore.setVisible(true);
        }else{
            viewOrderHistoryMore.setVisible(false);
