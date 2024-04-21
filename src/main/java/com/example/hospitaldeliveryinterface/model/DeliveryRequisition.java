@@ -13,6 +13,7 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Locale;
 import java.util.Map;
+import java.util.ArrayList;
 
 public class DeliveryRequisition {
     private String patientName;
@@ -21,7 +22,7 @@ public class DeliveryRequisition {
     private String dose;
     private String numDoses;
     private String dateTime;
-    private String notes;
+
     private String deliveryInfo; // tracks which staff member signed off on the package
     private String orderCreationRecord; // tracks which staff created the delivery/order
     @JsonProperty("objectID")
@@ -29,11 +30,17 @@ public class DeliveryRequisition {
     private static int orderNumCount;
     private String status;
 
+    private String patientMrn;
+
+    private ArrayList<OrderHistory> orderStatusHistory;
+
+
     public DeliveryRequisition() {
 
     }
 
-    public DeliveryRequisition(String orderNumber, String dateTime, String patientName, String patientLocation, String medication, String dose, String numDoses, String notes, String deliveryInfo, String createdBy) {
+    public DeliveryRequisition(String orderNumber, String dateTime, String patientMRN, String patientName, String patientLocation, String medication, String dose, String numDoses, String deliveryInfo, String createdBy, ArrayList<OrderHistory> orderStatusHistory) {
+        this.patientMrn = patientMRN;
         this.patientName = patientName;
         this.patientLocation = patientLocation;
         this.medication = medication;
@@ -41,10 +48,15 @@ public class DeliveryRequisition {
         this.numDoses = numDoses;
         this.dateTime = dateTime;
         this.orderNumberDisplay = orderNumber;
-        this.notes = notes;
         this.deliveryInfo = deliveryInfo;
         this.orderCreationRecord = createdBy;
+        this.orderStatusHistory = orderStatusHistory;
     }
+
+    public void setOrderStatusHistory(ArrayList<OrderHistory> orderStatusHistory) {
+        this.orderStatusHistory = orderStatusHistory;
+    }
+
     public void setPatientName(String patientName) {
         this.patientName = patientName;
     }
@@ -61,8 +73,8 @@ public class DeliveryRequisition {
         this.numDoses = numDoses;
     }
 
-    public void setNotes(String notes) {
-        this.notes = notes;
+    public void setPatientMrn(String patientMrn) {
+        this.patientMrn = patientMrn;
     }
 
     public static void setOrderNumCount(int DBcount) {
@@ -71,6 +83,14 @@ public class DeliveryRequisition {
 
     public void setOrderCreationRecord(String orderCreationRecord) {
         this.orderCreationRecord = orderCreationRecord;
+    }
+
+    public ArrayList<OrderHistory> getOrderStatusHistory() {
+        return orderStatusHistory;
+    }
+
+    public String getPatientMrn() {
+        return patientMrn;
     }
 
     public String getPatientName(){
@@ -96,9 +116,7 @@ public class DeliveryRequisition {
     public String getDateTime(){
         return dateTime;
     }
-    public String getNotes() {
-        return notes;
-    }
+
     public String getStatus(){
         return status;
     }

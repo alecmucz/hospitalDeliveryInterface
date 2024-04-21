@@ -1,10 +1,7 @@
 package com.example.hospitaldeliveryinterface.firebase;
 
-import com.example.hospitaldeliveryinterface.model.DeliveryRequisition;
+import com.example.hospitaldeliveryinterface.model.*;
 import com.example.hospitaldeliveryinterface.PharmaTracApp;
-import com.example.hospitaldeliveryinterface.model.MitchTextTranslate;
-import com.example.hospitaldeliveryinterface.model.NotifyMessg;
-import com.example.hospitaldeliveryinterface.model.QueueSaves;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.*;
 import com.google.firebase.cloud.FirestoreClient;
@@ -50,33 +47,38 @@ public class DataBaseMgmt {
 
                     List<String> defaultSetUpValue = (List<String>) document.get("defualtSetUp");
 
-                    String[] defaultSetUpArray = defaultSetUpValue.toArray(new String[0]);
-                    storedLang.put(entry.getKey(), defaultSetUpArray);
-
-                } else {
-                    System.out.println("Need to add Language Defaults to LanguageStorage Collection: " + entry.getKey());
-                    String[] defaultEnglsihText = MitchTextTranslate.defaultEnglishText();
-                    String[] tempStirngArr = defaultEnglsihText;
-
-                    for(int i = 0; i < defaultEnglsihText.length; i++){
-                        tempStirngArr[i] = Translator.translate("en", entry.getValue(), defaultEnglsihText[i]);
+                    if(defaultSetUpValue != null && defaultSetUpValue.size() == 24){
+                        String[] defaultSetUpArray = defaultSetUpValue.toArray(new String[0]);
+                        storedLang.put(entry.getKey(), defaultSetUpArray);
+                        continue;
                     }
 
-                    storedLang.put(entry.getKey(), tempStirngArr);
-
-                    List<String> StringListToDB = new ArrayList<>(Arrays.asList(tempStirngArr));
-
-                    Map<String, Object> data = new HashMap<>();
-                    data.put("defualtSetUp", StringListToDB);
-                    ApiFuture<WriteResult> result = docRef.set(data);
-                    try {
-                        WriteResult writeResult = result.get();
-                        System.out.println("Document created at: " + writeResult.getUpdateTime() + " for " + entry.getKey());
-                    } catch (Exception e) {
-                        System.err.println("Error adding document: " + e.getMessage());
-                    }
 
                 }
+
+                System.out.println("Need to add Language Defaults to LanguageStorage Collection: " + entry.getKey());
+                String[] defaultEnglsihText = MitchTextTranslate.defaultEnglishText();
+                String[] tempStirngArr = defaultEnglsihText;
+
+                for(int i = 0; i < defaultEnglsihText.length; i++){
+                    tempStirngArr[i] = Translator.translate("en", entry.getValue(), defaultEnglsihText[i]);
+                }
+
+                storedLang.put(entry.getKey(), tempStirngArr);
+
+                List<String> StringListToDB = new ArrayList<>(Arrays.asList(tempStirngArr));
+
+                Map<String, Object> data = new HashMap<>();
+                data.put("defualtSetUp", StringListToDB);
+                ApiFuture<WriteResult> result = docRef.set(data);
+                try {
+                    WriteResult writeResult = result.get();
+                    System.out.println("Document created at: " + writeResult.getUpdateTime() + " for " + entry.getKey());
+                } catch (Exception e) {
+                    System.err.println("Error adding document: " + e.getMessage());
+                }
+
+
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             } catch (ExecutionException e) {
@@ -98,18 +100,13 @@ public class DataBaseMgmt {
         DocumentReference docRef = PharmaTracApp.fstore.collection(collectionName).document(deliveryRequisition.getOrderNumberDisplay());
 
         Map<String, Object> data = new HashMap<>();
+        data.put("patientMRN",deliveryRequisition.getPatientMrn());
         data.put("patientName", deliveryRequisition.getPatientName());
         data.put("location", deliveryRequisition.getPatientLocation());
         data.put("medication", deliveryRequisition.getMedication());
         data.put("dose", deliveryRequisition.getDose());
         data.put("numDoses", deliveryRequisition.getNumDoses());
         data.put("timeCreated", deliveryRequisition.getDateTime());
-        if(newOrder){
-            data.put("notes", "ORDER CREATED: "+ getDateAndTime() + "\n" + deliveryRequisition.getNotes() + "\n");
-        }
-        else {
-            data.put("notes", "ORDER MOVED: "+ getDateAndTime() + "\n" + deliveryRequisition.getNotes() + "\n");
-        }
         data.put("deliveredBy", deliveryRequisition.getDeliveryInfo() != null ? deliveryRequisition.getDeliveryInfo() : "");
         data.put("createdBy", deliveryRequisition.getOrderCreationRecord() != null ? deliveryRequisition.getOrderCreationRecord() : "");
         if (collectionName.equals("pendingDeliveries")) {
@@ -117,6 +114,8 @@ public class DataBaseMgmt {
         } else {
             data.put("status", "completed");
         }
+
+        data.put("orderStatusHistory", deliveryRequisition.getOrderStatusHistory());
         //add who entered the order
         ApiFuture<WriteResult> result = docRef.set(data);
 
@@ -135,30 +134,19 @@ public class DataBaseMgmt {
 
         DocumentReference docRef = collectionReference.document(orderNumber);
         ApiFuture<DocumentSnapshot> future = docRef.get();
-        String currentNotes;
-
-        try {
-            DocumentSnapshot document = future.get();
-            currentNotes = (String) document.get("notes");
-        } catch (ExecutionException e) {
-            throw new RuntimeException(e);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-
 
         Map<String, Object> data = new HashMap<>();
+        data.put("patientMrn", order.getPatientMrn());
         data.put("patientName", order.getPatientName());
         data.put("location", order.getPatientLocation());
         data.put("medication", order.getMedication());
         data.put("dose", order.getDose());
         data.put("numDoses", order.getNumDoses());
         data.put("timeCreated", order.getDateTime());
-        data.put("notes", "ORDER EDITED: " + getDateAndTime() + "\n" + order.getNotes() + "\n" + currentNotes);
+        data.put("orderStatusHistory", order.getOrderStatusHistory());
 
         ApiFuture<WriteResult> future2 = PharmaTracApp.fstore.collection(collectionName).document(orderNumber).set(data);
     }
-
 
 
     /**
@@ -193,6 +181,26 @@ public class DataBaseMgmt {
         return query;
     }
 
+    public static ArrayList<OrderHistory> quickCheckForOrderStatus(QueryDocumentSnapshot document){
+        ArrayList<OrderHistory> tempHistory = new ArrayList<>();
+
+        if (document.contains("orderStatusHistory")) {
+
+                List<Map<String, Object>> orderStatusHistoryData = (List<Map<String, Object>>) document.get("orderStatusHistory");
+
+                for (Map<String, Object> orderHistoryData : orderStatusHistoryData) {
+                    String statusMessage = (String) orderHistoryData.get("statusMessage");
+                    String notes = (String) orderHistoryData.get("notes");
+
+                    OrderHistory orderHistory = new OrderHistory(statusMessage, notes);
+                    tempHistory.add(orderHistory);
+                }
+
+        }
+
+        return tempHistory;
+    }
+
     /**
      * Reads all order from a collection, pending or completed and puts then into a linked list
      *
@@ -207,17 +215,23 @@ public class DataBaseMgmt {
 
         for(QueryDocumentSnapshot document : documents) {
 
+
+
+
+
             DeliveryRequisition order = new DeliveryRequisition(
-                    document.getId()
-                    ,document.getString("timeCreated")
-                    ,document.getString("patientName")
-                    , document.getString("location")
-                    , document.getString("medication")
-                    , document.getString("dose")
-                    , document.getString("numDoses")
-                    , document.getString("notes"),
+                    document.getId(),
+                    document.getString("timeCreated"),
+                    document.getString("patientMrn"),
+                    document.getString("patientName"),
+                    document.getString("location"),
+                    document.getString("medication"),
+                    document.getString("dose"),
+                    document.getString("numDoses"),
                     document.getString("deliveredBy"),
-                    document.getString("createdBy")
+                    document.getString("createdBy"),
+                    quickCheckForOrderStatus(document)
+
             );
 
             requisitionQueue.add(order);
@@ -244,8 +258,7 @@ public class DataBaseMgmt {
      * @param collectionFrom origin collection
      * @param collectionTo   destination collection
      */
-    public static void swapDB(String orderNumber, String collectionFrom, String collectionTo) {
-        System.out.println("SwapDB called");
+    public static void swapDB(DeliveryRequisition swapOrder, String orderNumber, String collectionFrom, String collectionTo) {
         /*
         copy the data from it into delivery rec
         delete the data from pending
@@ -254,7 +267,7 @@ public class DataBaseMgmt {
         DeliveryRequisition order = findOrder(orderNumber, collectionFrom);
         if (order != null) {
             deleteFromDB(orderNumber, collectionFrom);
-            addToDB(order, collectionTo, false);
+            addToDB(swapOrder, collectionTo, false);
         }
 
     }
@@ -288,14 +301,16 @@ public class DataBaseMgmt {
             DeliveryRequisition order = new DeliveryRequisition(
                     document.getId(),
                     document.getString("timeCreated"),
+                    document.getString("patientMrn"),
                     document.getString("patientName"),
                     document.getString("location"),
                     document.getString("medication"),
                     document.getString("dose"),
                     document.getString("numDoses"),
-                    document.getString("notes"),
                     document.getString("deliveredBy"),
-                    document.getString("createdBy")
+                    document.getString("createdBy"),
+                    (ArrayList<OrderHistory>) document.get("orderStatusHistory")
+
             );
             return order;
         } catch (InterruptedException e) {
@@ -325,16 +340,17 @@ public class DataBaseMgmt {
 
             for (DocumentSnapshot document : querySnapshot.get().getDocuments()) {
                 DeliveryRequisition order = new DeliveryRequisition(
-                        document.getId()
-                        , document.getString("timeCreated")
-                        , document.getString("patientName")
-                        , document.getString("location")
-                        , document.getString("medication")
-                        , document.getString("dose")
-                        , document.getString("numDoses")
-                        , document.getString("notes"),
+                        document.getId(),
+                        document.getString("timeCreated"),
+                        document.getString("patientMrn"),
+                        document.getString("patientName"),
+                        document.getString("location"),
+                        document.getString("medication"),
+                        document.getString("dose"),
+                        document.getString("numDoses"),
                         document.getString("deliveredBy"),
-                        document.getString("createdBy")
+                        document.getString("createdBy"),
+                        (ArrayList<OrderHistory>) document.get("orderStatusHistory")
                 );
 
                 searchResults.add(order);

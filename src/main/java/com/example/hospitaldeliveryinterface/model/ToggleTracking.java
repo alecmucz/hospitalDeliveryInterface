@@ -10,6 +10,8 @@ public class ToggleTracking {
 
     private static  boolean isCreateUser;
 
+    private static String languageTrack;
+
 
     private static String selectedCardOrderNum;
 
@@ -59,5 +61,11 @@ public class ToggleTracking {
         selectedCardOrderNum = currentOrderNum;
     }
 
+    public static void setLanguageTrack(String languageTrack) {
+        ToggleTracking.languageTrack = languageTrack;
+    }
 
+    public static String getLanguageTrack() {
+        return languageTrack;
+    }
 }
