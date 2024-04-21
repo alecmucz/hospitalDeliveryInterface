@@ -85,7 +85,7 @@ public class LoginFormController {
                 showDialogCorrect();
                 defaultBorder(textFieldUsername);
                 defaultBorder(textFieldPassword);
-                controller.setDisabled();
+                controller.setDisabled(false);
 
             } else {
                 // Password does not match

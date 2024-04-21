@@ -107,6 +107,7 @@ public class HomepageController {
 
     /****************************************************************************/
     public void initialize(){
+        setDisabled(true);
 
         setUpDeliveryForm();
         setUpCreateUserForm();
@@ -153,10 +154,10 @@ public class HomepageController {
     }
     /****************initial SETUP BEGINS HERE**************************/
 
-    public void setDisabled(){
-        deliverReturnBtn.setDisable(false);
-        editBtn.setDisable(false);
-        newDeliveryButton.setDisable(false);
+    public void setDisabled(boolean temp){
+        deliverReturnBtn.setDisable(temp);
+        editBtn.setDisable(temp);
+        newDeliveryButton.setDisable(temp);
     }
     public void setUpLoginForm(){
         try {
