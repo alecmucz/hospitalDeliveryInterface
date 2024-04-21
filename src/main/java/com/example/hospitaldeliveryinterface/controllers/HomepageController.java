@@ -107,6 +107,7 @@ public class HomepageController {
 
     /****************************************************************************/
     public void initialize(){
+        setDisabled(true);
 
         setUpDeliveryForm();
         setUpCreateUserForm();
@@ -151,6 +152,11 @@ public class HomepageController {
     }
     /****************initial SETUP BEGINS HERE**************************/
 
+    public void setDisabled(boolean temp){
+        deliverReturnBtn.setDisable(temp);
+        editBtn.setDisable(temp);
+        newDeliveryButton.setDisable(temp);
+    }
     public void setUpLoginForm(){
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/hospitaldeliveryinterface/LoginForm.fxml"));
@@ -702,6 +708,9 @@ public class HomepageController {
             settingNavbar.setVisible(false);
             buttonNotToggle(settingsButton);
             isToggleSettings = false;
+            deliverReturnBtn.setDisable(true);
+            editBtn.setDisable(true);
+            newDeliveryButton.setDisable(true);
         }
         else if (LoginButtonChange.getText().equals("Sign out")) {
             showDialogSignOut();
@@ -709,6 +718,9 @@ public class HomepageController {
             Employee.setCurrentLogin(null);
             LoginButtonChange.setText("Login");
             usernameLabel.setText("");
+            deliverReturnBtn.setDisable(true);
+            editBtn.setDisable(true);
+            newDeliveryButton.setDisable(true);
             //LogInVbox.setVisible(true);
         }
     }
