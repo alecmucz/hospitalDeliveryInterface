@@ -56,6 +56,13 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
+            <Label fx:id="mrnLbl" prefHeight="28.0" prefWidth="292.0" text="Medical Record Number(MRN)" />
+            <HBox prefHeight="9.0" prefWidth="292.0" spacing="10.0">
+               <children>
+                  <TextField fx:id="mrnText" prefHeight="2.0" prefWidth="141.0" />
+                  <Pane prefHeight="25.0" prefWidth="150.0" />
+               </children>
+            </HBox>
             <Label fx:id="nameLbl" layoutX="10.0" layoutY="10.0" prefHeight="28.0" prefWidth="292.0" text="Name" />
             <HBox prefHeight="9.0" prefWidth="292.0" spacing="10.0">
                <children>
@@ -105,7 +112,7 @@
                   <Font name="System Bold" size="13.0" />
                </font>
             </Button>
-            <TextArea fx:id="addNoteText" prefHeight="114.0" prefWidth="300.0">
+            <TextArea fx:id="addNoteText" prefHeight="114.0" prefWidth="300.0" wrapText="true">
                <VBox.margin>
                   <Insets top="10.0" />
                </VBox.margin>

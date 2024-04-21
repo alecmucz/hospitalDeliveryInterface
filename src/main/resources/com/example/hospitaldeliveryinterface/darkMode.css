@@ -41,6 +41,13 @@
     -fx-background-radius: 0;
 }
 
+#deliverReturnBtn,
+#newDeliveryButton,
+#editBtn{
+    -fx-border-color: white;
+    -fx-border-width: 1;
+
+}
 /*CSS for homepage.fxml ends*/
 
 
@@ -54,13 +61,53 @@
 
 }
 
+#mrnDisplay,
 #patientNameDisplay,
 #locationDisplay,
 #medicationDisplay,
 #doseDisplay,
-#doseQuantityDisplay,
-#notesDisplay{
+#doseQuantityDisplay{
     -fx-text-fill: white;
+}
+
+#orderStatusDisplay{
+    -fx-background-color: transparent;
+    -fx-control-inner-background: transparent;
+    -fx-line-spacing: 10px;
+
+
+}
+#orderStatusDisplay .scroll-pane{
+    -fx-background-color: transparent;
+    -fx-hbar-policy: never;
+    -fx-vbar-policy: never;
+}
+
+#orderStatusDisplay:disabled{
+    -fx-opacity: 1;
+    -fx-text-fill:  white;
+    -fx-line-spacing: 10px;
+}
+
+#orderStatusDisplay .scroll-pane .viewport{
+    -fx-background-color: transparent;
+}
+
+
+#orderStatusDisplay .scroll-pane .content{
+    -fx-background-color: transparent;
+    -fx-cursor: default;
+    -fx-user-select: none;
+}
+
+#orderSplit{
+    -fx-background-color:  #22aae1;
+}
+
+#viewOrderHistoryMore{
+    -fx-background-color: transparent;
+    -fx-text-fill: #1e90f5;
+
 }
 /*CSS for OrderCard.fxml Ends*/
 
@@ -69,6 +116,7 @@
     -fx-background-color: #16191f;
 }
 
+#mrnLbl,
 #nameLbl,
 #locationlbl,
 #medDescriplbl,
@@ -78,6 +126,7 @@
     -fx-text-fill: white;
 }
 
+#mrnText,
 #firstnameText,
 #lastnameText,
 #locationText,
