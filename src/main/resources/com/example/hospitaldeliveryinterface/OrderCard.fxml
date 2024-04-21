@@ -31,7 +31,7 @@
                 <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
               </rowConstraints>
                <children>
-                  <Label alignment="CENTER_RIGHT" focusTraversable="false" prefHeight="47.0" prefWidth="155.0" text="Order:" textFill="#1e90f5">
+                  <Label fx:id="orderNumLbl" alignment="CENTER_RIGHT" focusTraversable="false" prefHeight="47.0" prefWidth="155.0" text="Order:" textFill="#1e90f5">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -41,7 +41,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER_RIGHT" focusTraversable="false" prefHeight="30.0" prefWidth="236.0" text="Patient Name:" textFill="#1e90f5" GridPane.rowIndex="2">
+                  <Label fx:id="patientNameLbl" alignment="CENTER_RIGHT" focusTraversable="false" prefHeight="30.0" prefWidth="236.0" text="Patient Name:" textFill="#1e90f5" GridPane.rowIndex="2">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -51,7 +51,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER_RIGHT" focusTraversable="false" prefHeight="30.0" prefWidth="335.0" text="Location:" textFill="#1e90f5" GridPane.rowIndex="3">
+                  <Label fx:id="locationLbl" alignment="CENTER_RIGHT" focusTraversable="false" prefHeight="30.0" prefWidth="335.0" text="Location:" textFill="#1e90f5" GridPane.rowIndex="3">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -61,7 +61,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER_RIGHT" focusTraversable="false" prefHeight="30.0" prefWidth="289.0" text="Medication:" textFill="#1e90f5" GridPane.rowIndex="4">
+                  <Label fx:id="medicationLbl" alignment="CENTER_RIGHT" focusTraversable="false" prefHeight="30.0" prefWidth="289.0" text="Medication:" textFill="#1e90f5" GridPane.rowIndex="4">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -71,7 +71,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="298.0" text="Dose:" textFill="#1e90f5" GridPane.rowIndex="5">
+                  <Label fx:id="doseLbl" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="298.0" text="Dose:" textFill="#1e90f5" GridPane.rowIndex="5">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -81,7 +81,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="258.0" text="Number of Doses:" textFill="#1e90f5" wrapText="true" GridPane.rowIndex="6">
+                  <Label fx:id="numDoseLbl" alignment="CENTER_RIGHT" prefHeight="30.0" prefWidth="258.0" text="Number of Doses:" textFill="#1e90f5" wrapText="true" GridPane.rowIndex="6">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -91,7 +91,7 @@
                         <Font size="14.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER_RIGHT" focusTraversable="false" layoutX="10.0" layoutY="52.0" prefHeight="30.0" prefWidth="236.0" text="MRN:" textFill="#1e90f5" GridPane.rowIndex="1">
+                  <Label fx:id="mrnlbl" alignment="CENTER_RIGHT" focusTraversable="false" layoutX="10.0" layoutY="52.0" prefHeight="30.0" prefWidth="236.0" text="MRN:" textFill="#1e90f5" GridPane.rowIndex="1">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -105,34 +105,37 @@
             </GridPane>
          </children>
          <HBox.margin>
-            <Insets bottom="10.0" top="10.0" />
+            <Insets bottom="10.0" />
          </HBox.margin>
       </VBox>
-      <Pane fx:id="orderSplit" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="205.0" prefWidth="3.0" />
+      <Pane fx:id="orderSplit" maxWidth="-Infinity" minWidth="-Infinity" prefHeight="205.0" prefWidth="2.0" />
       <VBox prefHeight="205.0" prefWidth="263.0" HBox.hgrow="ALWAYS">
          <children>
-            <Label prefHeight="23.0" prefWidth="139.0" text="Order History:" textFill="#1e90f5">
+            <Label fx:id="orderHistoryLbl" prefHeight="23.0" prefWidth="139.0" text="Order History:" textFill="#1e90f5">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <TextArea fx:id="orderStatusDisplay" disable="true" editable="false" focusTraversable="false" prefHeight="27.0" prefWidth="243.0" wrapText="true" VBox.vgrow="ALWAYS">
+            <TextArea fx:id="orderStatusDisplay" disable="true" editable="false" focusTraversable="false" prefHeight="106.0" prefWidth="243.0" wrapText="true" VBox.vgrow="ALWAYS">
                <VBox.margin>
                   <Insets left="20.0" />
                </VBox.margin>
             </TextArea>
-            <Button fx:id="viewOrderHistoryMore" mnemonicParsing="false" onAction="#onMoreOrderHistory" text="[ view more ]" underline="true">
+            <Button fx:id="viewOrderHistoryMore" mnemonicParsing="false" nodeOrientation="LEFT_TO_RIGHT" onAction="#onMoreOrderHistory" prefHeight="25.0" prefWidth="149.0" text="[ view more ]" underline="true">
                <VBox.margin>
-                  <Insets left="20.0" />
+                  <Insets />
                </VBox.margin>
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
             </Button>
          </children>
          <HBox.margin>
-            <Insets bottom="10.0" left="20.0" top="10.0" />
+            <Insets left="20.0" />
          </HBox.margin>
       </VBox>
    </children>
    <padding>
-      <Insets left="20.0" right="20.0" />
+      <Insets bottom="10.0" left="20.0" right="20.0" top="10.0" />
    </padding>
 </HBox>

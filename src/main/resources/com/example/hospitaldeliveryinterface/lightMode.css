@@ -60,14 +60,14 @@
 #locationDisplay,
 #medicationDisplay,
 #doseDisplay,
-#doseQuantityDisplay,
-#orderStatusDisplay{
+#doseQuantityDisplay{
     -fx-text-fill: black;
 }
+
 #orderStatusDisplay{
     -fx-background-color: transparent;
     -fx-control-inner-background: transparent;
-
+    -fx-line-spacing: 10px;
 
 
 }
@@ -79,7 +79,8 @@
 
 #orderStatusDisplay:disabled{
     -fx-opacity: 1;
-    -fx-text-fill: black;
+    -fx-text-fill:  #3C5B6F;
+    -fx-line-spacing: 10px;
 }
 
 #orderStatusDisplay .scroll-pane .viewport{
@@ -97,12 +98,11 @@
     -fx-background-color:  #22aae1;
 }
 
-
-#viewMoreNotes, #viewOrderHistoryMore{
+#viewOrderHistoryMore{
     -fx-background-color: transparent;
-    -fx-text-fill: blue;
-
+    -fx-text-fill: #1e90f5;
 }
+
 /*CSS for OrderCard.fxml Ends*/
 
 /*CSS for DeliveryForm.fxml*/

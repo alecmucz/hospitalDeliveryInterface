@@ -1,6 +1,8 @@
 package com.example.hospitaldeliveryinterface.controllers;
 
+import com.example.hospitaldeliveryinterface.firebase.FirebaseListener;
 import com.example.hospitaldeliveryinterface.model.MitchTextTranslate;
+import com.example.hospitaldeliveryinterface.model.ToggleTracking;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -61,8 +63,10 @@ public class LanguageMenuController {
 
         if(checkStoredLang.containsKey(clickedButton.getText())){
 
+            ToggleTracking.setLanguageTrack(clickedButton.getText());
            String[] retrieveTranslatedText = checkStoredLang.get(clickedButton.getText());
            homeController.setLangToggleBtn(retrieveTranslatedText);
+            FirebaseListener.navBarDataDisplay(ToggleTracking.getCurrentTab());
         }
         buttonNotToggle(prevButton);
         prevButton = clickedButton;
