@@ -434,8 +434,7 @@ public class HomepageController {
                 DeliveryRequisition order = iterator.next();
                 String collectionFrom = ToggleTracking.getCurrentTab().equals("Pending") ? "pendingDeliveries" : "completedDeliveries";
                 String collectionTo = ToggleTracking.getCurrentTab().equals("Pending") ? "completedDeliveries" : "pendingDeliveries";
-
-                DataBaseMgmt.swapDB(order.getOrderNumberDisplay(), collectionFrom, collectionTo);
+                //DataBaseMgmt.swapDB(order.getOrderNumberDisplay(), collectionFrom, collectionTo);
                 System.out.println("Swapped order " + order.getOrderNumberDisplay() + " from " + collectionFrom + " to " + collectionTo);
 
                 Node node = findNodeByRequisition(order);
