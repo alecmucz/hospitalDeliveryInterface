@@ -104,7 +104,7 @@
                         <Insets left="10.0" />
                      </padding>
                   </Label>
-                  <Button fx:id="settingsButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSettingClick" prefHeight="39.0" prefWidth="77.0" styleClass="isNotToggled" text="Settings" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
+                  <Button fx:id="settingsButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSettingClick" prefHeight="39.0" prefWidth="77.0" style="-fx-background-image: '/com/example/hospitaldeliveryinterface/settingIcon.jpg';" styleClass="isNotToggled" text="Settings" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS" wrapText="true">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
