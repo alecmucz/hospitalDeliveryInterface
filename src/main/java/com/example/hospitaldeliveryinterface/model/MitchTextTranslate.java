@@ -37,9 +37,20 @@ public class MitchTextTranslate {
                "Login",
                "Sign Out",
                "Delete Orders",
-               "Create Users"
+               "Create Users",
+               "Order",
+               "Patient Name",
+               "Location",
+               "Medication",
+               "Dose",
+               "Number of Doses",
+               "Order History",
+               "view more",
+               "close view more",
+               "Reports"
        };
    }
+
     public static void initialLanguages(){
 
         languagesMap.put("Arabic", "ar");
@@ -74,7 +85,7 @@ public class MitchTextTranslate {
         languagesMap.put("Ukrainian", "uk");
 
 
-        //storedLang = DataBaseMgmt.initialLanguageCheck(languagesMap);
+        storedLang = DataBaseMgmt.initialLanguageCheck(languagesMap);
 
     }
 
