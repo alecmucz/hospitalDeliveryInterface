@@ -10,11 +10,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="LogInVbox" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: rgba(0,0,0,0.75);" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hospitaldeliveryinterface.controllers.LoginFormController">
+<BorderPane fx:id="LogInVbox" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="200.0" prefWidth="200.0" stylesheets="@lightMode.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.hospitaldeliveryinterface.controllers.LoginFormController">
    <center>
-      <VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="294.0" prefWidth="385.0" spacing="4.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+      <VBox fx:id="loginPanel" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="294.0" prefWidth="385.0" spacing="4.0" BorderPane.alignment="CENTER">
          <children>
-            <Label fx:id="us" prefHeight="30.0" prefWidth="180.0" text="Employee Login" textFill="#22aae1">
+            <Label prefHeight="30.0" prefWidth="180.0" text="Employee Login" textFill="#22aae1">
                <font>
                   <Font name="Tahoma" size="24.0" />
                </font>
@@ -22,7 +22,7 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </Label>
-            <TextField fx:id="textFieldUsername" prefHeight="38.0" prefWidth="316.0" promptText="Username" style="-fx-background-color: lightgrey; -fx-text-fill: grey; -fx-prompt-text-fill: gray;">
+            <TextField fx:id="textFieldUsername" prefHeight="38.0" prefWidth="316.0" promptText="Username">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
@@ -30,7 +30,7 @@
                   <Font size="18.0" />
                </font>
             </TextField>
-            <PasswordField fx:id="textFieldPassword" prefHeight="36.0" prefWidth="316.0" promptText="Password" style="-fx-background-color: lightgrey; -fx-prompt-text-fill: grey; -fx-text-fill: gray;">
+            <PasswordField fx:id="textFieldPassword" prefHeight="36.0" prefWidth="316.0" promptText="Password">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
@@ -38,7 +38,7 @@
                   <Font size="18.0" />
                </font>
             </PasswordField>
-            <Button fx:id="LoginButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#loginUser" prefHeight="44.0" prefWidth="358.0" style="-fx-background-color: #22aae1;" text="Log In" textFill="WHITE">
+            <Button fx:id="LoginButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#loginUser" prefHeight="44.0" prefWidth="358.0" text="Log In" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="18.0" />
                </font>

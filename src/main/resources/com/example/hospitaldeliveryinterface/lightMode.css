@@ -1,0 +1,155 @@
+
+/*CSS for homepage.fxml*/
+
+.tool-bar{
+    -fx-background-color: #22aae1;
+    -fx-border-color:  transparent transparent #1e90f5 transparent;
+    -fx-border-width: 0 0 3 0;
+}
+
+#settingNavbar, #adminToolsNav{
+    -fx-background-color: #22aae1;
+}
+
+#mainOrderScroll, #orderDisplayContainer{
+    -fx-background-color: white;
+}
+
+.scroll-bar:horizontal, .scroll-bar:vertical{
+    -fx-background-color:transparent;
+}
+
+.increment-button, .decrement-button {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.scroll-bar:horizontal .track,
+.scroll-bar:vertical .track{
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-background-radius: 0em;
+}
+
+.scroll-bar:horizontal .thumb,
+.scroll-bar:vertical .thumb {
+    -fx-background-color:  #22aae1;
+    -fx-background-radius: 0;
+}
+
+/*CSS for homepage.fxml ends*/
+
+/*CSS for OrderCard.fxml*/
+#orderTemplate{
+    -fx-background-color: transparent;
+    -fx-border-color:  #22aae1;
+    -fx-border-width: 2;
+
+}
+
+#patientNameDisplay,
+#locationDisplay,
+#medicationDisplay,
+#doseDisplay,
+#doseQuantityDisplay,
+#notesDisplay{
+    -fx-text-fill: black;
+}
+/*CSS for OrderCard.fxml Ends*/
+
+/*CSS for DeliveryForm.fxml*/
+#deliveryFormPane{
+    -fx-background-color: #fafafa;
+}
+#nameLbl,
+#locationlbl,
+#medDescriplbl,
+#doselbl,
+#doseQuantlbl,
+#formDescriplbl{
+    -fx-text-fill: black;
+}
+
+#firstnameText,
+#lastnameText,
+#locationText,
+#medicationText,
+#doseText,
+#doseAmountText{
+    -fx-background-color: #ffffff;
+    -fx-text-fill: black;
+    -fx-border-width: 1px;
+    -fx-border-color: lightgrey;
+}
+
+#addNoteText{
+    -fx-control-inner-background: #ffffff;
+    -fx-text-fill: black;
+}
+
+/*CSS for DeliveryForm.fxml Ends*/
+
+
+/*CSS for CreateUserForm.fxml*/
+#adminNavBar{
+    -fx-background-color:  #1678a8;
+}
+
+#createUserButton{
+    -fx-background-color:  #22aae1;
+}
+
+#textFieldEmployeeID,
+#textFieldFirstName,
+#textFieldLastName,
+#textFieldEmail,
+#textFieldPassword1,
+#textFieldConfirmPassword
+{
+    -fx-background-color: #ffffff;
+    -fx-text-fill: black;
+}
+/*CSS for CreateUserForm.fxml Ends*/
+
+/**NotifyMessage.fxml file*/
+#notifyPanel{
+    -fx-background-color: #22aae1;
+}
+
+/*LoginForm.fxml CSS Stuff*/
+#LogInVbox{
+    -fx-background-color:  rgba(0,0,0,0.75);
+}
+
+#LoginButton{
+    -fx-background-color:  #22aae1;
+}
+
+#loginPanel{
+    -fx-background-color: white;
+}
+
+#textFieldUsername,
+#textFieldPassword{
+    -fx-background-color:  lightgrey;
+    -fx-text-fill: gray;
+    -fx-prompt-text-fill: gray;
+
+}
+
+/*Languagemenu faxml css*/
+#languagePane{
+    -fx-background-color:  #22aae1;
+}
+
+
+/***Toggle changes on homepage***/
+.isToggled{
+    -fx-background-color: #5ac6fc;
+    -fx-text-fill: white;
+}
+
+.isNotToggled{
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}

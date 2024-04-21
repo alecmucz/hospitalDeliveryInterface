@@ -7,7 +7,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ExecutionException;
@@ -27,18 +31,18 @@ public class LoginFormController {
     private HBox loginErrorHbox;
 
     @FXML
+    private VBox loginPanel;
+
+    @FXML
     private PasswordField textFieldPassword;
 
     @FXML
     private TextField textFieldUsername;
 
-    @FXML
-    private Label us;
-
     private HomepageController controller;
     public void initialize(){
         LogInVbox.setVisible(false);
-
+        LogInVbox.getStylesheets().clear();
     }
 
     public void setHomepageController(HomepageController control){
@@ -63,8 +67,13 @@ public class LoginFormController {
         if (userData != null) {
             // Check if the provided username and password match the stored username and password
             String storedUsername = (String) userData.get("Username");
-            String storedPassword = (String) userData.get("Password");
-            if (storedPassword.equals(textFieldPassword.getText())) {
+            String storedPasswordHash = (String) userData.get("Password");
+
+            // Hash the password provided by the user
+            String providedPasswordHash = hashPassword(textFieldPassword.getText());
+
+            if (storedPasswordHash.equals(providedPasswordHash)) {
+
                 // Password matches
                 DataBaseMgmt.updateLoginStatus(textFieldUsername.getText(),"True");
                 LogInVbox.setVisible(false);
@@ -91,7 +100,20 @@ public class LoginFormController {
             loginErrorHbox.setVisible(true);
             errorBorder(textFieldUsername);
         }
+        textFieldUsername.clear();
+        textFieldPassword.clear();
     }
+    private String hashPassword(String password) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(password.getBytes());
+            return Base64.getEncoder().encodeToString(hash);
+        } catch (NoSuchAlgorithmException e) {
+            e.printStackTrace(); // Handle the exception appropriately
+            return null; // Or throw an exception
+        }
+    }
+
 
     @FXML
     void onReturnToHome(ActionEvent event) {
@@ -99,6 +121,8 @@ public class LoginFormController {
         loginErrorHbox.setVisible(false);
         defaultBorder(textFieldUsername);
         defaultBorder(textFieldPassword);
+        textFieldUsername.clear();
+        textFieldPassword.clear();
     }
 
     public  void errorBorder(TextField textField){

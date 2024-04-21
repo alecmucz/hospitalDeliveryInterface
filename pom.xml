@@ -37,11 +37,6 @@
       <version>20.0.1</version>
     </dependency>
     <dependency>
-      <groupId>com.google.firebase</groupId>
-      <artifactId>firebase-admin</artifactId>
-      <version>9.2.0</version>
-    </dependency>
-    <dependency>
       <groupId>org.openjfx</groupId>
       <artifactId>javafx-fxml</artifactId>
       <version>20.0.1</version>
@@ -58,6 +53,22 @@
       <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>com.google.firebase</groupId>
+      <artifactId>firebase-admin</artifactId>
+      <version>9.2.0</version>
+    </dependency>
+    <dependency>
+      <groupId>com.algolia</groupId>
+      <artifactId>algoliasearch-apache-uber</artifactId>
+      <version>3.16.5</version>
+    </dependency>
+    <dependency>
+    <groupId>com.algolia</groupId>
+    <artifactId>algoliasearch-apache</artifactId>
+    <version>3.16.5</version>
+  </dependency>
+
       <dependency>
           <groupId>com.google.cloud</groupId>
           <artifactId>google-cloud-firestore</artifactId>

@@ -1,5 +1,6 @@
 package com.example.hospitaldeliveryinterface.model;
 
+import com.algolia.search.com.fasterxml.jackson.annotation.JsonProperty;
 import com.example.hospitaldeliveryinterface.PharmaTracApp;
 import com.google.api.core.ApiFuture;
 import com.google.cloud.firestore.DocumentReference;
@@ -21,16 +22,18 @@ public class DeliveryRequisition {
     private String numDoses;
     private String dateTime;
     private String notes;
-    private String deliveredBy; // tracks which staff member signed off on the package
-    private String createdBy; // tracks which staff created the delivery/order
-    private String updatedBy;
-
+    private String deliveryInfo; // tracks which staff member signed off on the package
+    private String orderCreationRecord; // tracks which staff created the delivery/order
+    @JsonProperty("objectID")
     private  String orderNumberDisplay;
     private static int orderNumCount;
+    private String status;
 
+    public DeliveryRequisition() {
 
+    }
 
-    public DeliveryRequisition(String orderNumber, String dateTime, String patientName, String patientLocation, String medication, String dose, String numDoses, String notes, String deliveredBy, String createdBy, String updatedBy) {
+    public DeliveryRequisition(String orderNumber, String dateTime, String patientName, String patientLocation, String medication, String dose, String numDoses, String notes, String deliveryInfo, String createdBy) {
         this.patientName = patientName;
         this.patientLocation = patientLocation;
         this.medication = medication;
@@ -39,9 +42,8 @@ public class DeliveryRequisition {
         this.dateTime = dateTime;
         this.orderNumberDisplay = orderNumber;
         this.notes = notes;
-        this.deliveredBy = deliveredBy;
-        this.createdBy = createdBy;
-        this.updatedBy = updatedBy;
+        this.deliveryInfo = deliveryInfo;
+        this.orderCreationRecord = createdBy;
     }
     public void setPatientName(String patientName) {
         this.patientName = patientName;
@@ -67,20 +69,9 @@ public class DeliveryRequisition {
         orderNumCount = DBcount;
     }
 
-    public void setCreatedBy(String createdBy) {
-        this.createdBy = createdBy;
+    public void setOrderCreationRecord(String orderCreationRecord) {
+        this.orderCreationRecord = orderCreationRecord;
     }
-
-    public String getUpdatedBy() {
-        return updatedBy;
-    }
-
-    public void setUpdatedBy(String updatedBy) {
-        this.updatedBy = updatedBy;
-    }
-
-
-
 
     public String getPatientName(){
         return patientName;
@@ -108,17 +99,23 @@ public class DeliveryRequisition {
     public String getNotes() {
         return notes;
     }
-
-    public String getDeliveredBy() {
-        return deliveredBy;
+    public String getStatus(){
+        return status;
+    }
+    public void setStatus(String status) {
+        this.status = status;
     }
 
-    public void setDeliveredBy(String deliveredBy) {
-        this.deliveredBy = deliveredBy;
+    public String getDeliveryInfo() {
+        return deliveryInfo;
     }
 
-    public String getCreatedBy() {
-        return createdBy;
+    public void setDeliveryInfo(String deliveryInfo) {
+        this.deliveryInfo = deliveryInfo;
+    }
+
+    public String getOrderCreationRecord() {
+        return orderCreationRecord;
     }
     public static int getOrderNumCount() {
         return orderNumCount;
@@ -167,19 +164,5 @@ public class DeliveryRequisition {
                 docRef.update("totalNumOrders", FieldValue.increment(1));
     }
 
-    public static Map<String, Object> orderToMap(DeliveryRequisition order) {
-        Map<String, Object> data = new HashMap<>();
-        data.put("patientName", order.getPatientName());
-        data.put("patientLocation", order.getPatientLocation());
-        data.put("medication", order.getMedication());
-        data.put("dose", order.getDose());
-        data.put("numDoses", order.getNumDoses());
-        data.put("dateTime", order.getDateTime());
-        data.put("notes", order.getNotes());
-        data.put("deliveredBy", order.getDeliveredBy());
-        data.put("createdBy", order.getCreatedBy());
-        data.put("updatedBy", order.getUpdatedBy());
-        return data;
-    }
 
 }
