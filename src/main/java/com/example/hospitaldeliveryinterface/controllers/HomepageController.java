@@ -618,27 +618,30 @@ public class HomepageController {
     public void selectOrder() {
         for (Node node : orderDisplayContainer.getChildren()) {
             node.setOnMouseClicked(mouseEvent -> {
-                GridPane gridPane = (GridPane) node;
-                DeliveryRequisition requisition = (DeliveryRequisition) gridPane.getUserData();
-                if (selectedOrders.contains(requisition)) {
-                    // Deselect the order
-                    deselectNode(gridPane);
-                    selectedOrders.remove(requisition);
-                } else {
-                    // Select the order
-                    selectNode(gridPane);
-                    selectedOrders.add(requisition);
+                if(node instanceof HBox){
+                    HBox gridPane = (HBox) node;
+                    DeliveryRequisition requisition = (DeliveryRequisition) gridPane.getUserData();
+                    if (selectedOrders.contains(requisition)) {
+                        // Deselect the order
+                        deselectNode(gridPane);
+                        selectedOrders.remove(requisition);
+                    } else {
+                        // Select the order
+                        selectNode(gridPane);
+                        selectedOrders.add(requisition);
+                    }
                 }
+
             });
         }
     }
 
-    private void selectNode(GridPane node) {
+    private void selectNode(HBox node) {
         node.setStyle("-fx-background-color: #98FF98; -fx-border-color: #22aae1; -fx-border-width: 2;");
         System.out.println("Selected order: " + ((DeliveryRequisition) node.getUserData()).getOrderNumberDisplay());
     }
 
-    private void deselectNode(GridPane node) {
+    private void deselectNode(HBox node) {
         node.setStyle("-fx-background-color: transparent; -fx-border-color: #22aae1; -fx-border-width: 2;");
         System.out.println("Deselected order: " + ((DeliveryRequisition) node.getUserData()).getOrderNumberDisplay());
     }
