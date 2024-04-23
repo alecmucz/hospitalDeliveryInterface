@@ -435,6 +435,7 @@ public class HomepageController {
                 DeliveryRequisition order = iterator.next();
                 String collectionFrom = ToggleTracking.getCurrentTab().equals("Pending") ? "pendingDeliveries" : "completedDeliveries";
                 String collectionTo = ToggleTracking.getCurrentTab().equals("Pending") ? "completedDeliveries" : "pendingDeliveries";
+
                 DataBaseMgmt.swapDB(order,order.getOrderNumberDisplay(), collectionFrom, collectionTo);
                 System.out.println("Swapped order " + order.getOrderNumberDisplay() + " from " + collectionFrom + " to " + collectionTo);
 
@@ -456,8 +457,7 @@ public class HomepageController {
         Iterator<DeliveryRequisition> iterator = selectedOrders.iterator();
         while (iterator.hasNext()) {
             DeliveryRequisition requisition = iterator.next();
-            DataBaseMgmt.deleteFromDB(requisition.getOrderNumberDisplay(),
-                    ToggleTracking.getCurrentTab().equals("Pending") ? "pendingDeliveries" : "completedDeliveries");
+            DataBaseMgmt.deleteFromDB(requisition.getOrderNumberDisplay(), ToggleTracking.getCurrentTab().equals("Pending") ? "pendingDeliveries" : "completedDeliveries");
             Node node = findNodeByRequisition(requisition);
             if (node != null) {
                 Platform.runLater(() -> {
@@ -715,7 +715,6 @@ public class HomepageController {
                 selectedCard = null;
                 ToggleTracking.setSelectedCardOrderNum(null);
                 ToggleTracking.setIsEdit(false);
-
                 toggleNewDelivery();
             }
     }
