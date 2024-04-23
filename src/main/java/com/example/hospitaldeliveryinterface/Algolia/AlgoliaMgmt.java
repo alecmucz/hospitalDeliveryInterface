@@ -4,6 +4,7 @@ import com.algolia.search.SearchIndex;
 import com.algolia.search.models.indexing.Query;
 import com.algolia.search.models.indexing.SearchResult;
 import com.example.hospitaldeliveryinterface.PharmaTracApp;
+import com.example.hospitaldeliveryinterface.controllers.HomepageController;
 import com.example.hospitaldeliveryinterface.model.DeliveryRequisition;
 import java.util.LinkedList;
 import java.util.List;
@@ -35,6 +36,6 @@ public class AlgoliaMgmt {
         searchResultsQueue.addAll(searchResultsList);
 
         return searchResultsQueue;
-
     }
+
 }
