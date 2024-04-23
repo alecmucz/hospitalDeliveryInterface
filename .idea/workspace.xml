@@ -4,12 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7e1c1fe8-19dc-4e88-bc9d-fc845d4c4708" name="Changes" comment="full test search added&#10;-adds new orders to algolia&#10;-when user types in search bar and presses search it will return all orders that match">
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_13_2024_6_56_PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Checkout_at_4_13_2024_6_57_PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Merge_at_4_13_2024_6_58_PM_[Changes]/shelved.patch" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/shelf/Uncommitted_changes_before_Update_at_4_13_2024_6_57_PM_[Changes]/shelved.patch" beforeDir="false" />
+    <list default="true" id="7e1c1fe8-19dc-4e88-bc9d-fc845d4c4708" name="Changes" comment="-started on listerers for search bar&#10;-MAIN FIX:&#10;fixed but with AlgoliaMgmt introduced when deliveryRequisition was updated">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hospitaldeliveryinterface/controllers/HomepageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/hospitaldeliveryinterface/controllers/HomepageController.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -27,7 +24,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="Irvin_branch" />
+        <entry key="$PROJECT_DIR$" value="master" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -75,7 +72,7 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
+    "git-widget-placeholder": "WillBranch",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "C:/Users/wcars/OneDrive/Desktop/School/Spring 2024/CSC 325/Programs/hospitalDeliveryInterface",
@@ -87,7 +84,7 @@
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.6321839",
-    "settings.editor.selected.configurable": "preferences.keymap",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -109,7 +106,7 @@
   <component name="SharedIndexes">
     <attachedChunks>
       <set>
-        <option value="jdk-21.0.2-openjdk-21.0.2-4caba194b151-4f524021" />
+        <option value="jdk-21.0.1-openjdk-21.0.1-f644763e9732-f98dd351" />
       </set>
     </attachedChunks>
   </component>
@@ -142,6 +139,7 @@
       <workItem from="1712854014467" duration="60000" />
       <workItem from="1712854134345" duration="3411000" />
       <workItem from="1713054793671" duration="17505000" />
+      <workItem from="1713878687047" duration="7272000" />
     </task>
     <task id="LOCAL-00001" summary="@author Alec Muczynski&#10;Implemented the Pending stage">
       <option name="closed" value="true" />
@@ -335,7 +333,15 @@
       <option name="project" value="LOCAL" />
       <updated>1713665515515</updated>
     </task>
-    <option name="localTasksCounter" value="25" />
+    <task id="LOCAL-00025" summary="-started on listerers for search bar&#10;-MAIN FIX:&#10;fixed but with AlgoliaMgmt introduced when deliveryRequisition was updated">
+      <option name="closed" value="true" />
+      <created>1713885127920</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1713885127920</updated>
+    </task>
+    <option name="localTasksCounter" value="26" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -385,7 +391,8 @@
     <MESSAGE value="added search method to AlgoliaMgmt&#10;-only works with hard coded search term &#10;-doesn't return anything &#10;-will print the data for the first term returned in the search" />
     <MESSAGE value="full test search added&#10;-adds new orders to algolia&#10;-when user types in search bar and presses search it will return all orders that match" />
     <MESSAGE value="-updated disabled button so when the user is not logged in you cannot use certain features" />
-    <option name="LAST_COMMIT_MESSAGE" value="-updated disabled button so when the user is not logged in you cannot use certain features" />
+    <MESSAGE value="-started on listerers for search bar&#10;-MAIN FIX:&#10;fixed but with AlgoliaMgmt introduced when deliveryRequisition was updated" />
+    <option name="LAST_COMMIT_MESSAGE" value="-started on listerers for search bar&#10;-MAIN FIX:&#10;fixed but with AlgoliaMgmt introduced when deliveryRequisition was updated" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>

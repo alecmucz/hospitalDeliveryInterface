@@ -15,10 +15,14 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.Document;
 import java.io.IOException;
 import java.util.*;
 
 import static com.example.hospitaldeliveryinterface.Algolia.AlgoliaMgmt.searchAlgolia;
+
 
 public class HomepageController {
     @FXML
@@ -62,11 +66,6 @@ public class HomepageController {
     private HBox searchBarHbox;
     @FXML
     private HBox editDeliverButtonsHbox;
-
-    @FXML
-    private Button searchButton;
-    @FXML
-    private ChoiceBox<String> searchByChoiceBox;
     @FXML
     private VBox settingNavbar;
     @FXML
@@ -736,17 +735,6 @@ public class HomepageController {
     }
 
     public void onSearchClick() {
-
-        if(!ToggleTracking.getCurrentTab().equals("Reports")) {
-            ToggleTracking.setCurrentTab("Reports");
-            toggleNewDelivery();
-            orderDisplayContainer.getChildren().clear();
-            deliverReturnBtn.setText("Deliver Package");
-            buttonToggle(reportsButton);
-            buttonNotToggle(pendingButton);
-            buttonNotToggle(completedButton);
-        }
-
         Queue<DeliveryRequisition> tempQueue = searchAlgolia(searchBarTextField.getText());
         displaySearchResults(tempQueue);
     }
@@ -757,5 +745,16 @@ public class HomepageController {
     private void toggleReports() {
         searchBarHbox.setVisible(!searchBarHbox.isVisible());
         editDeliverButtonsHbox.setVisible(!editDeliverButtonsHbox.isVisible());
+        listenToSearchBar();
+    }
+    public void listenToSearchBar() {
+        searchBarTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(searchBarTextField.getText().isEmpty()){
+                orderDisplayContainer.getChildren().clear();
+            }
+            else {
+                onSearchClick();
+            }
+        });
     }
 }
