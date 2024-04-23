@@ -46,6 +46,12 @@
 
 }
 
+#deliverReturnBtn:disabled,
+#newDeliveryButton:disabled,
+#editBtn:disabled {
+    -fx-opacity: 0.5;
+}
+
 /*CSS for homepage.fxml ends*/
 
 /*CSS for OrderCard.fxml*/

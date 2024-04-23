@@ -26,60 +26,82 @@ import static com.example.hospitaldeliveryinterface.Algolia.AlgoliaMgmt.searchAl
 
 public class HomepageController {
     @FXML
-    private HBox mainContainer;
+    private Button LoginButtonChange;
+
+    @FXML
+    private Button adminButton;
+
+    @FXML
+    private VBox adminToolsNav;
+
+    @FXML
+    private ToolBar bottomToolBar;
+
     @FXML
     private Button changeLanguageBtn;
 
     @FXML
-    private TextField searchBarTextField;
-
-    @FXML
-    private Button LoginButtonChange;
-    @FXML
-    private Button adminButton;
-    @FXML
-    private VBox adminToolsNav;
-    @FXML
-    private ToolBar bottomToolBar;
-    @FXML
     private Button completedButton;
-    @FXML
-    private Button deliverReturnBtn;
-    @FXML
-    private Button deleteOrdersBtn;
+
     @FXML
     private Button createUserBtn;
-    @FXML
-    private Button editBtn;
-    @FXML
-    private BorderPane mainLayout;
-    @FXML
-    private Button newDeliveryButton;
-    @FXML
-    private VBox orderDisplayContainer;
-    @FXML
-    private Button pendingButton;
 
     @FXML
-    private Button reportsButton;
+    private Button darkLightBtn;
+
     @FXML
-    private HBox searchBarHbox;
+    private Button deleteOrdersBtn;
+
+    @FXML
+    private Button deliverReturnBtn;
+
+    @FXML
+    private Button editBtn;
+
     @FXML
     private HBox editDeliverButtonsHbox;
+
     @FXML
-    private VBox settingNavbar;
+    private HBox mainContainer;
+
     @FXML
-    private Button settingsButton;
-    @FXML
-    private AnchorPane rootPane;
-    @FXML
-    private Label usernameLabel;
+    private BorderPane mainLayout;
 
     @FXML
     private ScrollPane mainOrderScroll;
 
     @FXML
-    private Button darkLightBtn;
+    private Button newDeliveryButton;
+
+    @FXML
+    private VBox orderDisplayContainer;
+
+    @FXML
+    private Button pendingButton;
+
+    @FXML
+    private Button reportsButton;
+
+    @FXML
+    private AnchorPane rootPane;
+
+    @FXML
+    private HBox searchBarHbox;
+
+    @FXML
+    private TextField searchBarTextField;
+
+    @FXML
+    private Button searchButton;
+
+    @FXML
+    private VBox settingNavbar;
+
+    @FXML
+    private Button settingsButton;
+
+    @FXML
+    private Label usernameLabel;
 
 
     //variables created
@@ -89,8 +111,6 @@ public class HomepageController {
     private String[] LangToggleBtn;
 
     private boolean isLightMode;
-
-    private Node[] homePageColorChanges;
 
     /***Menus and controllers for different components of application********/
     private AnchorPane languageMenuUI;
@@ -106,7 +126,18 @@ public class HomepageController {
 
     /****************************************************************************/
     public void initialize(){
-        setDisabled(true);
+
+        //onSetDisabled(true);
+        toggleReports(false);
+
+        searchBarTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(searchBarTextField.getText().isEmpty()){
+                orderDisplayContainer.getChildren().clear();
+            }
+            else {
+                onSearchClick();
+            }
+        });
 
         setUpDeliveryForm();
         setUpCreateUserForm();
@@ -151,10 +182,11 @@ public class HomepageController {
     }
     /****************initial SETUP BEGINS HERE**************************/
 
-    public void setDisabled(boolean temp){
-        deliverReturnBtn.setDisable(temp);
+    public void onSetDisabled(boolean temp){
         editBtn.setDisable(temp);
         newDeliveryButton.setDisable(temp);
+        deliverReturnBtn.setDisable(temp);
+
     }
     public void setUpLoginForm(){
         try {
@@ -332,28 +364,25 @@ public class HomepageController {
     @FXML
     void onPendingClick(ActionEvent event) throws IOException {
         System.out.println("Pending Button Clicked");
-        if(ToggleTracking.getCurrentTab().equals("Reports")) {
-            toggleReports();
-        }
         if(!ToggleTracking.getCurrentTab().equals("Pending")){
             ToggleTracking.setCurrentTab("Pending");
             deliverReturnBtn.setText(LangToggleBtn[3]);
             FirebaseListener.navBarDataDisplay("Pending");
+            toggleReports(false);
         }
+
     }
 
     @FXML
     void onCompleteClick(ActionEvent event) throws IOException {
         System.out.println("Completed Button Clicked");
-        if(ToggleTracking.getCurrentTab().equals("Reports")) {
-            toggleReports();
-        }
         if(!ToggleTracking.getCurrentTab().equals("Completed")){
             ToggleTracking.setCurrentTab("Completed");
             deliverReturnBtn.setText(LangToggleBtn[4]);
             FirebaseListener.navBarDataDisplay("Completed");
             ToggleTracking.setIsEdit(false);
             ToggleTracking.setIsNewDelivery(false);
+            toggleReports(false);
             toggleNewDelivery();
         }
 
@@ -363,13 +392,10 @@ public class HomepageController {
         System.out.println("Reports Button Clicked");
         if(!ToggleTracking.getCurrentTab().equals("Reports")) {
             ToggleTracking.setCurrentTab("Reports");
-            toggleNewDelivery();
             orderDisplayContainer.getChildren().clear();
             deliverReturnBtn.setText("Deliver Package");
-            buttonToggle(reportsButton);
-            buttonNotToggle(pendingButton);
-            buttonNotToggle(completedButton);
-            toggleReports();
+            toggleReports(true);
+            toggleNewDelivery();
         }
     }
 
@@ -453,6 +479,19 @@ public class HomepageController {
         }
 
 
+    }
+
+    /**
+     * turns off unneeded buttons and makes the search bar visible when you go to the reports tab
+     */
+    private void toggleReports(boolean currentState) {
+
+        searchBarHbox.setVisible(currentState);
+        if(currentState){
+            searchBarHbox.setPrefHeight(46);
+        }else{
+            searchBarHbox.setPrefHeight(0);
+        }
     }
 
     public void onNotifyMessage(){
@@ -707,9 +746,7 @@ public class HomepageController {
             settingNavbar.setVisible(false);
             buttonNotToggle(settingsButton);
             isToggleSettings = false;
-            deliverReturnBtn.setDisable(true);
-            editBtn.setDisable(true);
-            newDeliveryButton.setDisable(true);
+
         }
         else if (LoginButtonChange.getText().equals("Sign out")) {
             showDialogSignOut();
@@ -717,9 +754,7 @@ public class HomepageController {
             Employee.setCurrentLogin(null);
             LoginButtonChange.setText("Login");
             usernameLabel.setText("");
-            deliverReturnBtn.setDisable(true);
-            editBtn.setDisable(true);
-            newDeliveryButton.setDisable(true);
+            onSetDisabled(true);
             //LogInVbox.setVisible(true);
         }
     }
@@ -739,22 +774,5 @@ public class HomepageController {
         displaySearchResults(tempQueue);
     }
 
-    /**
-     * turns off unneeded buttons and makes the search bar visible when you go to the reports tab
-     */
-    private void toggleReports() {
-        searchBarHbox.setVisible(!searchBarHbox.isVisible());
-        editDeliverButtonsHbox.setVisible(!editDeliverButtonsHbox.isVisible());
-        listenToSearchBar();
-    }
-    public void listenToSearchBar() {
-        searchBarTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if(searchBarTextField.getText().isEmpty()){
-                orderDisplayContainer.getChildren().clear();
-            }
-            else {
-                onSearchClick();
-            }
-        });
-    }
+
 }

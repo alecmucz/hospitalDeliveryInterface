@@ -48,6 +48,12 @@
     -fx-border-width: 1;
 
 }
+
+#deliverReturnBtn:disabled,
+#newDeliveryButton:disabled,
+#editBtn:disabled {
+    -fx-opacity: 0.5;
+}
 /*CSS for homepage.fxml ends*/
 
 
