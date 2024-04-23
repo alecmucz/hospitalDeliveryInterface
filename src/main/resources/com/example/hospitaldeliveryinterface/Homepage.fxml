@@ -107,7 +107,7 @@
             </ToolBar>
          </top>
          <center>
-            <VBox fx:id="parentMainContainer" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
+            <VBox fx:id="parentMainContainer" maxHeight="1.7976931348623157E308" prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
                <children>
                   <HBox fx:id="searchHBox" alignment="CENTER" maxHeight="-Infinity" minHeight="-Infinity" prefHeight="50.0" prefWidth="1114.0">
                      <children>
@@ -118,7 +118,7 @@
                         </TextField>
                      </children>
                   </HBox>
-                  <HBox fx:id="mainContainer" prefHeight="518.0" prefWidth="1114.0">
+                  <HBox fx:id="mainContainer" maxHeight="1.7976931348623157E308" prefHeight="518.0" prefWidth="1114.0">
                      <children>
                         <ScrollPane fx:id="mainOrderScroll" fitToHeight="true" fitToWidth="true" prefHeight="545.0" prefWidth="351.0" HBox.hgrow="ALWAYS">
                            <content>
