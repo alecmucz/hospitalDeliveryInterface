@@ -5,6 +5,8 @@ public class OrderHistory {
     private String statusMessage;
     private String notes;
 
+    public OrderHistory(){
+    }
     public OrderHistory(String statusMessage, String notes){
         this.statusMessage = statusMessage;
         this.notes = notes;

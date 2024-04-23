@@ -118,8 +118,6 @@ public class DataBaseMgmt {
         data.put("orderStatusHistory", deliveryRequisition.getOrderStatusHistory());
         //add who entered the order
         ApiFuture<WriteResult> result = docRef.set(data);
-
-
     }
 
     /**
