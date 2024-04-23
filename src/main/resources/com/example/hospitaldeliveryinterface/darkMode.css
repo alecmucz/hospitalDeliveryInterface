@@ -54,6 +54,10 @@
 #editBtn:disabled {
     -fx-opacity: 0.5;
 }
+
+#searchBarHbox{
+    -fx-background-color: transparent;
+}
 /*CSS for homepage.fxml ends*/
 
 
