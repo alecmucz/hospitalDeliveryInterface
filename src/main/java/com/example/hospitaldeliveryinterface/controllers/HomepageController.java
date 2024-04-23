@@ -15,10 +15,14 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import javax.swing.text.Document;
 import java.io.IOException;
 import java.util.*;
 
 import static com.example.hospitaldeliveryinterface.Algolia.AlgoliaMgmt.searchAlgolia;
+
 
 public class HomepageController {
     @FXML
@@ -371,6 +375,7 @@ public class HomepageController {
             buttonNotToggle(pendingButton);
             buttonNotToggle(completedButton);
             toggleReports();
+            //listenToSearchBar();
         }
     }
 
@@ -757,5 +762,10 @@ public class HomepageController {
     private void toggleReports() {
         searchBarHbox.setVisible(!searchBarHbox.isVisible());
         editDeliverButtonsHbox.setVisible(!editDeliverButtonsHbox.isVisible());
+    }
+    public void listenToSearchBar() {
+    searchBarTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            onSearchClick();
+        });
     }
 }
