@@ -66,11 +66,6 @@ public class HomepageController {
     private HBox searchBarHbox;
     @FXML
     private HBox editDeliverButtonsHbox;
-
-    @FXML
-    private Button searchButton;
-    @FXML
-    private ChoiceBox<String> searchByChoiceBox;
     @FXML
     private VBox settingNavbar;
     @FXML
@@ -375,7 +370,6 @@ public class HomepageController {
             buttonNotToggle(pendingButton);
             buttonNotToggle(completedButton);
             toggleReports();
-            //listenToSearchBar();
         }
     }
 
@@ -741,17 +735,6 @@ public class HomepageController {
     }
 
     public void onSearchClick() {
-
-        if(!ToggleTracking.getCurrentTab().equals("Reports")) {
-            ToggleTracking.setCurrentTab("Reports");
-            toggleNewDelivery();
-            orderDisplayContainer.getChildren().clear();
-            deliverReturnBtn.setText("Deliver Package");
-            buttonToggle(reportsButton);
-            buttonNotToggle(pendingButton);
-            buttonNotToggle(completedButton);
-        }
-
         Queue<DeliveryRequisition> tempQueue = searchAlgolia(searchBarTextField.getText());
         displaySearchResults(tempQueue);
     }
@@ -762,10 +745,16 @@ public class HomepageController {
     private void toggleReports() {
         searchBarHbox.setVisible(!searchBarHbox.isVisible());
         editDeliverButtonsHbox.setVisible(!editDeliverButtonsHbox.isVisible());
+        listenToSearchBar();
     }
     public void listenToSearchBar() {
-    searchBarTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            onSearchClick();
+        searchBarTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(searchBarTextField.getText().isEmpty()){
+                orderDisplayContainer.getChildren().clear();
+            }
+            else {
+                onSearchClick();
+            }
         });
     }
 }
