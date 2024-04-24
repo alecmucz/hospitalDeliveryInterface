@@ -192,7 +192,7 @@
       </VBox>
       <VBox fx:id="settingNavbar" alignment="CENTER" prefHeight="65.0" prefWidth="185.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="76.0">
          <children>
-            <Button fx:id="darkLightBtn" alignment="CENTER" contentDisplay="CENTER" minWidth="0.0" mnemonicParsing="false" onAction="#onDarkLightClick" prefHeight="45.0" style="-fx-background-color: transparent;" text="Dark Mode" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
+            <Button fx:id="darkLightBtn" alignment="BOTTOM_LEFT" contentDisplay="CENTER" minWidth="0.0" mnemonicParsing="false" onAction="#onDarkLightClick" prefHeight="37.0" prefWidth="189.0" style="-fx-background-color: transparent;" text="Dark Mode" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -203,6 +203,9 @@
                      </image>
                   </ImageView>
                </graphic>
+               <VBox.margin>
+                  <Insets left="30.0" />
+               </VBox.margin>
             </Button>
             <Button fx:id="changeLanguageBtn" mnemonicParsing="false" onAction="#onChangeLanguageClick" prefHeight="25.0" prefWidth="244.0" style="-fx-background-color: transparent;" text="Language: Indonesian" textFill="WHITE">
                <font>
