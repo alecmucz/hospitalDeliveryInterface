@@ -120,7 +120,7 @@
                         <Font name="System Bold" size="14.0" />
                      </font>
                      <graphic>
-                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                        <ImageView fitHeight="30.0" fitWidth="30.0" pickOnBounds="true" preserveRatio="true">
                            <image>
                               <Image url="@settingIcon.png" />
                            </image>
@@ -173,7 +173,7 @@
             </HBox>
          </center>
       </BorderPane>
-      <VBox fx:id="adminToolsNav" alignment="TOP_RIGHT" layoutX="945.0" layoutY="465.0" prefHeight="90.0" AnchorPane.rightAnchor="140.0" AnchorPane.topAnchor="76.0">
+      <VBox fx:id="adminToolsNav" alignment="TOP_RIGHT" layoutX="945.0" layoutY="465.0" prefHeight="90.0" visible="false" AnchorPane.rightAnchor="140.0" AnchorPane.topAnchor="76.0">
          <children>
             <Button fx:id="deleteOrdersBtn" alignment="CENTER" contentDisplay="CENTER" minWidth="0.0" mnemonicParsing="false" prefHeight="33.0" style="-fx-background-color: transparent;" text="Delete Orders " textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                <font>
@@ -190,12 +190,19 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
       </VBox>
-      <VBox fx:id="settingNavbar" alignment="CENTER" prefHeight="79.0" prefWidth="185.0" visible="false" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="76.0">
+      <VBox fx:id="settingNavbar" alignment="CENTER" prefHeight="65.0" prefWidth="185.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="76.0">
          <children>
             <Button fx:id="darkLightBtn" alignment="CENTER" contentDisplay="CENTER" minWidth="0.0" mnemonicParsing="false" onAction="#onDarkLightClick" prefHeight="45.0" style="-fx-background-color: transparent;" text="Dark Mode" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
+               <graphic>
+                  <ImageView fx:id="lightDarkIcon" fitHeight="27.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" styleClass="isLightMode" translateX="-55.0">
+                     <image>
+                        <Image url="@darkModeIcon.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
             </Button>
             <Button fx:id="changeLanguageBtn" mnemonicParsing="false" onAction="#onChangeLanguageClick" prefHeight="25.0" prefWidth="244.0" style="-fx-background-color: transparent;" text="Language: Indonesian" textFill="WHITE">
                <font>

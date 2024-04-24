@@ -12,6 +12,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
@@ -61,6 +63,9 @@ public class HomepageController {
 
     @FXML
     private HBox editDeliverButtonsHbox;
+
+    @FXML
+    private ImageView lightDarkIcon;
 
     @FXML
     private HBox mainContainer;
@@ -132,7 +137,17 @@ public class HomepageController {
     /****************************************************************************/
 
     private Button[] buttonsForAdjustWidth;
+
+    private Image lightModeIcon;
+    private Image darkModeIcon;
+
+    String tempDarkMode;
+    String tempLightMode;
     public void initialize(){
+
+        tempLightMode = "Light Mode";
+        tempDarkMode = "Dark Mode";
+
 
         buttonsForAdjustWidth = new Button[]{
                 pendingButton,
@@ -200,6 +215,9 @@ public class HomepageController {
 
         isLightMode = true;
         rootPane.getStylesheets().clear();
+
+        lightModeIcon = new Image(String.valueOf(getClass().getResource("/com/example/hospitaldeliveryinterface/lightModeIcon.png")));
+        darkModeIcon = new Image(String.valueOf(getClass().getResource("/com/example/hospitaldeliveryinterface/darkModeIcon.png")));
 
 
     }
@@ -328,7 +346,20 @@ public class HomepageController {
         createUserBtn.setText(langTextChange[13]);
         deleteOrdersBtn.setText(langTextChange[12]);
         adminButton.setText(langTextChange[9]);
-        LoginButtonChange.setText(langTextChange[10]);
+
+        if(Employee.getCurrentLogin() == null){
+            LoginButtonChange.setText(langTextChange[10]);
+        }
+
+        tempLightMode = langTextChange[41];
+        tempDarkMode = langTextChange[42];
+
+        if(isLightMode){
+            darkLightBtn.setText(langTextChange[41]);
+        }else{
+            darkLightBtn.setText(langTextChange[42]);
+        }
+        signOutBtn.setText(langTextChange[11]);
 
         switch (ToggleTracking.getCurrentTab()){
             case "Pending":
@@ -343,6 +374,9 @@ public class HomepageController {
                 System.out.println("No Page/Tab exist on Application!");
         }
 
+        deliveryFormController.updateLanguageLabel(langTextChange);
+        loginFormController.updateLanguageLabel(langTextChange);
+        createUserController.updateLanguageLabel(langTextChange);
 
     }
 
@@ -374,13 +408,16 @@ public class HomepageController {
     }
 
     public void handleDarkLightChanges(){
+
         String currentStyleSheet = "";
         if (isLightMode) {
-            darkLightBtn.setText("Light Mode");
+            darkLightBtn.setText(tempLightMode);
+            lightDarkIcon.setImage(lightModeIcon);
             currentStyleSheet = "darkMode.css";
 
         } else {
-            darkLightBtn.setText("Dark Mode");
+            darkLightBtn.setText(tempDarkMode);
+            lightDarkIcon.setImage(darkModeIcon);
             currentStyleSheet = "lightMode.css";
         }
 
@@ -770,7 +807,7 @@ public class HomepageController {
                     tempHistory = new OrderHistory(tempNewMess,null);
                     currentOrder.getOrderStatusHistory().add(tempHistory);
                     DataBaseMgmt.swapDB(currentOrder, ToggleTracking.getSelectedCardOrderNum(), "pendingDeliveries","completedDeliveries");
-                    NotifyMessg.createMessg("delivered", "[Employee ID]", ToggleTracking.getSelectedCardOrderNum());
+                    NotifyMessg.createMessg("delivered", ToggleTracking.getSelectedCardOrderNum());
 
                 }
 
@@ -779,7 +816,7 @@ public class HomepageController {
                     tempHistory = new OrderHistory(tempNewMess,null);
                     currentOrder.getOrderStatusHistory().add(tempHistory);
                     DataBaseMgmt.swapDB(currentOrder, ToggleTracking.getSelectedCardOrderNum(), "completedDeliveries","pendingDeliveries");
-                    NotifyMessg.createMessg("returnToPending", "[Employee ID]", ToggleTracking.getSelectedCardOrderNum());
+                    NotifyMessg.createMessg("returnToPending", ToggleTracking.getSelectedCardOrderNum());
 
                 }
             }
@@ -805,7 +842,10 @@ public class HomepageController {
             showDialogSignOut();
             DataBaseMgmt.updateLoginStatus(Employee.getCurrentLogin(),"False");
             Employee.setCurrentLogin(null);
-            LoginButtonChange.setText("Login");
+            HashMap<String,String[]> checkStoredLang = MitchTextTranslate.getStoredLang();
+            String[] retrieveTranslatedText = checkStoredLang.get(ToggleTracking.getLanguageTrack());
+
+            LoginButtonChange.setText(retrieveTranslatedText[10]);
             onSetDisabled(true);
             //LogInVbox.setVisible(true);
         }

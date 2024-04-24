@@ -2,6 +2,7 @@ package com.example.hospitaldeliveryinterface.controllers;
 
 import com.example.hospitaldeliveryinterface.firebase.DataBaseMgmt;
 import com.example.hospitaldeliveryinterface.model.Employee;
+import com.example.hospitaldeliveryinterface.model.ToggleTracking;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -25,6 +26,9 @@ public class LoginFormController {
     private Button LoginButton;
 
     @FXML
+    private Label emplopyeeLoginLBL;
+
+    @FXML
     private Label labelLoginError;
 
     @FXML
@@ -32,6 +36,9 @@ public class LoginFormController {
 
     @FXML
     private VBox loginPanel;
+
+    @FXML
+    private Button returnToHomeBtn;
 
     @FXML
     private PasswordField textFieldPassword;
@@ -114,7 +121,6 @@ public class LoginFormController {
         }
     }
 
-
     @FXML
     void onReturnToHome(ActionEvent event) {
         LogInVbox.setVisible(false);
@@ -133,27 +139,6 @@ public class LoginFormController {
         textfield.setStyle("-fx-border-color: grey;");
     }
 
-    public static boolean textFieldCheck(String username,String password) {
-        boolean checker = false;
-        if (username.length() == 0 || password.length() == 0) {
-            checker = true;
-        }
-        if (!(username.matches("S\\d{8}") && password.matches("^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$"))) {
-
-            checker = true;
-        }
-        return checker;
-
-    }
-
-    public void showDialog () {
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setHeaderText("Invalid input");
-        alert.setTitle("Warning");
-        alert.setContentText("Username or password is incorrect");
-        Optional<ButtonType> result = alert.showAndWait();
-    }
-
 
     public void showDialogCorrect () {
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -163,21 +148,13 @@ public class LoginFormController {
         Optional<ButtonType> result = alert.showAndWait();
     }
 
-    /*@FXML
-    void handleLoginButton() {
+    public void updateLanguageLabel(String[] langTextChange){
+        emplopyeeLoginLBL.setText(langTextChange[32]);
+        textFieldUsername.setPromptText(langTextChange[35]);
+        textFieldPassword.setPromptText(langTextChange[37]);
+        LoginButton.setText(langTextChange[10]);
+        returnToHomeBtn.setText(langTextChange[33]);
+    }
 
-            if (textFieldCheck(textFieldUsername.getText(), textFieldPassword.getText()) == false) {
-                showDialogCorrect();
-                LogInVbox.setVisible(false);
-                usernameLabel.setText(String.valueOf(textFieldUsername.getText()));
-
-                LoginButtonChange.setText("Sign out");
-            } else{
-                showDialog();
-            }
-            textFieldUsername.clear();
-            textFieldPassword.clear();
-
-    }*/
 
 }

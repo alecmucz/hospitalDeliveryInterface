@@ -14,7 +14,7 @@
    <center>
       <VBox fx:id="loginPanel" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="294.0" prefWidth="385.0" spacing="4.0" BorderPane.alignment="CENTER">
          <children>
-            <Label prefHeight="30.0" prefWidth="180.0" text="Employee Login" textFill="#22aae1">
+            <Label fx:id="emplopyeeLoginLBL" prefHeight="30.0" prefWidth="180.0" text="Employee Login" textFill="#22aae1">
                <font>
                   <Font name="Tahoma" size="24.0" />
                </font>
@@ -22,7 +22,7 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </Label>
-            <TextField fx:id="textFieldUsername" prefHeight="38.0" prefWidth="316.0" promptText="Username">
+            <TextField fx:id="textFieldUsername" prefHeight="38.0" prefWidth="316.0" promptText="Employee ID">
                <VBox.margin>
                   <Insets bottom="10.0" />
                </VBox.margin>
@@ -46,7 +46,7 @@
                   <Insets />
                </VBox.margin>
             </Button>
-            <Button mnemonicParsing="false" onAction="#onReturnToHome" prefHeight="25.0" prefWidth="129.0" style="-fx-background-color: transparent;" text="Return to Homepage" textFill="#22aae1" underline="true" />
+            <Button fx:id="returnToHomeBtn" mnemonicParsing="false" onAction="#onReturnToHome" prefHeight="25.0" prefWidth="129.0" style="-fx-background-color: transparent;" text="Return to Homepage" textFill="#22aae1" underline="true" />
             <HBox fx:id="loginErrorHbox" alignment="CENTER" prefHeight="100.0" prefWidth="200.0" visible="false">
                <children>
                   <Label fx:id="labelLoginError" text="Label">

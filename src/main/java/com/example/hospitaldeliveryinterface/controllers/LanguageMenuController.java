@@ -28,6 +28,7 @@ public class LanguageMenuController {
     private HomepageController homeController;
 
 
+
     public void initialize() {
 
         for (Node node : languageGrid.getChildren()) {
@@ -61,15 +62,16 @@ public class LanguageMenuController {
 
         HashMap<String,String[]> checkStoredLang = MitchTextTranslate.getStoredLang();
 
-        if(checkStoredLang.containsKey(clickedButton.getText())){
+        if(checkStoredLang.containsKey(clickedButton.getText()) && !clickedButton.getText().equals(prevButton.getText())){
 
             ToggleTracking.setLanguageTrack(clickedButton.getText());
            String[] retrieveTranslatedText = checkStoredLang.get(clickedButton.getText());
            homeController.setLangToggleBtn(retrieveTranslatedText);
             FirebaseListener.navBarDataDisplay(ToggleTracking.getCurrentTab());
+            buttonNotToggle(prevButton);
+            prevButton = clickedButton;
         }
-        buttonNotToggle(prevButton);
-        prevButton = clickedButton;
+
     }
     public void buttonToggle(Button button) {
         button.setStyle("-fx-background-color: white; -fx-text-fill: #22aae1;");
