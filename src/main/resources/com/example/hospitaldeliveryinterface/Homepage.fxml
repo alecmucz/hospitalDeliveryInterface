@@ -2,7 +2,6 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
@@ -12,7 +11,6 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
@@ -22,36 +20,41 @@
          <bottom>
             <ToolBar fx:id="bottomToolBar" nodeOrientation="LEFT_TO_RIGHT" prefHeight="39.0" prefWidth="888.0" BorderPane.alignment="CENTER">
                <items>
-                  <StackPane prefHeight="45.0" prefWidth="503.0">
+                  <HBox fx:id="editDeliverButtonsHbox" prefHeight="45.0" prefWidth="353.0">
                      <children>
-                        <HBox fx:id="editDeliverButtonsHbox" prefHeight="94.0" prefWidth="200.0">
-                           <children>
-                              <Button fx:id="deliverReturnBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onDeliverReturn" onMousePressed="#onCompleteDeliverPress" onMouseReleased="#onCompleteDeliverRelease" prefHeight="38.0" prefWidth="178.0" styleClass="isNotToggled" text="Deliver Package" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets top="5.0" />
-                                 </HBox.margin>
-                              </Button>
-                              <Pane maxWidth="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="29.0" style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS" />
-                              <Button fx:id="editBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onEditDelivery" prefHeight="36.0" prefWidth="178.0" styleClass="isNotToggled" text="Edit Delivery" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
-                                 <font>
-                                    <Font name="System Bold" size="14.0" />
-                                 </font>
-                                 <HBox.margin>
-                                    <Insets top="5.0" />
-                                 </HBox.margin>
-                              </Button>
-                           </children>
-                        </HBox>
+                        <Button fx:id="deliverReturnBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onDeliverReturn" onMousePressed="#onCompleteDeliverPress" onMouseReleased="#onCompleteDeliverRelease" prefHeight="38.0" prefWidth="178.0" styleClass="isNotToggled" text="Deliver Package" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets top="5.0" />
+                           </HBox.margin>
+                           <padding>
+                              <Insets left="10.0" right="10.0" />
+                           </padding>
+                        </Button>
+                        <Pane maxWidth="-Infinity" minWidth="-Infinity" prefHeight="45.0" prefWidth="29.0" style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS" />
+                        <Button fx:id="editBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onEditDelivery" prefHeight="36.0" prefWidth="178.0" styleClass="isNotToggled" text="Edit Delivery" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
+                           <font>
+                              <Font name="System Bold" size="14.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets top="5.0" />
+                           </HBox.margin>
+                           <padding>
+                              <Insets left="10.0" right="10.0" />
+                           </padding>
+                        </Button>
                      </children>
-                  </StackPane>
-                  <Pane prefHeight="45.0" prefWidth="180.0" style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS" />
+                  </HBox>
+                  <Pane prefHeight="45.0" prefWidth="1.0" style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS" />
                   <Button fx:id="newDeliveryButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onNewDelivery" prefHeight="36.0" prefWidth="161.0" styleClass="isNotToggled" text="+ New Delivery" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
                   </Button>
                </items>
                <BorderPane.margin>
@@ -63,50 +66,66 @@
             </ToolBar>
          </bottom>
          <top>
-            <ToolBar nodeOrientation="LEFT_TO_RIGHT" BorderPane.alignment="CENTER">
+            <ToolBar nodeOrientation="LEFT_TO_RIGHT" prefWidth="1114.0" BorderPane.alignment="CENTER">
                <items>
-                  <ImageView fitHeight="62.0" fitWidth="186.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fitHeight="44.0" fitWidth="186.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@PharmaTracLogo.png" />
                      </image>
                   </ImageView>
-                  <Pane prefHeight="63.0" prefWidth="0.0" HBox.hgrow="ALWAYS" />
-                  <Button fx:id="pendingButton" alignment="CENTER" mnemonicParsing="false" onAction="#onPendingClick" prefHeight="39.0" prefWidth="75.0" styleClass="isNotToggled" text="Pending" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
+                  <Pane maxWidth="-Infinity" minHeight="-Infinity" prefHeight="63.0" prefWidth="12.0" HBox.hgrow="ALWAYS" />
+                  <Button fx:id="pendingButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onPendingClick" prefHeight="39.0" prefWidth="75.0" styleClass="isNotToggled" text="Pending" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                      <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                        <Insets left="10.0" right="10.0" />
                      </padding>
                   </Button>
-                  <Button fx:id="completedButton" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#onCompleteClick" prefHeight="39.0" styleClass="isNotToggled" text=" Completed" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
+                  <Button fx:id="completedButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onCompleteClick" prefHeight="39.0" styleClass="isNotToggled" text=" Completed" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                      <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                        <Insets left="10.0" right="10.0" />
                      </padding>
                   </Button>
-                  <Button fx:id="reportsButton" alignment="CENTER" layoutX="886.0" layoutY="22.0" mnemonicParsing="false" onAction="#onReportsClick" prefHeight="39.0" prefWidth="84.0" styleClass="isNotToggled" text="Reports" textFill="WHITE">
+                  <Button fx:id="reportsButton" alignment="CENTER" contentDisplay="CENTER" layoutX="886.0" layoutY="22.0" mnemonicParsing="false" onAction="#onReportsClick" prefHeight="39.0" prefWidth="84.0" styleClass="isNotToggled" text="Reports" textAlignment="CENTER" textFill="WHITE">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
                   </Button>
-                  <Label fx:id="usernameLabel" alignment="CENTER" prefHeight="39.0" prefWidth="121.0" style="-fx-border-color: transparent transparent transparent white; -fx-border-width: 0 0 0 3;" text="Nobody Login" textAlignment="CENTER" textFill="#ffc800">
-                     <font>
-                        <Font name="Tahoma Bold" size="14.0" />
-                     </font>
-                     <padding>
-                        <Insets left="10.0" />
-                     </padding>
-                  </Label>
-                  <Button fx:id="settingsButton" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSettingClick" prefHeight="39.0" prefWidth="77.0" style="-fx-background-image: '/com/example/hospitaldeliveryinterface/settingIcon.jpg';" styleClass="isNotToggled" text="Settings" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS" wrapText="true">
+                  <Pane prefHeight="45.0" prefWidth="1.0" style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS" />
+                  <Button fx:id="adminButton" alignment="CENTER" minWidth="0.0" mnemonicParsing="false" onAction="#onAdminClick" prefHeight="45.0" prefWidth="104.0" style="-fx-background-color: transparent;" text="Admin Tools" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
                      <padding>
-                        <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                        <Insets left="10.0" right="10.0" />
                      </padding>
+                  </Button>
+                  <Button fx:id="LoginButtonChange" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#handleLoginButtonChange" prefHeight="40.0" prefWidth="63.0" text="Log In" textAlignment="CENTER" textFill="WHITE" textOverrun="CENTER_WORD_ELLIPSIS">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                     <padding>
+                        <Insets left="10.0" right="10.0" />
+                     </padding>
+                  </Button>
+                  <Button fx:id="settingsButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onSettingClick" prefHeight="49.0" prefWidth="49.0" styleClass="isNotToggled" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS" wrapText="true">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@settingIcon.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
                   </Button>
                </items>
             </ToolBar>
@@ -154,7 +173,7 @@
             </HBox>
          </center>
       </BorderPane>
-      <VBox fx:id="adminToolsNav" alignment="TOP_RIGHT" layoutX="945.0" layoutY="465.0" prefHeight="90.0" AnchorPane.rightAnchor="200.0" AnchorPane.topAnchor="167.0">
+      <VBox fx:id="adminToolsNav" alignment="TOP_RIGHT" layoutX="945.0" layoutY="465.0" prefHeight="90.0" AnchorPane.rightAnchor="140.0" AnchorPane.topAnchor="76.0">
          <children>
             <Button fx:id="deleteOrdersBtn" alignment="CENTER" contentDisplay="CENTER" minWidth="0.0" mnemonicParsing="false" prefHeight="33.0" style="-fx-background-color: transparent;" text="Delete Orders " textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                <font>
@@ -171,7 +190,7 @@
             <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
          </padding>
       </VBox>
-      <VBox fx:id="settingNavbar" alignment="CENTER" prefHeight="159.0" prefWidth="204.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="76.0">
+      <VBox fx:id="settingNavbar" alignment="CENTER" prefHeight="79.0" prefWidth="185.0" visible="false" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="76.0">
          <children>
             <Button fx:id="darkLightBtn" alignment="CENTER" contentDisplay="CENTER" minWidth="0.0" mnemonicParsing="false" onAction="#onDarkLightClick" prefHeight="45.0" style="-fx-background-color: transparent;" text="Dark Mode" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                <font>
@@ -183,12 +202,14 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="adminButton" alignment="CENTER" minWidth="0.0" mnemonicParsing="false" onAction="#onAdminClick" prefHeight="45.0" style="-fx-background-color: transparent;" text="&lt; Admin Tools" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
-               <font>
-                  <Font name="System Bold" size="14.0" />
-               </font>
-            </Button>
-            <Button fx:id="LoginButtonChange" alignment="CENTER" minWidth="0.0" mnemonicParsing="false" onAction="#handleLoginButtonChange" prefHeight="36.0" prefWidth="167.0" style="-fx-background-color: transparent; -fx-border-color: white transparent transparent transparent; -fx-border-width: 1 0 0 0;" text="Login" textAlignment="RIGHT" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </padding>
+      </VBox>
+      <VBox fx:id="signOutVbox" alignment="TOP_RIGHT" layoutX="784.0" layoutY="86.0" prefHeight="49.0" prefWidth="101.0" visible="false" AnchorPane.rightAnchor="60.0" AnchorPane.topAnchor="76.0">
+         <children>
+            <Button fx:id="signOutBtn" alignment="CENTER" contentDisplay="CENTER" mnemonicParsing="false" onAction="#onSignOutClcik" prefHeight="29.0" prefWidth="157.0" style="-fx-background-color: transparent;" text="Sign Out" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>

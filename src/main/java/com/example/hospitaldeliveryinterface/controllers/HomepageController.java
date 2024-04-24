@@ -25,6 +25,7 @@ import static com.example.hospitaldeliveryinterface.Algolia.AlgoliaMgmt.searchAl
 
 
 public class HomepageController {
+
     @FXML
     private Button LoginButtonChange;
 
@@ -101,10 +102,14 @@ public class HomepageController {
     private Button settingsButton;
 
     @FXML
-    private Label usernameLabel;
+    private Button signOutBtn;
+
+    @FXML
+    private VBox signOutVbox;
 
 
     //variables created
+    private boolean isLoginToggle;
     private boolean isToggleSettings;
     private boolean isToggleAdmin;
     private Node selectedCard;
@@ -125,10 +130,26 @@ public class HomepageController {
     private LoginFormController loginFormController;
 
     /****************************************************************************/
+
+    private Button[] buttonsForAdjustWidth;
     public void initialize(){
 
-        //onSetDisabled(true);
+        buttonsForAdjustWidth = new Button[]{
+                pendingButton,
+                completedButton,
+                reportsButton,
+                editBtn,
+                deliverReturnBtn,
+                newDeliveryButton,
+                settingsButton,
+                LoginButtonChange,
+                adminButton
+        };
+        setUpAdjustWidth();
+
+        onSetDisabled(true);
         toggleReports(false);
+
 
         searchBarTextField.textProperty().addListener((observable, oldValue, newValue) -> {
             if(searchBarTextField.getText().isEmpty()){
@@ -159,6 +180,7 @@ public class HomepageController {
         selectedCard = null;
 
         isToggleSettings = false;
+        isLoginToggle = false;
         int totalOrders = DataBaseMgmt.getTotalNumOrders();
         DeliveryRequisition.setOrderNumCount(totalOrders);
 
@@ -166,6 +188,7 @@ public class HomepageController {
 
         settingNavbar.setVisible(false);
         adminToolsNav.setVisible(false);
+        signOutVbox.setVisible(false);
 
         selectOrder();
 
@@ -181,6 +204,14 @@ public class HomepageController {
 
     }
     /****************initial SETUP BEGINS HERE**************************/
+
+    public void setUpAdjustWidth(){
+      for(Button childBtn: buttonsForAdjustWidth){
+          childBtn.textProperty().addListener(((observableValue, s, t1) -> {
+              childBtn.setPrefWidth(Button.USE_COMPUTED_SIZE);
+          }));
+      }
+    }
 
     public void onSetDisabled(boolean temp){
         editBtn.setDisable(temp);
@@ -271,7 +302,7 @@ public class HomepageController {
             rootPane.getChildren().add(languageMenuUI);
 
             AnchorPane.setTopAnchor(languageMenuUI, 127.0);
-            AnchorPane.setRightAnchor(languageMenuUI, 200.0);
+            AnchorPane.setRightAnchor(languageMenuUI, 180.0);
 
             languageMenuUI.setVisible(false);
 
@@ -290,13 +321,13 @@ public class HomepageController {
         newDeliveryButton.setText(ToggleTracking.getIsNewDelivery()?langTextChange[8]:langTextChange[7]);
         editBtn.setText(ToggleTracking.getIsEdit()?langTextChange[6]:langTextChange[5]);
 
-        settingsButton.setText(langTextChange[2]);
+        //settingsButton.setText(langTextChange[2]);
         completedButton.setText(langTextChange[0]);
         pendingButton.setText(langTextChange[1]);
         reportsButton.setText(langTextChange[23]);
         createUserBtn.setText(langTextChange[13]);
         deleteOrdersBtn.setText(langTextChange[12]);
-        adminButton.setText("< "+langTextChange[9]);
+        adminButton.setText(langTextChange[9]);
         LoginButtonChange.setText(langTextChange[10]);
 
         switch (ToggleTracking.getCurrentTab()){
@@ -394,6 +425,9 @@ public class HomepageController {
             ToggleTracking.setCurrentTab("Reports");
             orderDisplayContainer.getChildren().clear();
             deliverReturnBtn.setText("Deliver Package");
+            buttonToggle(reportsButton);
+            buttonNotToggle(pendingButton);
+            buttonNotToggle(completedButton);
             toggleReports(true);
             toggleNewDelivery();
         }
@@ -410,18 +444,37 @@ public class HomepageController {
     }
 
     @FXML
+    void handleLoginButtonChange() {
+
+        if(Employee.getCurrentLogin() != null){
+            signOutVbox.setVisible(!signOutVbox.isVisible());
+        }else{
+            loginFormController.setLoginVBoxVisibility(true);
+        }
+
+        languageMenuUI.setVisible(false);
+        adminToolsNav.setVisible(false);
+        settingNavbar.setVisible(false);
+        buttonNotToggle(settingsButton);
+        isToggleSettings = false;
+        isToggleAdmin = false;
+
+    }
+    @FXML
     void onSettingClick(ActionEvent event) {
         if(!isToggleSettings){
             buttonToggle(settingsButton);
             settingNavbar.setVisible(true);
+
         }else{
             buttonNotToggle(settingsButton);
             settingNavbar.setVisible(false);
             loginFormController.setLoginVBoxVisibility(false);//Bug Fix: discards widgets within LoginVBOX if the Login button is clicked and settings is closed
-            adminToolsNav.setVisible(false);
-            isToggleAdmin = false;
-            languageMenuUI.setVisible(false);
         }
+        adminToolsNav.setVisible(false);
+        isToggleAdmin = false;
+        languageMenuUI.setVisible(false);
+        signOutVbox.setVisible(false);
 
         isToggleSettings = !isToggleSettings;
     }
@@ -432,12 +485,20 @@ public class HomepageController {
 
         if (isToggleAdmin) {
             adminToolsNav.setVisible(true);
-           languageMenuUI.setVisible(false);
         } else {
             adminToolsNav.setVisible(false);
-
         }
+
+        languageMenuUI.setVisible(false);
+        settingNavbar.setVisible(false);
+        signOutVbox.setVisible(false);
+
+        buttonNotToggle(settingsButton);
+        isToggleSettings = false;
+
     }
+
+
 
     @FXML
     protected void onNewDelivery(ActionEvent event){
@@ -502,9 +563,6 @@ public class HomepageController {
         LoginButtonChange.setText(currentStatus);
     }
 
-    public void setCurrentSignIn(String userEmployeeID){
-        usernameLabel.setText(userEmployeeID);
-    }
 
     public void toggleNewDelivery( ){
 
@@ -574,6 +632,8 @@ public class HomepageController {
                 buttonNotToggle(completedButton);
                 tempQueue = currentQueue;
             }
+
+
 
             if(tempQueue == null && tempQueue.isEmpty()){
                 orderDisplayContainer.getChildren().clear();
@@ -736,28 +796,22 @@ public class HomepageController {
         alert.setTitle("Signed out");
         alert.setContentText("You are signing out");
         Optional<ButtonType> result = alert.showAndWait();
+        signOutVbox.setVisible(false);
     }
 
     @FXML
-    void handleLoginButtonChange() {
-        if (LoginButtonChange.getText().equals("Login")) {
-            loginFormController.setLoginVBoxVisibility(true);
-            adminToolsNav.setVisible(false);
-            settingNavbar.setVisible(false);
-            buttonNotToggle(settingsButton);
-            isToggleSettings = false;
-
-        }
-        else if (LoginButtonChange.getText().equals("Sign out")) {
+    void onSignOutClcik(ActionEvent event) {
+        if (Employee.getCurrentLogin() != null) {
             showDialogSignOut();
             DataBaseMgmt.updateLoginStatus(Employee.getCurrentLogin(),"False");
             Employee.setCurrentLogin(null);
             LoginButtonChange.setText("Login");
-            usernameLabel.setText("");
             onSetDisabled(true);
             //LogInVbox.setVisible(true);
         }
     }
+
+
 
     @FXML
     void onCreateUserClick(ActionEvent event){

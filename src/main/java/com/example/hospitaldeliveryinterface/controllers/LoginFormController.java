@@ -77,9 +77,8 @@ public class LoginFormController {
                 // Password matches
                 DataBaseMgmt.updateLoginStatus(textFieldUsername.getText(),"True");
                 LogInVbox.setVisible(false);
-                controller.setLoginButtonText("Sign out");
                 Employee.setCurrentLogin(textFieldUsername.getText());
-                controller.setCurrentSignIn(textFieldUsername.getText());
+                controller.setLoginButtonText("EID: " + textFieldUsername.getText());
                 System.out.println("Logged in");
                 //changes text and style and changes it back to default border
                 showDialogCorrect();

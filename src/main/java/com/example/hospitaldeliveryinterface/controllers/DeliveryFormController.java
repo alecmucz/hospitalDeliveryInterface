@@ -244,15 +244,22 @@ public class DeliveryFormController {
     /**other methoid helper**/
 
     public String  createOrderHistoryMessage(String statusType){
+
+        String tempEmplyeeID = "EID: ";
+        if(Employee.getCurrentLogin() != null){
+            tempEmplyeeID += Employee.getCurrentLogin();
+        }else{
+            tempEmplyeeID += "NO EMPLOYEE FOUND!";
+        }
         switch (statusType){
             case "new":
-                return "["+DeliveryRequisition.currentDateTime()+"]: " + "[EmployeeID goes here] " + "created this order.";
+                return "["+DeliveryRequisition.currentDateTime()+"]: " + tempEmplyeeID + " created this order.";
             case "edit":
-                return "["+DeliveryRequisition.currentDateTime()+"]: " + "[EmployeeID goes here] " + "edited this order.";
+                return "["+DeliveryRequisition.currentDateTime()+"]: " + tempEmplyeeID + " edited this order.";
             case "delivery":
-                return "["+DeliveryRequisition.currentDateTime()+"]: " + "[EmployeeID goes here] " + "delivered this order.";
+                return "["+DeliveryRequisition.currentDateTime()+"]: " + tempEmplyeeID + " delivered this order.";
             case "return":
-                return "["+DeliveryRequisition.currentDateTime()+"]: " + "[EmployeeID goes here] " + "return this order to queue.";
+                return "["+DeliveryRequisition.currentDateTime()+"]: " + tempEmplyeeID + " return this order to queue.";
         }
 
         return null;
