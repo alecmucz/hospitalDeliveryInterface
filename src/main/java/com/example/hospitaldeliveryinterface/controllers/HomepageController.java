@@ -746,7 +746,6 @@ public class HomepageController {
      * turns off unneeded buttons and makes the search bar visible when you go to the reports tab
      */
     private void toggleReports() {
-        searchBarHbox.setVisible(!searchBarHbox.isVisible());
         editDeliverButtonsHbox.setVisible(!editDeliverButtonsHbox.isVisible());
         searchHBox.setPrefHeight((searchHBox.getHeight() + 50.0) % 100.0);
         searchBarTextField.setVisible(!searchBarTextField.isVisible());
