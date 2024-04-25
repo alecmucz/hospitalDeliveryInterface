@@ -23,14 +23,14 @@
                   <Font name="System Bold" size="16.0" />
                </font>
             </Label>
-            <Label fx:id="formDescriplbl" alignment="TOP_LEFT" contentDisplay="TOP" prefHeight="59.0" prefWidth="292.0" text="Please fill all the required fields." />
+            <Label fx:id="formDescriplbl" alignment="TOP_LEFT" contentDisplay="TOP" prefHeight="59.0" prefWidth="292.0" text="Please fill out all the required fields." />
          </children>
       </VBox>
    </top>
    <bottom>
       <HBox alignment="TOP_RIGHT" prefHeight="33.0" prefWidth="309.0" spacing="10.0" style="-fx-background-color: transparent;" BorderPane.alignment="TOP_LEFT">
          <children>
-            <Button alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#onClearText" prefHeight="33.0" prefWidth="85.0" style="-fx-background-color: red;" text="Clear" textFill="WHITE" HBox.hgrow="ALWAYS">
+            <Button fx:id="clearBtn" alignment="CENTER" contentDisplay="RIGHT" mnemonicParsing="false" onAction="#onClearText" prefHeight="33.0" prefWidth="85.0" style="-fx-background-color: red;" text="Clear" textFill="WHITE" HBox.hgrow="ALWAYS">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -40,7 +40,7 @@
                   <Font size="11.0" />
                </font>
             </Label>
-            <Button alignment="CENTER" contentDisplay="RIGHT" layoutX="253.0" layoutY="10.0" mnemonicParsing="false" onAction="#onSubmitOrder" prefHeight="33.0" prefWidth="86.0" style="-fx-background-color: #1adca2;" text="Submit" textFill="WHITE">
+            <Button fx:id="submitBtn" alignment="CENTER" contentDisplay="RIGHT" layoutX="253.0" layoutY="10.0" mnemonicParsing="false" onAction="#onSubmitOrder" prefHeight="33.0" prefWidth="86.0" style="-fx-background-color: #1adca2;" text="Submit" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
@@ -51,12 +51,12 @@
    <center>
       <VBox focusTraversable="true" prefHeight="428.0" prefWidth="300.0" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
          <children>
-            <Label alignment="TOP_LEFT" contentDisplay="TOP" prefHeight="8.0" prefWidth="292.0" text="Patient Information" textFill="#1e90f5">
+            <Label fx:id="patientInfoLbl" alignment="TOP_LEFT" contentDisplay="TOP" prefHeight="8.0" prefWidth="292.0" text="Patient Information" textFill="#1e90f5">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Label fx:id="mrnLbl" prefHeight="28.0" prefWidth="292.0" text="Medical Record Number(MRN)" />
+            <Label fx:id="mrnLbl" prefHeight="28.0" prefWidth="292.0" text="MRN" />
             <HBox prefHeight="9.0" prefWidth="292.0" spacing="10.0">
                <children>
                   <TextField fx:id="mrnText" prefHeight="2.0" prefWidth="141.0" />
@@ -77,7 +77,7 @@
                   <Pane prefHeight="25.0" prefWidth="150.0" />
                </children>
             </HBox>
-            <Label alignment="TOP_LEFT" contentDisplay="TOP" prefHeight="8.0" prefWidth="292.0" text="Medication Information" textFill="#1e90f5">
+            <Label fx:id="medInfoLbl" alignment="TOP_LEFT" contentDisplay="TOP" prefHeight="8.0" prefWidth="292.0" text="Medication Information" textFill="#1e90f5">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>

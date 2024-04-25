@@ -14,17 +14,17 @@
    <center>
       <VBox fx:id="adminVBox" alignment="TOP_CENTER" minWidth="-Infinity" prefHeight="613.0" prefWidth="277.0" spacing="10.0">
          <children>
-            <Label layoutX="31.0" layoutY="30.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="23.0" prefWidth="246.0" text="Create User Form" textFill="WHITE">
+            <Label fx:id="creatueUserFormLbl" layoutX="31.0" layoutY="30.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="23.0" prefWidth="246.0" text="Create User Form" textFill="WHITE">
                <font>
                   <Font name="Tahoma Bold" size="18.0" />
                </font>
             </Label>
-            <Label layoutX="31.0" layoutY="30.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="22.0" prefWidth="243.0" text="Please fill out all required fields" textFill="WHITE">
+            <Label fx:id="createUserDescriptLbl" layoutX="31.0" layoutY="30.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="22.0" prefWidth="243.0" text="Please fill out all required fields" textFill="WHITE">
                <font>
                   <Font name="Tahoma Bold" size="11.0" />
                </font>
             </Label>
-            <Label layoutX="30.0" layoutY="30.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="19.0" prefWidth="241.0" text="EmployeeID" textFill="WHITE">
+            <Label fx:id="employeeIdLbl" layoutX="30.0" layoutY="30.0" nodeOrientation="LEFT_TO_RIGHT" prefHeight="19.0" prefWidth="241.0" text="Employee ID" textFill="WHITE">
                <font>
                   <Font name="Tahoma Bold" size="14.0" />
                </font>
@@ -34,7 +34,7 @@
                   <Insets />
                </VBox.margin>
             </TextField>
-            <Label nodeOrientation="LEFT_TO_RIGHT" prefHeight="23.0" prefWidth="238.0" text="Name" textFill="WHITE">
+            <Label fx:id="createNameLbl" nodeOrientation="LEFT_TO_RIGHT" prefHeight="23.0" prefWidth="238.0" text="Name" textFill="WHITE">
                <font>
                   <Font name="Tahoma Bold" size="14.0" />
                </font>
@@ -45,7 +45,7 @@
                   <TextField fx:id="textFieldLastName" prefHeight="28.0" prefWidth="111.0" promptText="Last" />
                </children>
             </HBox>
-            <Label nodeOrientation="LEFT_TO_RIGHT" prefHeight="23.0" prefWidth="236.0" text="Email" textFill="WHITE">
+            <Label fx:id="emailLbl" nodeOrientation="LEFT_TO_RIGHT" prefHeight="23.0" prefWidth="236.0" text="Email" textFill="WHITE">
                <font>
                   <Font name="Tahoma Bold" size="14.0" />
                </font>
@@ -58,13 +58,13 @@
                   <Insets bottom="10.0" />
                </VBox.margin>
             </TextField>
-            <Label nodeOrientation="LEFT_TO_RIGHT" prefHeight="23.0" prefWidth="240.0" text="Password" textFill="WHITE">
+            <Label fx:id="pswdLbl" nodeOrientation="LEFT_TO_RIGHT" prefHeight="23.0" prefWidth="240.0" text="Password" textFill="WHITE">
                <font>
                   <Font name="Tahoma Bold" size="14.0" />
                </font>
             </Label>
             <PasswordField fx:id="textFieldPassword1" prefHeight="25.0" prefWidth="0.0" />
-            <Label nodeOrientation="LEFT_TO_RIGHT" prefHeight="23.0" prefWidth="239.0" text="Confirm Password" textFill="WHITE">
+            <Label fx:id="confirmPswdLbl" nodeOrientation="LEFT_TO_RIGHT" prefHeight="23.0" prefWidth="239.0" text="Confirm Password" textFill="WHITE">
                <font>
                   <Font name="Tahoma Bold" size="14.0" />
                </font>
@@ -82,7 +82,7 @@
                   <Insets />
                </VBox.margin>
             </Button>
-            <Button alignment="CENTER" layoutX="30.0" layoutY="393.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onCloseUserCreate" prefHeight="29.0" prefWidth="0.0" style="-fx-background-color: transparent;" text="Close User Create" textFill="WHITE" underline="true">
+            <Button fx:id="closeCreateUserLbl" alignment="CENTER" layoutX="30.0" layoutY="393.0" maxWidth="1.7976931348623157E308" mnemonicParsing="false" onAction="#onCloseUserCreate" prefHeight="29.0" prefWidth="0.0" style="-fx-background-color: transparent;" text="Close Create User" textFill="WHITE" underline="true">
                <font>
                   <Font size="14.0" />
                </font>

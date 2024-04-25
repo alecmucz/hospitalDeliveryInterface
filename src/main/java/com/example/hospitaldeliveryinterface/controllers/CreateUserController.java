@@ -32,13 +32,37 @@ public class CreateUserController {
     private VBox adminVBox;
 
     @FXML
+    private Button closeCreateUserLbl;
+
+    @FXML
+    private Label confirmPswdLbl;
+
+    @FXML
+    private Label createNameLbl;
+
+    @FXML
     private Button createUserButton;
+
+    @FXML
+    private Label createUserDescriptLbl;
 
     @FXML
     private Label createUserError;
 
     @FXML
+    private Label creatueUserFormLbl;
+
+    @FXML
+    private Label emailLbl;
+
+    @FXML
+    private Label employeeIdLbl;
+
+    @FXML
     private HBox errorMessageHbox;
+
+    @FXML
+    private Label pswdLbl;
 
     @FXML
     private PasswordField textFieldConfirmPassword;
@@ -225,6 +249,21 @@ public class CreateUserController {
             adminNavBar.setVisible(false);
         }
     }
+
+    public void updateLanguageLabel(String[] langTextChange){
+        creatueUserFormLbl.setText(langTextChange[34]);
+        createUserDescriptLbl.setText(langTextChange[25]);
+        employeeIdLbl.setText(langTextChange[35]);
+        createNameLbl.setText(langTextChange[27]);
+        textFieldFirstName.setPromptText(langTextChange[44]);
+        textFieldLastName.setPromptText(langTextChange[45]);
+        emailLbl.setText(langTextChange[36]);
+        pswdLbl.setText(langTextChange[34]);
+        confirmPswdLbl.setText(langTextChange[38]);
+        createUserButton.setText(langTextChange[13]);
+        closeCreateUserLbl.setText(langTextChange[39]);
+    }
+
 
     /**public boolean registerUser() {
         UserRecord.CreateRequest request = new UserRecord.CreateRequest()
