@@ -46,8 +46,6 @@ public class HomepageController {
     @FXML
     private ToolBar bottomToolBar;
 
-    @FXML
-    private Button changeLanguageBtn;
 
     @FXML
     private Button completedButton;
@@ -73,8 +71,6 @@ public class HomepageController {
     @FXML
     private ImageView lightDarkIcon;
 
-    @FXML
-    private HBox mainContainer;
 
     @FXML
     private BorderPane mainLayout;
@@ -97,11 +93,7 @@ public class HomepageController {
     @FXML
     private AnchorPane rootPane;
 
-    @FXML
-    private HBox searchBarHbox;
 
-    @FXML
-    private TextField searchBarTextField;
 
     @FXML
     private Button searchButton;
@@ -169,7 +161,7 @@ public class HomepageController {
         setUpAdjustWidth();
 
         onSetDisabled(true);
-        toggleReports(false);
+
 
 
         searchBarTextField.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -442,12 +434,15 @@ public class HomepageController {
     /*********************************************************************************/
     @FXML
     void onPendingClick(ActionEvent event) throws IOException {
+
+        if(ToggleTracking.getCurrentTab().equals("Reports")){
+            toggleReports();
+        }
         System.out.println("Pending Button Clicked");
         if(!ToggleTracking.getCurrentTab().equals("Pending")){
             ToggleTracking.setCurrentTab("Pending");
             deliverReturnBtn.setText(LangToggleBtn[3]);
             FirebaseListener.navBarDataDisplay("Pending");
-            toggleReports(false);
         }
 
     }
@@ -455,13 +450,16 @@ public class HomepageController {
     @FXML
     void onCompleteClick(ActionEvent event) throws IOException {
         System.out.println("Completed Button Clicked");
+
+        if(ToggleTracking.getCurrentTab().equals("Reports")){
+            toggleReports();
+        }
         if(!ToggleTracking.getCurrentTab().equals("Completed")){
             ToggleTracking.setCurrentTab("Completed");
             deliverReturnBtn.setText(LangToggleBtn[4]);
             FirebaseListener.navBarDataDisplay("Completed");
             ToggleTracking.setIsEdit(false);
             ToggleTracking.setIsNewDelivery(false);
-            toggleReports(false);
             toggleNewDelivery();
         }
 
@@ -476,7 +474,7 @@ public class HomepageController {
             buttonToggle(reportsButton);
             buttonNotToggle(pendingButton);
             buttonNotToggle(completedButton);
-            toggleReports(true);
+            toggleReports();
             toggleNewDelivery();
         }
     }
@@ -593,15 +591,6 @@ public class HomepageController {
     /**
      * turns off unneeded buttons and makes the search bar visible when you go to the reports tab
      */
-    private void toggleReports(boolean currentState) {
-
-        searchBarHbox.setVisible(currentState);
-        if(currentState){
-            searchBarHbox.setPrefHeight(46);
-        }else{
-            searchBarHbox.setPrefHeight(0);
-        }
-    }
 
     public void onNotifyMessage(){
         notifyMessageController.displayNotfications();
@@ -844,6 +833,7 @@ public class HomepageController {
         alert.setContentText("You are signing out");
         Optional<ButtonType> result = alert.showAndWait();
         signOutVbox.setVisible(false);
+
     }
 
     @FXML
@@ -855,7 +845,9 @@ public class HomepageController {
             HashMap<String,String[]> checkStoredLang = MitchTextTranslate.getStoredLang();
             String[] retrieveTranslatedText = checkStoredLang.get(ToggleTracking.getLanguageTrack());
 
-            LoginButtonChange.setText(retrieveTranslatedText[10]);
+            String translateExist = retrieveTranslatedText != null ? retrieveTranslatedText[10] : "Log In";
+
+            LoginButtonChange.setText(translateExist);
             onSetDisabled(true);
             //LogInVbox.setVisible(true);
         }
@@ -881,20 +873,11 @@ public class HomepageController {
     /**
      * turns off unneeded buttons and makes the search bar visible when you go to the reports tab
      */
-   /* private void toggleReports() {
+   private void toggleReports() {
         editDeliverButtonsHbox.setVisible(!editDeliverButtonsHbox.isVisible());
         searchHBox.setPrefHeight((searchHBox.getHeight() + 50.0) % 100.0);
         searchBarTextField.setVisible(!searchBarTextField.isVisible());
-        listenToSearchBar();
+
     }
-    public void listenToSearchBar() {
-        searchBarTextField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if(searchBarTextField.getText().isEmpty()){
-                orderDisplayContainer.getChildren().clear();
-            }
-            else {
-                onSearchClick();
-            }
-        });
-    }*/
+
 }
