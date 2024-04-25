@@ -15,9 +15,6 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
-import javax.swing.text.Document;
 import java.io.IOException;
 import java.util.*;
 
@@ -25,6 +22,8 @@ import static com.example.hospitaldeliveryinterface.Algolia.AlgoliaMgmt.searchAl
 
 
 public class HomepageController {
+    @FXML
+    private HBox searchHBox;
     @FXML
     private HBox mainContainer;
     @FXML
@@ -108,10 +107,12 @@ public class HomepageController {
     public void initialize(){
         setDisabled(true);
 
+
         setUpDeliveryForm();
         setUpCreateUserForm();
         setUpNotifyMessage();
         setUpLoginForm();
+
 
 
         LangToggleBtn = MitchTextTranslate.defaultEnglishText();
@@ -135,6 +136,9 @@ public class HomepageController {
 
         settingNavbar.setVisible(false);
         adminToolsNav.setVisible(false);
+
+        searchHBox.setPrefHeight(0.0);
+        searchBarTextField.setVisible(false);
 
         selectOrder();
 
@@ -653,7 +657,6 @@ public class HomepageController {
                 }
             }
         }
-
         return null;
     }
 
@@ -743,8 +746,9 @@ public class HomepageController {
      * turns off unneeded buttons and makes the search bar visible when you go to the reports tab
      */
     private void toggleReports() {
-        searchBarHbox.setVisible(!searchBarHbox.isVisible());
         editDeliverButtonsHbox.setVisible(!editDeliverButtonsHbox.isVisible());
+        searchHBox.setPrefHeight((searchHBox.getHeight() + 50.0) % 100.0);
+        searchBarTextField.setVisible(!searchBarTextField.isVisible());
         listenToSearchBar();
     }
     public void listenToSearchBar() {
