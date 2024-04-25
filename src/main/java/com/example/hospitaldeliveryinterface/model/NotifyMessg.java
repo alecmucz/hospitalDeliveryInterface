@@ -60,23 +60,29 @@ public class NotifyMessg {
         return new String[]{dateFormat.format(currentDate), timeFormat.format(currentDate)};
     }
 
-    public static void createMessg(String status, String employeeID, String orderNum){
+    public static void createMessg(String status, String orderNum){
 
         String[] dateAndTimeArr = currentDateAndTime();
         String messgTemp = "";
+        String tempEmployeeID = "EID: ";
+        if(Employee.getCurrentLogin() != null){
+            tempEmployeeID += Employee.getCurrentLogin();
+        }else{
+            tempEmployeeID += "Employee ID is NULL";
+        }
 
         switch(status){
             case "newDelivery":
-                messgTemp = employeeID + " created a new order: #" + orderNum;
+                messgTemp = tempEmployeeID + " created a new order: #" + orderNum;
                 break;
             case "delivered":
-                messgTemp = employeeID + " signed off order: #" + orderNum;
+                messgTemp = tempEmployeeID + " signed off order: #" + orderNum;
                 break;
             case "edited":
-                messgTemp = employeeID + " edited order: #" + orderNum;
+                messgTemp = tempEmployeeID + " edited order: #" + orderNum;
                 break;
             case "returnToPending":
-                messgTemp = employeeID + " returned order: #" + orderNum + " to pending";
+                messgTemp = tempEmployeeID + " returned order: #" + orderNum + " to pending";
                 break;
             default:
                 System.out.println("Status type: " + status + " does not exist.");

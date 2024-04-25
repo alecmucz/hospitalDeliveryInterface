@@ -29,6 +29,9 @@ public class DeliveryFormController {
     private TextArea addNoteText;
 
     @FXML
+    private Button clearBtn;
+
+    @FXML
     private Label deliveryFormLabel;
 
     @FXML
@@ -68,6 +71,9 @@ public class DeliveryFormController {
     private Label medDescriplbl;
 
     @FXML
+    private Label medInfoLbl;
+
+    @FXML
     private TextField medicationText;
 
     @FXML
@@ -79,10 +85,31 @@ public class DeliveryFormController {
     @FXML
     private Label nameLbl;
 
+    @FXML
+    private Label patientInfoLbl;
+
+    @FXML
+    private Button submitBtn;
+
     /***Non FXML Components***/
     private TextField[] allInputs;
 
+    String tempNewDeliveryLang;
+    String tempEditDeliveryLang;
+
+    String tempAddNoteLang;
+    String tempCloseNoteLang;
+
+    boolean isNewDelivery;
+
     public void initialize(){
+
+        isNewDelivery = false;
+
+        tempAddNoteLang = "Add Note";
+        tempCloseNoteLang = "Close Add Note";
+        tempNewDeliveryLang = "New Delivery Form";
+        tempEditDeliveryLang = "Edit Delivery Form";
 
         addNoteText.setVisible(false);
 
@@ -205,7 +232,7 @@ public class DeliveryFormController {
                     closeDeliveryForm();
                     ToggleTracking.setIsEdit(false);
 
-                    NotifyMessg.createMessg("edited", "[Employee ID]", ToggleTracking.getSelectedCardOrderNum());
+                    NotifyMessg.createMessg("edited", ToggleTracking.getSelectedCardOrderNum());
 
 
                     if(ToggleTracking.getCurrentTab().equals("Pending")) {
@@ -224,7 +251,7 @@ public class DeliveryFormController {
                 }
                 else {
                     clearText();
-                    NotifyMessg.createMessg("newDelivery", "[Employee ID]", newOrderNum);
+                    NotifyMessg.createMessg("newDelivery", newOrderNum);
                     DataBaseMgmt.addToDB(newOrder, "pendingDeliveries",true);
                     createNewIndex(newOrder);
 
@@ -244,15 +271,22 @@ public class DeliveryFormController {
     /**other methoid helper**/
 
     public String  createOrderHistoryMessage(String statusType){
+
+        String tempEmplyeeID = "EID: ";
+        if(Employee.getCurrentLogin() != null){
+            tempEmplyeeID += Employee.getCurrentLogin();
+        }else{
+            tempEmplyeeID += "NO EMPLOYEE FOUND!";
+        }
         switch (statusType){
             case "new":
-                return "["+DeliveryRequisition.currentDateTime()+"]: " + "[EmployeeID goes here] " + "created this order.";
+                return "["+DeliveryRequisition.currentDateTime()+"]: " + tempEmplyeeID + " created this order.";
             case "edit":
-                return "["+DeliveryRequisition.currentDateTime()+"]: " + "[EmployeeID goes here] " + "edited this order.";
+                return "["+DeliveryRequisition.currentDateTime()+"]: " + tempEmplyeeID + " edited this order.";
             case "delivery":
-                return "["+DeliveryRequisition.currentDateTime()+"]: " + "[EmployeeID goes here] " + "delivered this order.";
+                return "["+DeliveryRequisition.currentDateTime()+"]: " + tempEmplyeeID + " delivered this order.";
             case "return":
-                return "["+DeliveryRequisition.currentDateTime()+"]: " + "[EmployeeID goes here] " + "return this order to queue.";
+                return "["+DeliveryRequisition.currentDateTime()+"]: " + tempEmplyeeID + " return this order to queue.";
         }
 
         return null;
@@ -264,10 +298,10 @@ public class DeliveryFormController {
     }
     public void toggleAddNote(){
         if(ToggleTracking.getIsAddNote()){
-            addNoteBtn.setText("Close Note");
+            addNoteBtn.setText(tempCloseNoteLang);
             addNoteText.setVisible(true);
         }else{
-            addNoteBtn.setText("Add Note");
+            addNoteBtn.setText(tempAddNoteLang);
             addNoteText.setVisible(false);
         }
     }
@@ -290,14 +324,16 @@ public class DeliveryFormController {
     }
 
     public void openNewDlivery(){
-        deliveryFormLabel.setText("New Delivery Form");
+        deliveryFormLabel.setText(tempNewDeliveryLang);
+        isNewDelivery = true;
         clearText();
     }
     public void openEditDelivery(){
         System.out.println("Edit Delivery is Open");
+        isNewDelivery = false;
         deliveryFormPane.setPrefWidth(320);
         deliveryFormPane.setVisible(true);
-        deliveryFormLabel.setText("Edit Delivery Form");
+        deliveryFormLabel.setText(tempEditDeliveryLang);
         clearText();
 
         DeliveryRequisition findOrder = retrieveOrderFromQueueSaves();
@@ -344,5 +380,38 @@ public class DeliveryFormController {
         doseAmountText.setText(currentOrder.getNumDoses());
     }
 
+  public void updateLanguageLabel(String[] langTextChange){
+        tempNewDeliveryLang = langTextChange[24];
+        tempEditDeliveryLang = langTextChange[43];
+
+        if(isNewDelivery){
+            deliveryFormLabel.setText(tempNewDeliveryLang);
+        }else{
+            deliveryFormLabel.setText(tempEditDeliveryLang);
+        }
+
+          tempCloseNoteLang = langTextChange[46];
+          tempAddNoteLang = langTextChange[29];
+
+          if(ToggleTracking.getIsAddNote()){
+              addNoteBtn.setText(tempCloseNoteLang);
+          }else{
+              addNoteBtn.setText(tempAddNoteLang);
+          }
+
+        formDescriplbl.setText(langTextChange[25]);
+        patientInfoLbl.setText(langTextChange[26]);
+
+        nameLbl.setText(langTextChange[27]);
+        firstnameText.setPromptText(langTextChange[44]);
+        lastnameText.setPromptText(langTextChange[45]);
+        locationlbl.setText(langTextChange[16]);
+        medInfoLbl.setText(langTextChange[40]);
+        medDescriplbl.setText(langTextChange[17] + " (" + langTextChange[27] + "/" + langTextChange[28] + ")");
+        doselbl.setText(langTextChange[18]);
+        doseQuantlbl.setText(langTextChange[19]);
+        clearBtn.setText(langTextChange[30]);
+        submitBtn.setText(langTextChange[31]);
+    }
 
 }

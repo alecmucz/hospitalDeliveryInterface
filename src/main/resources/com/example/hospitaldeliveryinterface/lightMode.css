@@ -1,6 +1,9 @@
 
 /*CSS for homepage.fxml*/
 
+#LoginButtonChange{
+    -fx-background-color: transparent;
+}
 
 .tool-bar{
     -fx-background-color: #22aae1;
@@ -8,7 +11,7 @@
     -fx-border-width: 0 0 3 0;
 }
 
-#settingNavbar, #adminToolsNav{
+#settingNavbar, #adminToolsNav, #signOutVbox{
     -fx-background-color: #22aae1;
 }
 
@@ -44,6 +47,16 @@
     -fx-border-color: white;
     -fx-border-width: 1;
 
+}
+
+#deliverReturnBtn:disabled,
+#newDeliveryButton:disabled,
+#editBtn:disabled {
+    -fx-opacity: 0.5;
+}
+
+#searchBarHbox{
+    -fx-background-color: transparent;
 }
 
 /*CSS for homepage.fxml ends*/
