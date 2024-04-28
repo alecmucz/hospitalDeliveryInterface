@@ -14,6 +14,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
+import net.suuft.libretranslate.util.JsonUtil;
 
 import java.io.IOException;
 import java.util.*;
@@ -82,8 +83,6 @@ public class HomepageController {
     @FXML
     private Button darkLightBtn;
 
-    private Set<DeliveryRequisition> selectedOrders = new HashSet<>();
-
     //variables created
     private boolean isToggleSettings;
     private boolean isToggleAdmin;
@@ -109,7 +108,6 @@ public class HomepageController {
     /****************************************************************************/
     public void initialize(){
 
-        //setDisabled(true);
         setUpDeliveryForm();
         setUpCreateUserForm();
         setUpNotifyMessage();
@@ -343,7 +341,7 @@ public class HomepageController {
             ToggleTracking.setCurrentTab("Pending");
             deliverReturnBtn.setText(LangToggleBtn[3]);
             FirebaseListener.navBarDataDisplay("Pending");
-            selectedOrders.clear(); //clears the selection of orders when changing screens
+            ToggleTracking.clearOrders(); //clears the selection of orders when changing screens
         }
     }
 
@@ -361,7 +359,7 @@ public class HomepageController {
             ToggleTracking.setIsEdit(false);
             ToggleTracking.setIsNewDelivery(false);
             toggleNewDelivery();
-            selectedOrders.clear(); //clears the selection of orders when changing screens
+            ToggleTracking.clearOrders(); //clears the selection of orders when changing screens
         }
 
     }
@@ -426,6 +424,8 @@ public class HomepageController {
         selectOrder();
         deliveryFormController.openNewDlivery();
     }
+
+    /*
     @FXML
     void onDeliverReturn(ActionEvent event) {
         System.out.println("Delivery orders button clicked");
@@ -435,8 +435,7 @@ public class HomepageController {
                 DeliveryRequisition order = iterator.next();
                 String collectionFrom = ToggleTracking.getCurrentTab().equals("Pending") ? "pendingDeliveries" : "completedDeliveries";
                 String collectionTo = ToggleTracking.getCurrentTab().equals("Pending") ? "completedDeliveries" : "pendingDeliveries";
-
-                DataBaseMgmt.swapDB(order,order.getOrderNumberDisplay(), collectionFrom, collectionTo);
+                //DataBaseMgmt.swapDB(order.getOrderNumberDisplay(), collectionFrom, collectionTo);
                 System.out.println("Swapped order " + order.getOrderNumberDisplay() + " from " + collectionFrom + " to " + collectionTo);
 
                 Node node = findNodeByRequisition(order);
@@ -451,22 +450,59 @@ public class HomepageController {
             System.out.println("No orders selected for delivery/return.");
         }
     }
+     */
+
+
+
+    @FXML
+    void onDeliverReturn(ActionEvent event) {
+        System.out.println("Delivery orders button clicked");
+        if (!ToggleTracking.getSelectedOrders().isEmpty()) {
+            String currentTab = ToggleTracking.getCurrentTab();
+            String collectionFrom = currentTab.equals("Pending") ? "pendingDeliveries" : "completedDeliveries";
+            String collectionTo = currentTab.equals("Pending") ? "completedDeliveries" : "pendingDeliveries";
+            for (DeliveryRequisition order : ToggleTracking.getSelectedOrders()) {
+                DeliveryRequisition swapOrder = DataBaseMgmt.findOrder(order.getOrderNumberDisplay(), collectionFrom);
+                DataBaseMgmt.swapDB(swapOrder, swapOrder.getOrderNumberDisplay(), collectionFrom, collectionTo);
+            }
+            Platform.runLater(() -> {
+                for (DeliveryRequisition order : ToggleTracking.getSelectedOrders()) {
+                    Node node = findNodeByRequisition(order);
+                    if (node != null) {
+                        orderDisplayContainer.getChildren().remove(node);
+                    }
+                }
+            });
+
+            ToggleTracking.clearOrders();
+            System.out.println("Processed all selected orders for delivery/return.");
+        } else {
+            System.out.println("No orders selected for delivery/return.");
+        }
+    }
 
     @FXML
     void onDeleteSelectedOrders(ActionEvent event) {
-        Iterator<DeliveryRequisition> iterator = selectedOrders.iterator();
-        while (iterator.hasNext()) {
-            DeliveryRequisition requisition = iterator.next();
-            DataBaseMgmt.deleteFromDB(requisition.getOrderNumberDisplay(), ToggleTracking.getCurrentTab().equals("Pending") ? "pendingDeliveries" : "completedDeliveries");
-            Node node = findNodeByRequisition(requisition);
-            if (node != null) {
-                Platform.runLater(() -> {
-                    orderDisplayContainer.getChildren().remove(node);
-                });
+        System.out.println("Delivery orders button clicked");
+        if (!ToggleTracking.getSelectedOrders().isEmpty()) {
+            String currentTab = ToggleTracking.getCurrentTab();
+            String collectionFrom = currentTab.equals("Pending") ? "pendingDeliveries" : "completedDeliveries";
+            for (DeliveryRequisition order : ToggleTracking.getSelectedOrders()) {
+                DeliveryRequisition deleteOrder = DataBaseMgmt.findOrder(order.getOrderNumberDisplay(), collectionFrom);
+                DataBaseMgmt.deleteFromDB(deleteOrder.getOrderNumberDisplay(), collectionFrom);
             }
-            iterator.remove();
-        }
-        if (orderDisplayContainer.getChildren().isEmpty()) {
+            Platform.runLater(() -> {
+                for (DeliveryRequisition order : ToggleTracking.getSelectedOrders()) {
+                    Node node = findNodeByRequisition(order);
+                    if (node != null) {
+                        orderDisplayContainer.getChildren().remove(node);
+                    }
+                }
+            });
+            ToggleTracking.clearOrders();
+            System.out.println("Processed all selected orders for delivery/return.");
+        } else {
+            System.out.println("No orders selected for delivery/return.");
         }
     }
 
@@ -478,9 +514,10 @@ public class HomepageController {
         }
         return null; // Not found
     }
+    /*
     @FXML
     void onEditDelivery(ActionEvent event) {
-        System.out.println("OnEditDeliveyr checkv.1: " + ToggleTracking.getSelectedCardOrderNum());
+        System.out.println("OnEditDelivery checkv.1: " + ToggleTracking.getSelectedCardOrderNum());
 
         if(selectedCard != null && ToggleTracking.getIsEdit() && ToggleTracking.getSelectedCardOrderNum() != null){
             selectedCard.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: transparent");
@@ -499,9 +536,32 @@ public class HomepageController {
                deliveryFormController.openEditDelivery();
            }
         }
-
-
     }
+      */
+    @FXML
+    void onEditDelivery(ActionEvent event) {
+        System.out.println("Edit Button pressed");
+
+        String selectedOrderNum = ToggleTracking.getSelectedCardOrderNum();
+
+        if (ToggleTracking.getSelectedOrders().size() == 1) {
+            System.out.println("OnEditDelivery check: " + selectedOrderNum);
+
+            if (ToggleTracking.getIsEdit()) {
+                ToggleTracking.setIsEdit(false);
+                ToggleTracking.setIsNewDelivery(false);
+                ToggleTracking.setSelectedCardOrderNum(null);
+            } else {
+                ToggleTracking.setIsEdit(true);
+                ToggleTracking.setIsNewDelivery(false);
+            }
+            toggleNewDelivery();
+            if (ToggleTracking.getIsEdit() && deliveryFormController != null) {
+                deliveryFormController.openEditDelivery();
+            }
+        }
+    }
+
 
     public void onNotifyMessage(){
         notifyMessageController.displayNotfications();
@@ -636,23 +696,39 @@ public class HomepageController {
         }
     }
 
+//    public void selectOrder() {
+//        for (Node node : orderDisplayContainer.getChildren()) {
+//            node.setOnMouseClicked(mouseEvent -> {
+//                if(node instanceof HBox){
+//                    HBox gridPane = (HBox) node;
+//                    DeliveryRequisition requisition = (DeliveryRequisition) gridPane.getUserData();
+//                    if (selectedOrders.contains(requisition)) {
+//                        // Deselect the order
+//                        deselectNode(gridPane);
+//                        selectedOrders.remove(requisition);
+//                    } else {
+//                        // Select the order
+//                        selectNode(gridPane);
+//                        selectedOrders.add(requisition);
+//                    }
+//                }
+//
+//            });
+//        }
+//    }
+
     public void selectOrder() {
         for (Node node : orderDisplayContainer.getChildren()) {
             node.setOnMouseClicked(mouseEvent -> {
-                if(node instanceof HBox){
-                    HBox gridPane = (HBox) node;
-                    DeliveryRequisition requisition = (DeliveryRequisition) gridPane.getUserData();
-                    if (selectedOrders.contains(requisition)) {
-                        // Deselect the order
-                        deselectNode(gridPane);
-                        selectedOrders.remove(requisition);
+                if (node instanceof HBox) {
+                    HBox hbox = (HBox) node;
+                    DeliveryRequisition requisition = (DeliveryRequisition) hbox.getUserData();
+                    if (ToggleTracking.getSelectedOrders().contains(requisition)) {
+                        ToggleTracking.deselectNode(hbox);
                     } else {
-                        // Select the order
-                        selectNode(gridPane);
-                        selectedOrders.add(requisition);
+                        ToggleTracking.selectNode(hbox);
                     }
                 }
-
             });
         }
     }
@@ -715,9 +791,11 @@ public class HomepageController {
                 selectedCard = null;
                 ToggleTracking.setSelectedCardOrderNum(null);
                 ToggleTracking.setIsEdit(false);
+
                 toggleNewDelivery();
             }
     }
+
 
     public Label recusiveFindLabel(Node node, String nodeid){
         if (node instanceof Label && node.getId() != null && node.getId().equals(nodeid)) {
@@ -771,7 +849,7 @@ public class HomepageController {
         }
     }
 
-     */
+   */
     public void showDialogSignOut() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText("Logged out");

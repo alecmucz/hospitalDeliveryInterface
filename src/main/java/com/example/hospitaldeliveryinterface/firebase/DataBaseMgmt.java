@@ -218,7 +218,6 @@ public class DataBaseMgmt {
 
 
 
-
             DeliveryRequisition order = new DeliveryRequisition(
                     document.getId(),
                     document.getString("timeCreated"),
