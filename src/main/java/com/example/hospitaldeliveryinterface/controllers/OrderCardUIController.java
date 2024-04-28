@@ -18,6 +18,7 @@ import javafx.scene.layout.Pane;
 
 import java.lang.reflect.Array;
 import java.util.HashMap;
+import java.util.List;
 
 public class OrderCardUIController {
 
@@ -192,11 +193,15 @@ public class OrderCardUIController {
     }
     private void populateOrderHistory(DeliveryRequisition currentOrder){
         if(currentOrder.getOrderStatusHistory() != null){
-            for(OrderHistory childMess: currentOrder.getOrderStatusHistory()){
+            List<OrderHistory> history = currentOrder.getOrderStatusHistory();
+
+            for (int i = history.size() - 1; i >= 0; i--) {
+                OrderHistory childMess = history.get(i);
                 orderStatusDisplay.setText(orderStatusDisplay.getText() + "- " + childMess.getStatusMessage() + "\n");
                 if(childMess.getNotes() != null){
                     orderStatusDisplay.setText(orderStatusDisplay.getText() + "**Notes** " + childMess.getNotes() + "\n");
                 }
+
             }
         }
 

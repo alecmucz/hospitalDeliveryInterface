@@ -12,6 +12,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import net.suuft.libretranslate.util.JsonUtil;
@@ -21,7 +23,10 @@ import java.util.*;
 
 import static com.example.hospitaldeliveryinterface.Algolia.AlgoliaMgmt.searchAlgolia;
 
+
 public class HomepageController {
+    @FXML
+    private HBox searchHBox;
     @FXML
     private HBox mainContainer;
     @FXML
@@ -32,66 +37,88 @@ public class HomepageController {
 
     @FXML
     private Button LoginButtonChange;
-    @FXML
-    private Button adminButton;
-    @FXML
-    private VBox adminToolsNav;
-    @FXML
-    private ToolBar bottomToolBar;
-    @FXML
-    private Button completedButton;
-    @FXML
-    private Button deliverReturnBtn;
-    @FXML
-    private Button deleteOrdersBtn;
-    @FXML
-    private Button createUserBtn;
-    @FXML
-    private Button editBtn;
-    @FXML
-    private BorderPane mainLayout;
-    @FXML
-    private Button newDeliveryButton;
-    @FXML
-    private VBox orderDisplayContainer;
-    @FXML
-    private Button pendingButton;
 
     @FXML
-    private Button reportsButton;
+    private Button adminButton;
+
     @FXML
-    private HBox searchBarHbox;
+    private VBox adminToolsNav;
+
+    @FXML
+    private ToolBar bottomToolBar;
+
+
+    @FXML
+    private Button completedButton;
+
+    @FXML
+    private Button createUserBtn;
+
+    @FXML
+    private Button darkLightBtn;
+
+    @FXML
+    private Button deleteOrdersBtn;
+
+    @FXML
+    private Button deliverReturnBtn;
+
+    @FXML
+    private Button editBtn;
+
     @FXML
     private HBox editDeliverButtonsHbox;
 
     @FXML
-    private Button searchButton;
+    private ImageView lightDarkIcon;
+
+
     @FXML
-    private ChoiceBox<String> searchByChoiceBox;
-    @FXML
-    private VBox settingNavbar;
-    @FXML
-    private Button settingsButton;
-    @FXML
-    private AnchorPane rootPane;
-    @FXML
-    private Label usernameLabel;
+    private BorderPane mainLayout;
 
     @FXML
     private ScrollPane mainOrderScroll;
 
     @FXML
-    private Button darkLightBtn;
+    private Button newDeliveryButton;
+
+    @FXML
+    private VBox orderDisplayContainer;
+
+    @FXML
+    private Button pendingButton;
+
+    @FXML
+    private Button reportsButton;
+
+    @FXML
+    private AnchorPane rootPane;
+
+
+
+    @FXML
+    private Button searchButton;
+
+    @FXML
+    private VBox settingNavbar;
+
+    @FXML
+    private Button settingsButton;
+
+    @FXML
+    private Button signOutBtn;
+
+    @FXML
+    private VBox signOutVbox;
 
     //variables created
+    private boolean isLoginToggle;
     private boolean isToggleSettings;
     private boolean isToggleAdmin;
     private Node selectedCard;
     private String[] LangToggleBtn;
 
     private boolean isLightMode;
-
-    private Node[] homePageColorChanges;
 
     /***Menus and controllers for different components of application********/
     private AnchorPane languageMenuUI;
@@ -106,12 +133,52 @@ public class HomepageController {
     private LoginFormController loginFormController;
 
     /****************************************************************************/
+
+    private Button[] buttonsForAdjustWidth;
+
+    private Image lightModeIcon;
+    private Image darkModeIcon;
+
+    String tempDarkMode;
+    String tempLightMode;
     public void initialize(){
+
+        tempLightMode = "Light Mode";
+        tempDarkMode = "Dark Mode";
+
+
+        buttonsForAdjustWidth = new Button[]{
+                pendingButton,
+                completedButton,
+                reportsButton,
+                editBtn,
+                deliverReturnBtn,
+                newDeliveryButton,
+                settingsButton,
+                LoginButtonChange,
+                adminButton
+        };
+        setUpAdjustWidth();
+
+        onSetDisabled(true);
+
+
+
+        searchBarTextField.textProperty().addListener((observable, oldValue, newValue) -> {
+            if(searchBarTextField.getText().isEmpty()){
+                orderDisplayContainer.getChildren().clear();
+            }
+            else {
+                onSearchClick();
+            }
+        });
+
 
         setUpDeliveryForm();
         setUpCreateUserForm();
         setUpNotifyMessage();
         setUpLoginForm();
+
 
 
         LangToggleBtn = MitchTextTranslate.defaultEnglishText();
@@ -128,6 +195,7 @@ public class HomepageController {
         selectedCard = null;
 
         isToggleSettings = false;
+        isLoginToggle = false;
         int totalOrders = DataBaseMgmt.getTotalNumOrders();
         DeliveryRequisition.setOrderNumCount(totalOrders);
 
@@ -135,6 +203,10 @@ public class HomepageController {
 
         settingNavbar.setVisible(false);
         adminToolsNav.setVisible(false);
+        signOutVbox.setVisible(false);
+
+        searchHBox.setPrefHeight(0.0);
+        searchBarTextField.setVisible(false);
 
         selectOrder();
 
@@ -148,14 +220,26 @@ public class HomepageController {
         isLightMode = true;
         rootPane.getStylesheets().clear();
 
+        lightModeIcon = new Image(String.valueOf(getClass().getResource("/com/example/hospitaldeliveryinterface/lightModeIcon.png")));
+        darkModeIcon = new Image(String.valueOf(getClass().getResource("/com/example/hospitaldeliveryinterface/darkModeIcon.png")));
+
 
     }
     /****************initial SETUP BEGINS HERE**************************/
 
-    public void setDisabled(boolean temp){
-        deliverReturnBtn.setDisable(temp);
+    public void setUpAdjustWidth(){
+      for(Button childBtn: buttonsForAdjustWidth){
+          childBtn.textProperty().addListener(((observableValue, s, t1) -> {
+              childBtn.setPrefWidth(Button.USE_COMPUTED_SIZE);
+          }));
+      }
+    }
+
+    public void onSetDisabled(boolean temp){
         editBtn.setDisable(temp);
         newDeliveryButton.setDisable(temp);
+        deliverReturnBtn.setDisable(temp);
+
     }
     public void setUpLoginForm(){
         try {
@@ -240,7 +324,7 @@ public class HomepageController {
             rootPane.getChildren().add(languageMenuUI);
 
             AnchorPane.setTopAnchor(languageMenuUI, 127.0);
-            AnchorPane.setRightAnchor(languageMenuUI, 200.0);
+            AnchorPane.setRightAnchor(languageMenuUI, 180.0);
 
             languageMenuUI.setVisible(false);
 
@@ -259,14 +343,27 @@ public class HomepageController {
         newDeliveryButton.setText(ToggleTracking.getIsNewDelivery()?langTextChange[8]:langTextChange[7]);
         editBtn.setText(ToggleTracking.getIsEdit()?langTextChange[6]:langTextChange[5]);
 
-        settingsButton.setText(langTextChange[2]);
+        //settingsButton.setText(langTextChange[2]);
         completedButton.setText(langTextChange[0]);
         pendingButton.setText(langTextChange[1]);
         reportsButton.setText(langTextChange[23]);
         createUserBtn.setText(langTextChange[13]);
         deleteOrdersBtn.setText(langTextChange[12]);
-        adminButton.setText("< "+langTextChange[9]);
-        LoginButtonChange.setText(langTextChange[10]);
+        adminButton.setText(langTextChange[9]);
+
+        if(Employee.getCurrentLogin() == null){
+            LoginButtonChange.setText(langTextChange[10]);
+        }
+
+        tempLightMode = langTextChange[41];
+        tempDarkMode = langTextChange[42];
+
+        if(isLightMode){
+            darkLightBtn.setText(langTextChange[41]);
+        }else{
+            darkLightBtn.setText(langTextChange[42]);
+        }
+        signOutBtn.setText(langTextChange[11]);
 
         switch (ToggleTracking.getCurrentTab()){
             case "Pending":
@@ -281,6 +378,9 @@ public class HomepageController {
                 System.out.println("No Page/Tab exist on Application!");
         }
 
+        deliveryFormController.updateLanguageLabel(langTextChange);
+        loginFormController.updateLanguageLabel(langTextChange);
+        createUserController.updateLanguageLabel(langTextChange);
 
     }
 
@@ -312,13 +412,16 @@ public class HomepageController {
     }
 
     public void handleDarkLightChanges(){
+
         String currentStyleSheet = "";
         if (isLightMode) {
-            darkLightBtn.setText("Light Mode");
+            darkLightBtn.setText(tempLightMode);
+            lightDarkIcon.setImage(lightModeIcon);
             currentStyleSheet = "darkMode.css";
 
         } else {
-            darkLightBtn.setText("Dark Mode");
+            darkLightBtn.setText(tempDarkMode);
+            lightDarkIcon.setImage(darkModeIcon);
             currentStyleSheet = "lightMode.css";
         }
 
@@ -337,19 +440,22 @@ public class HomepageController {
         if(ToggleTracking.getCurrentTab().equals("Reports")) {
             toggleReports();
         }
+        System.out.println("Pending Button Clicked");
         if(!ToggleTracking.getCurrentTab().equals("Pending")){
             ToggleTracking.setCurrentTab("Pending");
             deliverReturnBtn.setText(LangToggleBtn[3]);
             FirebaseListener.navBarDataDisplay("Pending");
             ToggleTracking.clearOrders(); //clears the selection of orders when changing screens
         }
+
     }
 
     @FXML
     void onCompleteClick(ActionEvent event) throws IOException {
         System.out.println("Completed Button Clicked: Clearing Selection");
         System.out.println("Completed Button Clicked");
-        if(ToggleTracking.getCurrentTab().equals("Reports")) {
+
+        if(ToggleTracking.getCurrentTab().equals("Reports")){
             toggleReports();
         }
         if(!ToggleTracking.getCurrentTab().equals("Completed")){
@@ -368,13 +474,13 @@ public class HomepageController {
         System.out.println("Reports Button Clicked");
         if(!ToggleTracking.getCurrentTab().equals("Reports")) {
             ToggleTracking.setCurrentTab("Reports");
-            toggleNewDelivery();
             orderDisplayContainer.getChildren().clear();
             deliverReturnBtn.setText("Deliver Package");
             buttonToggle(reportsButton);
             buttonNotToggle(pendingButton);
             buttonNotToggle(completedButton);
             toggleReports();
+            toggleNewDelivery();
         }
     }
 
@@ -389,18 +495,37 @@ public class HomepageController {
     }
 
     @FXML
+    void handleLoginButtonChange() {
+
+        if(Employee.getCurrentLogin() != null){
+            signOutVbox.setVisible(!signOutVbox.isVisible());
+        }else{
+            loginFormController.setLoginVBoxVisibility(true);
+        }
+
+        languageMenuUI.setVisible(false);
+        adminToolsNav.setVisible(false);
+        settingNavbar.setVisible(false);
+        buttonNotToggle(settingsButton);
+        isToggleSettings = false;
+        isToggleAdmin = false;
+
+    }
+    @FXML
     void onSettingClick(ActionEvent event) {
         if(!isToggleSettings){
             buttonToggle(settingsButton);
             settingNavbar.setVisible(true);
+
         }else{
             buttonNotToggle(settingsButton);
             settingNavbar.setVisible(false);
             loginFormController.setLoginVBoxVisibility(false);//Bug Fix: discards widgets within LoginVBOX if the Login button is clicked and settings is closed
-            adminToolsNav.setVisible(false);
-            isToggleAdmin = false;
-            languageMenuUI.setVisible(false);
         }
+        adminToolsNav.setVisible(false);
+        isToggleAdmin = false;
+        languageMenuUI.setVisible(false);
+        signOutVbox.setVisible(false);
 
         isToggleSettings = !isToggleSettings;
     }
@@ -414,7 +539,17 @@ public class HomepageController {
         } else {
             adminToolsNav.setVisible(false);
         }
+
+        languageMenuUI.setVisible(false);
+        settingNavbar.setVisible(false);
+        signOutVbox.setVisible(false);
+
+        buttonNotToggle(settingsButton);
+        isToggleSettings = false;
+
     }
+
+
 
     @FXML
     protected void onNewDelivery(ActionEvent event){
@@ -563,6 +698,10 @@ public class HomepageController {
     }
 
 
+    /**
+     * turns off unneeded buttons and makes the search bar visible when you go to the reports tab
+     */
+
     public void onNotifyMessage(){
         notifyMessageController.displayNotfications();
     }
@@ -571,9 +710,6 @@ public class HomepageController {
         LoginButtonChange.setText(currentStatus);
     }
 
-    public void setCurrentSignIn(String userEmployeeID){
-        usernameLabel.setText(userEmployeeID);
-    }
 
     public void toggleNewDelivery( ){
 
@@ -643,6 +779,8 @@ public class HomepageController {
                 buttonNotToggle(completedButton);
                 tempQueue = currentQueue;
             }
+
+
 
             if(tempQueue == null && tempQueue.isEmpty()){
                 orderDisplayContainer.getChildren().clear();
@@ -811,7 +949,6 @@ public class HomepageController {
                 }
             }
         }
-
         return null;
     }
 
@@ -829,7 +966,7 @@ public class HomepageController {
                     tempHistory = new OrderHistory(tempNewMess,null);
                     currentOrder.getOrderStatusHistory().add(tempHistory);
                     DataBaseMgmt.swapDB(currentOrder, ToggleTracking.getSelectedCardOrderNum(), "pendingDeliveries","completedDeliveries");
-                    NotifyMessg.createMessg("delivered", "[Employee ID]", ToggleTracking.getSelectedCardOrderNum());
+                    NotifyMessg.createMessg("delivered", ToggleTracking.getSelectedCardOrderNum());
 
                 }
 
@@ -838,7 +975,7 @@ public class HomepageController {
                     tempHistory = new OrderHistory(tempNewMess,null);
                     currentOrder.getOrderStatusHistory().add(tempHistory);
                     DataBaseMgmt.swapDB(currentOrder, ToggleTracking.getSelectedCardOrderNum(), "completedDeliveries","pendingDeliveries");
-                    NotifyMessg.createMessg("returnToPending", "[Employee ID]", ToggleTracking.getSelectedCardOrderNum());
+                    NotifyMessg.createMessg("returnToPending", ToggleTracking.getSelectedCardOrderNum());
 
                 }
             }
@@ -856,32 +993,28 @@ public class HomepageController {
         alert.setTitle("Signed out");
         alert.setContentText("You are signing out");
         Optional<ButtonType> result = alert.showAndWait();
+        signOutVbox.setVisible(false);
+
     }
 
     @FXML
-    void handleLoginButtonChange() {
-        if (LoginButtonChange.getText().equals("Login")) {
-            loginFormController.setLoginVBoxVisibility(true);
-            adminToolsNav.setVisible(false);
-            settingNavbar.setVisible(false);
-            buttonNotToggle(settingsButton);
-            isToggleSettings = false;
-            deliverReturnBtn.setDisable(true);
-            editBtn.setDisable(true);
-            newDeliveryButton.setDisable(true);
-        }
-        else if (LoginButtonChange.getText().equals("Sign out")) {
+    void onSignOutClcik(ActionEvent event) {
+        if (Employee.getCurrentLogin() != null) {
             showDialogSignOut();
             DataBaseMgmt.updateLoginStatus(Employee.getCurrentLogin(),"False");
             Employee.setCurrentLogin(null);
-            LoginButtonChange.setText("Login");
-            usernameLabel.setText("");
-            deliverReturnBtn.setDisable(true);
-            editBtn.setDisable(true);
-            newDeliveryButton.setDisable(true);
+            HashMap<String,String[]> checkStoredLang = MitchTextTranslate.getStoredLang();
+            String[] retrieveTranslatedText = checkStoredLang.get(ToggleTracking.getLanguageTrack());
+
+            String translateExist = retrieveTranslatedText != null ? retrieveTranslatedText[10] : "Log In";
+
+            LoginButtonChange.setText(translateExist);
+            onSetDisabled(true);
             //LogInVbox.setVisible(true);
         }
     }
+
+
 
     @FXML
     void onCreateUserClick(ActionEvent event){
@@ -894,17 +1027,6 @@ public class HomepageController {
     }
 
     public void onSearchClick() {
-
-        if(!ToggleTracking.getCurrentTab().equals("Reports")) {
-            ToggleTracking.setCurrentTab("Reports");
-            toggleNewDelivery();
-            orderDisplayContainer.getChildren().clear();
-            deliverReturnBtn.setText("Deliver Package");
-            buttonToggle(reportsButton);
-            buttonNotToggle(pendingButton);
-            buttonNotToggle(completedButton);
-        }
-
         Queue<DeliveryRequisition> tempQueue = searchAlgolia(searchBarTextField.getText());
         displaySearchResults(tempQueue);
     }
@@ -912,8 +1034,11 @@ public class HomepageController {
     /**
      * turns off unneeded buttons and makes the search bar visible when you go to the reports tab
      */
-    private void toggleReports() {
-        searchBarHbox.setVisible(!searchBarHbox.isVisible());
+   private void toggleReports() {
         editDeliverButtonsHbox.setVisible(!editDeliverButtonsHbox.isVisible());
+        searchHBox.setPrefHeight((searchHBox.getHeight() + 50.0) % 100.0);
+        searchBarTextField.setVisible(!searchBarTextField.isVisible());
+
     }
+
 }
