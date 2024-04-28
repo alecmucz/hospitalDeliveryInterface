@@ -99,7 +99,7 @@
                      </padding>
                   </Button>
                   <Pane prefHeight="45.0" prefWidth="1.0" style="-fx-background-color: transparent;" HBox.hgrow="ALWAYS" />
-                  <Button fx:id="adminButton" alignment="CENTER" minWidth="0.0" mnemonicParsing="false" onAction="#onAdminClick" prefHeight="45.0" prefWidth="104.0" style="-fx-background-color: transparent;" text="Admin Tools" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
+                  <Button fx:id="adminButton" alignment="CENTER" minWidth="0.0" mnemonicParsing="false" onAction="#onAdminClick" prefHeight="45.0" prefWidth="104.0" style="-fx-background-color: transparent;" text="Admin Tools" textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS" visible="false">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
@@ -167,12 +167,12 @@
       </BorderPane>
       <VBox fx:id="adminToolsNav" alignment="TOP_RIGHT" layoutX="945.0" layoutY="465.0" prefHeight="90.0" visible="false" AnchorPane.rightAnchor="140.0" AnchorPane.topAnchor="76.0">
          <children>
-            <Button fx:id="deleteOrdersBtn" alignment="CENTER" contentDisplay="CENTER" minWidth="0.0" mnemonicParsing="false" prefHeight="33.0" style="-fx-background-color: transparent;" text="Delete Orders " textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
+            <Button fx:id="createUserBtn" alignment="CENTER" minWidth="0.0" mnemonicParsing="false" onAction="#onCreateUserClick" prefHeight="37.0" prefWidth="120.0" style="-fx-background-color: transparent;" text="Create Users" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </Button>
-            <Button fx:id="createUserBtn" alignment="CENTER" minWidth="0.0" mnemonicParsing="false" onAction="#onCreateUserClick" prefHeight="37.0" prefWidth="120.0" style="-fx-background-color: transparent;" text="Create Users" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
+            <Button fx:id="deleteOrdersBtn" alignment="CENTER" contentDisplay="CENTER" minWidth="0.0" mnemonicParsing="false" prefHeight="33.0" style="-fx-background-color: transparent;" text="Delete Orders " textAlignment="CENTER" textFill="WHITE" textOverrun="WORD_ELLIPSIS">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>

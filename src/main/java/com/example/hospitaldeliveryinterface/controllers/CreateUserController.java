@@ -13,6 +13,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -26,6 +27,11 @@ public class CreateUserController {
     @FXML
     private CheckBox showPasswordCheckBox;
 
+    @FXML
+    private Tooltip TooltipPassword;
+
+    @FXML
+    private Tooltip TooltipConfirmPassword;
 
 
     @FXML
@@ -91,6 +97,10 @@ public class CreateUserController {
     private TextField[] createUserInputs;
 
     public void initialize(){
+        textFieldPassword1.textProperty().addListener((observable, oldValue, newValue) -> updateTooltips());
+        textFieldConfirmPassword.textProperty().addListener((observable, oldValue, newValue) -> updateTooltips());
+
+
         createUserInputs = new TextField[]{
                 textFieldEmployeeID,
                 textFieldFirstName,
@@ -101,6 +111,7 @@ public class CreateUserController {
         };
 
         adminNavBar.getStylesheets().clear();
+
     }
 
     @FXML
@@ -207,30 +218,40 @@ public class CreateUserController {
             }
         }
     }
+    @FXML
     public void showPassword() {
-        boolean showPassword = showPasswordCheckBox.isSelected();
-
-        // Set visibility of both password fields based on the checkbox state
-        textFieldPassword1.setVisible(showPassword);
-        textFieldConfirmPassword.setVisible(showPassword);
-
-        // Handle potential CSS-related errors
-        try {
-            // Apply default CSS styles to the password fields
-            if (showPassword) {
-                textFieldPassword1.setStyle(""); // Apply default style
-                textFieldConfirmPassword.setStyle(""); // Apply default style
-            } else {
-                // Apply custom CSS styles to hide the password fields (if necessary)
-                textFieldPassword1.setStyle("-fx-background-color: transparent;"); // Example CSS to hide the field
-                textFieldConfirmPassword.setStyle("-fx-background-color: transparent;"); // Example CSS to hide the field
-            }
-        } catch (Exception e) {
-            // Handle CSS-related errors
-            System.err.println("Error applying CSS styles to password fields: " + e.getMessage());
-            e.printStackTrace(); // Print stack trace for debugging purposes
+        // Set the tooltips based on the checkbox state
+        if (showPasswordCheckBox.isSelected()) {
+            updateTooltips();
+            // Show tooltips instantly on hover and do not hide them automatically
+            TooltipPassword.setShowDelay(Duration.ZERO);
+            TooltipPassword.setAutoHide(false);
+            TooltipConfirmPassword.setShowDelay(Duration.ZERO);
+            TooltipConfirmPassword.setAutoHide(false);
+        } else {
+            // Clear the tooltip texts
+            TooltipPassword.setText("");
+            TooltipConfirmPassword.setText("");
+            // Hide tooltips instantly
+            TooltipPassword.setAutoHide(true);
+            TooltipPassword.hide(); // Hide the tooltip instantly
+            TooltipPassword.setShowDelay(Duration.ZERO);
+            TooltipConfirmPassword.setAutoHide(true);
+            TooltipConfirmPassword.hide(); // Hide the tooltip instantly
+            TooltipConfirmPassword.setShowDelay(Duration.ZERO);
         }
     }
+
+    private void updateTooltips() {
+        // Only update the tooltips if the checkbox is selected
+        if (showPasswordCheckBox.isSelected()) {
+            // Update the tooltip texts with the text from the text fields
+            TooltipPassword.setText(textFieldPassword1.getText());
+            TooltipConfirmPassword.setText(textFieldConfirmPassword.getText());
+        }
+    }
+
+
 
 
 

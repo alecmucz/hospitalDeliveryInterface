@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.PasswordField?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -64,7 +65,10 @@
                   <Font name="Tahoma Bold" size="14.0" />
                </font>
             </Label>
-            <PasswordField fx:id="textFieldPassword1" prefHeight="25.0" prefWidth="0.0" />
+            <PasswordField fx:id="textFieldPassword1" prefHeight="25.0" prefWidth="0.0">
+               <tooltip>
+                  <Tooltip fx:id="TooltipPassword" text="Empty Tooltip" />
+               </tooltip></PasswordField>
             <Label fx:id="confirmPswdLbl" nodeOrientation="LEFT_TO_RIGHT" prefHeight="23.0" prefWidth="239.0" text="Confirm Password" textFill="WHITE">
                <font>
                   <Font name="Tahoma Bold" size="14.0" />
@@ -74,6 +78,9 @@
                <VBox.margin>
                   <Insets />
                </VBox.margin>
+               <tooltip>
+                  <Tooltip fx:id="TooltipConfirmPassword" text="Empty Tooltip" />
+               </tooltip>
             </PasswordField>
             <CheckBox fx:id="showPasswordCheckBox" mnemonicParsing="false" onAction="#showPassword" prefHeight="17.0" prefWidth="240.0" text="Show password" textFill="WHITE">
                <VBox.margin>

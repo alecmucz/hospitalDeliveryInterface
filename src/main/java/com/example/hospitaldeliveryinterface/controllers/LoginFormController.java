@@ -9,6 +9,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -18,6 +19,13 @@ import java.util.Optional;
 import java.util.concurrent.ExecutionException;
 
 public class LoginFormController {
+
+
+    @FXML
+    private Tooltip TooltipPassword;
+
+    @FXML
+    private CheckBox showPasswordCheckBox;
 
     @FXML
     private BorderPane LogInVbox;
@@ -52,6 +60,7 @@ public class LoginFormController {
     public void initialize(){
         LogInVbox.setVisible(false);
         LogInVbox.getStylesheets().clear();
+        textFieldPassword.textProperty().addListener((observable, oldValue, newValue) -> updateTooltips());
     }
 
     public void setHomepageController(HomepageController control){
@@ -127,6 +136,34 @@ public class LoginFormController {
         } catch (NoSuchAlgorithmException e) {
             e.printStackTrace(); // Handle the exception appropriately
             return null; // Or throw an exception
+        }
+    }
+    @FXML
+    public void showPassword() {
+        // Set the tooltips based on the checkbox state
+        if (showPasswordCheckBox.isSelected()) {
+            updateTooltips();
+            // Show tooltips instantly on hover and do not hide them automatically
+            TooltipPassword.setShowDelay(Duration.ZERO);
+            TooltipPassword.setAutoHide(false);
+
+        } else {
+            // Clear the tooltip texts
+            TooltipPassword.setText("");
+
+            // Hide tooltips instantly
+            TooltipPassword.setAutoHide(true);
+            TooltipPassword.hide(); // Hide the tooltip instantly
+            TooltipPassword.setShowDelay(Duration.ZERO);
+
+        }
+    }
+
+    private void updateTooltips() {
+        // Only update the tooltips if the checkbox is selected
+        if (showPasswordCheckBox.isSelected()) {
+            // Update the tooltip texts with the text from the text fields
+            TooltipPassword.setText(textFieldPassword.getText());
         }
     }
 
