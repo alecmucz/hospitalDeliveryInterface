@@ -33,6 +33,7 @@ public class DataBaseMgmt {
     public static HashMap<String,String[]> initialLanguageCheck(TreeMap<String,String> initialLanguageMap){
         CollectionReference LanguageCollection = PharmaTracApp.fstore.collection("LanguageStorage");
         HashMap<String,String[]> storedLang = new HashMap<>();
+        String[] defaultEnglsihText = MitchTextTranslate.defaultEnglishText();
 
         for (Map.Entry<String, String> entry : initialLanguageMap.entrySet()) {
 
@@ -47,7 +48,8 @@ public class DataBaseMgmt {
 
                     List<String> defaultSetUpValue = (List<String>) document.get("defualtSetUp");
 
-                    if(defaultSetUpValue != null && defaultSetUpValue.size() == 24){
+
+                    if(defaultSetUpValue != null && defaultSetUpValue.size() == defaultEnglsihText.length){
                         String[] defaultSetUpArray = defaultSetUpValue.toArray(new String[0]);
                         storedLang.put(entry.getKey(), defaultSetUpArray);
                         continue;
@@ -57,7 +59,7 @@ public class DataBaseMgmt {
                 }
 
                 System.out.println("Need to add Language Defaults to LanguageStorage Collection: " + entry.getKey());
-                String[] defaultEnglsihText = MitchTextTranslate.defaultEnglishText();
+                defaultEnglsihText = MitchTextTranslate.defaultEnglishText();
                 String[] tempStirngArr = defaultEnglsihText;
 
                 for(int i = 0; i < defaultEnglsihText.length; i++){
@@ -118,8 +120,6 @@ public class DataBaseMgmt {
         data.put("orderStatusHistory", deliveryRequisition.getOrderStatusHistory());
         //add who entered the order
         ApiFuture<WriteResult> result = docRef.set(data);
-
-
     }
 
     /**
