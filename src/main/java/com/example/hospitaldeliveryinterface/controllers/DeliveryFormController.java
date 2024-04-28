@@ -333,16 +333,22 @@ public class DeliveryFormController {
         return null;
     }
 
-    public void setTextFieldFromLabel(DeliveryRequisition currentOrder){
-        mrnText.setText(currentOrder.getPatientMrn());
-        String[] fullName = currentOrder.getPatientName().split(" ");
-        firstnameText.setText(fullName[0]);
-        lastnameText.setText(fullName[1]);
-        locationText.setText(currentOrder.getPatientLocation());
-        medicationText.setText(currentOrder.getMedication());
-        doseText.setText(currentOrder.getDose());
-        doseAmountText.setText(currentOrder.getNumDoses());
+    public void setTextFieldFromLabel(DeliveryRequisition currentOrder) {
+        mrnText.setText(currentOrder.getPatientMrn() != null ? currentOrder.getPatientMrn() : "");
+        if (currentOrder.getPatientName() != null && !currentOrder.getPatientName().isEmpty()) {
+            String[] fullName = currentOrder.getPatientName().split("\\s+", 2); // Split into at most two parts
+            firstnameText.setText(fullName.length > 0 ? fullName[0] : "");
+            lastnameText.setText(fullName.length > 1 ? fullName[1] : "");
+        } else {
+            firstnameText.setText("");
+            lastnameText.setText("");
+        }
+        locationText.setText(currentOrder.getPatientLocation() != null ? currentOrder.getPatientLocation() : "");
+        medicationText.setText(currentOrder.getMedication() != null ? currentOrder.getMedication() : "");
+        doseText.setText(currentOrder.getDose() != null ? currentOrder.getDose() : "");
+        doseAmountText.setText(currentOrder.getNumDoses() != null ? currentOrder.getNumDoses() : "");
     }
+
 
 
 }
