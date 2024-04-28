@@ -8,10 +8,8 @@ import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.geometry.Point2D;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -22,7 +20,12 @@ import java.util.Base64;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+
+
 public class CreateUserController {
+    @FXML
+    private CheckBox showPasswordCheckBox;
+
 
 
     @FXML
@@ -81,6 +84,8 @@ public class CreateUserController {
 
     @FXML
     private PasswordField textFieldPassword1;
+
+
 
     /**non fxml components***/
     private TextField[] createUserInputs;
@@ -202,6 +207,35 @@ public class CreateUserController {
             }
         }
     }
+    public void showPassword() {
+        boolean showPassword = showPasswordCheckBox.isSelected();
+
+        // Set visibility of both password fields based on the checkbox state
+        textFieldPassword1.setVisible(showPassword);
+        textFieldConfirmPassword.setVisible(showPassword);
+
+        // Handle potential CSS-related errors
+        try {
+            // Apply default CSS styles to the password fields
+            if (showPassword) {
+                textFieldPassword1.setStyle(""); // Apply default style
+                textFieldConfirmPassword.setStyle(""); // Apply default style
+            } else {
+                // Apply custom CSS styles to hide the password fields (if necessary)
+                textFieldPassword1.setStyle("-fx-background-color: transparent;"); // Example CSS to hide the field
+                textFieldConfirmPassword.setStyle("-fx-background-color: transparent;"); // Example CSS to hide the field
+            }
+        } catch (Exception e) {
+            // Handle CSS-related errors
+            System.err.println("Error applying CSS styles to password fields: " + e.getMessage());
+            e.printStackTrace(); // Print stack trace for debugging purposes
+        }
+    }
+
+
+
+
+
     //this uses SHA-256 algorithm and hashes the password for create user
     private String hashPassword(String password) {
         try {
@@ -213,6 +247,9 @@ public class CreateUserController {
             return null; // Or throw an exception
         }
     }
+
+
+
 
     @FXML
     void onCloseUserCreate(ActionEvent event) {

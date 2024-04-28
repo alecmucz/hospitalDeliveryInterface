@@ -46,6 +46,8 @@ public class LoginFormController {
     @FXML
     private TextField textFieldUsername;
 
+
+
     private HomepageController controller;
     public void initialize(){
         LogInVbox.setVisible(false);
@@ -82,6 +84,12 @@ public class LoginFormController {
             if (storedPasswordHash.equals(providedPasswordHash)) {
 
                 // Password matches
+                String userType = storedUsername.startsWith("A") ? "admin" : "employee";
+                if (userType.equals("admin")) {
+                    // If the user is an admin, make the admin button visible
+                    controller.onSetVisibleAdmin();
+                }
+
                 DataBaseMgmt.updateLoginStatus(textFieldUsername.getText(),"True");
                 LogInVbox.setVisible(false);
                 Employee.setCurrentLogin(textFieldUsername.getText());
@@ -110,6 +118,7 @@ public class LoginFormController {
         textFieldUsername.clear();
         textFieldPassword.clear();
     }
+
     private String hashPassword(String password) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
