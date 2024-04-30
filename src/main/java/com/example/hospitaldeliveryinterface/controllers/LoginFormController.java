@@ -80,9 +80,20 @@ public class LoginFormController {
             errorBorder(textFieldPassword);
             return;
         }
+
         // Retrieve user data based on the provided username
         Map<String, Object> userData = DataBaseMgmt.retrieveUserData(textFieldUsername.getText(),"employees");
         if (userData != null) {
+            // Check if the user is already logged in
+            String loginStatus = (String) userData.get("loginStatus");
+            if (loginStatus != null && loginStatus.equalsIgnoreCase("True")) {
+                // User is already logged in
+                labelLoginError.setText("User is already logged in");
+                labelLoginError.setStyle("-fx-text-fill: red;");
+                loginErrorHbox.setVisible(true);
+                return;
+            }
+
             // Check if the provided username and password match the stored username and password
             String storedUsername = (String) userData.get("Username");
             String storedPasswordHash = (String) userData.get("Password");
@@ -99,6 +110,7 @@ public class LoginFormController {
                     controller.onSetVisibleAdmin();
                 }
 
+                // Update login status to true
                 DataBaseMgmt.updateLoginStatus(textFieldUsername.getText(),"True");
                 LogInVbox.setVisible(false);
                 Employee.setCurrentLogin(textFieldUsername.getText());
@@ -127,6 +139,7 @@ public class LoginFormController {
         textFieldUsername.clear();
         textFieldPassword.clear();
     }
+
 
     private String hashPassword(String password) {
         try {
@@ -167,7 +180,7 @@ public class LoginFormController {
         }
     }
 
-    @FXML
+    @FXML   
     void onReturnToHome(ActionEvent event) {
         LogInVbox.setVisible(false);
         loginErrorHbox.setVisible(false);
