@@ -8,13 +8,12 @@ import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.UserRecord;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
-import javafx.scene.control.TextField;
+import javafx.geometry.Point2D;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.util.Duration;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -22,7 +21,17 @@ import java.util.Base64;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+
+
 public class CreateUserController {
+    @FXML
+    private CheckBox showPasswordCheckBox;
+
+    @FXML
+    private Tooltip TooltipPassword;
+
+    @FXML
+    private Tooltip TooltipConfirmPassword;
 
 
     @FXML
@@ -82,10 +91,16 @@ public class CreateUserController {
     @FXML
     private PasswordField textFieldPassword1;
 
+
+
     /**non fxml components***/
     private TextField[] createUserInputs;
 
     public void initialize(){
+        textFieldPassword1.textProperty().addListener((observable, oldValue, newValue) -> updateTooltips());
+        textFieldConfirmPassword.textProperty().addListener((observable, oldValue, newValue) -> updateTooltips());
+
+
         createUserInputs = new TextField[]{
                 textFieldEmployeeID,
                 textFieldFirstName,
@@ -96,6 +111,7 @@ public class CreateUserController {
         };
 
         adminNavBar.getStylesheets().clear();
+
     }
 
     @FXML
@@ -202,6 +218,45 @@ public class CreateUserController {
             }
         }
     }
+    @FXML
+    public void showPassword() {
+        // Set the tooltips based on the checkbox state
+        if (showPasswordCheckBox.isSelected()) {
+            updateTooltips();
+            // Show tooltips instantly on hover and do not hide them automatically
+            TooltipPassword.setShowDelay(Duration.ZERO);
+            TooltipPassword.setAutoHide(false);
+            TooltipConfirmPassword.setShowDelay(Duration.ZERO);
+            TooltipConfirmPassword.setAutoHide(false);
+        } else {
+            // Clear the tooltip texts
+            TooltipPassword.setText("");
+            TooltipConfirmPassword.setText("");
+            // Hide tooltips instantly
+            TooltipPassword.setAutoHide(true);
+            TooltipPassword.hide(); // Hide the tooltip instantly
+            TooltipPassword.setShowDelay(Duration.ZERO);
+            TooltipConfirmPassword.setAutoHide(true);
+            TooltipConfirmPassword.hide(); // Hide the tooltip instantly
+            TooltipConfirmPassword.setShowDelay(Duration.ZERO);
+        }
+    }
+
+    private void updateTooltips() {
+        // Only update the tooltips if the checkbox is selected
+        if (showPasswordCheckBox.isSelected()) {
+            // Update the tooltip texts with the text from the text fields
+            TooltipPassword.setText(textFieldPassword1.getText());
+            TooltipConfirmPassword.setText(textFieldConfirmPassword.getText());
+        }
+    }
+
+
+
+
+
+
+
     //this uses SHA-256 algorithm and hashes the password for create user
     private String hashPassword(String password) {
         try {
@@ -213,6 +268,9 @@ public class CreateUserController {
             return null; // Or throw an exception
         }
     }
+
+
+
 
     @FXML
     void onCloseUserCreate(ActionEvent event) {

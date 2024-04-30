@@ -73,9 +73,8 @@ public class Employee {
 
 
     public static String textFieldCheckCreatingAccount(String employeeID,String firstName,String lastName,String email, String password, String confirmPassword) {
-        if(!(employeeID.matches("S\\d{8}"))) {
+        if(!(employeeID.matches("[SA]\\d{8}"))) {
             return "**Error : Input doesn't follow staff ID format ex:S01234567";
-
         }
         if(!(firstName.matches("[A-Za-z]+"))) {
             return "**Error : First name must be only letters";
