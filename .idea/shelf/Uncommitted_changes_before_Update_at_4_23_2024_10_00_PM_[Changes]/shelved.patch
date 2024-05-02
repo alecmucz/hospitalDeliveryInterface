@@ -6,53 +6,79 @@ Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
 <+>UTF-8
 ===================================================================
 diff --git a/.idea/workspace.xml b/.idea/workspace.xml
---- a/.idea/workspace.xml	(revision 5c3f389f555047d561ef4383421be8b1cc916971)
-+++ b/.idea/workspace.xml	(date 1713888964180)
-@@ -4,10 +4,7 @@
+--- a/.idea/workspace.xml	(revision 493dc1f9c8309349785b200070aa4ae43507efa4)
++++ b/.idea/workspace.xml	(date 1713924039043)
+@@ -4,9 +4,8 @@
      <option name="autoReloadType" value="SELECTIVE" />
    </component>
    <component name="ChangeListManager">
 -    <list default="true" id="7e1c1fe8-19dc-4e88-bc9d-fc845d4c4708" name="Changes" comment="-started on listerers for search bar&#10;-MAIN FIX:&#10;fixed but with AlgoliaMgmt introduced when deliveryRequisition was updated">
--      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
++    <list default="true" id="7e1c1fe8-19dc-4e88-bc9d-fc845d4c4708" name="Changes" comment="-moved search bar&#10;-bug, need to get the ordercard display to fit the whole screen">
+       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
 -      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hospitaldeliveryinterface/controllers/HomepageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/hospitaldeliveryinterface/controllers/HomepageController.java" afterDir="false" />
--    </list>
-+    <list default="true" id="7e1c1fe8-19dc-4e88-bc9d-fc845d4c4708" name="Changes" comment="-search feature updates the queue when typing" />
+     </list>
      <option name="SHOW_DIALOG" value="false" />
      <option name="HIGHLIGHT_CONFLICTS" value="true" />
-     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
-@@ -139,7 +136,7 @@
-       <workItem from="1712854014467" duration="60000" />
-       <workItem from="1712854134345" duration="3411000" />
-       <workItem from="1713054793671" duration="17505000" />
--      <workItem from="1713878687047" duration="7272000" />
-+      <workItem from="1713878687047" duration="7517000" />
-     </task>
-     <task id="LOCAL-00001" summary="@author Alec Muczynski&#10;Implemented the Pending stage">
-       <option name="closed" value="true" />
-@@ -341,7 +338,15 @@
+@@ -16,15 +15,15 @@
+   <component name="FileTemplateManagerImpl">
+     <option name="RECENT_TEMPLATES">
+       <list>
+-        <option value="FxmlFile" />
+         <option value="Class" />
++        <option value="FxmlFile" />
+       </list>
+     </option>
+   </component>
+   <component name="Git.Settings">
+     <option name="RECENT_BRANCH_BY_REPOSITORY">
+       <map>
+-        <entry key="$PROJECT_DIR$" value="master" />
++        <entry key="$PROJECT_DIR$" value="HomepageNodeChange" />
+       </map>
+     </option>
+     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+@@ -72,7 +71,7 @@
+     "RunOnceActivity.OpenProjectViewOnStart": "true",
+     "RunOnceActivity.ShowReadmeOnStart": "true",
+     "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+-    "git-widget-placeholder": "WillBranch",
++    "git-widget-placeholder": "master",
+     "ignore.virus.scanning.warn.message": "true",
+     "kotlin-language-version-configured": "true",
+     "last_opened_file_path": "C:/Users/wcars/OneDrive/Desktop/School/Spring 2024/CSC 325/Programs/hospitalDeliveryInterface",
+@@ -90,6 +89,8 @@
+ }]]></component>
+   <component name="RecentsManager">
+     <key name="MoveFile.RECENT_KEYS">
++      <recent name="C:\Users\wcars\OneDrive\Desktop\School\hospitalDeliveryInterface\src\main\resources\com\example\hospitaldeliveryinterface" />
++      <recent name="C:\Users\wcars\OneDrive\Desktop\School\hospitalDeliveryInterface\src\main\resources" />
+       <recent name="C:\Users\alecm\IdeaProjects\hospitalDeliveryInterface\src\main\resources\com\example\hospitaldeliveryinterface" />
+       <recent name="C:\Users\alecm\IdeaProjects\hospitalDeliveryInterface\src\main\java\com\example\hospitaldeliveryinterface" />
+     </key>
+@@ -341,7 +342,15 @@
        <option name="project" value="LOCAL" />
        <updated>1713885127920</updated>
      </task>
 -    <option name="localTasksCounter" value="26" />
-+    <task id="LOCAL-00026" summary="-search feature updates the queue when typing">
++    <task id="LOCAL-00026" summary="-moved search bar&#10;-bug, need to get the ordercard display to fit the whole screen">
 +      <option name="closed" value="true" />
-+      <created>1713888886152</created>
++      <created>1713907918340</created>
 +      <option name="number" value="00026" />
 +      <option name="presentableId" value="LOCAL-00026" />
 +      <option name="project" value="LOCAL" />
-+      <updated>1713888886152</updated>
++      <updated>1713907918340</updated>
 +    </task>
 +    <option name="localTasksCounter" value="27" />
      <servers />
    </component>
    <component name="TypeScriptGeneratedFilesManager">
-@@ -392,7 +397,8 @@
+@@ -392,7 +401,8 @@
      <MESSAGE value="full test search added&#10;-adds new orders to algolia&#10;-when user types in search bar and presses search it will return all orders that match" />
      <MESSAGE value="-updated disabled button so when the user is not logged in you cannot use certain features" />
      <MESSAGE value="-started on listerers for search bar&#10;-MAIN FIX:&#10;fixed but with AlgoliaMgmt introduced when deliveryRequisition was updated" />
 -    <option name="LAST_COMMIT_MESSAGE" value="-started on listerers for search bar&#10;-MAIN FIX:&#10;fixed but with AlgoliaMgmt introduced when deliveryRequisition was updated" />
-+    <MESSAGE value="-search feature updates the queue when typing" />
-+    <option name="LAST_COMMIT_MESSAGE" value="-search feature updates the queue when typing" />
++    <MESSAGE value="-moved search bar&#10;-bug, need to get the ordercard display to fit the whole screen" />
++    <option name="LAST_COMMIT_MESSAGE" value="-moved search bar&#10;-bug, need to get the ordercard display to fit the whole screen" />
    </component>
    <component name="XDebuggerManager">
      <breakpoint-manager>

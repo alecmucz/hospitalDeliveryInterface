@@ -178,6 +178,7 @@ public class OrderCardUIController {
         medicationDisplay.setText(order.getMedication());
         doseDisplay.setText(order.getDose());
         doseQuantityDisplay.setText(order.getNumDoses());
+        
         mrnDisplay.setText(order.getPatientMrn());
         populateOrderHistory(order);
 
