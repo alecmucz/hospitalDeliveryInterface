@@ -185,7 +185,7 @@ public class HomepageController {
 
         MitchTextTranslate.initialLanguages();
         setUpLanguageMenu();
-
+        ToggleTracking.setHomepageController(this);
         ToggleTracking.setCurrentTab("Pending");
         ToggleTracking.setSelectedCardOrderNum(null);
         ToggleTracking.setIsEdit(false);
@@ -560,34 +560,6 @@ public class HomepageController {
         deliveryFormController.openNewDlivery();
     }
 
-    /*
-    @FXML
-    void onDeliverReturn(ActionEvent event) {
-        System.out.println("Delivery orders button clicked");
-        if (!selectedOrders.isEmpty()) {
-            Iterator<DeliveryRequisition> iterator = selectedOrders.iterator();
-            while (iterator.hasNext()) {
-                DeliveryRequisition order = iterator.next();
-                String collectionFrom = ToggleTracking.getCurrentTab().equals("Pending") ? "pendingDeliveries" : "completedDeliveries";
-                String collectionTo = ToggleTracking.getCurrentTab().equals("Pending") ? "completedDeliveries" : "pendingDeliveries";
-                //DataBaseMgmt.swapDB(order.getOrderNumberDisplay(), collectionFrom, collectionTo);
-                System.out.println("Swapped order " + order.getOrderNumberDisplay() + " from " + collectionFrom + " to " + collectionTo);
-
-                Node node = findNodeByRequisition(order);
-                if (node != null) {
-                    Platform.runLater(() -> orderDisplayContainer.getChildren().remove(node));
-                }
-                iterator.remove();
-            }
-            toggleNewDelivery();
-            System.out.println("Processed all selected orders for delivery/return.");
-        } else {
-            System.out.println("No orders selected for delivery/return.");
-        }
-    }
-     */
-
-
 
     @FXML
     void onDeliverReturn(ActionEvent event) {
@@ -625,6 +597,7 @@ public class HomepageController {
             for (DeliveryRequisition order : ToggleTracking.getSelectedOrders()) {
                 DeliveryRequisition deleteOrder = DataBaseMgmt.findOrder(order.getOrderNumberDisplay(), collectionFrom);
                 DataBaseMgmt.deleteFromDB(deleteOrder.getOrderNumberDisplay(), collectionFrom);
+                // Add Algolia Delete Here
             }
             Platform.runLater(() -> {
                 for (DeliveryRequisition order : ToggleTracking.getSelectedOrders()) {
@@ -649,50 +622,34 @@ public class HomepageController {
         }
         return null; // Not found
     }
-    /*
-    @FXML
-    void onEditDelivery(ActionEvent event) {
-        System.out.println("OnEditDelivery checkv.1: " + ToggleTracking.getSelectedCardOrderNum());
 
-        if(selectedCard != null && ToggleTracking.getIsEdit() && ToggleTracking.getSelectedCardOrderNum() != null){
-            selectedCard.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: transparent");
-            selectedCard = null;
-            ToggleTracking.setSelectedCardOrderNum(null);
-            ToggleTracking.setIsEdit(false);
-            toggleNewDelivery();
-        }
-
-        if(ToggleTracking.getSelectedCardOrderNum() != null){
-            ToggleTracking.setIsEdit(!ToggleTracking.getIsEdit());
-            ToggleTracking.setIsNewDelivery(false);
-            toggleNewDelivery();
-            System.out.println("OnEditDeliveyr check: " + ToggleTracking.getSelectedCardOrderNum());
-           if(deliveryFormController != null){
-               deliveryFormController.openEditDelivery();
-           }
-        }
-    }
-      */
     @FXML
     void onEditDelivery(ActionEvent event) {
         System.out.println("Edit Button pressed");
-
-        String selectedOrderNum = ToggleTracking.getSelectedCardOrderNum();
-
         if (ToggleTracking.getSelectedOrders().size() == 1) {
+            String selectedOrderNum = ToggleTracking.getSelectedCardOrderNum();
             System.out.println("OnEditDelivery check: " + selectedOrderNum);
-
             if (ToggleTracking.getIsEdit()) {
                 ToggleTracking.setIsEdit(false);
                 ToggleTracking.setIsNewDelivery(false);
-                ToggleTracking.setSelectedCardOrderNum(null);
             } else {
                 ToggleTracking.setIsEdit(true);
                 ToggleTracking.setIsNewDelivery(false);
             }
+
             toggleNewDelivery();
+
             if (ToggleTracking.getIsEdit() && deliveryFormController != null) {
                 deliveryFormController.openEditDelivery();
+            } else {
+                if (selectedOrderNum != null) {
+                    System.out.println("Edit mode closed but order remains selected: " + selectedOrderNum);
+                }
+            }
+        } else {
+            System.out.println("No order selected or multiple orders selected. Cannot edit.");
+            if (ToggleTracking.getIsEdit()) {
+                toggleNewDelivery();
             }
         }
     }
@@ -834,27 +791,6 @@ public class HomepageController {
         }
     }
 
-//    public void selectOrder() {
-//        for (Node node : orderDisplayContainer.getChildren()) {
-//            node.setOnMouseClicked(mouseEvent -> {
-//                if(node instanceof HBox){
-//                    HBox gridPane = (HBox) node;
-//                    DeliveryRequisition requisition = (DeliveryRequisition) gridPane.getUserData();
-//                    if (selectedOrders.contains(requisition)) {
-//                        // Deselect the order
-//                        deselectNode(gridPane);
-//                        selectedOrders.remove(requisition);
-//                    } else {
-//                        // Select the order
-//                        selectNode(gridPane);
-//                        selectedOrders.add(requisition);
-//                    }
-//                }
-//
-//            });
-//        }
-//    }
-
     public void selectOrder() {
         for (Node node : orderDisplayContainer.getChildren()) {
             node.setOnMouseClicked(mouseEvent -> {
@@ -871,122 +807,6 @@ public class HomepageController {
         }
     }
 
-    private void selectNode(HBox node) {
-        node.setStyle("-fx-background-color: #98FF98; -fx-border-color: #22aae1; -fx-border-width: 2;");
-        System.out.println("Selected order: " + ((DeliveryRequisition) node.getUserData()).getOrderNumberDisplay());
-    }
-
-    private void deselectNode(HBox node) {
-        node.setStyle("-fx-background-color: transparent; -fx-border-color: #22aae1; -fx-border-width: 2;");
-        System.out.println("Deselected order: " + ((DeliveryRequisition) node.getUserData()).getOrderNumberDisplay());
-    }
-    /*
-    public void selectOrder(){
-            for(Node node: orderDisplayContainer.getChildren()){
-                node.setOnMouseClicked(mouseEvent -> {
-                    System.out.println("SELECT ORDER CARD DETECTION");
-                    if(selectedCard != null &&  selectedCard != node){
-                        selectedCard.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: transparent");
-                        selectedCard = null;
-                        ToggleTracking.setSelectedCardOrderNum(null);
-                        ToggleTracking.setIsEdit(false);
-                        toggleNewDelivery();
-                    }
-
-                    if(selectedCard != node || selectedCard == null){
-                            if (node instanceof HBox) {
-                                HBox hbox = (HBox) node;
-                                hbox.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: #f1cbcb");
-
-                                Label findOrderNumLabel = recusiveFindLabel(node, "orderNumDisplay");
-                                if(findOrderNumLabel != null){
-                                    String labelText  = findOrderNumLabel.getText().substring(1); // Remove the "#" symbol
-                                    ToggleTracking.setSelectedCardOrderNum(labelText);
-                                    System.out.println("order selected");
-                                    System.out.println("ORDER NUMBER RETRIEVED: " + labelText);
-                                    System.out.println("OnEditDeliveyr checkv.3: " + ToggleTracking.getSelectedCardOrderNum());
-                                }
-                            }
-                        selectedCard = node;
-
-                    }else{
-                        selectedCard.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: transparent");
-
-                        selectedCard = null;
-                        ToggleTracking.setSelectedCardOrderNum(null);
-                        ToggleTracking.setIsEdit(false);
-
-                        toggleNewDelivery();
-                    }
-                });
-            }
-
-            if(!ToggleTracking.getIsEdit()){
-                for(Node node: orderDisplayContainer.getChildren()){
-                    node.setStyle("-fx-border-color: #22aae1; -fx-border-width: 2; -fx-background-color: transparent");
-                }
-
-                selectedCard = null;
-                ToggleTracking.setSelectedCardOrderNum(null);
-                ToggleTracking.setIsEdit(false);
-
-                toggleNewDelivery();
-            }
-    }
-
-
-    public Label recusiveFindLabel(Node node, String nodeid){
-        if (node instanceof Label && node.getId() != null && node.getId().equals(nodeid)) {
-            return (Label) node;
-        }
-
-        if (node instanceof Parent) {
-
-            for (Node child : ((Parent) node).getChildrenUnmodifiable()) {
-                Label result = recusiveFindLabel(child, nodeid);
-                if (result != null) {
-                    return result;
-                }
-            }
-        }
-        return null;
-    }
-
-    public void sendOrderToCompleted(String selectedorderNum){
-        System.out.print("sendOrderToComplete method called!!!");
-        System.out.println("selectOrderNum: " + selectedorderNum);
-        if(selectedorderNum != null){
-
-            String tempNewMess = null;
-            OrderHistory tempHistory = null;
-            DeliveryRequisition currentOrder = deliveryFormController.retrieveOrderFromQueueSaves();
-            if (currentOrder!=null){
-                if(ToggleTracking.getCurrentTab().equals("Pending")) {
-                    tempNewMess = deliveryFormController.createOrderHistoryMessage("delivery");
-                    tempHistory = new OrderHistory(tempNewMess,null);
-                    currentOrder.getOrderStatusHistory().add(tempHistory);
-                    DataBaseMgmt.swapDB(currentOrder, ToggleTracking.getSelectedCardOrderNum(), "pendingDeliveries","completedDeliveries");
-                    NotifyMessg.createMessg("delivered", ToggleTracking.getSelectedCardOrderNum());
-
-                }
-
-                if(ToggleTracking.getCurrentTab().equals("Completed")) {
-                    tempNewMess = deliveryFormController.createOrderHistoryMessage("return");
-                    tempHistory = new OrderHistory(tempNewMess,null);
-                    currentOrder.getOrderStatusHistory().add(tempHistory);
-                    DataBaseMgmt.swapDB(currentOrder, ToggleTracking.getSelectedCardOrderNum(), "completedDeliveries","pendingDeliveries");
-                    NotifyMessg.createMessg("returnToPending", ToggleTracking.getSelectedCardOrderNum());
-
-                }
-            }
-
-            toggleNewDelivery();
-            selectedCard = null;
-            ToggleTracking.setSelectedCardOrderNum(null);
-        }
-    }
-
-   */
     public void showDialogSignOut() {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setHeaderText("Logged out");
@@ -1001,9 +821,9 @@ public class HomepageController {
     void onSignOutClcik(ActionEvent event) {
         if (Employee.getCurrentLogin() != null) {
             showDialogSignOut();
-            DataBaseMgmt.updateLoginStatus(Employee.getCurrentLogin(),"False");
+            DataBaseMgmt.updateLoginStatus(Employee.getCurrentLogin(), "False");
             Employee.setCurrentLogin(null);
-            HashMap<String,String[]> checkStoredLang = MitchTextTranslate.getStoredLang();
+            HashMap<String, String[]> checkStoredLang = MitchTextTranslate.getStoredLang();
             String[] retrieveTranslatedText = checkStoredLang.get(ToggleTracking.getLanguageTrack());
 
             String translateExist = retrieveTranslatedText != null ? retrieveTranslatedText[10] : "Log In";
@@ -1013,8 +833,6 @@ public class HomepageController {
             //LogInVbox.setVisible(true);
         }
     }
-
-
 
     @FXML
     void onCreateUserClick(ActionEvent event){
