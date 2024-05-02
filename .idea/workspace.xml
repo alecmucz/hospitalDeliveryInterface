@@ -4,7 +4,10 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7e1c1fe8-19dc-4e88-bc9d-fc845d4c4708" name="Changes" comment="deleteRecord method created&#10;deletes a record from the algolia database" />
+    <list default="true" id="7e1c1fe8-19dc-4e88-bc9d-fc845d4c4708" name="Changes" comment="-Implemented EmployeeID to order history&#10;-Switched up Login button and admin tools layout for Professor request&#10;-fixed Irvins disabled bug&#10;-replace setting text with icon&#10;-add text translator to all parts with default english text&#10;-dark/light mode icon added">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hospitaldeliveryinterface/controllers/HomepageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/hospitaldeliveryinterface/controllers/HomepageController.java" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -13,7 +16,6 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="CSS File" />
         <option value="FxmlFile" />
         <option value="Class" />
       </list>
@@ -22,10 +24,11 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="master" />
+        <entry key="$PROJECT_DIR$" value="Mitchell_branch" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="RESET_MODE" value="HARD" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
   &quot;lastFilter&quot;: {
@@ -33,20 +36,12 @@
     &quot;assignee&quot;: &quot;alecmucz&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings">
-    <option name="recentNewPullRequestHead">
-      <RepoCoordinatesHolder>
-        <option name="owner" value="alecmucz" />
-        <option name="repository" value="hospitalDeliveryInterface" />
-      </RepoCoordinatesHolder>
-    </option>
-    <option name="selectedUrlAndAccountId">
-      <UrlAndAccount>
-        <option name="accountId" value="1e6d7551-1c92-47b8-bcbf-1813ba10f68d" />
-        <option name="url" value="https://github.com/alecmucz/hospitalDeliveryInterface.git" />
-      </UrlAndAccount>
-    </option>
-  </component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/alecmucz/hospitalDeliveryInterface.git&quot;,
+    &quot;accountId&quot;: &quot;64d9bc1e-b3cb-4982-8fc1-6520ac9417d8&quot;
+  }
+}</component>
   <component name="MarkdownSettingsMigration">
     <option name="stateVersion" value="1" />
   </component>
@@ -59,34 +54,31 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.HelloApplication.executor": "Run",
-    "Application.PharmaTracApp.executor": "Run",
-    "Application.Unnamed.executor": "Run",
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "C:/Users/Mitchell Lam/Downloads/google-api-translate-java-0.97.jar",
-    "list.type.of.created.stylesheet": "CSS",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Libraries",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.6321839",
-    "settings.editor.selected.configurable": "preferences.general",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.HelloApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.PharmaTracApp.executor&quot;: &quot;Run&quot;,
+    &quot;Application.Unnamed.executor&quot;: &quot;Run&quot;,
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;Alec__Branch&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;C:/Users/Mitchell Lam/Downloads/google-api-translate-java-0.97.jar&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Libraries&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.6321839&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.general&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="C:\Users\Mitchell Lam\IdeaProjects\hospitalDeliveryInterface\src\main\resources\com\example\hospitaldeliveryinterface" />
       <recent name="C:\Users\alecm\IdeaProjects\hospitalDeliveryInterface\src\main\resources\com\example\hospitaldeliveryinterface" />
       <recent name="C:\Users\alecm\IdeaProjects\hospitalDeliveryInterface\src\main\java\com\example\hospitaldeliveryinterface" />
     </key>
@@ -99,13 +91,6 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-  </component>
-  <component name="SharedIndexes">
-    <attachedChunks>
-      <set>
-        <option value="jdk-21.0.1-openjdk-21.0.1-f644763e9732-f98dd351" />
-      </set>
-    </attachedChunks>
   </component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
@@ -146,19 +131,7 @@
       <workItem from="1712505308406" duration="2275000" />
       <workItem from="1712509018873" duration="21000" />
       <workItem from="1712509800940" duration="693000" />
-      <workItem from="1712623975517" duration="1983000" />
-      <workItem from="1712679368547" duration="445000" />
-      <workItem from="1712713426173" duration="2328000" />
-      <workItem from="1712720278919" duration="520000" />
-      <workItem from="1712854160750" duration="1740000" />
-      <workItem from="1713037444861" duration="7821000" />
-      <workItem from="1713048376031" duration="17517000" />
-      <workItem from="1713456457363" duration="1023000" />
-      <workItem from="1713459753216" duration="612000" />
-      <workItem from="1713631210682" duration="30363000" />
-      <workItem from="1713942264868" duration="353000" />
-      <workItem from="1714061674590" duration="429000" />
-      <workItem from="1714324880731" duration="1041000" />
+      <workItem from="1712623975517" duration="736000" />
     </task>
     <task id="LOCAL-00001" summary="@author Alec Muczynski&#10;Implemented the Pending stage">
       <option name="closed" value="true" />
@@ -384,95 +357,79 @@
       <option name="project" value="LOCAL" />
       <updated>1712623161245</updated>
     </task>
-    <task id="LOCAL-00029" summary="reduce homepage controoler codebase from 1400-ish to less than 600 lines">
+    <task id="LOCAL-00029" summary="working on multi select">
       <option name="closed" value="true" />
-      <created>1712624877504</created>
+      <created>1712797732445</created>
       <option name="number" value="00029" />
       <option name="presentableId" value="LOCAL-00029" />
       <option name="project" value="LOCAL" />
-      <updated>1712624877504</updated>
+      <updated>1712797732445</updated>
     </task>
-    <task id="LOCAL-00030" summary="commit for dark/light feature">
+    <task id="LOCAL-00030" summary="commit for multiselect">
       <option name="closed" value="true" />
-      <created>1713045396840</created>
+      <created>1712869180764</created>
       <option name="number" value="00030" />
       <option name="presentableId" value="LOCAL-00030" />
       <option name="project" value="LOCAL" />
-      <updated>1713045396840</updated>
+      <updated>1712869180764</updated>
     </task>
-    <task id="LOCAL-00031" summary="commit for dark/light feature">
+    <task id="LOCAL-00031" summary="commit for multiselect">
       <option name="closed" value="true" />
-      <created>1713064561249</created>
+      <created>1712870119373</created>
       <option name="number" value="00031" />
       <option name="presentableId" value="LOCAL-00031" />
       <option name="project" value="LOCAL" />
-      <updated>1713064561250</updated>
+      <updated>1712870119373</updated>
     </task>
-    <task id="LOCAL-00032" summary="commit for menu toggle fixes">
+    <task id="LOCAL-00032" summary="commit for multiselect">
       <option name="closed" value="true" />
-      <created>1713065887880</created>
+      <created>1713044777433</created>
       <option name="number" value="00032" />
       <option name="presentableId" value="LOCAL-00032" />
       <option name="project" value="LOCAL" />
-      <updated>1713065887880</updated>
+      <updated>1713044777433</updated>
     </task>
-    <task id="LOCAL-00033" summary="commit for aClient close connection and fix irvin shut down login status change">
+    <task id="LOCAL-00033" summary="commit for multiselect">
       <option name="closed" value="true" />
-      <created>1713127740246</created>
+      <created>1713056507208</created>
       <option name="number" value="00033" />
       <option name="presentableId" value="LOCAL-00033" />
       <option name="project" value="LOCAL" />
-      <updated>1713127740246</updated>
+      <updated>1713056507208</updated>
     </task>
-    <task id="LOCAL-00034" summary="orderCard Format change,deliver requisition change, language databas eupdated.">
+    <task id="LOCAL-00034" summary="commit for multiselect">
       <option name="closed" value="true" />
-      <created>1713662875741</created>
+      <created>1713061532036</created>
       <option name="number" value="00034" />
       <option name="presentableId" value="LOCAL-00034" />
       <option name="project" value="LOCAL" />
-      <updated>1713662875741</updated>
+      <updated>1713061532036</updated>
     </task>
-    <task id="LOCAL-00035" summary="testing Wills search bar on reports tab">
+    <task id="LOCAL-00035" summary="commit for multiselect">
       <option name="closed" value="true" />
-      <created>1713914027966</created>
+      <created>1713064666061</created>
       <option name="number" value="00035" />
       <option name="presentableId" value="LOCAL-00035" />
       <option name="project" value="LOCAL" />
-      <updated>1713914027966</updated>
+      <updated>1713064666061</updated>
     </task>
-    <task id="LOCAL-00036" summary="testing Wills search bar on reports tab">
+    <task id="LOCAL-00036" summary="try To resolve multiselect">
       <option name="closed" value="true" />
-      <created>1713914321516</created>
+      <created>1713725895834</created>
       <option name="number" value="00036" />
       <option name="presentableId" value="LOCAL-00036" />
       <option name="project" value="LOCAL" />
-      <updated>1713914321516</updated>
+      <updated>1713725895834</updated>
     </task>
-    <task id="LOCAL-00037" summary="-Implemented EmployeeID to order history&#10;-Switched up Login button and admin tools layout for Professor request&#10;-fixed Irvins disabled bug&#10;-replace seeting text with icon">
+    <task id="LOCAL-00037" summary="-MultiSelect Fix&#10;-Edit Implementation (need to fix submit order)">
       <option name="closed" value="true" />
-      <created>1713927456862</created>
+      <created>1714267190803</created>
       <option name="number" value="00037" />
       <option name="presentableId" value="LOCAL-00037" />
       <option name="project" value="LOCAL" />
-      <updated>1713927456862</updated>
+      <updated>1714267190803</updated>
     </task>
-    <task id="LOCAL-00038" summary="-Implemented EmployeeID to order history&#10;-Switched up Login button and admin tools layout for Professor request&#10;-fixed Irvins disabled bug&#10;-replace setting text with icon&#10;-add text translator to all parts with default english text&#10;-dark/light mode icon added">
-      <option name="closed" value="true" />
-      <created>1713941041347</created>
-      <option name="number" value="00038" />
-      <option name="presentableId" value="LOCAL-00038" />
-      <option name="project" value="LOCAL" />
-      <updated>1713941041347</updated>
-    </task>
-    <task id="LOCAL-00039" summary="-Implemented EmployeeID to order history&#10;-Switched up Login button and admin tools layout for Professor request&#10;-fixed Irvins disabled bug&#10;-replace setting text with icon&#10;-add text translator to all parts with default english text&#10;-dark/light mode icon added">
-      <option name="closed" value="true" />
-      <created>1713941599981</created>
-      <option name="number" value="00039" />
-      <option name="presentableId" value="LOCAL-00039" />
-      <option name="project" value="LOCAL" />
-      <updated>1713941599981</updated>
-    </task>
-    <option name="localTasksCounter" value="40" />
+    <option name="localTasksCounter" value="38" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -490,6 +447,11 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
+    <MESSAGE value="@author Alec Muczynski&#10;Implemented the Pending stage" />
+    <MESSAGE value="-Changed up Homepage UI&#10;-Complete new Delivery From and display on homepage&#10;-ErrorMessage Display for form textfields&#10;-Display Orders Vertically&#10;-Added New classes, Pending,OrderCardUI,etc." />
+    <MESSAGE value="-Changed up Homepage UI&#10;-Complete new Delivery From and display on homepage&#10;-ErrorMessage Display for form textfields&#10;-Display Orders Vertically&#10;-Added New classes, Pending,OrderCardUI,etc.&#10;-Navbar complete and pending toggles" />
+    <MESSAGE value="-Toolbar changes according to page" />
+    <MESSAGE value="struggling" />
     <MESSAGE value="-Update login onto homepage.fxml" />
     <MESSAGE value="-Update login onto homepage.fxml&#10;-update to check if theres errors" />
     <MESSAGE value="updated db interactioin with client code." />
@@ -506,16 +468,11 @@
     <MESSAGE value="- Im a genius / Very epic stuff" />
     <MESSAGE value="- Im a genius / Very epic stuff / made it even better" />
     <MESSAGE value="reduce homepage controoler codebase from 1400-ish to less than 600 lines" />
-    <MESSAGE value="commit for dark/light feature" />
-    <MESSAGE value="commit for menu toggle fixes" />
-    <MESSAGE value="full test search added&#10;-adds new orders to algolia&#10;-when user types in search bar and presses search it will return all orders that match" />
-    <MESSAGE value="commit for aClient close connection and fix irvin shut down login status change" />
-    <MESSAGE value="orderCard Format change,deliver requisition change, language databas eupdated." />
-    <MESSAGE value="testing Wills search bar on reports tab" />
-    <MESSAGE value="-Implemented EmployeeID to order history&#10;-Switched up Login button and admin tools layout for Professor request&#10;-fixed Irvins disabled bug&#10;-replace seeting text with icon" />
-    <MESSAGE value="-Implemented EmployeeID to order history&#10;-Switched up Login button and admin tools layout for Professor request&#10;-fixed Irvins disabled bug&#10;-replace setting text with icon" />
-    <MESSAGE value="-Implemented EmployeeID to order history&#10;-Switched up Login button and admin tools layout for Professor request&#10;-fixed Irvins disabled bug&#10;-replace setting text with icon&#10;-add text translator to all parts with default english text&#10;-dark/light mode icon added" />
-    <option name="LAST_COMMIT_MESSAGE" value="-Implemented EmployeeID to order history&#10;-Switched up Login button and admin tools layout for Professor request&#10;-fixed Irvins disabled bug&#10;-replace setting text with icon&#10;-add text translator to all parts with default english text&#10;-dark/light mode icon added" />
+    <MESSAGE value="working on multi select" />
+    <MESSAGE value="commit for multiselect" />
+    <MESSAGE value="try To resolve multiselect" />
+    <MESSAGE value="-MultiSelect Fix&#10;-Edit Implementation (need to fix submit order)" />
+    <option name="LAST_COMMIT_MESSAGE" value="-MultiSelect Fix&#10;-Edit Implementation (need to fix submit order)" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
