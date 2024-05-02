@@ -20,6 +20,9 @@ public class AlgoliaMgmt {
     public static void createNewIndex(DeliveryRequisition deliveryRequisition) {
         index.saveObject(deliveryRequisition).waitTask();
     }
+    public static void deleteRecord(String orderNumber) {
+        index.deleteObject(orderNumber);
+    }
 
     /**
      * takes a search term and queries the Algolia DB and returns a queue of delivery requisitions that match teh search term

@@ -174,6 +174,7 @@ public class HomepageController {
         });
 
 
+
         setUpDeliveryForm();
         setUpCreateUserForm();
         setUpNotifyMessage();
@@ -233,6 +234,10 @@ public class HomepageController {
               childBtn.setPrefWidth(Button.USE_COMPUTED_SIZE);
           }));
       }
+    }
+
+    public void onSetVisibleAdmin(){
+        adminButton.setVisible(true);
     }
 
     public void onSetDisabled(boolean temp){
@@ -826,7 +831,7 @@ public class HomepageController {
     }
 
     @FXML
-    void onSignOutClcik(ActionEvent event) {
+    void onSignOutClick(ActionEvent event) {
         if (Employee.getCurrentLogin() != null) {
             showDialogSignOut();
             DataBaseMgmt.updateLoginStatus(Employee.getCurrentLogin(), "False");
@@ -838,6 +843,7 @@ public class HomepageController {
 
             LoginButtonChange.setText(translateExist);
             onSetDisabled(true);
+            adminButton.setVisible(false);
             //LogInVbox.setVisible(true);
         }
     }
