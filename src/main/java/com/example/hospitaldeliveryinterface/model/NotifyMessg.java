@@ -73,16 +73,20 @@ public class NotifyMessg {
 
         switch(status){
             case "newDelivery":
-                messgTemp = tempEmployeeID + " created a new order: #" + orderNum;
+                messgTemp = tempEmployeeID + " CREATED a new order: #" + orderNum;
                 break;
             case "delivered":
-                messgTemp = tempEmployeeID + " signed off order: #" + orderNum;
+                messgTemp = tempEmployeeID + " SIGNED OFF order: #" + orderNum;
                 break;
             case "edited":
-                messgTemp = tempEmployeeID + " edited order: #" + orderNum;
+                messgTemp = tempEmployeeID + " EDITED order: #" + orderNum;
                 break;
             case "returnToPending":
-                messgTemp = tempEmployeeID + " returned order: #" + orderNum + " to pending";
+                messgTemp = tempEmployeeID + " RETURNED order: #" + orderNum + " to pending";
+                break;
+
+            case "deleted":
+                messgTemp = tempEmployeeID + " DELETED order: #" + orderNum + " to pending";
                 break;
             default:
                 System.out.println("Status type: " + status + " does not exist.");
