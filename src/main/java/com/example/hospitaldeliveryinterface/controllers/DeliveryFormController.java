@@ -237,11 +237,13 @@ public class DeliveryFormController {
 
                     if(ToggleTracking.getCurrentTab().equals("Pending")) {
                         DataBaseMgmt.editOrder("pendingDeliveries", ToggleTracking.getSelectedCardOrderNum(), newOrder);
+                        ToggleTracking.clearOrders();
                         FirebaseListener.listenToPendingDeliveries();
                         createNewIndex(newOrder);
                     }
                     if(ToggleTracking.getCurrentTab().equals("Completed")) {
                         DataBaseMgmt.editOrder("completedDeliveries", ToggleTracking.getSelectedCardOrderNum(), newOrder);
+                        ToggleTracking.clearOrders();
                         FirebaseListener.listenToCompletedDeliveries();
                         createNewIndex(newOrder);
                     }

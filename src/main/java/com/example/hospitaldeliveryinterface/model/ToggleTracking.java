@@ -1,4 +1,5 @@
 package com.example.hospitaldeliveryinterface.model;
+import com.example.hospitaldeliveryinterface.controllers.HomepageController;
 import javafx.scene.layout.HBox;
 
 import java.util.HashSet;
@@ -6,31 +7,51 @@ import java.util.Set;
 
 public class ToggleTracking {
 
+
+
     private static Set<DeliveryRequisition> selectedOrders = new HashSet<>();
+    private static HomepageController homepageController;
+    public static Set<DeliveryRequisition> getSelectedOrders() {
+        return selectedOrders;
+    }
+
+
+    public static void setHomepageController(HomepageController controller) {
+        homepageController = controller;
+    }
 
     public static void selectNode(HBox node) {
         DeliveryRequisition req = (DeliveryRequisition) node.getUserData();
         node.setStyle("-fx-background-color: #98FF98; -fx-border-color: #22aae1; -fx-border-width: 2;");
         selectedOrders.add(req);
-        selectedCardOrderNum = req.getOrderNumberDisplay(); // Ensure this is the right method to get the display number
-        System.out.println("Selected order: " + selectedCardOrderNum);
+        setSelectedCardOrderNum(req.getOrderNumberDisplay());
+        setIsEdit(false);
+        homepageController.toggleNewDelivery();
+        System.out.println("Selected order: " + req.getOrderNumberDisplay());
     }
 
     public static void deselectNode(HBox node) {
         DeliveryRequisition req = (DeliveryRequisition) node.getUserData();
         node.setStyle("-fx-background-color: transparent; -fx-border-color: #22aae1; -fx-border-width: 2;");
         selectedOrders.remove(req);
-        if (selectedCardOrderNum != null && selectedCardOrderNum.equals(req.getOrderNumberDisplay())) {
-            selectedCardOrderNum = null; // Reset selected card order number if it's the deselected one
+        if (req.getOrderNumberDisplay().equals(selectedCardOrderNum)) {
+            if (selectedOrders.isEmpty()) {
+                setSelectedCardOrderNum(null);
+            } else {
+                setSelectedCardOrderNum(selectedOrders.iterator().next().getOrderNumberDisplay());
+            }
         }
         System.out.println("Deselected order: " + req.getOrderNumberDisplay());
+        if (selectedOrders.isEmpty()) {
+            setIsEdit(false);
+        }
+        homepageController.toggleNewDelivery();
     }
 
     public static void clearOrders(){
         selectedOrders.clear();
-    }
-    public static Set<DeliveryRequisition> getSelectedOrders() {
-        return selectedOrders;
+        selectedCardOrderNum = null;
+        homepageController.toggleNewDelivery();
     }
 
     private static boolean isEdit;
