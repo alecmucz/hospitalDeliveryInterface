@@ -571,6 +571,14 @@ public class HomepageController {
             for (DeliveryRequisition order : ToggleTracking.getSelectedOrders()) {
                 DeliveryRequisition swapOrder = DataBaseMgmt.findOrder(order.getOrderNumberDisplay(), collectionFrom);
                 DataBaseMgmt.swapDB(swapOrder, swapOrder.getOrderNumberDisplay(), collectionFrom, collectionTo);
+                if(currentTab.equals("Pending")){
+                    NotifyMessg.createMessg("delivered", order.getOrderNumberDisplay());
+                }
+                if(currentTab.equals("Completed")){
+                    NotifyMessg.createMessg("returnToPending", order.getOrderNumberDisplay());
+                }
+
+
             }
             Platform.runLater(() -> {
                 for (DeliveryRequisition order : ToggleTracking.getSelectedOrders()) {
