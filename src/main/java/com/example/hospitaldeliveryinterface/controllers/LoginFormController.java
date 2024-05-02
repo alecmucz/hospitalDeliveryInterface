@@ -58,6 +58,8 @@ public class LoginFormController {
 
     private HomepageController controller;
     public void initialize(){
+
+
         LogInVbox.setVisible(false);
         LogInVbox.getStylesheets().clear();
         textFieldPassword.textProperty().addListener((observable, oldValue, newValue) -> updateTooltips());
@@ -151,16 +153,24 @@ public class LoginFormController {
             return null; // Or throw an exception
         }
     }
+
+
     @FXML
     public void showPassword() {
+
         // Set the tooltips based on the checkbox state
         if (showPasswordCheckBox.isSelected()) {
+
+
             updateTooltips();
             // Show tooltips instantly on hover and do not hide them automatically
             TooltipPassword.setShowDelay(Duration.ZERO);
             TooltipPassword.setAutoHide(false);
 
         } else {
+
+
+
             // Clear the tooltip texts
             TooltipPassword.setText("");
 
