@@ -4,10 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7e1c1fe8-19dc-4e88-bc9d-fc845d4c4708" name="Changes" comment="FIXED MRN display">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/com/example/hospitaldeliveryinterface/model/MitchTextTranslate.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/example/hospitaldeliveryinterface/model/MitchTextTranslate.java" afterDir="false" />
-    </list>
+    <list default="true" id="7e1c1fe8-19dc-4e88-bc9d-fc845d4c4708" name="Changes" comment="local commit" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -519,7 +516,6 @@
     </option>
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="-Update login onto homepage.fxml&#10;-update to check if theres errors" />
     <MESSAGE value="updated db interactioin with client code." />
     <MESSAGE value="I am a genius. Add listener for realtime updates on Pending and Complete Queue" />
     <MESSAGE value="Organized files into packages or folders" />
@@ -544,7 +540,8 @@
     <MESSAGE value="-Implemented EmployeeID to order history&#10;-Switched up Login button and admin tools layout for Professor request&#10;-fixed Irvins disabled bug&#10;-replace setting text with icon" />
     <MESSAGE value="-Implemented EmployeeID to order history&#10;-Switched up Login button and admin tools layout for Professor request&#10;-fixed Irvins disabled bug&#10;-replace setting text with icon&#10;-add text translator to all parts with default english text&#10;-dark/light mode icon added" />
     <MESSAGE value="FIXED MRN display" />
-    <option name="LAST_COMMIT_MESSAGE" value="FIXED MRN display" />
+    <MESSAGE value="local commit" />
+    <option name="LAST_COMMIT_MESSAGE" value="local commit" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
