@@ -136,7 +136,7 @@ public class DataBaseMgmt {
         ApiFuture<DocumentSnapshot> future = docRef.get();
 
         Map<String, Object> data = new HashMap<>();
-        data.put("patientMrn", order.getPatientMrn());
+        data.put("patientMRN", order.getPatientMrn());
         data.put("patientName", order.getPatientName());
         data.put("location", order.getPatientLocation());
         data.put("medication", order.getMedication());
@@ -222,7 +222,7 @@ public class DataBaseMgmt {
             DeliveryRequisition order = new DeliveryRequisition(
                     document.getId(),
                     document.getString("timeCreated"),
-                    document.getString("patientMrn"),
+                    document.getString("patientMRN"),
                     document.getString("patientName"),
                     document.getString("location"),
                     document.getString("medication"),
@@ -301,7 +301,7 @@ public class DataBaseMgmt {
             DeliveryRequisition order = new DeliveryRequisition(
                     document.getId(),
                     document.getString("timeCreated"),
-                    document.getString("patientMrn"),
+                    document.getString("patientMRN"),
                     document.getString("patientName"),
                     document.getString("location"),
                     document.getString("medication"),
@@ -342,7 +342,7 @@ public class DataBaseMgmt {
                 DeliveryRequisition order = new DeliveryRequisition(
                         document.getId(),
                         document.getString("timeCreated"),
-                        document.getString("patientMrn"),
+                        document.getString("patientMRN"),
                         document.getString("patientName"),
                         document.getString("location"),
                         document.getString("medication"),
