@@ -8,7 +8,6 @@ import java.util.Set;
 public class ToggleTracking {
 
 
-
     private static Set<DeliveryRequisition> selectedOrders = new HashSet<>();
     private static HomepageController homepageController;
     public static Set<DeliveryRequisition> getSelectedOrders() {
