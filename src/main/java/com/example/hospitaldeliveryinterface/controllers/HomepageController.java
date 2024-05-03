@@ -18,9 +18,11 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import net.suuft.libretranslate.util.JsonUtil;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.util.*;
 
+import static com.example.hospitaldeliveryinterface.Algolia.AlgoliaMgmt.deleteRecord;
 import static com.example.hospitaldeliveryinterface.Algolia.AlgoliaMgmt.searchAlgolia;
 
 
@@ -610,7 +612,7 @@ public class HomepageController {
             for (DeliveryRequisition order : ToggleTracking.getSelectedOrders()) {
                 DeliveryRequisition deleteOrder = DataBaseMgmt.findOrder(order.getOrderNumberDisplay(), collectionFrom);
                 DataBaseMgmt.deleteFromDB(deleteOrder.getOrderNumberDisplay(), collectionFrom);
-                // Add Algolia Delete Here
+                deleteRecord(order.getOrderNumberDisplay());
             }
             Platform.runLater(() -> {
                 for (DeliveryRequisition order : ToggleTracking.getSelectedOrders()) {
