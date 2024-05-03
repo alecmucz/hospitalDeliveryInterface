@@ -575,15 +575,26 @@ public class HomepageController {
             String currentTab = ToggleTracking.getCurrentTab();
             String collectionFrom = currentTab.equals("Pending") ? "pendingDeliveries" : "completedDeliveries";
             String collectionTo = currentTab.equals("Pending") ? "completedDeliveries" : "pendingDeliveries";
+
+            String tempNewMess = null;
+            OrderHistory tempHistory = null;
             for (DeliveryRequisition order : ToggleTracking.getSelectedOrders()) {
                 DeliveryRequisition swapOrder = DataBaseMgmt.findOrder(order.getOrderNumberDisplay(), collectionFrom);
-                DataBaseMgmt.swapDB(swapOrder, swapOrder.getOrderNumberDisplay(), collectionFrom, collectionTo);
                 if(currentTab.equals("Pending")){
+                    tempNewMess = deliveryFormController.createOrderHistoryMessage("delivery");
+                    tempHistory = new OrderHistory(tempNewMess,null);
+                    swapOrder.getOrderStatusHistory().add(tempHistory);
                     NotifyMessg.createMessg("delivered", order.getOrderNumberDisplay());
                 }
                 if(currentTab.equals("Completed")){
+                    tempNewMess = deliveryFormController.createOrderHistoryMessage("return");
+                    tempHistory = new OrderHistory(tempNewMess,null);
+                    swapOrder.getOrderStatusHistory().add(tempHistory);
                     NotifyMessg.createMessg("returnToPending", order.getOrderNumberDisplay());
                 }
+
+
+                DataBaseMgmt.swapDB(swapOrder, swapOrder.getOrderNumberDisplay(), collectionFrom, collectionTo);
 
 
             }
@@ -611,6 +622,7 @@ public class HomepageController {
             String collectionFrom = currentTab.equals("Pending") ? "pendingDeliveries" : "completedDeliveries";
             for (DeliveryRequisition order : ToggleTracking.getSelectedOrders()) {
                 DeliveryRequisition deleteOrder = DataBaseMgmt.findOrder(order.getOrderNumberDisplay(), collectionFrom);
+                NotifyMessg.createMessg("deleted", deleteOrder.getOrderNumberDisplay());
                 DataBaseMgmt.deleteFromDB(deleteOrder.getOrderNumberDisplay(), collectionFrom);
                 deleteRecord(order.getOrderNumberDisplay());
             }
