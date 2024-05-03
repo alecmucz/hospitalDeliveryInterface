@@ -112,8 +112,7 @@ public class MitchTextTranslate {
         languagesMap.put("Turkish", "tr");
         languagesMap.put("Ukrainian", "uk");
 
-
-        //storedLang = DataBaseMgmt.initialLanguageCheck(languagesMap);
+        storedLang = DataBaseMgmt.initialLanguageCheck(languagesMap);
 
     }
 

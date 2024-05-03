@@ -194,7 +194,7 @@ public class CreateUserController {
                 } else {
                     // User creation successful, add user to database
                     errorMessageHbox.setVisible(true);
-                    createUserError.setStyle("-fx-text-fill: green;");
+                    createUserError.setStyle("-fx-text-fill: white;");
                     //Hash the password using SHA-256
                     String hashedPassword = hashPassword(textFieldPassword1.getText());
                     DataBaseMgmt.addCreateUserDB(
