@@ -132,6 +132,10 @@ public class DeliveryRequisition {
         this.deliveryInfo = deliveryInfo;
     }
 
+    public void setOrderNumberDisplay(String orderNumberDisplay) {
+        this.orderNumberDisplay = orderNumberDisplay;
+    }
+
     public String getOrderCreationRecord() {
         return orderCreationRecord;
     }
