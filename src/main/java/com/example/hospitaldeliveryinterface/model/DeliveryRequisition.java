@@ -156,7 +156,6 @@ public class DeliveryRequisition {
     }
 
     public static String currentDateTime(){
-
         LocalDateTime timeNow = LocalDateTime.now();
         DateTimeFormatter format = DateTimeFormatter.ofPattern("MMMM dd, yyyy - hh:mm a");
         return timeNow.format(format);
