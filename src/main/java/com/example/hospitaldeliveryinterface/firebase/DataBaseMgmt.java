@@ -215,9 +215,6 @@ public class DataBaseMgmt {
 
         for(QueryDocumentSnapshot document : documents) {
 
-
-
-
             DeliveryRequisition order = new DeliveryRequisition(
                     document.getId(),
                     document.getString("timeCreated"),
