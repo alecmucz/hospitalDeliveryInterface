@@ -24,13 +24,13 @@ The purpose of PharmaTrac is to replace the existing manual process used in hosp
 
 ## Technologies Used
 **PharmaTrac is built using the following technologies:**
-IntelliJ: Integrated Development Environment (IDE) for Java development.
-SceneBuilder: Drag-and-drop GUI design tool for JavaFX applications.
-Google Firebase: Backend infrastructure for authentication, database management, and real-time updates.
+- IntelliJ: Integrated Development Environment (IDE) for Java development.
+- SceneBuilder: Drag-and-drop GUI design tool for JavaFX applications.
+- Google Firebase: Backend infrastructure for authentication, database management, and real-time updates.
 
 ## How to Start
 **To get started with PharmaTrac, follow these steps:**
-Clone the repository.
-Set up Firebase authentication and database.
-Configure Algolia Search API.
-Run the application using IntelliJ or your preferred IDE.
+- Clone the repository.
+- Set up Firebase authentication and database.
+- Configure Algolia Search API.
+- Run the application using IntelliJ or your preferred IDE.
