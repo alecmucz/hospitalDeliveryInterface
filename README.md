@@ -1,53 +1,36 @@
-3/6/2024 - Push by Alec, Pending stage implementation
+# PharmaTrac
 
-4/9/24 10:49 - Will Edit
-- Changed ordercard UI to better display the notes secition 
-- added fuction to track all user actions taken on an order
-- tracks creation, edits and moves between queues
-- added reports page for new seach function
-- supports swapping between pages
+PharmaTrac is a comprehensive delivery requisition management system designed to streamline the process within hospital pharmacy settings. It replaces the traditional binder-based method of tracking delivery history with a digital solution. PharmaTrac aims to enhance efficiency and accuracy in managing delivery requisitions.
 
-3/9/2024 3:04 am - Mitchell Edit:
-- Revise Homepage UI
-- Created New Delivery Form
-- Orders Display on HomePage
-- Error handling with invalid input on New Delivery Form
-- Pending Classes added for Queue and order storage
-- Completed Class setup but not implemented yet
-- orderCard created for cloning orderUI to homepage
-- orderCardUI Controller for updating data from Queue linkedlist
-- DateSetUpFixed on Delivery Requisitions
-- Method to generate Order number, I decide the ordernumbers are based  on todays date then "00" and then orderNumberCounter
-- ScrollPane added to Homepage for orderQueue list
-- To test make sure you are on my branch "Mitchell_branch" / Didnt merge to main/master branch yet.
+## Purpose
 
-3/9/2024 2:21pm -Mitchell Edit:
--Able to toggle between Pending and Completed Tab
+The purpose of PharmaTrac is to replace the existing manual process used in hospital pharmacies for tracking the delivery history of narcotics. Traditionally, this process involves maintaining a binder to record and manage delivery requisitions. However, PharmaTrac offers a modern digital alternative that simplifies the creation, management, and tracking of delivery requisitions.
 
-3/9/2024 6:09 pm -Mitchell Edit:
--Adjust top navbar
--setting side nav bar implemented
+## Key Features
 
-3/11/2024 1:00 pm - Alec Edit:
-- Toolbar changes according to page
-- New Delivery Popup window (note: Edit Delivery currently has the same popup to Deliver Windows )
+**User Authentication:** Users with valid employee credentials can access the application and utilize its features. When creating user accounts, passwords are securely hashed using the SHA-256 hash algorithm for enhanced security.
 
-3/14/2024 12:38 am - Mitchell Edit:
-- Redesign application UI
-- reimplemented new delivery to the homepage
-- The edit and delivered button works
-- Completed and Pending tabs display orders
+**Delivery Requisitions:** Users can create, edit, sign off, deliver orders, and return orders to the pending queue.
 
-3/17/2024 3:01 AM - Mitchell/William Edit:
-- created a new method for sending and retrieving documents from Google Firebase
-- Pending and Completed class has been removed
-- files have been organized to the specified package
-- Display Pending and Completed Queue updates in real-time for all applications
+**Hierarchy:** The application distinguishes between Admin and Staff roles, with Admin having additional privileges such as managing user accounts and deleting delivery requisitions.
 
-3/17/2024 11:16 AM - Alec Edit:
-- Bug Fix: If the user enables the LoginVBOX pane with the login button and closes the settings tab, the widgets within LoginVBOX would still be left over in the New Delivery Pane
+**Order Management:** Orders are categorized as pending or completed, providing a clear overview of the delivery status.
 
-3/27/24 11:08 PM - Alec Edit:
- - Cleaned up GUI (set proper widths throughout toolbar and navbars so buttons arent being cut off)
- - Made search button nice (should probably implement search drop down to function the same as the settings button and navbar)
- - Will be working on selecting multiple orders and performing functions (Deliver,Send back to Pending,Delete) those selections.
+**Search Functionality:** Users can search for orders based on various criteria, facilitating efficient order management.
+
+**Real-time Updates:** Changes made to the order queues are instantly reflected across all application instances.
+
+**Additional Features:** PharmaTrac offers additional features such as light and dark mode, language switching (utilizing LibreTranslate API), and integration with Algolia Search API for enhanced search capabilities.
+
+## Technologies Used
+**PharmaTrac is built using the following technologies:**
+IntelliJ: Integrated Development Environment (IDE) for Java development.
+SceneBuilder: Drag-and-drop GUI design tool for JavaFX applications.
+Google Firebase: Backend infrastructure for authentication, database management, and real-time updates.
+
+## How to Start
+**To get started with PharmaTrac, follow these steps:**
+Clone the repository.
+Set up Firebase authentication and database.
+Configure Algolia Search API.
+Run the application using IntelliJ or your preferred IDE.
