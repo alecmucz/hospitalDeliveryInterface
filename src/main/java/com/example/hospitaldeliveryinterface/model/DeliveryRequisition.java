@@ -50,11 +50,11 @@ public class DeliveryRequisition {
         this.orderNumberDisplay = orderNumber;
         this.deliveryInfo = deliveryInfo;
         this.orderCreationRecord = createdBy;
-        this.orderStatusHistory = orderStatusHistory;
+        this.orderStatusHistory = new ArrayList<>(orderStatusHistory);
     }
 
     public void setOrderStatusHistory(ArrayList<OrderHistory> orderStatusHistory) {
-        this.orderStatusHistory = orderStatusHistory;
+        this.orderStatusHistory = new ArrayList<>(orderStatusHistory);
     }
 
     public void setPatientName(String patientName) {
@@ -86,7 +86,7 @@ public class DeliveryRequisition {
     }
 
     public ArrayList<OrderHistory> getOrderStatusHistory() {
-        return orderStatusHistory;
+        return new ArrayList<>(orderStatusHistory);
     }
 
     public String getPatientMrn() {
@@ -177,8 +177,7 @@ public class DeliveryRequisition {
      */
     public static void incrementNumOrders(){
         DocumentReference docRef = PharmaTracApp.fstore.collection("statistics").document("numOrders");
-        final ApiFuture<WriteResult> updateFuture =
-                docRef.update("totalNumOrders", FieldValue.increment(1));
+        docRef.update("totalNumOrders", FieldValue.increment(1));
     }
 
 

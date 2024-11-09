@@ -48,7 +48,7 @@ public class Employee {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-    public void setEmployeeId() {
+    public void setEmployeeId(int employeeId) {
         this.employeeId = employeeId;
     }
 

@@ -24,7 +24,7 @@ public class DataBaseMgmt {
         data.put("time", mssgTime);
         data.put("message", mssg);
 
-        ApiFuture<WriteResult> result = docRef.set(data);
+        docRef.set(data);
     }
 
     //----------------------------------------------------------------------------->
@@ -119,7 +119,7 @@ public class DataBaseMgmt {
 
         data.put("orderStatusHistory", deliveryRequisition.getOrderStatusHistory());
         //add who entered the order
-        ApiFuture<WriteResult> result = docRef.set(data);
+        docRef.set(data);
     }
 
     /**
@@ -133,7 +133,7 @@ public class DataBaseMgmt {
         CollectionReference collectionReference = PharmaTracApp.fstore.collection(collectionName);
 
         DocumentReference docRef = collectionReference.document(orderNumber);
-        ApiFuture<DocumentSnapshot> future = docRef.get();
+        docRef.get();
 
         Map<String, Object> data = new HashMap<>();
         data.put("patientMRN", order.getPatientMrn());
@@ -145,7 +145,7 @@ public class DataBaseMgmt {
         data.put("timeCreated", order.getDateTime());
         data.put("orderStatusHistory", order.getOrderStatusHistory());
 
-        ApiFuture<WriteResult> future2 = PharmaTracApp.fstore.collection(collectionName).document(orderNumber).set(data);
+        PharmaTracApp.fstore.collection(collectionName).document(orderNumber).set(data);
     }
 
 
@@ -370,7 +370,7 @@ public class DataBaseMgmt {
         data.put("email", email);
         data.put("loginStatus", "false");
 
-        ApiFuture<WriteResult> result = docRef.set(data);
+        docRef.set(data);
     }
 
     public static Map<String, Object> retrieveUserData(String employeeID,String collectionName) throws InterruptedException, ExecutionException {
@@ -412,7 +412,7 @@ public class DataBaseMgmt {
         DocumentReference docRef = PharmaTracApp.fstore.collection("employees").document(employeeId);
 
         // (async) Update one field
-        ApiFuture<WriteResult> future = docRef.update("loginStatus", status);
+        docRef.update("loginStatus", status);
     }
     private static String getDateAndTime() {
         LocalDateTime currentTime = LocalDateTime.now();

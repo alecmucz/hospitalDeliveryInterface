@@ -11,12 +11,12 @@ public class ToggleTracking {
     private static Set<DeliveryRequisition> selectedOrders = new HashSet<>();
     private static HomepageController homepageController;
     public static Set<DeliveryRequisition> getSelectedOrders() {
-        return selectedOrders;
+        return new HashSet<>(selectedOrders);
     }
 
 
     public static void setHomepageController(HomepageController controller) {
-        homepageController = controller;
+        homepageController = new HomepageController(controller);
     }
 
     public static void selectNode(HBox node) {

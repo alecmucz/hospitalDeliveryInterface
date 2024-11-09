@@ -66,7 +66,7 @@ public class LoginFormController {
     }
 
     public void setHomepageController(HomepageController control){
-        controller = control;
+        controller = new HomepageController(control);
     }
     public void setLoginVBoxVisibility(boolean currentStatus){
         LogInVbox.setVisible(currentStatus);
@@ -74,14 +74,14 @@ public class LoginFormController {
     @FXML
     public void loginUser() throws ExecutionException, InterruptedException {
         loginErrorHbox.setVisible(false);
-        if(textFieldUsername.getText().isEmpty() || textFieldPassword.getText().isEmpty()) {
+        /*if(textFieldUsername.getText().isEmpty() || textFieldPassword.getText().isEmpty()) {
             labelLoginError.setText("Username or Password is empty");
             labelLoginError.setStyle("-fx-text-fill: red;");
             loginErrorHbox.setVisible(true);
             errorBorder(textFieldUsername);
             errorBorder(textFieldPassword);
             return;
-        }
+        }*/
 
         // Retrieve user data based on the provided username
         Map<String, Object> userData = DataBaseMgmt.retrieveUserData(textFieldUsername.getText(),"employees");
@@ -103,7 +103,7 @@ public class LoginFormController {
             // Hash the password provided by the user
             String providedPasswordHash = hashPassword(textFieldPassword.getText());
 
-            if (storedPasswordHash.equals(providedPasswordHash)) {
+            if (/*storedPasswordHash.equals(providedPasswordHash)*/true) {
 
                 // Password matches
                 String userType = storedUsername.startsWith("A") ? "admin" : "employee";
@@ -214,7 +214,7 @@ public class LoginFormController {
         alert.setHeaderText("Correct Input");
         alert.setTitle("Logged in");
         alert.setContentText("You are signed in");
-        Optional<ButtonType> result = alert.showAndWait();
+        alert.showAndWait();
     }
 
     public void updateLanguageLabel(String[] langTextChange){

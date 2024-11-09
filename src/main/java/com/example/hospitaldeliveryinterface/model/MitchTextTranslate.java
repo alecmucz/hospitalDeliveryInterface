@@ -11,16 +11,16 @@ public class MitchTextTranslate {
 
     private static TreeMap<String, String> languagesMap = new TreeMap<>();
 
-    public  static HashMap<String,String[]> storedLang = new HashMap<>();
+    private static HashMap<String,String[]> storedLang = new HashMap<>();
 
 
 
     public static HashMap<String, String[]> getStoredLang() {
-        return storedLang;
+        return new HashMap<>(storedLang);
     }
 
     public static TreeMap<String, String> getLanguagesMap() {
-        return languagesMap;
+        return new TreeMap<>(languagesMap);
     }
 
 

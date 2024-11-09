@@ -143,6 +143,59 @@ public class HomepageController {
 
     String tempDarkMode;
     String tempLightMode;
+
+    public HomepageController() {
+
+    }
+    public HomepageController(HomepageController copyMe) {
+        this.rootPane = copyMe.rootPane;
+        this.mainOrderScroll = copyMe.mainOrderScroll;
+        this.orderDisplayContainer = copyMe.orderDisplayContainer;
+        this.pendingButton = copyMe.pendingButton;
+        this.completedButton = copyMe.completedButton;
+        this.reportsButton = copyMe.reportsButton;
+        this.editBtn = copyMe.editBtn;
+        this.deliverReturnBtn = copyMe.deliverReturnBtn;
+        this.newDeliveryButton = copyMe.newDeliveryButton;
+        this.settingsButton = copyMe.settingsButton;
+        this.LoginButtonChange = copyMe.LoginButtonChange;
+        this.adminButton = copyMe.adminButton;
+        this.searchBarTextField = copyMe.searchBarTextField;
+        this.changeLanguageBtn = copyMe.changeLanguageBtn;
+        this.lightDarkIcon = copyMe.lightDarkIcon;
+        this.mainContainer = copyMe.mainContainer;
+        this.createUserBtn = copyMe.createUserBtn;
+        this.deleteOrdersBtn = copyMe.deleteOrdersBtn;
+        this.signOutBtn = copyMe.signOutBtn;
+        this.signOutVbox = copyMe.signOutVbox;
+        this.searchHBox = copyMe.searchHBox;
+        this.settingNavbar = copyMe.settingNavbar;
+        this.adminToolsNav = copyMe.adminToolsNav;
+        this.editDeliverButtonsHbox = copyMe.editDeliverButtonsHbox;
+        this.darkLightBtn = copyMe.darkLightBtn;
+        this.isLoginToggle = copyMe.isLoginToggle;
+        this.isToggleSettings = copyMe.isToggleSettings;
+        this.isToggleAdmin = copyMe.isToggleAdmin;
+        this.selectedCard = copyMe.selectedCard;
+        this.LangToggleBtn = copyMe.LangToggleBtn;
+        this.isLightMode = copyMe.isLightMode;
+        this.languageMenuUI = copyMe.languageMenuUI;
+        this.languageMenuController = copyMe.languageMenuController;
+        this.deliveryFormUI = copyMe.deliveryFormUI;
+        this.deliveryFormController = copyMe.deliveryFormController;
+        this.createUserFormUI = copyMe.createUserFormUI;
+        this.createUserController = copyMe.createUserController;
+        this.notifyMessageUI = copyMe.notifyMessageUI;
+        this.notifyMessageController = copyMe.notifyMessageController;
+        this.loginFormUI = copyMe.loginFormUI;
+        this.loginFormController = copyMe.loginFormController;
+        this.buttonsForAdjustWidth = copyMe.buttonsForAdjustWidth;
+        this.lightModeIcon = copyMe.lightModeIcon;
+        this.darkModeIcon = copyMe.darkModeIcon;
+        this.tempDarkMode = copyMe.tempDarkMode;
+        this.tempLightMode = copyMe.tempLightMode;
+    }
+
     public void initialize(){
 
         tempLightMode = "Light Mode";
@@ -407,7 +460,7 @@ public class HomepageController {
         }
     }
     public void setLangToggleBtn(String[] newText) {
-       LangToggleBtn = newText;
+        LangToggleBtn = newText.clone();
         setUpLangText(LangToggleBtn);
 
     }
@@ -799,8 +852,7 @@ public class HomepageController {
     public void displaySearchResults(Queue<DeliveryRequisition> searchQueue) {
 
         orderDisplayContainer.getChildren().clear();
-        if(searchQueue == null && searchQueue.isEmpty()){
-
+        if(searchQueue == null || searchQueue.isEmpty()){
             return;
         }
 
@@ -839,9 +891,8 @@ public class HomepageController {
         alert.setHeaderText("Logged out");
         alert.setTitle("Signed out");
         alert.setContentText("You are signing out");
-        Optional<ButtonType> result = alert.showAndWait();
+        alert.showAndWait();
         signOutVbox.setVisible(false);
-
     }
 
     @FXML

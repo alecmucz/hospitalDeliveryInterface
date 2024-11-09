@@ -51,7 +51,7 @@ public class LanguageMenuController {
 
 
     public void setHomeController(HomepageController homeController) {
-        this.homeController = homeController;
+        this.homeController = new HomepageController(homeController);
     }
 
     private void onLanguageButtonClick(ActionEvent event) {

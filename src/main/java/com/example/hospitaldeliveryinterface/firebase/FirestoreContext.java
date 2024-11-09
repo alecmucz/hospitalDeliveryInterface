@@ -24,6 +24,7 @@ public class FirestoreContext {
             FirebaseApp.initializeApp(options);
         }catch(IOException e) {
             e.printStackTrace();
+
         }
         return FirestoreClient.getFirestore();
     }

@@ -35,8 +35,12 @@ public class NotifyMessg {
     public String getMessage(){return message;}
 
 
-    public static void setMessgQueue(Queue<NotifyMessg> mQueue){messgQueue = mQueue;}
-    public static Queue<NotifyMessg> getMessgQueue(){return messgQueue;}
+    public static void setMessgQueue(Queue<NotifyMessg> mQueue){
+        messgQueue = new LinkedList<>(mQueue);
+    }
+    public static Queue<NotifyMessg> getMessgQueue(){
+        return new LinkedList<>(messgQueue);
+    }
 
 
     public static void addMessg(NotifyMessg messg){

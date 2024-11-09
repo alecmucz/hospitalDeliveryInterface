@@ -9,18 +9,18 @@ public class QueueSaves {
     private static Queue<DeliveryRequisition> completedLatest = new LinkedList<>();
 
     public static void setPendingLatest(Queue<DeliveryRequisition> latestPending){
-        pendingLatest = latestPending;
+        pendingLatest = new LinkedList<>(latestPending);
     }
 
     public static void setCompletedLatest(Queue<DeliveryRequisition> lastestCompleted){
-        completedLatest = lastestCompleted;
+        completedLatest = new LinkedList<>(lastestCompleted);
     }
 
     public static Queue<DeliveryRequisition> getPendingLatest(){
-        return pendingLatest;
+        return new LinkedList<>(pendingLatest);
     }
 
     public static Queue<DeliveryRequisition> getCompletedLatest(){
-        return completedLatest;
+        return new LinkedList<>(completedLatest);
     }
 }

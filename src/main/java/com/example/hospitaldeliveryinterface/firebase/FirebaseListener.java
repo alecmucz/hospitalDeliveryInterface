@@ -25,7 +25,7 @@ public class FirebaseListener {
     private static boolean initializeNotify = false;
 
     public static void setController(HomepageController control) {
-        controller = control;
+        controller = new HomepageController(control);
     }
 
 
